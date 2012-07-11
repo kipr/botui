@@ -6,6 +6,9 @@
 #include <easydevice/DiscoveryClient.h>
 #include <easydevice/DeviceInfo.h>
 
+#include <kiss-compiler/Temporary.h>
+#include <kiss-compiler/CompilerManager.h>
+
 #include <QDebug>
 
 EasyDeviceCommunicationProvider::EasyDeviceCommunicationProvider(Device *device)
@@ -44,6 +47,29 @@ const bool EasyDeviceCommunicationProvider::run(const QString& name)
 
 CompilationPtr EasyDeviceCommunicationProvider::compile(const QString& name)
 {
+	FilesystemProvider *filesystem = device()->filesystemProvider();
+	if(!filesystem) return CompilationPtr();
+	
+	TinyArchive *archive = filesystem->program(name);
+	if(!archive) return CompilationPtr();
+	
+	/* ArchiveWriter writer(archive, Temporary::subdir(name));
+	QMap<QString, QString> settings;
+	QByteArray rawSettings = QTinyNode::data(archive->lookup("settings:"));
+	QDataStream stream(rawSettings);
+	stream >> settings;
+	
+	CompilationPtr compilation(new Compilation(CompilerManager::ref().compilers(), name, writer.files(), settings, "kovan"));
+	bool success = compilation->start();
+	qDebug() << "Results:" << compilation->compileResults();
+	
+	qDebug() << (success ? "Compile Succeeded" : "Compile Failed");
+	
+	if(success) m_compileResults[name] = compilation->compileResults();
+	else m_compileResults.remove(name);
+	
+	return compilation; */
+	
 	return CompilationPtr();
 }
 
