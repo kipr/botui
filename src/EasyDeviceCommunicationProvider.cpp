@@ -50,7 +50,7 @@ CompilationPtr EasyDeviceCommunicationProvider::compile(const QString& name)
 	FilesystemProvider *filesystem = device()->filesystemProvider();
 	if(!filesystem) return CompilationPtr();
 	
-	TinyArchive *archive = filesystem->program(name);
+	const TinyArchive *archive = filesystem->program(name);
 	if(!archive) return CompilationPtr();
 	
 	/* ArchiveWriter writer(archive, Temporary::subdir(name));
