@@ -1,0 +1,55 @@
+PROJECT(botui)
+
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6.0)
+
+FIND_PACKAGE(Qt4 REQUIRED)
+
+SET(INCLUDE ${botui_SOURCE_DIR}/include)
+SET(RC ${botui_SOURCE_DIR}/rc)
+SET(SRC ${botui_SOURCE_DIR}/src)
+SET(UI ${botui_SOURCE_DIR}/ui)
+SET(TRADEMARKS ${botui_SOURCE_DIR}/trademarks)
+
+INCLUDE_DIRECTORIES(
+	${CMAKE_SOURCE_DIR} 
+	${CMAKE_SOURCE_DIR}/src 
+	${botui_SOURCE_DIR} 
+	${botui_BINARY_DIR} 
+	${INCLUDE} 
+)
+
+SET(QT_USE_QTDECLARATIVE TRUE)
+SET(QT_USE_QTNETWORK TRUE)
+
+INCLUDE(${QT_USE_FILE})
+
+FILE(GLOB INCLUDES ${INCLUDE}/*.h)
+FILE(GLOB SOURCES ${SRC}/*)
+FILE(GLOB UIS ${UI}/*)
+
+SET(botui_SRCS_CXX ${SOURCES})
+SET(botui_UI ${UIS})
+SET(botui_MOC_SRCS ${INCLUDES})
+
+SET(botui_QRC_FILES ${RC}/icons.qrc ${RC}/construction.qrc)
+
+QT4_WRAP_CPP(botui_SRCS_CXX ${botui_MOC_SRCS})
+QT4_WRAP_UI(botui_SRCS_CXX ${botui_UI})
+QT4_ADD_RESOURCES(botui_SRCS_CXX ${botui_QRC_FILES})
+
+SET(CMAKE_CXX_FLAGS "-Wall")
+
+IF(APPLE)
+	SET(CMAKE_OSX_SYSROOT "${OSX_DEVELOPER_ROOT}/SDKs/MacOSX10.6.sdk")
+	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -arch x86_64 -g")
+	LINK_DIRECTORIES(/Library/Frameworks/)
+	ADD_EXECUTABLE(botui ${botui_SRCS_CXX})
+ELSEIF(UNIX)
+	ADD_EXECUTABLE(botui ${botui_SRCS_CXX})
+ELSEIF(WIN32)
+  SET(CMAKE_CXX_FLAGS "-Wl,--enable-auto-import")
+  ADD_EXECUTABLE(botui WIN32 ${botui_SRCS_CXX} rc/logos/kiss.rc)
+ENDIF()
+
+SET(EXECUTABLE_OUTPUT_PATH ${botui_SOURCE_DIR}/deploy)
+TARGET_LINK_LIBRARIES(botui ${QT_LIBRARIES} easydevice kiss-compiler tinyarchive z)
