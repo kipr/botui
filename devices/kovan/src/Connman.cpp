@@ -3,6 +3,7 @@
 #include "Network.h"
 
 #include <QtDBus>
+#include <QDebug>
 
 #define SERVICES_KEY "Services"
 
@@ -14,6 +15,7 @@ NetworkItem::NetworkItem(const NetworkPtr& network)
 	: QStandardItem(network->name())
 {
 	setSizeHint(QSize(0, 50));
+	qDebug() << "Made Network Item with name" << network->name();
 }
 
 
@@ -24,6 +26,7 @@ NetworkItemModel::NetworkItemModel()
 void NetworkItemModel::scanned(const NetworkPtrList& networks)
 {
 	clear();
+	qDebug() << "Scanned (item model)";
 	foreach(const NetworkPtr& network, networks) appendRow(new NetworkItem(network));
 }
 
@@ -59,6 +62,7 @@ Connman::~Connman()
 
 void Connman::setup()
 {
+	qDebug() << "Setup...";
 	if(m_setup) return;
 	QDBusPendingReply<QVariantMap> reply = m_manager->GetProperties();
 	QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(reply, this);
@@ -86,6 +90,7 @@ NetworkPtrList Connman::list() const
 
 const bool Connman::scan()
 {
+	qDebug() << "Requesting Scan...";
 	m_manager->RequestScan(m_type);
 	return true;
 }
@@ -107,8 +112,10 @@ QAbstractItemModel *Connman::networkItemModel() const
 
 void Connman::finishSetup(QDBusPendingCallWatcher *watcher)
 {
+	qDebug() << "finishSetup";
 	QDBusPendingReply<QVariantMap> reply = *watcher;
 	m_properties = reply.value();
+	qDebug() << m_properties;
 	QObject::connect(m_manager, SIGNAL(PropertyChanged(QString, QDBusVariant)), SLOT(propertyChanged(QString, QDBusVariant)));
 }
 
@@ -116,6 +123,7 @@ void Connman::propertyChanged(const QString& name, const QDBusVariant& value)
 {
 	m_properties[name] = value.variant();
 	if(name == SERVICES_KEY) emit scanned(list());
+	qDebug() << servicesToStringList();
 }
 
 QStringList Connman::servicesToStringList() const
