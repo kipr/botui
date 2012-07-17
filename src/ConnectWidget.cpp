@@ -39,6 +39,7 @@ void ConnectWidget::connect()
 	if(selection.size() != 1) return;
 	NetworkPtr network = m_device->networkingProvider()->networkItemModel()->network(selection[0]);
 	network->connect();
+	qDebug() << network->security();
 }
 
 void ConnectWidget::other()
