@@ -106,9 +106,7 @@ const bool Connman::scan()
 {
 	qDebug() << "Requesting Scan...";
 	QDBusPendingReply<> reply = m_manager->RequestScan(m_type);
-	qDebug() << "Waiting for finish";
 	reply.waitForFinished();
-	qDebug() << "Finished";
 	if(reply.isError()) qCritical() << reply.error();
 	return !reply.isError();
 }
@@ -139,6 +137,7 @@ void Connman::finishSetup(QDBusPendingCallWatcher *watcher)
 
 void Connman::propertyChanged(const QString& name, const QDBusVariant& value)
 {
+	qDebug() << "Property" << name << "changed.";
 	m_properties[name] = value.variant();
 	if(name == SERVICES_KEY) emit scanned(list());
 	qDebug() << servicesToStringList();
