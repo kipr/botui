@@ -91,8 +91,10 @@ NetworkPtrList Connman::list() const
 const bool Connman::scan()
 {
 	qDebug() << "Requesting Scan...";
-	m_manager->RequestScan(m_type);
-	return true;
+	QDBusPendingReply<> reply = m_manager->RequestScan(m_type);
+	reply.waitForFinished();
+	if(reply.isError()) qCritical() << reply.error();
+	return !reply.isError();
 }
 
 const float Connman::networkStrengthMin() const
