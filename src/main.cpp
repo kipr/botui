@@ -5,7 +5,6 @@
 #include "StatusBar.h"
 #include "KovanDevice.h"
 #include "SimulatorDevice.h"
-#include "NetworkManager.h"
 #include <QApplication>
 #include <QDir>
 
@@ -15,8 +14,6 @@ int main(int argc, char* argv[])
 	QApplication app(argc, argv);
 	QDir::setCurrent(QApplication::applicationDirPath());
 	qmlRegisterType<BusyIndicator>("ZapBsComponents", 1, 0, "BusyIndicator");
-	
-	NetworkManager network;
 	
 	Kovan::Device device;
 	//RootController::ref().presentQml(QUrl::fromLocalFile("loading.qml"));

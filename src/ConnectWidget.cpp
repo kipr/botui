@@ -44,6 +44,6 @@ void ConnectWidget::other()
 
 void ConnectWidget::refresh()
 {
-	qDebug() << "REFRESH!!";
+	qDebug() << "REFRESH!! Scanning..";
 	m_device->networkingProvider()->scan();
 }
