@@ -47,7 +47,7 @@ void NetworkItemModel::refresh()
 
 Connman::Connman()
 	: m_type(TECHNOLOGY),
-	m_manager(new net::connman::Manager("net.conmann.Manager", "/", QDBusConnection::systemBus(), this)),
+	m_manager(new net::connman::Manager("net.connman.Manager", "/", QDBusConnection::systemBus(), this)),
 	m_setup(false),
 	m_networkItemModel(new NetworkItemModel())
 {
