@@ -19,6 +19,9 @@ public:
 	MotorsSensorsWidget(Device *device, QWidget *parent = 0);
 	~MotorsSensorsWidget();
 	
+public slots:
+	void camera();
+	
 private:
 	Ui::MotorsSensorsWidget *ui;
 	Device *m_device;

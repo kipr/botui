@@ -59,8 +59,7 @@ void NetworkStatusWidget::paintEvent(QPaintEvent *event)
 		return;
 	}
 	
-	const float networkStrength = m_networkingProvider
-		? m_networkingProvider->networkStrength() : 0.0;
+	const float networkStrength = 0.0;
 	const float networkStrengthMin = m_networkingProvider
 		? m_networkingProvider->networkStrengthMin() : 0.0;
 	const float networkStrengthMax = m_networkingProvider

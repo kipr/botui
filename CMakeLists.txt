@@ -8,23 +8,29 @@ SET(INCLUDE ${botui_SOURCE_DIR}/include)
 SET(RC ${botui_SOURCE_DIR}/rc)
 SET(SRC ${botui_SOURCE_DIR}/src)
 SET(UI ${botui_SOURCE_DIR}/ui)
-SET(TRADEMARKS ${botui_SOURCE_DIR}/trademarks)
+
+SET(DEVICES ${botui_SOURCE_DIR}/devices)
+SET(KOVAN ${DEVICES}/kovan)
+SET(SIMULATOR ${DEVICES}/simulator)
 
 INCLUDE_DIRECTORIES(
 	${CMAKE_SOURCE_DIR} 
 	${CMAKE_SOURCE_DIR}/src 
 	${botui_SOURCE_DIR} 
-	${botui_BINARY_DIR} 
+	${botui_BINARY_DIR}
+	${KOVAN}/include
+	${SIMULATOR}/include
 	${INCLUDE} 
 )
 
 SET(QT_USE_QTDECLARATIVE TRUE)
 SET(QT_USE_QTNETWORK TRUE)
+SET(QT_USE_QTDBUS TRUE)
 
 INCLUDE(${QT_USE_FILE})
 
-FILE(GLOB INCLUDES ${INCLUDE}/*.h)
-FILE(GLOB SOURCES ${SRC}/*)
+FILE(GLOB INCLUDES ${INCLUDE}/*.h ${KOVAN}/include/*.h ${SIMULATOR}/include/*.h)
+FILE(GLOB SOURCES ${SRC}/*.cpp ${KOVAN}/src/*.cpp ${SIMULATOR}/src/*.cpp)
 FILE(GLOB UIS ${UI}/*)
 
 SET(botui_SRCS_CXX ${SOURCES})
@@ -40,16 +46,15 @@ QT4_ADD_RESOURCES(botui_SRCS_CXX ${botui_QRC_FILES})
 SET(CMAKE_CXX_FLAGS "-Wall")
 
 IF(APPLE)
-	SET(CMAKE_OSX_SYSROOT "${OSX_DEVELOPER_ROOT}/SDKs/MacOSX10.6.sdk")
 	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -arch x86_64 -g")
 	LINK_DIRECTORIES(/Library/Frameworks/)
 	ADD_EXECUTABLE(botui ${botui_SRCS_CXX})
 ELSEIF(UNIX)
 	ADD_EXECUTABLE(botui ${botui_SRCS_CXX})
 ELSEIF(WIN32)
-  SET(CMAKE_CXX_FLAGS "-Wl,--enable-auto-import")
-  ADD_EXECUTABLE(botui WIN32 ${botui_SRCS_CXX} rc/logos/kiss.rc)
+	SET(CMAKE_CXX_FLAGS "-Wl,--enable-auto-import")
+	ADD_EXECUTABLE(botui WIN32 ${botui_SRCS_CXX})
 ENDIF()
 
 SET(EXECUTABLE_OUTPUT_PATH ${botui_SOURCE_DIR}/deploy)
-TARGET_LINK_LIBRARIES(botui ${QT_LIBRARIES} easydevice kiss-compiler tinyarchive z)
+TARGET_LINK_LIBRARIES(botui ${QT_LIBRARIES} easydevice kiss-compiler tinyarchive z opencv_core opencv_highgui)

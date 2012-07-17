@@ -16,7 +16,7 @@ public:
 	RootController();
 	
 	void presentQml(const QUrl& url);
-	void presentWidget(QWidget *widget, bool owns = false);
+	void presentWidget(QWidget *widget, bool owns = true);
 	const unsigned int depth() const;
 	
 public slots:

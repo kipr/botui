@@ -6,12 +6,19 @@
 #include "FilesystemProvider.h"
 #include "KovanProgramsItemModel.h"
 #include "EasyDeviceCommunicationProvider.h"
+#include "Connman.h"
+
+#include "BuildOptions.h"
 
 #include <QStandardItemModel>
 #include <QFileSystemModel>
 
 #include <QDir>
 #include <QFileInfo>
+
+#ifdef ENABLE_DBUS_SUPPORT
+#include <QDBusConnection>
+#endif
 
 #include <QDebug>
 
@@ -25,46 +32,6 @@ namespace Kovan
 		virtual const float batteryLevelMax() const;
 		virtual const bool isCharging() const;
 	};
-	
-	class NetworkItem : public QStandardItem
-	{
-	public:
-		NetworkItem(const QString& title);
-	};
-	
-	class NetworkItemModel : public QStandardItemModel
-	{
-	public:
-		NetworkItemModel();
-		
-	protected:
-		virtual void beginResetModel();
-		virtual void endResetModel();
-		
-	private:
-		void refresh();
-	};
-	
-	class NetworkingProvider : public ::NetworkingProvider
-	{
-	public:
-		NetworkingProvider();
-		~NetworkingProvider();
-		
-		virtual const NetworkingProvider::NetworkState networkState() const;
-		virtual void setNetworkState(const NetworkingProvider::NetworkState& state);
-		
-		virtual const float networkStrength() const;
-		virtual const float networkStrengthMin() const;
-		virtual const float networkStrengthMax() const;
-		
-		virtual QAbstractItemModel *networkItemModel() const;
-	private:
-		QAbstractItemModel *m_networkItemModel;
-		NetworkingProvider::NetworkState m_state;
-	};
-	
-	
 	
 	class ProgramItem : public QStandardItem
 	{
@@ -106,52 +73,22 @@ namespace Kovan
 
 const float Kovan::BatteryLevelProvider::batteryLevel() const
 {
-	return 100.0;
+	return 0.0;
 }
 
 const float Kovan::BatteryLevelProvider::batteryLevelMin() const
 {
-	return 0.0;
+	return 600.0; // That's bogus
 }
 
 const float Kovan::BatteryLevelProvider::batteryLevelMax() const
 {
-	return 100.0;
+	return 800.0; // That's also bogus
 }
 
 const bool Kovan::BatteryLevelProvider::isCharging() const
 {
-	return false;
-}
-
-Kovan::NetworkItem::NetworkItem(const QString& title)
-	: QStandardItem(title)
-{
-	setSizeHint(QSize(0, 50));
-}
-
-
-Kovan::NetworkItemModel::NetworkItemModel()
-{
-	refresh();
-}
-
-void Kovan::NetworkItemModel::beginResetModel()
-{
-	clear();
-}
-
-void Kovan::NetworkItemModel::endResetModel()
-{
-	refresh();
-}
-
-void Kovan::NetworkItemModel::refresh()
-{
-	appendRow(new NetworkItem("One Fish"));
-	appendRow(new NetworkItem("Two Fish"));
-	appendRow(new NetworkItem("Red Fish"));
-	appendRow(new NetworkItem("Blue Fish"));
+	return 1000.0;
 }
 
 Kovan::ProgramItem::ProgramItem(const QString& name)
@@ -260,12 +197,13 @@ QString Kovan::FilesystemProvider::pathForProgram(const QString& program) const
 }
 
 Kovan::Device::Device()
-	: m_filesystemProvider(new Kovan::FilesystemProvider),
+	: m_filesystemProvider(new Kovan::FilesystemProvider()),
 	m_communicationProviders(CommunicationProviderList()
 		<< new EasyDeviceCommunicationProvider(this)),
-	m_networkingProvider(new Kovan::NetworkingProvider),
-	m_batteryLevelProvider(new Kovan::BatteryLevelProvider)
+	m_networkingProvider(new Kovan::Connman()),
+	m_batteryLevelProvider(new Kovan::BatteryLevelProvider())
 {
+	m_networkingProvider->setup();
 }
 
 Kovan::Device::~Device()
@@ -284,49 +222,6 @@ QString Kovan::Device::name() const
 QString Kovan::Device::version() const
 {
 	return "0.1a";
-}
-
-Kovan::NetworkingProvider::NetworkingProvider()
-	: m_networkItemModel(new Kovan::NetworkItemModel),
-	m_state(NetworkOff)
-{
-	
-}
-
-Kovan::NetworkingProvider::~NetworkingProvider()
-{
-	delete m_networkItemModel;
-}
-
-const NetworkingProvider::NetworkState Kovan::NetworkingProvider::networkState() const
-{
-	return m_state;
-}
-
-void Kovan::NetworkingProvider::setNetworkState(const NetworkingProvider::NetworkState& state)
-{
-	m_state = state;
-	emit networkStateChanged(state);
-}
-
-const float Kovan::NetworkingProvider::networkStrength() const
-{
-	return 50.0;
-}
-
-const float Kovan::NetworkingProvider::networkStrengthMin() const
-{
-	return 0.0;
-}
-
-const float Kovan::NetworkingProvider::networkStrengthMax() const
-{
-	return 100.0;
-}
-
-QAbstractItemModel *Kovan::NetworkingProvider::networkItemModel() const
-{
-	return m_networkItemModel;
 }
 
 FilesystemProvider *Kovan::Device::filesystemProvider() const

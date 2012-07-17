@@ -5,6 +5,8 @@
 
 namespace Kovan
 {
+	class Connman;
+	
 	class Device : public ::Device
 	{
 	public:
@@ -22,7 +24,7 @@ namespace Kovan
 	private:
 		FilesystemProvider *m_filesystemProvider;
 		CommunicationProviderList m_communicationProviders;
-		NetworkingProvider *m_networkingProvider;
+		Connman *m_networkingProvider;
 		BatteryLevelProvider *m_batteryLevelProvider;
 	};
 }

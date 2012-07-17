@@ -57,7 +57,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton">
+        <widget class="QPushButton" name="motors">
          <property name="text">
           <string>Motors</string>
          </property>
@@ -68,7 +68,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_2">
+        <widget class="QPushButton" name="servos">
          <property name="minimumSize">
           <size>
            <width>200</width>
@@ -85,7 +85,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_3">
+        <widget class="QPushButton" name="sensors">
          <property name="text">
           <string>Sensors</string>
          </property>
@@ -96,7 +96,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_4">
+        <widget class="QPushButton" name="camera">
          <property name="text">
           <string>Camera</string>
          </property>
