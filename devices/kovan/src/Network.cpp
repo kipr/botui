@@ -98,7 +98,9 @@ void Kovan::Network::setIpv4Settings(const QVariantMap& map)
 
 void Kovan::Network::connect()
 {
-	m_service->Connect();
+	QDBusPendingReply<> reply = m_service->Connect();
+	reply.waitForFinished();
+	if(reply.isError()) qCritical() << reply.error();
 }
 
 void Kovan::Network::disconnect()

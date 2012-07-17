@@ -38,8 +38,9 @@ void ConnectWidget::connect()
 	QModelIndexList selection = ui->networks->selectionModel()->selectedIndexes();
 	if(selection.size() != 1) return;
 	NetworkPtr network = m_device->networkingProvider()->networkItemModel()->network(selection[0]);
+	network->setAutoConnect(true);
+	if(network->security().size() > 0) qDebug() << "This network has security";
 	network->connect();
-	qDebug() << network->security();
 }
 
 void ConnectWidget::other()
