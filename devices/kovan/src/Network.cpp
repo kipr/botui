@@ -109,6 +109,9 @@ void Kovan::Network::disconnect()
 void Kovan::Network::propertyChanged(const QString& name, const QDBusVariant& value)
 {
 	m_properties[name] = value.variant();
-	if(name == STATE_KEY) emit stateChanged();
+	if(name == STATE_KEY) {
+		qDebug() << "New state: " << m_properties[name];
+		emit stateChanged();
+	}
 	emit propertiesChanged();
 }

@@ -12,35 +12,49 @@ using namespace Kovan;
 #define TECHNOLOGY "wifi"
 
 NetworkItem::NetworkItem(const NetworkPtr& network)
-	: QStandardItem(network->name())
+	: QStandardItem(network->name()),
+	m_network(network)
 {
 	setSizeHint(QSize(0, 50));
 	qDebug() << "Made Network Item with name" << network->name();
 }
 
+NetworkPtr NetworkItem::network() const
+{
+	return m_network;
+}
 
-NetworkItemModel::NetworkItemModel()
+
+Kovan::NetworkItemModel::NetworkItemModel()
 {
 }
 
-void NetworkItemModel::scanned(const NetworkPtrList& networks)
+void Kovan::NetworkItemModel::scanned(const NetworkPtrList& networks)
 {
 	clear();
 	qDebug() << "Scanned (item model)";
-	foreach(const NetworkPtr& network, networks) appendRow(new NetworkItem(network));
+	foreach(const NetworkPtr& network, networks) {
+		if(!network->isHidden()) appendRow(new NetworkItem(network));
+	}
 }
 
-void NetworkItemModel::beginResetModel()
+NetworkPtr Kovan::NetworkItemModel::network(const QModelIndex& index)
+{
+	NetworkItem *item = dynamic_cast<NetworkItem *>(itemFromIndex(index));
+	return item ? item->network() : NetworkPtr();
+}
+
+void Kovan::NetworkItemModel::beginResetModel()
 {
 	clear();
 }
 
-void NetworkItemModel::endResetModel()
+void Kovan::NetworkItemModel::endResetModel()
 {
 	refresh();
 }
 
-void NetworkItemModel::refresh()
+void Kovan::NetworkItemModel::refresh()
 {
 	
 }
@@ -49,7 +63,7 @@ Connman::Connman()
 	: m_type(TECHNOLOGY),
 	m_manager(new net::connman::Manager("net.connman", "/", QDBusConnection::systemBus(), this)),
 	m_setup(false),
-	m_networkItemModel(new NetworkItemModel())
+	m_networkItemModel(new Kovan::NetworkItemModel())
 {
 	m_networkItemModel->connect(this, SIGNAL(scanned(NetworkPtrList)), SLOT(scanned(NetworkPtrList)));
 }
@@ -109,7 +123,7 @@ const float Connman::networkStrengthMax() const
 	return 255.0;
 }
 
-QAbstractItemModel *Connman::networkItemModel() const
+::NetworkItemModel *Connman::networkItemModel() const
 {
 	return m_networkItemModel;
 }

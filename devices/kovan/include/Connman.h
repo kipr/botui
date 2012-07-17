@@ -21,13 +21,19 @@ namespace Kovan
 	{
 	public:
 		NetworkItem(const NetworkPtr& network);
+		
+		NetworkPtr network() const;
+	private:
+		NetworkPtr m_network;
 	};
 
-	class NetworkItemModel : public QStandardItemModel
+	class NetworkItemModel : public ::NetworkItemModel
 	{
 	Q_OBJECT
 	public:
 		NetworkItemModel();
+	
+		NetworkPtr network(const QModelIndex& index);
 	
 	public slots:
 		void scanned(const NetworkPtrList& networks);
@@ -58,7 +64,7 @@ namespace Kovan
 		virtual const float networkStrengthMin() const;
 		virtual const float networkStrengthMax() const;
 		
-		virtual QAbstractItemModel *networkItemModel() const;
+		virtual ::NetworkItemModel *networkItemModel() const;
 	
 	private slots:
 		void finishSetup(QDBusPendingCallWatcher *watcher);
@@ -74,7 +80,7 @@ namespace Kovan
 		net::connman::Manager *m_manager;
 		bool m_setup;
 		QVariantMap m_properties;
-		QStandardItemModel *m_networkItemModel;
+		Kovan::NetworkItemModel *m_networkItemModel;
 	};
 }
 

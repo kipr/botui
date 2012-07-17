@@ -7,6 +7,7 @@
 #include <QList>
 #include <QVariantMap>
 #include <QSharedPointer>
+#include <QStandardItemModel>
 
 class QAbstractItemModel;
 
@@ -39,6 +40,7 @@ public slots:
 signals:
 	void propertiesChanged();
 	void stateChanged();
+	void connected();
 	
 protected:
 	Network();
@@ -52,6 +54,12 @@ private:
 
 typedef QSharedPointer<Network> NetworkPtr;
 typedef QList<NetworkPtr> NetworkPtrList;
+
+class NetworkItemModel : public QStandardItemModel
+{
+public:
+	virtual NetworkPtr network(const QModelIndex& index) = 0;
+};
 
 class NetworkingProvider : public QObject
 {
@@ -72,7 +80,7 @@ public:
 	
 	virtual const NetworkingProvider::NetworkState networkState() const = 0;
 	virtual void setNetworkState(const NetworkingProvider::NetworkState& state) = 0;
-	virtual QAbstractItemModel *networkItemModel() const = 0;
+	virtual NetworkItemModel *networkItemModel() const = 0;
 	
 	virtual const bool scan() = 0;
 	virtual NetworkPtrList list() const = 0;
@@ -83,7 +91,7 @@ public:
 signals:
 	void networkStateChanged(const NetworkState& state);
 	void scanned(const NetworkPtrList& networks);
-	void connected(const QString& network);
+	void connected(const NetworkPtr& network);
 };
 
 #endif

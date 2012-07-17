@@ -23,6 +23,7 @@ ConnectWidget::ConnectWidget(Device *device, QWidget *parent)
 	ui->networks->setModel(m_device->networkingProvider()->networkItemModel());
 	
 	QObject::connect(ui->refresh, SIGNAL(clicked()), SLOT(refresh()));
+	QObject::connect(ui->connect, SIGNAL(clicked()), SLOT(connect()));
 }
 
 ConnectWidget::~ConnectWidget()
@@ -34,7 +35,10 @@ ConnectWidget::~ConnectWidget()
 
 void ConnectWidget::connect()
 {
-	
+	QModelIndexList selection = ui->networks->selectionModel()->selectedIndexes();
+	if(selection.size() != 1) return;
+	NetworkPtr network = m_device->networkingProvider()->networkItemModel()->network(selection[0]);
+	network->connect();
 }
 
 void ConnectWidget::other()
@@ -44,6 +48,5 @@ void ConnectWidget::other()
 
 void ConnectWidget::refresh()
 {
-	qDebug() << "REFRESH!! Scanning..";
 	m_device->networkingProvider()->scan();
 }
