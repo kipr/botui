@@ -92,7 +92,9 @@ const bool Connman::scan()
 {
 	qDebug() << "Requesting Scan...";
 	QDBusPendingReply<> reply = m_manager->RequestScan(m_type);
+	qDebug() << "Waiting for finish";
 	reply.waitForFinished();
+	qDebug() << "Finished";
 	if(reply.isError()) qCritical() << reply.error();
 	return !reply.isError();
 }
