@@ -16,6 +16,9 @@ public:
 	
 	void setInputProvider(InputProviderDialog *inputProvider);
 	InputProviderDialog *inputProvider() const;
+protected:
+	void paintEvent(QPaintEvent *e);
+	
 private:
 	void init();
 	

@@ -1,14 +1,18 @@
 #include "LineEdit.h"
+
 #include <QEvent>
+#include <QPainter>
+
 #include "InputProviderDialog.h"
 #include "RootController.h"
+
+#include <QDebug>
 
 LineEdit::LineEdit(QWidget *parent)
 	: QLineEdit(parent),
 	m_inputProvider(0)
 {
 	init();
-	setReadOnly(true);
 }
 
 LineEdit::LineEdit(InputProviderDialog *inputProvider, QWidget *parent)
@@ -16,12 +20,11 @@ LineEdit::LineEdit(InputProviderDialog *inputProvider, QWidget *parent)
 	m_inputProvider(inputProvider)
 {
 	init();
-	setReadOnly(false);
 }
 
 bool LineEdit::event(QEvent *e)
 {
-	if(!m_inputProvider) {
+	if(isReadOnly() || !m_inputProvider) {
 		e->ignore();
 		return false;
 	}
@@ -38,6 +41,7 @@ bool LineEdit::event(QEvent *e)
 
 void LineEdit::setInputProvider(InputProviderDialog *inputProvider)
 {
+	qDebug() << "Input" << m_inputProvider;
 	m_inputProvider = inputProvider;
 	setReadOnly(!m_inputProvider);
 }
@@ -47,7 +51,22 @@ InputProviderDialog *LineEdit::inputProvider() const
 	return m_inputProvider;
 }
 
+void LineEdit::paintEvent(QPaintEvent *e)
+{
+	QLineEdit::paintEvent(e);
+	if(isReadOnly() || !m_inputProvider) return;
+	QPainter p(this);
+	p.setPen(QColor(127, 127, 127));
+	p.setFont(font());
+	static const int offset = 5;
+	const bool right = alignment() == Qt::AlignRight;
+	p.drawText(QRect(right ? offset : 0, 0, width() - offset, height()),
+		tr("Tap to Edit..."),
+		QTextOption(Qt::AlignAbsolute | (right ? Qt::AlignLeft : Qt::AlignRight) | Qt::AlignVCenter));
+}
+
 void LineEdit::init()
 {
+	setReadOnly(!m_inputProvider);
 	setFocusPolicy(Qt::NoFocus);
 }

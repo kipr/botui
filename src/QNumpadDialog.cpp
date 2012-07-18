@@ -25,7 +25,8 @@ QNumpadDialog::QNumpadDialog(const QString& text, InputType type, const double& 
 	grid->addWidget(label, 0, 0, 1, -1);
 
 	/* Setup the display */
-	display = new LineEdit(this);
+	display = new QLineEdit(this);
+	display->setFocusPolicy(Qt::NoFocus);
 	display->setAlignment(Qt::AlignRight);
 	display->setFont(font);
 	grid->addWidget(display, 1, 0, 1, -1);
