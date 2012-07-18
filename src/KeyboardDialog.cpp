@@ -10,36 +10,30 @@ KeyboardDialog::KeyboardDialog(const QString& text, Mode mode, QWidget *parent) 
 {
 	ui->setupUi(this);
 	
-	alphaWidget = new QWidget();
-	numWidget = new QWidget();
-	alphaGrid = new QGridLayout();
-	numGrid = new QGridLayout();
-	alphaGrid->setSpacing(0);
-	numGrid->setSpacing(0);
-	alphaGrid->setContentsMargins(6, 6, 6, 6);
-	numGrid->setContentsMargins(6, 6, 6, 6);
+	alphaVerticalLayout = new QVBoxLayout();
+	numVerticalLayout = new QVBoxLayout();
+	alphaVerticalLayout->setContentsMargins(0, 3, 0, 9);
+	numVerticalLayout->setContentsMargins(0, 3, 0, 9);
 	
+	label = new QLabel();
+	display = new QLineEdit();
 	QFont font;
 	font.setPointSize(16);
-	
-	label = new QLabel(text);
+	label->setText(text);
 	label->setFont(font);
-	display = new QLineEdit();
 	display->setFont(font);
 	if(mode == Password)
 		display->setEchoMode(QLineEdit::Password);
-	alphaGrid->addWidget(label, 0, 0, 1, -1);
-	alphaGrid->addWidget(display, 1, 0, 1, -1);
+	alphaVerticalLayout->addWidget(label);
+	alphaVerticalLayout->addWidget(display);
+	
+	ui->alphaGrid->addLayout(alphaVerticalLayout, 0, 0, 2, -1);
+	ui->numGrid->addLayout(numVerticalLayout, 0, 0, 2, -1);
 	
 	setupSpecialButtons();
 	setupAlphaButtons();
 	setupNumButtons();
-	numWidget->hide();
-	
-	alphaWidget->setLayout(alphaGrid);
-	numWidget->setLayout(numGrid);
-	layout()->addWidget(alphaWidget);
-	layout()->addWidget(numWidget);
+	ui->numWidget->hide();
 }
 
 KeyboardDialog::~KeyboardDialog()
@@ -70,11 +64,7 @@ void KeyboardDialog::spacePressed()
 
 void KeyboardDialog::shiftPressed()
 {
-	if(!numButton->isSwitched()) {
-		for(int i = 0; i < 26; ++i) alphaButtons[i]->switchLabel();
-	} else {
-		for(int i = 0; i < 25; ++i) numButtons[i]->switchLabel();
-	}
+	for(int i = 0; i < 26; ++i) alphaButtons[i]->switchLabel();
 	shifted = !shifted;
 }
 
@@ -92,34 +82,40 @@ void KeyboardDialog::numPressed()
 	
 	if(!numButton->isSwitched())
 	{
-		alphaWidget->hide();
+		ui->alphaWidget->hide();
 	
-		numGrid->addWidget(label, 0, 0, 1, -1);
-		numGrid->addWidget(display, 1, 0, 1, -1);
-		numGrid->addWidget(enterButton, 5, 16, 1, 4);
-		numGrid->addWidget(spaceButton, 5, 4, 1, 12);
-		numGrid->addWidget(shiftButton, 4, 0, 1, 5);
-		numGrid->addWidget(delButton, 4, 15, 1, 5);
-		numGrid->addWidget(numButton, 5, 0, 1, 4);
+		numVerticalLayout->addWidget(label);
+		numVerticalLayout->addWidget(display);
+		ui->numGrid->addWidget(enterButton, 5, 16, 1, 4);
+		ui->numGrid->addWidget(spaceButton, 5, 4, 1, 12);
+		ui->numGrid->addWidget(delButton, 4, 15, 1, 5);
+		ui->numGrid->addWidget(numButton, 5, 0, 1, 4);
 	
-		numWidget->show();
+		ui->numWidget->show();
 	}
 	
 	else
 	{
-		numWidget->hide();
+		if(symButton->isSwitched())
+			symPressed();
+		ui->numWidget->hide();
 		
-		alphaGrid->addWidget(label, 0, 0, 1, -1);
-		alphaGrid->addWidget(display, 1, 0, 1, -1);
-		alphaGrid->addWidget(enterButton, 5, 16, 1, 4);
-		alphaGrid->addWidget(spaceButton, 5, 4, 1, 12);
-		alphaGrid->addWidget(shiftButton, 4, 0, 1, 3);
-		alphaGrid->addWidget(delButton, 4, 17, 1, 3);
-		alphaGrid->addWidget(numButton, 5, 0, 1, 4);
+		alphaVerticalLayout->addWidget(label);
+		alphaVerticalLayout->addWidget(display);
+		ui->alphaGrid->addWidget(enterButton, 5, 16, 1, 4);
+		ui->alphaGrid->addWidget(spaceButton, 5, 4, 1, 12);
+		ui->alphaGrid->addWidget(delButton, 4, 17, 1, 3);
+		ui->alphaGrid->addWidget(numButton, 5, 0, 1, 4);
 		
-		alphaWidget->show();
+		ui->alphaWidget->show();
 	}
 	numButton->switchLabel();
+}
+
+void KeyboardDialog::symPressed()
+{
+	for(int i = 0; i < 25; ++i) numButtons[i]->switchLabel();
+	symButton->switchLabel();
 }
 
 QKeyButton *KeyboardDialog::makeButton(const char *slot, const QString& firstLabel, const QString& secondLabel)
@@ -161,11 +157,11 @@ void KeyboardDialog::setupAlphaButtons()
 	alphaButtons[25] = makeButton(SLOT(symbolPressed()), "m", "M");
 	
 	for(int i = 0; i < 10; ++i)
-		alphaGrid->addWidget(alphaButtons[i], 2, i * 2, 1, 2);
+		ui->alphaGrid->addWidget(alphaButtons[i], 2, i * 2, 1, 2);
 	for(int i = 0; i < 9; ++i)
-		alphaGrid->addWidget(alphaButtons[i + 10], 3, i * 2 + 1, 1, 2);
+		ui->alphaGrid->addWidget(alphaButtons[i + 10], 3, i * 2 + 1, 1, 2);
 	for(int i = 0; i < 7; ++i)
-		alphaGrid->addWidget(alphaButtons[i + 19], 4, i * 2 + 3, 1, 2);
+		ui->alphaGrid->addWidget(alphaButtons[i + 19], 4, i * 2 + 3, 1, 2);
 }
 
 void KeyboardDialog::setupNumButtons()
@@ -200,11 +196,11 @@ void KeyboardDialog::setupNumButtons()
 
 	for(int i = 0; i < 10; i++)
 	{
-		numGrid->addWidget(numButtons[i], 2, i * 2, 1, 2);
-		numGrid->addWidget(numButtons[i + 10], 3, i * 2, 1, 2);
+		ui->numGrid->addWidget(numButtons[i], 2, i * 2, 1, 2);
+		ui->numGrid->addWidget(numButtons[i + 10], 3, i * 2, 1, 2);
 	}
 	for(int i = 0; i < 5; i++)
-		numGrid->addWidget(numButtons[i + 20], 4, i * 2 + 5, 1, 2);
+		ui->numGrid->addWidget(numButtons[i + 20], 4, i * 2 + 5, 1, 2);
 }
 
 void KeyboardDialog::setupSpecialButtons()
@@ -214,10 +210,12 @@ void KeyboardDialog::setupSpecialButtons()
 	shiftButton = makeButton(SLOT(shiftPressed()), "Sft");
 	delButton = makeButton(SLOT(delPressed()), "Del");
 	numButton = makeButton(SLOT(numPressed()), "123", "ABC");
+	symButton = makeButton(SLOT(symPressed()), "#+=", "123");
 	
-	alphaGrid->addWidget(enterButton, 5, 16, 1, 4);
-	alphaGrid->addWidget(spaceButton, 5, 4, 1, 12);
-	alphaGrid->addWidget(shiftButton, 4, 0, 1, 3);
-	alphaGrid->addWidget(delButton, 4, 17, 1, 3);
-	alphaGrid->addWidget(numButton, 5, 0, 1, 4);
+	ui->alphaGrid->addWidget(enterButton, 5, 16, 1, 4);
+	ui->alphaGrid->addWidget(spaceButton, 5, 4, 1, 12);
+	ui->alphaGrid->addWidget(shiftButton, 4, 0, 1, 3);
+	ui->alphaGrid->addWidget(delButton, 4, 17, 1, 3);
+	ui->alphaGrid->addWidget(numButton, 5, 0, 1, 4);
+	ui->numGrid->addWidget(symButton, 4, 0, 1, 5);
 }

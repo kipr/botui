@@ -35,15 +35,14 @@ private slots:
 	void shiftPressed();
 	void delPressed();
 	void numPressed();
+	void symPressed();
 	
 private:
 	Ui::KeyboardDialog *ui;
-	QWidget *alphaWidget;
-	QWidget *numWidget;
-	QGridLayout *alphaGrid;
-	QGridLayout *numGrid;
 	QLabel *label;
 	QLineEdit *display;
+	QVBoxLayout *alphaVerticalLayout;
+	QVBoxLayout *numVerticalLayout;
 	
 	QKeyButton *alphaButtons[26];
 	QKeyButton *numButtons[25];
@@ -52,6 +51,7 @@ private:
 	QKeyButton *shiftButton;
 	QKeyButton *delButton;
 	QKeyButton *numButton;
+	QKeyButton *symButton;
 	
 	bool shifted;
 	
