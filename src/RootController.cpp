@@ -21,6 +21,15 @@ void RootController::presentQml(const QUrl& url)
 	view->engine()->rootContext()->setContextProperty("rootController", this);
 }
 
+int RootController::presentDialog(QDialog *dialog)
+{
+	setDismissable(false);
+	constrain(dialog);
+	const int ret = dialog->exec();
+	setDismissable(true);
+	return ret;
+}
+
 void RootController::presentWidget(QWidget *widget, bool owns)
 {
 	m_ownership[widget] = owns;
@@ -34,6 +43,7 @@ void RootController::presentWidget(QWidget *widget, bool owns)
 
 void RootController::dismissWidget()
 {
+	if(!m_dismissable) return;
 	QWidget *widget = m_stack.pop();
 	QWidget *next = m_stack.size() ? m_stack.top() : 0;
 	if(next) next->move(widget->pos());
@@ -45,12 +55,23 @@ void RootController::dismissWidget()
 
 void RootController::dismissAllWidgets()
 {
+	if(!m_dismissable) return;
 	while(m_stack.size() > 1) dismissWidget();
 }
 
 const unsigned int RootController::depth() const
 {
 	return m_stack.size();
+}
+
+void RootController::setDismissable(bool dismissable)
+{
+	m_dismissable = dismissable;
+}
+
+bool RootController::isDismissable() const
+{
+	return m_dismissable;
 }
 
 void RootController::constrain(QWidget *widget)
