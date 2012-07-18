@@ -323,6 +323,7 @@ void MechanicalStyle::drawControl(ControlElement ce, const QStyleOption *opt, QP
 		const QStyleOptionMenuItem *mo = qstyleoption_cast<const QStyleOptionMenuItem *>(opt);
 		if(!mo) return;
 		const QRect& rect = opt->rect;
+		qDebug() << "MenuBarItem rect:" << rect;
 		QLinearGradient gradient = QLinearGradient(rect.right(), rect.top(), rect.right(), rect.bottom());
 		gradient.setColorAt(0, mechanical_menubar_top_color());
 		gradient.setColorAt(1, mechanical_menubar_bottom_color());
