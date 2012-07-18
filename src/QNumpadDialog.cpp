@@ -1,5 +1,6 @@
 #include "QNumpadDialog.h"
 #include "ui_QNumpadDialog.h"
+#include "LineEdit.h"
 
 QNumpadDialog::QNumpadDialog(const QString& text, InputType type, const double& min, const double& max, QWidget *parent)
 	: InputProviderDialog(parent),
@@ -24,7 +25,7 @@ QNumpadDialog::QNumpadDialog(const QString& text, InputType type, const double& 
 	grid->addWidget(label, 0, 0, 1, -1);
 
 	/* Setup the display */
-	display = new QLineEdit();
+	display = new LineEdit(this);
 	display->setAlignment(Qt::AlignRight);
 	display->setFont(font);
 	grid->addWidget(display, 1, 0, 1, -1);
@@ -128,7 +129,7 @@ void QNumpadDialog::signPressed()
 
 QKeyButton *QNumpadDialog::makeButton(const char *slot, const QString& firstLabel, const QString& secondLabel)
 {
-	QKeyButton *button = new QKeyButton(firstLabel, secondLabel);
+	QKeyButton *button = new QKeyButton(firstLabel, secondLabel, this);
 	connect(button, SIGNAL(clicked()), this, slot);
 	return button;
 }
