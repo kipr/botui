@@ -28,7 +28,8 @@ CameraWidget::CameraWidget(Device *device, QWidget *parent)
 	connect(timer, SIGNAL(timeout()), SLOT(updateCamera()));
 	timer->start(50); // 20 FPS
 	
-	m_capture = cvCaptureFromCAM(-1);
+	m_capture = cvCaptureFromCAM(CV_CAP_ANY);
+	if(!m_capture) ui->camera->updateImage(0); // Displays no camera message
 }
 
 void CameraWidget::updateCamera()
