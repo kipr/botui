@@ -5,22 +5,22 @@
 
 class QKeyButton : public QAbstractButton
 {
-    Q_OBJECT
+Q_OBJECT
 public:
-    QKeyButton(QString firstlabel, QString secondLabel, QWidget *parent = 0);
+	QKeyButton(QString firstlabel, QString secondLabel, QWidget *parent = 0);
 
-    bool isSwitched();
+	bool isSwitched();
 
 public slots:
-    void switchLabel();
+	void switchLabel();
 
 protected:
-    void paintEvent(QPaintEvent *);
+	void paintEvent(QPaintEvent *);
 
 private:
-    QString m_firstLabel;
-    QString m_secondLabel;
-    bool m_switched;
+	QString m_firstLabel;
+	QString m_secondLabel;
+	bool m_switched;
 };
 
 #endif // QKEYBUTTON_H

@@ -9,52 +9,53 @@
 #include <QGridLayout>
 #include <limits>
 
-namespace Ui {
-class QNumpadDialog;
+namespace Ui
+{
+	class QNumpadDialog;
 }
 
 class QNumpadDialog : public QDialog
 {
-    Q_OBJECT
-    
+Q_OBJECT
+	
 public:
-    enum InputType
-    {
-        Integer,
-        Decimal
-    };
+	enum InputType
+	{
+		Integer,
+		Decimal
+	};
 
-    QNumpadDialog(QString text,
-                    InputType type = Integer,
-                    double min = std::numeric_limits<double>::min(),
-                    double max = std::numeric_limits<double>::max(),
-                    QWidget *parent = 0);
-    ~QNumpadDialog();
+	QNumpadDialog(QString text,
+					InputType type = Integer,
+					double min = std::numeric_limits<double>::min(),
+					double max = std::numeric_limits<double>::max(),
+					QWidget *parent = 0);
+	~QNumpadDialog();
 
-    QString getInput();
+	QString getInput();
 
 private slots:
-    void displayChanged(QString);
-    void numberPressed();
-    void delPressed();
-    void clearPressed();
-    void decimalPressed();
-    void signPressed();
-    
+	void displayChanged(QString);
+	void numberPressed();
+	void delPressed();
+	void clearPressed();
+	void decimalPressed();
+	void signPressed();
+	
 private:
-    Ui::QNumpadDialog *ui;
-    QGridLayout *grid;
-    QLabel *label;
-    QLineEdit *display;
+	Ui::QNumpadDialog *ui;
+	QGridLayout *grid;
+	QLabel *label;
+	QLineEdit *display;
 
-    bool m_decimalExists;
-    bool m_isEmpty;
-    double m_min;
-    double m_max;
+	bool m_decimalExists;
+	bool m_isEmpty;
+	double m_min;
+	double m_max;
 
-    QKeyButton *makeButton(const char*, QString, QString = "");
-    void appendDisplay(const QString&);
-    bool inBounds(double);
+	QKeyButton *makeButton(const char*, QString, QString = "");
+	void appendDisplay(const QString&);
+	bool inBounds(double);
 };
 
 #endif // QNUMPADDIALOG_H
