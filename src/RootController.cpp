@@ -8,6 +8,7 @@
 #include <QDeclarativeContext>
 
 RootController::RootController()
+	: m_dismissable(true)
 {
 	
 }
