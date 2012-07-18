@@ -9,7 +9,7 @@ Q_OBJECT
 public:
 	QKeyButton(const QString& firstlabel, const QString& secondLabel, QWidget *parent = 0);
 
-	bool switched() const;
+	bool isSwitched() const;
 
 public slots:
 	void switchLabel();

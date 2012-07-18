@@ -13,7 +13,7 @@ QKeyButton::QKeyButton(const QString& firstLabel, const QString& secondLabel, QW
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 }
 
-bool QKeyButton::switched() const
+bool QKeyButton::isSwitched() const
 {
 	return m_switched;
 }

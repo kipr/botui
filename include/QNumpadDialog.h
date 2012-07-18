@@ -33,7 +33,7 @@ public:
 					QWidget *parent = 0);
 	~QNumpadDialog();
 
-	QString input();
+	QString input() const;
 
 private slots:
 	void displayChanged(QString);

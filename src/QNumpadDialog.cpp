@@ -67,7 +67,7 @@ QNumpadDialog::~QNumpadDialog()
 	delete ui;
 }
 
-QString QNumpadDialog::input()
+QString QNumpadDialog::input() const
 {
 	return display->text();
 }
@@ -103,7 +103,7 @@ void QNumpadDialog::delPressed()
 void QNumpadDialog::clearPressed()
 {
 	QKeyButton *button = qobject_cast<QKeyButton *>(sender());
-	if(!button->switched()) {
+	if(!button->isSwitched()) {
 		display->clear();
 		m_decimalExists = false;
 	} else reject();
