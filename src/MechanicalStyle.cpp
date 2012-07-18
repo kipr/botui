@@ -323,7 +323,6 @@ void MechanicalStyle::drawControl(ControlElement ce, const QStyleOption *opt, QP
 		const QStyleOptionMenuItem *mo = qstyleoption_cast<const QStyleOptionMenuItem *>(opt);
 		if(!mo) return;
 		const QRect& rect = opt->rect;
-		if(rect.height < 21) rect.height = 21; // Hack for X11
 		qDebug() << "MenuBarItem rect:" << rect;
 		QLinearGradient gradient = QLinearGradient(rect.right(), rect.top(), rect.right(), rect.bottom());
 		gradient.setColorAt(0, mechanical_menubar_top_color());
@@ -438,7 +437,7 @@ QSize MechanicalStyle::sizeFromContents(ContentsType ct, const QStyleOption *opt
 {
 	QSize size = QPlastiqueStyle::sizeFromContents(ct, opt, csz, widget);
 	if(ct == CT_MenuBarItem) {
-		return QSize(size.width() + BUTTON_DECORATION_OFFSET * 2, size.height() < 21 ? 21 : size.height());
+		return QSize(size.width() + BUTTON_DECORATION_OFFSET * 2, size.height() < 21 ? 21 : size.height()); // Hack for X11
 	}
 	if(ct == CT_PushButton) {
 		const QStyleOptionButton *button = qstyleoption_cast<const QStyleOptionButton *>(opt);
