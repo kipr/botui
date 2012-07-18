@@ -16,6 +16,8 @@ KeyboardDialog::KeyboardDialog(const QString& text, Mode mode, QWidget *parent) 
 	numGrid = new QGridLayout();
 	alphaGrid->setSpacing(0);
 	numGrid->setSpacing(0);
+	alphaGrid->setContentsMargins(6, 6, 6, 6);
+	numGrid->setContentsMargins(6, 6, 6,
 	
 	QFont font;
 	font.setPointSize(16);
