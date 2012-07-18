@@ -4,6 +4,7 @@
 #include "RootController.h"
 #include "StatusBar.h"
 #include "NetworkingProvider.h"
+#include "OtherNetworkWidget.h"
 #include "Device.h"
 #include <QDebug>
 
@@ -23,6 +24,7 @@ ConnectWidget::ConnectWidget(Device *device, QWidget *parent)
 	ui->networks->setModel(m_device->networkingProvider()->networkItemModel());
 	
 	QObject::connect(ui->refresh, SIGNAL(clicked()), SLOT(refresh()));
+	QObject::connect(ui->other, SIGNAL(clicked()), SLOT(other()));
 	QObject::connect(ui->connect, SIGNAL(clicked()), SLOT(connect()));
 }
 
@@ -45,7 +47,7 @@ void ConnectWidget::connect()
 
 void ConnectWidget::other()
 {
-	
+	RootController::ref().presentWidget(new OtherNetworkWidget(m_device));
 }
 
 void ConnectWidget::refresh()
