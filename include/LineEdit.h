@@ -8,18 +8,18 @@ class InputProviderDialog;
 class LineEdit : public QLineEdit
 {
 Q_OBJECT
-Q_PROPERTY(InputProviderDialog *dialog READ dialog WRITE setDialog)
+Q_PROPERTY(InputProviderDialog *inputProvider READ inputProvider WRITE setInputProvider)
 public:
 	LineEdit(QWidget *parent = 0);
-	LineEdit(InputProviderDialog *dialog, QWidget *parent = 0);
+	LineEdit(InputProviderDialog *inputProvider, QWidget *parent = 0);
 	virtual bool event(QEvent *e);
 	
-	void setDialog(InputProviderDialog *dialog);
-	InputProviderDialog *dialog() const;
+	void setInputProvider(InputProviderDialog *inputProvider);
+	InputProviderDialog *inputProvider() const;
 private:
 	void init();
 	
-	InputProviderDialog *m_dialog;
+	InputProviderDialog *m_inputProvider;
 };
 
 #endif

@@ -22,7 +22,7 @@ StringNumberEditWidget::StringNumberEditWidget(Device *device, QWidget *parent)
 	layout()->setMenuBar(m_menuBar);
 	m_statusBar->loadDefaultWidgets(m_device);
 	layout()->addWidget(m_statusBar);
-	ui->number->setDialog(m_numpad);
+	ui->number->setInputProvider(m_numpad);
 }
 
 StringNumberEditWidget::~StringNumberEditWidget()

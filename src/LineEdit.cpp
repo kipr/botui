@@ -5,28 +5,28 @@
 
 LineEdit::LineEdit(QWidget *parent)
 	: QLineEdit(parent),
-	m_dialog(0)
+	m_inputProvider(0)
 {
 	init();
 }
 
-LineEdit::LineEdit(InputProviderDialog *dialog, QWidget *parent)
+LineEdit::LineEdit(InputProviderDialog *inputProvider, QWidget *parent)
 	: QLineEdit(parent),
-	m_dialog(dialog)
+	m_inputProvider(inputProvider)
 {
 	init();
 }
 
 bool LineEdit::event(QEvent *e)
 {
-	if(!m_dialog) {
+	if(!m_inputProvider) {
 		e->ignore();
 		return false;
 	}
 	
 	if(e->type() == QEvent::MouseButtonPress) {
-		int ret = RootController::ref().presentDialog(m_dialog);
-		if(ret == QDialog::Accepted) setText(m_dialog->input());
+		int ret = RootController::ref().presentDialog(m_inputProvider);
+		if(ret == QDialog::Accepted) setText(m_inputProvider->input());
 		e->accept();
 		return true;
 	}
@@ -34,14 +34,14 @@ bool LineEdit::event(QEvent *e)
 	return QLineEdit::event(e);
 }
 
-void LineEdit::setDialog(InputProviderDialog *dialog)
+void LineEdit::setInputProvider(InputProviderDialog *inputProvider)
 {
-	m_dialog = dialog;
+	m_inputProvider = inputProvider;
 }
 
-InputProviderDialog *LineEdit::dialog() const
+InputProviderDialog *LineEdit::inputProvider() const
 {
-	return m_dialog;
+	return m_inputProvider;
 }
 
 void LineEdit::init()
