@@ -20,6 +20,7 @@ protected:
 private:
 	void scaleImage();
 	
+	bool m_invalid;
 	QImage m_image;
 	QImage m_resizedImage;
 };
