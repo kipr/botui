@@ -8,6 +8,7 @@ LineEdit::LineEdit(QWidget *parent)
 	m_inputProvider(0)
 {
 	init();
+	setReadOnly(true);
 }
 
 LineEdit::LineEdit(InputProviderDialog *inputProvider, QWidget *parent)
@@ -15,6 +16,7 @@ LineEdit::LineEdit(InputProviderDialog *inputProvider, QWidget *parent)
 	m_inputProvider(inputProvider)
 {
 	init();
+	setReadOnly(false);
 }
 
 bool LineEdit::event(QEvent *e)
@@ -37,6 +39,7 @@ bool LineEdit::event(QEvent *e)
 void LineEdit::setInputProvider(InputProviderDialog *inputProvider)
 {
 	m_inputProvider = inputProvider;
+	setReadOnly(!m_inputProvider);
 }
 
 InputProviderDialog *LineEdit::inputProvider() const
