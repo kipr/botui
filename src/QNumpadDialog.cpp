@@ -1,7 +1,7 @@
 #include "QNumpadDialog.h"
 #include "ui_QNumpadDialog.h"
 
-QNumpadDialog::QNumpadDialog(QString text, InputType type, double min, double max, QWidget *parent)
+QNumpadDialog::QNumpadDialog(const QString& text, InputType type, const double& min, const double& max, QWidget *parent)
 	: QDialog(parent),
 	ui(new Ui::QNumpadDialog),
 	m_decimalExists(false),
@@ -21,13 +21,12 @@ QNumpadDialog::QNumpadDialog(QString text, InputType type, double min, double ma
 	else
 		label = new QLabel(text);
 	label->setFont(font);
+	grid->addWidget(label, 0, 0, 1, -1);
 
 	/* Setup the display */
 	display = new QLineEdit();
 	display->setAlignment(Qt::AlignRight);
 	display->setFont(font);
-
-	grid->addWidget(label, 0, 0, 1, -1);
 	grid->addWidget(display, 1, 0, 1, -1);
 
 	/* Setup and add digit buttons */
@@ -68,7 +67,7 @@ QNumpadDialog::~QNumpadDialog()
 	delete ui;
 }
 
-QString QNumpadDialog::getInput()
+QString QNumpadDialog::input()
 {
 	return display->text();
 }
@@ -104,7 +103,7 @@ void QNumpadDialog::delPressed()
 void QNumpadDialog::clearPressed()
 {
 	QKeyButton *button = qobject_cast<QKeyButton *>(sender());
-	if(!button->isSwitched()) {
+	if(!button->switched()) {
 		display->clear();
 		m_decimalExists = false;
 	} else reject();
@@ -112,10 +111,10 @@ void QNumpadDialog::clearPressed()
 
 void QNumpadDialog::decimalPressed()
 {
-	if(!m_decimalExists) {
-		m_decimalExists = true;
-		display->setText(display->text() + ".");
-	}
+	if(m_decimalExists)
+		return;
+	m_decimalExists = true;
+	display->setText(display->text() + ".");
 }
 
 void QNumpadDialog::signPressed()
@@ -127,14 +126,14 @@ void QNumpadDialog::signPressed()
 	if(inBounds(text.toDouble())) display->setText(text);
 }
 
-QKeyButton *QNumpadDialog::makeButton(const char* slot, QString firstLabel, QString secondLabel)
+QKeyButton *QNumpadDialog::makeButton(const char *slot, const QString& firstLabel, const QString& secondLabel)
 {
 	QKeyButton *button = new QKeyButton(firstLabel, secondLabel);
 	connect(button, SIGNAL(clicked()), this, slot);
 	return button;
 }
 
-bool QNumpadDialog::inBounds(double value)
+bool QNumpadDialog::inBounds(const double& value) const
 {
 	return (value >= m_min && value <= m_max);
 }

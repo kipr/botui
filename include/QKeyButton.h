@@ -7,9 +7,9 @@ class QKeyButton : public QAbstractButton
 {
 Q_OBJECT
 public:
-	QKeyButton(QString firstlabel, QString secondLabel, QWidget *parent = 0);
+	QKeyButton(const QString& firstlabel, const QString& secondLabel, QWidget *parent = 0);
 
-	bool isSwitched();
+	bool switched() const;
 
 public slots:
 	void switchLabel();

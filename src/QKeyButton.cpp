@@ -3,7 +3,7 @@
 #include <QPainter>
 #include <QSizePolicy>
 
-QKeyButton::QKeyButton(QString firstLabel, QString secondLabel, QWidget *parent)
+QKeyButton::QKeyButton(const QString& firstLabel, const QString& secondLabel, QWidget *parent)
 	: QAbstractButton(parent),
 	m_firstLabel(firstLabel),
 	m_secondLabel(secondLabel),
@@ -13,7 +13,7 @@ QKeyButton::QKeyButton(QString firstLabel, QString secondLabel, QWidget *parent)
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 }
 
-bool QKeyButton::isSwitched()
+bool QKeyButton::switched() const
 {
 	return m_switched;
 }

@@ -17,6 +17,7 @@ namespace Ui
 class QNumpadDialog : public QDialog
 {
 Q_OBJECT
+Q_PROPERTY(QString input READ input)
 	
 public:
 	enum InputType
@@ -25,14 +26,14 @@ public:
 		Decimal
 	};
 
-	QNumpadDialog(QString text,
+	QNumpadDialog(const QString& text,
 					InputType type = Integer,
-					double min = std::numeric_limits<double>::min(),
-					double max = std::numeric_limits<double>::max(),
+					const double& min = std::numeric_limits<double>::min(),
+					const double& max = std::numeric_limits<double>::max(),
 					QWidget *parent = 0);
 	~QNumpadDialog();
 
-	QString getInput();
+	QString input();
 
 private slots:
 	void displayChanged(QString);
@@ -53,9 +54,8 @@ private:
 	double m_min;
 	double m_max;
 
-	QKeyButton *makeButton(const char*, QString, QString = "");
-	void appendDisplay(const QString&);
-	bool inBounds(double);
+	QKeyButton *makeButton(const char *, const QString&, const QString& = "");
+	bool inBounds(const double&) const;
 };
 
 #endif // QNUMPADDIALOG_H
