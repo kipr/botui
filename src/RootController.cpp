@@ -24,9 +24,10 @@ void RootController::presentQml(const QUrl& url)
 int RootController::presentDialog(QDialog *dialog)
 {
 	setDismissable(false);
-	constrain(dialog);
+	presentWidget(dialog, false);
 	const int ret = dialog->exec();
 	setDismissable(true);
+	dismissWidget();
 	return ret;
 }
 

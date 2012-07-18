@@ -23,6 +23,8 @@ public slots:
 	void network();
 	void kissIde();
 	
+	void tmp(); // remove
+	
 private:
 	Ui::SettingsWidget *ui;
 	Device *m_device;

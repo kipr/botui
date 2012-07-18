@@ -2,7 +2,7 @@
 #include "ui_QNumpadDialog.h"
 
 QNumpadDialog::QNumpadDialog(const QString& text, InputType type, const double& min, const double& max, QWidget *parent)
-	: QDialog(parent),
+	: InputProviderDialog(parent),
 	ui(new Ui::QNumpadDialog),
 	m_decimalExists(false),
 	m_isEmpty(true),

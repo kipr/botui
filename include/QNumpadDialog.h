@@ -1,7 +1,7 @@
 #ifndef QNUMPADDIALOG_H
 #define QNUMPADDIALOG_H
 
-#include <QDialog>
+#include "InputProviderDialog.h"
 #include "QKeyButton.h"
 
 #include <QLabel>
@@ -14,11 +14,9 @@ namespace Ui
 	class QNumpadDialog;
 }
 
-class QNumpadDialog : public QDialog
+class QNumpadDialog : public InputProviderDialog
 {
 Q_OBJECT
-Q_PROPERTY(QString input READ input)
-	
 public:
 	enum InputType
 	{

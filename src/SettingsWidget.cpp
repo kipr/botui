@@ -7,6 +7,7 @@
 
 #include "NetworkSettingsWidget.h"
 #include "KissIdeSettingsWidget.h"
+#include "StringNumberEditWidget.h"
 
 #include <QDebug>
 
@@ -28,6 +29,7 @@ SettingsWidget::SettingsWidget(Device *device, QWidget *parent)
 	ui->networkSettings->setEnabled(m_device->networkingProvider());
 	connect(ui->networkSettings, SIGNAL(clicked()), SLOT(network()));
 	connect(ui->kissIdeSettings, SIGNAL(clicked()), SLOT(kissIde()));
+	connect(ui->stringNumber, SIGNAL(clicked()), SLOT(tmp())); // remove
 }
 
 SettingsWidget::~SettingsWidget()
@@ -45,4 +47,9 @@ void SettingsWidget::network()
 void SettingsWidget::kissIde()
 {
 	RootController::ref().presentWidget(new KissIdeSettingsWidget(m_device));
+}
+
+void SettingsWidget::tmp() // remove
+{
+	RootController::ref().presentWidget(new StringNumberEditWidget(m_device));
 }
