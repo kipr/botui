@@ -65,5 +65,5 @@ void HomeWidget::about()
 
 void HomeWidget::lock()
 {
-	RootController::ref().presentQml(QUrl::fromLocalFile("lock.qml"));
+	RootController::ref().presentQml(QUrl("qrc:///qml/lock.qml"));
 }

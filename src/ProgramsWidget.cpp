@@ -5,6 +5,7 @@
 #include "StatusBar.h"
 #include "Device.h"
 #include "FilesystemProvider.h"
+#include "ProgramWidget.h"
 #include <QDebug>
 
 ProgramsWidget::ProgramsWidget(Device *device, QWidget *parent)
@@ -22,6 +23,7 @@ ProgramsWidget::ProgramsWidget(Device *device, QWidget *parent)
 	layout()->addWidget(m_statusBar);
 	
 	ui->programs->setModel(m_device->filesystemProvider()->programsItemModel());
+	connect(ui->run, SIGNAL(clicked()), SLOT(run()));
 }
 
 ProgramsWidget::~ProgramsWidget()
@@ -29,4 +31,13 @@ ProgramsWidget::~ProgramsWidget()
 	delete ui;
 	delete m_menuBar;
 	delete m_statusBar;
+}
+
+void ProgramsWidget::run()
+{
+	QModelIndexList currents = ui->programs->selectionModel()->selectedIndexes();
+	if(currents.size() != 1) return;
+	QModelIndex current = currents[0];
+	QString program = m_device->filesystemProvider()->programsItemModel()->program(current);
+	RootController::ref().presentWidget(new ProgramWidget(program, m_device));
 }

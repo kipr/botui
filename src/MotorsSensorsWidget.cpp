@@ -6,6 +6,7 @@
 #include "Device.h"
 #include <QDebug>
 #include "CameraWidget.h"
+#include "ServosWidget.h"
 
 MotorsSensorsWidget::MotorsSensorsWidget(Device *device, QWidget *parent)
 	: QWidget(parent),
@@ -21,6 +22,7 @@ MotorsSensorsWidget::MotorsSensorsWidget(Device *device, QWidget *parent)
 	m_statusBar->loadDefaultWidgets(m_device);
 	layout()->addWidget(m_statusBar);
 	
+	connect(ui->servos, SIGNAL(clicked()), SLOT(servos()));
 	connect(ui->camera, SIGNAL(clicked()), SLOT(camera()));
 }
 
@@ -29,6 +31,11 @@ MotorsSensorsWidget::~MotorsSensorsWidget()
 	delete ui;
 	delete m_menuBar;
 	delete m_statusBar;
+}
+
+void MotorsSensorsWidget::servos()
+{
+	RootController::ref().presentWidget(new ServosWidget(m_device));
 }
 
 void MotorsSensorsWidget::camera()

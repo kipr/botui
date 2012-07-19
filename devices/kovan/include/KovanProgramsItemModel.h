@@ -1,14 +1,13 @@
 #ifndef _KOVANPROGRAMSITEMMODEL_H_
 #define _KOVANPROGRAMSITEMMODEL_H_
 
-#include <QStandardItemModel>
-#include <QString>
+#include "FilesystemProvider.h"
 
 namespace Kovan
 {
 	class FilesystemProvider;
 
-	class ProgramsItemModel : public QStandardItemModel
+	class ProgramsItemModel : public ::ProgramsItemModel
 	{
 	Q_OBJECT
 	public:

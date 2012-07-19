@@ -16,6 +16,8 @@
 #include <QDir>
 #include <QFileInfo>
 
+#include <kovan/kovan.hpp>
+
 #ifdef ENABLE_DBUS_SUPPORT
 #include <QDBusConnection>
 #endif
@@ -58,22 +60,22 @@ namespace Kovan
 		
 		virtual const bool setProgram(const QString& name, const TinyArchive *archive);
 		virtual const bool deleteProgram(const QString& name);
-		virtual const TinyArchive *program(const QString& name) const;
+		virtual TinyArchive *program(const QString& name) const;
 		virtual const QStringList programs() const;
-		virtual QAbstractItemModel *programsItemModel() const;
+		virtual ::ProgramsItemModel *programsItemModel() const;
 		
 		friend class ProgramsItemModel;
 	private:
 		QDir programDir() const;
 		QString pathForProgram(const QString& program) const;
 		
-		ProgramsItemModel *m_programsItemModel;
+		Kovan::ProgramsItemModel *m_programsItemModel;
 	};
 }
 
 const float Kovan::BatteryLevelProvider::batteryLevel() const
 {
-	return 0.0;
+	return Battery::powerLevel();
 }
 
 const float Kovan::BatteryLevelProvider::batteryLevelMin() const
@@ -88,7 +90,7 @@ const float Kovan::BatteryLevelProvider::batteryLevelMax() const
 
 const bool Kovan::BatteryLevelProvider::isCharging() const
 {
-	return 1000.0;
+	return true;
 }
 
 Kovan::ProgramItem::ProgramItem(const QString& name)
@@ -103,7 +105,7 @@ const QString& Kovan::ProgramItem::name() const
 }
 
 Kovan::ProgramsItemModel::ProgramsItemModel(Kovan::FilesystemProvider *filesystemProvider, QObject *parent)
-	: QStandardItemModel(parent), m_filesystemProvider(filesystemProvider)
+	: ::ProgramsItemModel(parent), m_filesystemProvider(filesystemProvider)
 {
 	foreach(const QString& program, m_filesystemProvider->programs()) appendRow(new ProgramItem(program));
 	
@@ -116,7 +118,8 @@ void Kovan::ProgramsItemModel::programUpdated(const QString& name)
 	qDebug() << name;
 	const int count = rowCount();
 	for(int i = 0; i < count; ++i) {
-		if(ProgramItem::programitem_cast(item(i))->name() == name) {
+		Kovan::ProgramItem *item = ProgramItem::programitem_cast(QStandardItemModel::item(i));
+		if(item && item->name() == name) {
 			insertRow(0, takeItem(i));
 			return;
 		}
@@ -163,7 +166,7 @@ const bool Kovan::FilesystemProvider::deleteProgram(const QString& name)
 	return ret;
 }
 
-const TinyArchive *Kovan::FilesystemProvider::program(const QString& name) const
+TinyArchive *Kovan::FilesystemProvider::program(const QString& name) const
 {
 	TinyArchiveFile fileReader((QDir::homePath() + "/" + name).toStdString());
 	return fileReader.read();
@@ -178,7 +181,7 @@ const QStringList Kovan::FilesystemProvider::programs() const
 	return ret;
 }
 
-QAbstractItemModel *Kovan::FilesystemProvider::programsItemModel() const
+::ProgramsItemModel *Kovan::FilesystemProvider::programsItemModel() const
 {
 	return m_programsItemModel;
 }

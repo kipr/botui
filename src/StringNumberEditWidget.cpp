@@ -5,6 +5,7 @@
 #include "StatusBar.h"
 #include "Device.h"
 #include "QNumpadDialog.h"
+#include "KeyboardDialog.h"
 
 #include <QDebug>
 
@@ -14,7 +15,8 @@ StringNumberEditWidget::StringNumberEditWidget(Device *device, QWidget *parent)
 	m_device(device),
 	m_menuBar(new MenuBar(this)),
 	m_statusBar(new StatusBar(this)),
-	m_numpad(new QNumpadDialog(tr("Number Edit")))
+	m_numpad(new QNumpadDialog(tr("Number Edit"))),
+	m_keyboard(new KeyboardDialog(tr("String Edit")))
 {
 	ui->setupUi(this);
 	m_menuBar->addHomeAndBackButtons();
@@ -23,6 +25,7 @@ StringNumberEditWidget::StringNumberEditWidget(Device *device, QWidget *parent)
 	m_statusBar->loadDefaultWidgets(m_device);
 	layout()->addWidget(m_statusBar);
 	ui->number->setInputProvider(m_numpad);
+	ui->string->setInputProvider(m_keyboard);
 }
 
 StringNumberEditWidget::~StringNumberEditWidget()

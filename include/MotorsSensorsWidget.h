@@ -20,6 +20,7 @@ public:
 	~MotorsSensorsWidget();
 	
 public slots:
+	void servos();
 	void camera();
 	
 private:

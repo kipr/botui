@@ -1,13 +1,17 @@
 #include "EasyDeviceCommunicationProvider.h"
 #include "Device.h"
 #include "FilesystemProvider.h"
+#include "CompilingWidget.h"
 
 #include <easydevice/Server.h>
 #include <easydevice/DiscoveryClient.h>
 #include <easydevice/DeviceInfo.h>
 
+#include <kiss-compiler/ArchiveWriter.h>
 #include <kiss-compiler/Temporary.h>
 #include <kiss-compiler/CompilerManager.h>
+
+#include "RootController.h"
 
 #include <QDebug>
 
@@ -50,10 +54,12 @@ CompilationPtr EasyDeviceCommunicationProvider::compile(const QString& name)
 	FilesystemProvider *filesystem = device()->filesystemProvider();
 	if(!filesystem) return CompilationPtr();
 	
-	const TinyArchive *archive = filesystem->program(name);
+	TinyArchive *archive = filesystem->program(name);
 	if(!archive) return CompilationPtr();
 	
-	/* ArchiveWriter writer(archive, Temporary::subdir(name));
+	RootController::ref().presentWidget(new CompilingWidget(device()));
+	
+	ArchiveWriter writer(archive, Temporary::subdir(name));
 	QMap<QString, QString> settings;
 	QByteArray rawSettings = QTinyNode::data(archive->lookup("settings:"));
 	QDataStream stream(rawSettings);
@@ -65,12 +71,12 @@ CompilationPtr EasyDeviceCommunicationProvider::compile(const QString& name)
 	
 	qDebug() << (success ? "Compile Succeeded" : "Compile Failed");
 	
-	if(success) m_compileResults[name] = compilation->compileResults();
-	else m_compileResults.remove(name);
+	/* if(success) m_compileResults[name] = compilation->compileResults();
+	else m_compileResults.remove(name); */
 	
-	return compilation; */
+	RootController::ref().dismissWidget();
 	
-	return CompilationPtr();
+	return compilation;
 }
 
 const bool EasyDeviceCommunicationProvider::download(const QString& name, TinyArchive *archive)

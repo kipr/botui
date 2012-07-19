@@ -1,0 +1,49 @@
+import QtQuick 1.0
+ 
+Rectangle {
+	id: root
+
+	gradient: Gradient {
+		GradientStop { position: 0.0; color: "#555555" }
+		GradientStop { position: 1.0; color: "#000000" }
+	}
+
+	Rectangle {
+		id: rect
+		width: 50; height: 50
+		color: "white"
+		radius: 50
+		smooth: true
+		opacity: (600.0 - rect.x) / 600
+		x: root.width / 2 - rect.width / 2
+		y: root.height / 2 - rect.height / 2
+		
+		MouseArea {
+			id: ma
+			anchors.fill: parent
+			drag.target: rect
+			drag.axis: Drag.XandYAxis
+			onReleased: {
+				var x = rect.x + rect.width / 2 - root.width / 2
+				if(x < 0) x = -x
+				var y = rect.y + rect.height / 2 - root.height / 2
+				if(y < 0) y = -y
+				if(x > 50 || y > 50) {
+					console.log("Dragged significantly")
+					rootController.dismissWidget()
+				} else {
+					rect.x = root.width / 2 - rect.width / 2
+					rect.y = root.height / 2 - rect.height / 2
+				}
+			}
+		}
+	}
+	
+	Text {
+		text: "Screen Locked. Drag the circle to unlock.";
+		color: "white"
+		anchors.horizontalCenter: root.horizontalCenter;
+		anchors.bottom: root.bottom;
+		anchors.bottomMargin: 5;
+	}
+}

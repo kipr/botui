@@ -38,10 +38,10 @@ void BatteryWidget::paintEvent(QPaintEvent *event)
 	const float batteryLevelMax = m_batteryLevelProvider
 		? m_batteryLevelProvider->batteryLevelMax() : 0.0;
 	
-	const float percentage = m_batteryLevelProvider
+	float percentage = m_batteryLevelProvider
 		? (batteryLevel - batteryLevelMin) / (batteryLevelMax - batteryLevelMin)
 		: 0.0;
-	
+	percentage = percentage < 0 ? 0 : percentage;
 	
 	const int w = width();
 	const int h = height();

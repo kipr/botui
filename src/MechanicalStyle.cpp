@@ -236,6 +236,44 @@ void MechanicalStyle::drawComplexControl(ComplexControl cc, const QStyleOptionCo
 		}
 		return;
 	}
+	if(cc == CC_Slider) {
+		const QStyleOptionSlider *so = qstyleoption_cast<const QStyleOptionSlider *>(opt);
+		if(!so) return;
+		const QRect& rect = opt->rect;
+		qDebug() << "Slider rect:" << rect;
+		QLinearGradient gradient = QLinearGradient(rect.right(), rect.top(), rect.right(), rect.bottom());
+		gradient.setColorAt(0, mechanical_menubar_top_color());
+		gradient.setColorAt(1, mechanical_menubar_bottom_color());
+		p->save();
+		p->setBrush(QColor(0, 0, 0));
+		p->setPen(QPen(QColor(0, 0, 0, 0)));
+		mechanical_draw_styled_rectangle(rect.adjusted(rect.width() / 3, 0, -rect.width() / 3, 0), p, false);
+		qDebug() << "slider pos" << so->sliderPosition;
+		double pos = (so->sliderPosition - so->minimum) / (double)(so->maximum - so->minimum);
+		if(so->orientation == Qt::Vertical) {
+			static const QColor wood = QColor(173, 134, 106);
+			const int yOff = rect.bottom() - pos * rect.height();
+			QRectF lever(2 * rect.width() / 5.0, rect.center().y(),
+				rect.width() / 5.0 - 1, yOff - rect.center().y());
+			const bool reverse = yOff - rect.center().y();
+			QLinearGradient gradient = QLinearGradient(lever.right(), lever.top(), lever.right(), lever.bottom());
+			gradient.setColorAt(reverse ? 1 : 0, wood);
+			gradient.setColorAt(reverse ? 0 : 1, QColor(0, 0, 0));
+			p->setBrush(gradient);
+			p->drawRect(lever);
+			
+			QRect button(rect.left(), yOff - 10, rect.right(), 20);
+			
+			QStyleOption pass = *opt;
+			pass.state = QStyle::State_None;
+			mechanical_draw_styled_button(button, &pass, p);
+			p->setPen(QColor(130, 130, 130));
+			p->drawText(button, QObject::tr("Drag"), QTextOption(Qt::AlignAbsolute | Qt::AlignHCenter | Qt::AlignVCenter));
+		}
+		
+		p->restore();
+		return;
+	}
 	QPlastiqueStyle::drawComplexControl(cc, opt, p, widget);
 }
 
@@ -323,7 +361,6 @@ void MechanicalStyle::drawControl(ControlElement ce, const QStyleOption *opt, QP
 		const QStyleOptionMenuItem *mo = qstyleoption_cast<const QStyleOptionMenuItem *>(opt);
 		if(!mo) return;
 		const QRect& rect = opt->rect;
-		qDebug() << "MenuBarItem rect:" << rect;
 		QLinearGradient gradient = QLinearGradient(rect.right(), rect.top(), rect.right(), rect.bottom());
 		gradient.setColorAt(0, mechanical_menubar_top_color());
 		gradient.setColorAt(1, mechanical_menubar_bottom_color());

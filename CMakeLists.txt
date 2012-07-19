@@ -20,7 +20,7 @@ INCLUDE_DIRECTORIES(
 	${botui_BINARY_DIR}
 	${KOVAN}/include
 	${SIMULATOR}/include
-	${INCLUDE} 
+	${INCLUDE}
 )
 
 SET(QT_USE_QTDECLARATIVE TRUE)
@@ -37,7 +37,7 @@ SET(botui_SRCS_CXX ${SOURCES})
 SET(botui_UI ${UIS})
 SET(botui_MOC_SRCS ${INCLUDES})
 
-SET(botui_QRC_FILES ${RC}/icons.qrc ${RC}/construction.qrc)
+SET(botui_QRC_FILES ${RC}/icons.qrc ${RC}/construction.qrc ${RC}/qml.qrc)
 
 QT4_WRAP_CPP(botui_SRCS_CXX ${botui_MOC_SRCS})
 QT4_WRAP_UI(botui_SRCS_CXX ${botui_UI})
@@ -57,4 +57,4 @@ ELSEIF(WIN32)
 ENDIF()
 
 SET(EXECUTABLE_OUTPUT_PATH ${botui_SOURCE_DIR}/deploy)
-TARGET_LINK_LIBRARIES(botui ${QT_LIBRARIES} easydevice kiss-compiler tinyarchive z opencv_core opencv_highgui)
+TARGET_LINK_LIBRARIES(botui ${QT_LIBRARIES} easydevice kiss-compiler tinyarchive z opencv_core opencv_highgui kovan)

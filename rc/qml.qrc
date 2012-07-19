@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="/">
+    <file>qml/loading.qml</file>
+    <file>qml/lock.qml</file>
+  </qresource>
+</RCC>

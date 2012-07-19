@@ -12,6 +12,7 @@ class MenuBar;
 class StatusBar;
 class Device;
 class QNumpadDialog;
+class KeyboardDialog;
 
 class StringNumberEditWidget : public QWidget
 {
@@ -26,6 +27,7 @@ private:
 	MenuBar *m_menuBar;
 	StatusBar *m_statusBar;
 	QNumpadDialog *m_numpad;
+	KeyboardDialog *m_keyboard;
 };
 
 #endif

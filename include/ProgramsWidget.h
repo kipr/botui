@@ -19,6 +19,9 @@ public:
 	ProgramsWidget(Device *device, QWidget *parent = 0);
 	~ProgramsWidget();
 	
+public slots:
+	void run();
+	
 private:
 	Ui::ProgramsWidget *ui;
 	Device *m_device;

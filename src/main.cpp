@@ -4,6 +4,7 @@
 #include "HomeWidget.h"
 #include "StatusBar.h"
 #include "KovanDevice.h"
+#include <kiss-compiler/CompilerPluginManager.h>
 #include "SimulatorDevice.h"
 #include <QApplication>
 #include <QDir>
@@ -14,6 +15,8 @@ int main(int argc, char* argv[])
 	QApplication app(argc, argv);
 	QDir::setCurrent(QApplication::applicationDirPath());
 	qmlRegisterType<BusyIndicator>("ZapBsComponents", 1, 0, "BusyIndicator");
+	
+	CompilerPluginManager::ref().loadAll();
 	
 	Kovan::Device device;
 	//RootController::ref().presentQml(QUrl::fromLocalFile("loading.qml"));
