@@ -12,6 +12,7 @@
 #include <kiss-compiler/CompilerManager.h>
 
 #include "RootController.h"
+#include "CompileProvider.h"
 
 #include <QDebug>
 
@@ -57,26 +58,7 @@ CompilationPtr EasyDeviceCommunicationProvider::compile(const QString& name)
 	TinyArchive *archive = filesystem->program(name);
 	if(!archive) return CompilationPtr();
 	
-	RootController::ref().presentWidget(new CompilingWidget(device()));
-	
-	ArchiveWriter writer(archive, Temporary::subdir(name));
-	QMap<QString, QString> settings;
-	QByteArray rawSettings = QTinyNode::data(archive->lookup("settings:"));
-	QDataStream stream(rawSettings);
-	stream >> settings;
-	
-	CompilationPtr compilation(new Compilation(CompilerManager::ref().compilers(), name, writer.files(), settings, "kovan"));
-	bool success = compilation->start();
-	qDebug() << "Results:" << compilation->compileResults();
-	
-	qDebug() << (success ? "Compile Succeeded" : "Compile Failed");
-	
-	/* if(success) m_compileResults[name] = compilation->compileResults();
-	else m_compileResults.remove(name); */
-	
-	RootController::ref().dismissWidget();
-	
-	return compilation;
+	return device()->compileProvider()->compile(name, archive);
 }
 
 const bool EasyDeviceCommunicationProvider::download(const QString& name, TinyArchive *archive)

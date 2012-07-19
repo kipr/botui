@@ -17,12 +17,14 @@ namespace Kovan
 		virtual QString version() const;
 		
 		virtual FilesystemProvider *filesystemProvider() const;
+		virtual CompileProvider *compileProvider() const;
 		virtual CommunicationProviderList communicationProviders() const;
 		virtual NetworkingProvider *networkingProvider() const;
 		virtual BatteryLevelProvider *batteryLevelProvider() const;
 		
 	private:
 		FilesystemProvider *m_filesystemProvider;
+		CompileProvider *m_compileProvider;
 		CommunicationProviderList m_communicationProviders;
 		Connman *m_networkingProvider;
 		BatteryLevelProvider *m_batteryLevelProvider;

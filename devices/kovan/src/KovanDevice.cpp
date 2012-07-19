@@ -7,6 +7,7 @@
 #include "KovanProgramsItemModel.h"
 #include "EasyDeviceCommunicationProvider.h"
 #include "Connman.h"
+#include "KissCompileProvider.h"
 
 #include "BuildOptions.h"
 
@@ -90,7 +91,7 @@ const float Kovan::BatteryLevelProvider::batteryLevelMax() const
 
 const bool Kovan::BatteryLevelProvider::isCharging() const
 {
-	return true;
+	return batteryLevel() > 1000.0;
 }
 
 Kovan::ProgramItem::ProgramItem(const QString& name)
@@ -201,6 +202,7 @@ QString Kovan::FilesystemProvider::pathForProgram(const QString& program) const
 
 Kovan::Device::Device()
 	: m_filesystemProvider(new Kovan::FilesystemProvider()),
+	m_compileProvider(new KissCompileProvider()),
 	m_communicationProviders(CommunicationProviderList()
 		<< new EasyDeviceCommunicationProvider(this)),
 	m_networkingProvider(new Kovan::Connman()),
@@ -212,6 +214,7 @@ Kovan::Device::Device()
 Kovan::Device::~Device()
 {
 	delete m_filesystemProvider;
+	delete m_compileProvider;
 	qDeleteAll(m_communicationProviders);
 	delete m_batteryLevelProvider;
 	delete m_networkingProvider;
@@ -230,6 +233,11 @@ QString Kovan::Device::version() const
 FilesystemProvider *Kovan::Device::filesystemProvider() const
 {
 	return m_filesystemProvider;
+}
+
+CompileProvider *Kovan::Device::compileProvider() const
+{
+	return m_compileProvider;
 }
 
 CommunicationProviderList Kovan::Device::communicationProviders() const

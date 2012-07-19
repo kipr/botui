@@ -59,6 +59,11 @@ QString Simulator::Device::version() const
 	return "0.1a";
 }
 
+CompileProvider *Simulator::Device::compileProvider() const
+{
+	return 0;
+}
+
 NetworkingProvider *Simulator::Device::networkingProvider() const
 {
 	return 0;
