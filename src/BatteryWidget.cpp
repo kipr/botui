@@ -42,6 +42,7 @@ void BatteryWidget::paintEvent(QPaintEvent *event)
 		? (batteryLevel - batteryLevelMin) / (batteryLevelMax - batteryLevelMin)
 		: 0.0;
 	percentage = percentage < 0 ? 0 : percentage;
+	percentage = percentage > 100 ? 100 : percentage;
 	
 	const int w = width();
 	const int h = height();
@@ -70,7 +71,9 @@ void BatteryWidget::paintEvent(QPaintEvent *event)
 	const int offset = 2;
 	painter.setPen(Qt::NoPen);
 	
-	if(percentage < 0.33) painter.setBrush(Qt::red);
+	if(m_batteryLevelProvider && m_batteryLevelProvider->isCharging())
+		painter.setBrush(QColor(0x7D, 0xF9, 0xFF)); // Electric Blue
+	else if(percentage < 0.33) painter.setBrush(Qt::red);
 	else if(percentage < 0.66) painter.setBrush(Qt::yellow);
 	else painter.setBrush(Qt::green);
 	
@@ -83,10 +86,10 @@ void BatteryWidget::paintEvent(QPaintEvent *event)
 	
 	QRectF textRect(adjustedWidth + connectorSize + offset, 0, textSize - offset, h);
 	QTextOption textOpt(Qt::AlignAbsolute | Qt::AlignHCenter | Qt::AlignVCenter);
-	if(m_batteryLevelProvider) painter.drawText(textRect,
-		QString::number(percentage * 100, 'g', 4) + "\%",
-		textOpt);
-	else painter.drawText(textRect, "N/A", textOpt);
+	if(m_batteryLevelProvider) {
+		if(!m_batteryLevelProvider->isCharging()) painter.drawText(textRect, QString::number(percentage * 100, 'g', 4) + "\%", textOpt);
+		else painter.drawText(textRect, "CHRG", textOpt);
+	} else painter.drawText(textRect, "N/A", textOpt);
 	
 	if(m_batteryLevelProvider && m_batteryLevelProvider->isCharging()) {
 		painter.drawLine(3.0 * adjustedWidth / 7.0, 4, 3.0 * adjustedWidth / 7.0, 6);

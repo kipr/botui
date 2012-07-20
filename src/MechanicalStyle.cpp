@@ -234,6 +234,7 @@ void MechanicalStyle::drawComplexControl(ComplexControl cc, const QStyleOptionCo
 
 			}
 		}
+		
 		return;
 	}
 	if(cc == CC_Slider) {
@@ -270,8 +271,23 @@ void MechanicalStyle::drawComplexControl(ComplexControl cc, const QStyleOptionCo
 			p->setPen(QColor(130, 130, 130));
 			p->drawText(button, QObject::tr("Drag"), QTextOption(Qt::AlignAbsolute | Qt::AlignHCenter | Qt::AlignVCenter));
 		}
-		
 		p->restore();
+		
+		return;
+	}
+	if(cc == CC_ComboBox) {
+		const QStyleOptionComboBox *co = qstyleoption_cast<const QStyleOptionComboBox *>(opt);
+		if(!co) return;
+		mechanical_draw_styled_button(co->rect, co, p, false);
+		const int top = co->rect.top() + co->rect.height() / 2 - 2;
+		p->setBrush(Qt::black);
+		QPoint polygon[] = {
+			QPoint(co->rect.right() - 20, top + 0),
+			QPoint(co->rect.right() - 10, top + 0),
+			QPoint(co->rect.right() - 15, top + 5)
+		};
+		p->drawPolygon(polygon, 3);
+		
 		return;
 	}
 	QPlastiqueStyle::drawComplexControl(cc, opt, p, widget);
@@ -286,6 +302,7 @@ void MechanicalStyle::drawControl(ControlElement ce, const QStyleOption *opt, QP
 		mechanical_draw_styled_button(bo->rect, opt, p);
 		p->restore();
 		drawControl(CE_PushButtonLabel, opt, p, widget);
+		
 		return;
 	}
 	if(ce == CE_MenuBarEmptyArea) {
@@ -301,6 +318,7 @@ void MechanicalStyle::drawControl(ControlElement ce, const QStyleOption *opt, QP
 		p->setBrush(gradient);
 		mechanical_draw_styled_rectangle(opt->rect.adjusted(1, 1, -1, -1), p, false);
 		p->restore();
+		
 		return;
 	}
 	if(ce == CE_PushButtonLabel) {
@@ -420,10 +438,6 @@ void MechanicalStyle::drawControl(ControlElement ce, const QStyleOption *opt, QP
 		return;
 	}
 	
-	if(ce == CE_MenuItem) {
-		
-	}
-	
 	if(ce == CE_FocusFrame) return; // No focus
 	
 	QPlastiqueStyle::drawControl(ce, opt, p, widget);
@@ -475,6 +489,9 @@ QSize MechanicalStyle::sizeFromContents(ContentsType ct, const QStyleOption *opt
 	QSize size = QPlastiqueStyle::sizeFromContents(ct, opt, csz, widget);
 	if(ct == CT_MenuBarItem) {
 		return QSize(size.width() + BUTTON_DECORATION_OFFSET * 2, size.height() < 21 ? 21 : size.height()); // Hack for X11
+	}
+	if(ct == CT_ComboBox) {
+		return QSize(size.width() + 5, size.height() + 5);
 	}
 	if(ct == CT_PushButton) {
 		const QStyleOptionButton *button = qstyleoption_cast<const QStyleOptionButton *>(opt);

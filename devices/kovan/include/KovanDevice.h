@@ -21,6 +21,7 @@ namespace Kovan
 		virtual CommunicationProviderList communicationProviders() const;
 		virtual NetworkingProvider *networkingProvider() const;
 		virtual BatteryLevelProvider *batteryLevelProvider() const;
+		virtual PackageManagerProvider *packageManagerProvider() const;
 		
 	private:
 		FilesystemProvider *m_filesystemProvider;

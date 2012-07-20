@@ -14,9 +14,12 @@ namespace Simulator
 		virtual QString name() const;
 		virtual QString version() const;
 		
+		virtual FilesystemProvider *filesystemProvider() const;
+		virtual CommunicationProviderList communicationProviders() const;
 		virtual NetworkingProvider *networkingProvider() const;
 		virtual CompileProvider *compileProvider() const;
 		virtual BatteryLevelProvider *batteryLevelProvider() const;
+		virtual PackageManagerProvider *packageManagerProvider() const;
 		
 	private:
 		BatteryLevelProvider *m_batteryLevelProvider;

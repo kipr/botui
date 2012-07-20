@@ -9,6 +9,7 @@ class NetworkingProvider;
 class CommunicationProvider;
 class FilesystemProvider;
 class CompileProvider;
+class PackageManagerProvider;
 
 class QAbstractItemModel;
 
@@ -26,6 +27,7 @@ public:
 	virtual CommunicationProviderList communicationProviders() const = 0;
 	virtual NetworkingProvider *networkingProvider() const = 0;
 	virtual BatteryLevelProvider *batteryLevelProvider() const = 0;
+	virtual PackageManagerProvider *packageManagerProvider() const = 0;
 };
 
 #endif

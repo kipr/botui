@@ -29,7 +29,10 @@ CameraWidget::CameraWidget(Device *device, QWidget *parent)
 	timer->start(50); // 20 FPS
 	
 	m_capture = cvCaptureFromCAM(CV_CAP_ANY);
-	if(!m_capture) ui->camera->updateImage(0); // Displays no camera message
+	if(m_capture) {
+		cvSetCaptureProperty(m_capture, CV_CAP_PROP_FRAME_WIDTH, 320);
+		cvSetCaptureProperty(m_capture, CV_CAP_PROP_FRAME_HEIGHT, 240);
+	} else ui->camera->updateImage(0); // Displays no camera message
 }
 
 void CameraWidget::updateCamera()

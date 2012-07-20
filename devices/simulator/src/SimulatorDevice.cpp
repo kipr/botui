@@ -20,7 +20,7 @@ namespace Simulator
 
 const float Simulator::BatteryLevelProvider::batteryLevel() const
 {
-	return 87.0;
+	return 100.0;
 }
 
 const float Simulator::BatteryLevelProvider::batteryLevelMin() const
@@ -59,6 +59,16 @@ QString Simulator::Device::version() const
 	return "0.1a";
 }
 
+FilesystemProvider *Simulator::Device::filesystemProvider() const
+{
+	return 0;
+}
+
+CommunicationProviderList Simulator::Device::communicationProviders() const
+{
+	return CommunicationProviderList();
+}
+
 CompileProvider *Simulator::Device::compileProvider() const
 {
 	return 0;
@@ -72,4 +82,9 @@ NetworkingProvider *Simulator::Device::networkingProvider() const
 BatteryLevelProvider *Simulator::Device::batteryLevelProvider() const
 {
 	return m_batteryLevelProvider;
+}
+
+PackageManagerProvider *Simulator::Device::packageManagerProvider() const
+{
+	return 0;
 }

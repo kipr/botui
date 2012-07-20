@@ -5,6 +5,7 @@
 #include <QPixmap>
 
 class QLabel;
+class Device;
 
 class MenuBar : public QMenuBar
 {

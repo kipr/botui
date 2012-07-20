@@ -54,7 +54,7 @@ InputProviderDialog *LineEdit::inputProvider() const
 void LineEdit::paintEvent(QPaintEvent *e)
 {
 	QLineEdit::paintEvent(e);
-	if(isReadOnly() || !m_inputProvider) return;
+	if(isReadOnly() || !m_inputProvider || text().size() > 0) return;
 	QPainter p(this);
 	p.setPen(QColor(127, 127, 127));
 	p.setFont(font());

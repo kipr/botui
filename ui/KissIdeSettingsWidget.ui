@@ -69,7 +69,36 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="sessionTimeout"/>
+      <widget class="QComboBox" name="sessionTimeout">
+       <property name="currentIndex">
+        <number>2</number>
+       </property>
+       <item>
+        <property name="text">
+         <string>1 Minute</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>5 Minutes</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>10 Minutes</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>30 Minutes</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>1 Hour</string>
+        </property>
+       </item>
+      </widget>
      </item>
     </layout>
    </item>
