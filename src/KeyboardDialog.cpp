@@ -49,8 +49,7 @@ QString KeyboardDialog::input() const
 void KeyboardDialog::symbolPressed()
 {
 	KeyButton *button = qobject_cast<KeyButton *>(sender());
-	QString newText = display->text() + button->text();
-	display->setText(newText);
+	display->insert(button->text());
 	
 	if(shifted)
 		shiftPressed();
@@ -58,8 +57,7 @@ void KeyboardDialog::symbolPressed()
 
 void KeyboardDialog::spacePressed()
 {
-	QString newText = display->text() + " ";
-	display->setText(newText);
+	display->insert(" ");
 }
 
 void KeyboardDialog::shiftPressed()
@@ -70,9 +68,7 @@ void KeyboardDialog::shiftPressed()
 
 void KeyboardDialog::delPressed()
 {
-	QString text = display->text();
-	text.chop(1);
-	display->setText(text);
+	display->backspace();
 }
 
 void KeyboardDialog::numPressed()
