@@ -47,6 +47,7 @@ QVariantMap NetworkingDelegateResponder::RequestInput(const QDBusObjectPath& pat
 		QString reply = m_delegate->networkingProviderNeedsNetworkName(m_networkingProvider);
 		ret[NAME_KEY] = reply;
 	} else if(fields.contains(PASSWORD_KEY)) {
+		qDebug() << "Type:" << fields[PASSWORD_KEY].toMap()[TYPE_KEY];
 		QString reply = m_delegate->networkingProviderNeedsPasswordOfType(m_networkingProvider, fields[PASSWORD_KEY].toMap()[TYPE_KEY].toString());
 		if(reply.isEmpty()) {
 			sendErrorReply("net.connman.Agent.Error.Cancel", "");

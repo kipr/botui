@@ -69,6 +69,7 @@ namespace Kovan
 	private slots:
 		void finishSetup(QDBusPendingCallWatcher *watcher);
 		void propertyChanged(const QString& name, const QDBusVariant& value);
+		void stateChanged(const QString& name);
 	
 	signals:
 		void scanned(const NetworkPtrList& list);

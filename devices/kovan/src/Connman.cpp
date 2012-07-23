@@ -137,6 +137,7 @@ void Connman::finishSetup(QDBusPendingCallWatcher *watcher)
 	m_properties = reply.value();
 	qDebug() << m_properties;
 	QObject::connect(m_manager, SIGNAL(PropertyChanged(QString, QDBusVariant)), SLOT(propertyChanged(QString, QDBusVariant)));
+	QObject::connect(m_manager, SIGNAL(StateChanged(QString)), SLOT(stateChanged(QString)));
 	new NetworkingDelegateResponder(this, delegate());
 	m_manager->RegisterAgent(QDBusObjectPath("/"));
 }
@@ -147,6 +148,11 @@ void Connman::propertyChanged(const QString& name, const QDBusVariant& value)
 	m_properties[name] = value.variant();
 	if(name == SERVICES_KEY) emit scanned(list());
 	qDebug() << servicesToStringList();
+}
+
+void stateChanged(const QString& name)
+{
+	qDebug() << "State changed" << name;
 }
 
 QStringList Connman::servicesToStringList() const
