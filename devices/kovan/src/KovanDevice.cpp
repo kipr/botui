@@ -173,7 +173,7 @@ const bool Kovan::FilesystemProvider::deleteProgram(const QString& name)
 
 TinyArchive *Kovan::FilesystemProvider::program(const QString& name) const
 {
-	TinyArchiveFile fileReader((QDir::homePath() + "/" + name).toStdString());
+	TinyArchiveFile fileReader(pathForProgram(name).toStdString());
 	return fileReader.read();
 }
 
