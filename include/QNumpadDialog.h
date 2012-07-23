@@ -44,6 +44,7 @@ private slots:
 private:
 	Ui::QNumpadDialog *ui;
 	QGridLayout *grid;
+	QVBoxLayout *verticalLayout;
 	QLabel *label;
 	QLineEdit *display;
 
