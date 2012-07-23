@@ -1,5 +1,6 @@
 #include "KissCompileProvider.h"
 
+#include <TinyArchive.h>
 #include <kiss-compiler/QTinyArchive.h>
 #include <kiss-compiler/Temporary.h>
 #include <kiss-compiler/ArchiveWriter.h>
@@ -30,11 +31,15 @@ CompilationPtr KissCompileProvider::compile(const QString& name, TinyArchive *ar
 	bool success = compilation->start();
 	
 	qDebug() << "Results:" << compilation->compileResults();
-	
 	qDebug() << (success ? "Compile Succeeded" : "Compile Failed");
 	
-	/* if(success) m_compileResults[name] = compilation->compileResults();
-	else m_compileResults.remove(name); */
+	if(success) m_executables[name] = compilation->compileResults();
+	else m_executables.remove(name);
 	
 	return compilation;
+}
+
+QString KissCompileProvider::executableFor(const QString& name) const
+{
+	return m_executables.value(name, QStringList() << "")[0];
 }

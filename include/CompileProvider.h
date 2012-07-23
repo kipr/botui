@@ -16,9 +16,10 @@ public:
 	virtual ~CompileProvider();
 	virtual CompilationPtr compile(const QString& name, TinyArchive *archive) = 0;
 	
+	virtual QString executableFor(const QString& name) const = 0;
+	
 signals:
 	void compileFinished(CompileResult result);
-	
 };
 
 #endif

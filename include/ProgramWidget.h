@@ -19,6 +19,10 @@ public:
 	ProgramWidget(const QString& program, Device *device, QWidget *parent = 0);
 	~ProgramWidget();
 	
+public slots:
+	void start();
+	void stop();
+	
 private:
 	Ui::ProgramWidget *ui;
 	QString m_program;
