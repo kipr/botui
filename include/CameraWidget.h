@@ -2,6 +2,7 @@
 #define _CAMERAWIDGET_H_
 
 #include <QWidget>
+#include <opencv2/opencv.hpp>
 
 namespace Ui
 {
@@ -11,7 +12,6 @@ namespace Ui
 class MenuBar;
 class StatusBar;
 class Device;
-struct CvCapture;
 
 class CameraWidget : public QWidget
 {
@@ -28,7 +28,7 @@ private:
 	Device *m_device;
 	MenuBar *m_menuBar;
 	StatusBar *m_statusBar;
-	CvCapture *m_capture;
+	cv::VideoCapture m_capture;
 };
 
 #endif

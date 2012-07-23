@@ -7,11 +7,16 @@
 
 class CvWidget : public QWidget
 {
+Q_OBJECT
+Q_PROPERTY(bool invalid READ invalid WRITE setInvalid)
 public:
 	CvWidget(QWidget *parent = 0);
 	~CvWidget();
 	
-	void updateImage(IplImage *image);
+	void setInvalid(bool invalid);
+	const bool& invalid() const;
+	
+	void updateImage(cv::Mat image);
 	
 protected:
 	void resizeEvent(QResizeEvent *event);
