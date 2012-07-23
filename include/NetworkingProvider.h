@@ -37,7 +37,7 @@ public:
 	virtual void setIpv4Settings(const QVariantMap& map) = 0;
 
 public slots:
-	virtual void connect() = 0;
+	virtual bool connect() = 0;
 	virtual void disconnect() = 0;
 
 signals:

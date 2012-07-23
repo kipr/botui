@@ -42,7 +42,9 @@ void ConnectWidget::connect()
 	NetworkPtr network = m_device->networkingProvider()->networkItemModel()->network(selection[0]);
 	network->setAutoConnect(true);
 	if(network->security().size() > 0) qDebug() << "This network has security" << network->security();
-	network->connect();
+	if(!network->connect()) {
+		qWarning() << "Connection Failed";
+	} else RootController::ref().dismissWidget();
 }
 
 void ConnectWidget::other()

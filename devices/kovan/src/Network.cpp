@@ -96,11 +96,12 @@ void Kovan::Network::setIpv4Settings(const QVariantMap& map)
 	reply.waitForFinished();
 }
 
-void Kovan::Network::connect()
+bool Kovan::Network::connect()
 {
 	QDBusPendingReply<> reply = m_service->Connect();
 	reply.waitForFinished();
-	if(reply.isError()) qCritical() << reply.error();
+	if(reply.isError()) qCritical() << "Connection Failed:" << reply.error();
+	return !reply.isError();
 }
 
 void Kovan::Network::disconnect()

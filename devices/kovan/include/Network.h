@@ -42,7 +42,7 @@ namespace Kovan
 		virtual void setIpv4Settings(const QVariantMap& map);
 
 	public slots:
-		virtual void connect();
+		virtual bool connect();
 		virtual void disconnect();
 
 	signals:
