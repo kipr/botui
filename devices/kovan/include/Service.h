@@ -8,8 +8,8 @@
  * Do not edit! All changes made to it will be lost.
  */
 
-#ifndef SERVICE_H_1342128110
-#define SERVICE_H_1342128110
+#ifndef SERVICE_H_1343055305
+#define SERVICE_H_1343055305
 
 #include <QtCore/QObject>
 #include <QtCore/QByteArray>

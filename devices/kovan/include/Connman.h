@@ -50,7 +50,7 @@ namespace Kovan
 	{
 	Q_OBJECT
 	public:
-		Connman();
+		Connman(NetworkingProviderDelegate *delegate);
 		~Connman();
 	
 		void setup();

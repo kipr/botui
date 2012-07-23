@@ -53,6 +53,7 @@ namespace Kovan
 		void propertyChanged(const QString& name, const QDBusVariant& value);
 
 	private:
+		
 		net::connman::Service *m_service;
 		QVariantMap m_properties;
 	};

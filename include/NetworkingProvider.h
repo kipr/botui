@@ -11,6 +11,9 @@
 
 class QAbstractItemModel;
 
+class NetworkingProvider;
+class NetworkingProviderDelegate;
+
 class Network : public QObject
 {
 Q_OBJECT
@@ -46,10 +49,6 @@ protected:
 	Network();
 	Network(const Network& rhs);
 	Network& operator=(Network& rhs);
-	
-private:
-	QString m_name;
-	QVariant m_internal;
 };
 
 typedef QSharedPointer<Network> NetworkPtr;
@@ -68,8 +67,10 @@ Q_PROPERTY(NetworkState networkState
 	READ networkState
 	WRITE setNetworkState
 	NOTIFY networkStateChanged)
+Q_PROPERTY(NetworkingProviderDelegate *delegate READ delegate)
 
 public:
+	NetworkingProvider(NetworkingProviderDelegate *delegate);
 	virtual ~NetworkingProvider();
 	
 	enum NetworkState {
@@ -77,6 +78,8 @@ public:
 		NetworkOn,
 		NetworkOff
 	};
+	
+	// virtual NetworkPtr otherNetwork(const QString& name) const = 0;
 	
 	virtual const NetworkingProvider::NetworkState networkState() const = 0;
 	virtual void setNetworkState(const NetworkingProvider::NetworkState& state) = 0;
@@ -87,11 +90,16 @@ public:
 	
 	virtual const float networkStrengthMin() const = 0;
 	virtual const float networkStrengthMax() const = 0;
+	
+	NetworkingProviderDelegate *delegate() const;
 
 signals:
 	void networkStateChanged(const NetworkState& state);
 	void scanned(const NetworkPtrList& networks);
 	void connected(const NetworkPtr& network);
+	
+private:
+	NetworkingProviderDelegate *m_delegate;
 };
 
 #endif

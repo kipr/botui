@@ -1,6 +1,8 @@
 #include "Connman.h"
 #include "Manager.h"
 #include "Network.h"
+#include "NetworkingProviderDelegate.h"
+#include "NetworkingDelegateResponder.h"
 
 #include <QtDBus>
 #include <QDebug>
@@ -28,6 +30,7 @@ NetworkPtr NetworkItem::network() const
 Kovan::NetworkItemModel::NetworkItemModel()
 {
 }
+
 
 void Kovan::NetworkItemModel::scanned(const NetworkPtrList& networks)
 {
@@ -59,8 +62,9 @@ void Kovan::NetworkItemModel::refresh()
 	
 }
 
-Connman::Connman()
-	: m_type(TECHNOLOGY),
+Connman::Connman(NetworkingProviderDelegate *delegate)
+	: NetworkingProvider(delegate),
+	m_type(TECHNOLOGY),
 	m_manager(new net::connman::Manager("net.connman", "/", QDBusConnection::systemBus(), this)),
 	m_setup(false),
 	m_networkItemModel(new Kovan::NetworkItemModel())
@@ -133,6 +137,8 @@ void Connman::finishSetup(QDBusPendingCallWatcher *watcher)
 	m_properties = reply.value();
 	qDebug() << m_properties;
 	QObject::connect(m_manager, SIGNAL(PropertyChanged(QString, QDBusVariant)), SLOT(propertyChanged(QString, QDBusVariant)));
+	new NetworkingDelegateResponder(this, delegate());
+	m_manager->RegisterAgent(QDBusObjectPath("/"));
 }
 
 void Connman::propertyChanged(const QString& name, const QDBusVariant& value)

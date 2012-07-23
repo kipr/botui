@@ -8,8 +8,8 @@
  * Do not edit! All changes made to it will be lost.
  */
 
-#ifndef MANAGER_H_1342128110
-#define MANAGER_H_1342128110
+#ifndef MANAGER_H_1343055305
+#define MANAGER_H_1343055305
 
 #include <QtCore/QObject>
 #include <QtCore/QByteArray>

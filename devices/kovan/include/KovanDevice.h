@@ -2,12 +2,13 @@
 #define _KOVANDEVICE_H_
 
 #include "Device.h"
+#include "NetworkingProviderDelegate.h"
 
 namespace Kovan
 {
 	class Connman;
 	
-	class Device : public ::Device
+	class Device : public ::Device, public NetworkingProviderDelegate
 	{
 	public:
 		Device();
@@ -24,6 +25,10 @@ namespace Kovan
 		virtual PackageManagerProvider *packageManagerProvider() const;
 		
 	private:
+		virtual QString networkingProviderNeedsPasswordOfType(NetworkingProvider *networkingProvider, const QString& type);
+		virtual QString networkingProviderNeedsNetworkName(NetworkingProvider *networkingProvider);
+		virtual void networkingProviderReportedError(NetworkingProvider *networkingProvider, const QString& message);
+		
 		FilesystemProvider *m_filesystemProvider;
 		CompileProvider *m_compileProvider;
 		CommunicationProviderList m_communicationProviders;

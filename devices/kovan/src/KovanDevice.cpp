@@ -11,8 +11,12 @@
 
 #include "BuildOptions.h"
 
+#include "RootController.h"
+#include "KeyboardDialog.h"
+
 #include <QStandardItemModel>
 #include <QFileSystemModel>
+#include <QMessageBox>
 
 #include <QDir>
 #include <QFileInfo>
@@ -205,7 +209,7 @@ Kovan::Device::Device()
 	m_compileProvider(new KissCompileProvider()),
 	m_communicationProviders(CommunicationProviderList()
 		<< new EasyDeviceCommunicationProvider(this)),
-	m_networkingProvider(new Kovan::Connman()),
+	m_networkingProvider(new Kovan::Connman(this)),
 	m_batteryLevelProvider(new Kovan::BatteryLevelProvider())
 {
 	m_networkingProvider->setup();
@@ -258,4 +262,23 @@ BatteryLevelProvider *Kovan::Device::batteryLevelProvider() const
 PackageManagerProvider *Kovan::Device::packageManagerProvider() const
 {
 	return 0;
+}
+
+QString Kovan::Device::networkingProviderNeedsPasswordOfType(NetworkingProvider *networkingProvider, const QString& type)
+{
+	KeyboardDialog keyboard("Password (" + type + ")");
+	const int ret = RootController::ref().presentDialog(&keyboard);
+	return ret == QDialog::Accepted ? keyboard.input() : "";
+}
+
+QString Kovan::Device::networkingProviderNeedsNetworkName(NetworkingProvider *networkingProvider)
+{
+	KeyboardDialog keyboard("Network Name");
+	const int ret = RootController::ref().presentDialog(&keyboard);
+	return ret == QDialog::Accepted ? keyboard.input() : "";
+}
+
+void Kovan::Device::networkingProviderReportedError(NetworkingProvider *networkingProvider, const QString& message)
+{
+	QMessageBox::critical(0, tr("Networking Error"), message);
 }
