@@ -26,7 +26,7 @@ public:
 
 	QNumpadDialog(const QString& text,
 					InputType type = Integer,
-					const double& min = std::numeric_limits<double>::min(),
+					const double& min = -std::numeric_limits<double>::max(),
 					const double& max = std::numeric_limits<double>::max(),
 					QWidget *parent = 0);
 	~QNumpadDialog();

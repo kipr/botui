@@ -19,7 +19,7 @@ QNumpadDialog::QNumpadDialog(const QString& text, InputType type, const double& 
 	font.setPointSize(18);
 
 	/* Setup the title label */
-	if(m_min != std::numeric_limits<double>::min() && m_max != std::numeric_limits<double>::max())
+	if(m_min != -std::numeric_limits<double>::max() && m_max != std::numeric_limits<double>::max())
 		label = new QLabel(text + " (" + QString::number(m_min) + tr(" to ") + QString::number(m_max) + ")");
 	else
 		label = new QLabel(text);
@@ -61,7 +61,7 @@ QNumpadDialog::QNumpadDialog(const QString& text, InputType type, const double& 
 
 	/* Hide some buttons (if needed) */
 	if(type != QNumpadDialog::Decimal) decimalButton->hide();
-	if(m_min <= 0.0) signButton->hide();
+	if(m_min >= 0.0) signButton->hide();
 
 	connect(display, SIGNAL(textChanged(QString)), this, SLOT(displayChanged(QString)));
 }
