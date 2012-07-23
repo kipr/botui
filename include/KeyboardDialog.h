@@ -2,7 +2,7 @@
 #define KEYBOARDDIALOG_H
 
 #include "InputProviderDialog.h"
-#include "QKeyButton.h"
+#include "KeyButton.h"
 
 #include <QGridLayout>
 #include <QLabel>
@@ -44,18 +44,18 @@ private:
 	QVBoxLayout *alphaVerticalLayout;
 	QVBoxLayout *numVerticalLayout;
 	
-	QKeyButton *alphaButtons[26];
-	QKeyButton *numButtons[25];
-	QKeyButton *enterButton;
-	QKeyButton *spaceButton;
-	QKeyButton *shiftButton;
-	QKeyButton *delButton;
-	QKeyButton *numButton;
-	QKeyButton *symButton;
+	KeyButton *alphaButtons[26];
+	KeyButton *numButtons[25];
+	KeyButton *enterButton;
+	KeyButton *spaceButton;
+	KeyButton *shiftButton;
+	KeyButton *delButton;
+	KeyButton *numButton;
+	KeyButton *symButton;
 	
 	bool shifted;
 	
-	QKeyButton *makeButton(const char *, const QString&, const QString& = "");
+	KeyButton *makeButton(const char *, const QString&, const QString& = "");
 	void setupAlphaButtons();
 	void setupNumButtons();
 	void setupSpecialButtons();
