@@ -12,6 +12,8 @@ QNumpadDialog::QNumpadDialog(const QString& text, InputType type, const double& 
 {
 	ui->setupUi(this);
 	grid = qobject_cast<QGridLayout *>(layout());
+	verticalLayout = new QVBoxLayout();
+	verticalLayout->setContentsMargins(0, 3, 0, 9);
 
 	QFont font;
 	font.setPointSize(18);
@@ -22,14 +24,16 @@ QNumpadDialog::QNumpadDialog(const QString& text, InputType type, const double& 
 	else
 		label = new QLabel(text);
 	label->setFont(font);
-	grid->addWidget(label, 0, 0, 1, -1);
+	verticalLayout->addWidget(label);
 
 	/* Setup the display */
 	display = new QLineEdit(this);
 	display->setFocusPolicy(Qt::NoFocus);
 	display->setAlignment(Qt::AlignRight);
 	display->setFont(font);
-	grid->addWidget(display, 1, 0, 1, -1);
+	verticalLayout->addWidget(display);
+	
+	grid->addLayout(verticalLayout, 0, 0, 2, -1);
 
 	/* Setup and add digit buttons */
 	QKeyButton *numberButtons[10];
@@ -42,15 +46,13 @@ QNumpadDialog::QNumpadDialog(const QString& text, InputType type, const double& 
 	}
 	grid->addWidget(numberButtons[0], 5, 1);
 
-	/* Setup other buttons */
+	/* Setup and add other buttons */
 	QKeyButton *enterButton = makeButton(SLOT(accept()), tr("ENT"));
 	QKeyButton *delButton = makeButton(SLOT(delPressed()), tr("DEL"));
 	QKeyButton *clearButton = makeButton(SLOT(clearPressed()), tr("C"), "X");
 	clearButton->switchLabel();
 	QKeyButton *decimalButton = makeButton(SLOT(decimalPressed()), ".");
 	QKeyButton *signButton = makeButton(SLOT(signPressed()), "+/-");
-
-	/* Add other buttons */
 	grid->addWidget(enterButton, 4, 3, 2, 1);
 	grid->addWidget(delButton, 3, 3);
 	grid->addWidget(clearButton, 2, 3);
