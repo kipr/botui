@@ -1,9 +1,9 @@
-#include "QKeyButton.h"
+#include "KeyButton.h"
 
 #include <QPainter>
 #include <QSizePolicy>
 
-QKeyButton::QKeyButton(const QString& firstLabel, const QString& secondLabel, QWidget *parent)
+KeyButton::KeyButton(const QString& firstLabel, const QString& secondLabel, QWidget *parent)
 	: QAbstractButton(parent),
 	m_firstLabel(firstLabel),
 	m_secondLabel(secondLabel),
@@ -13,18 +13,18 @@ QKeyButton::QKeyButton(const QString& firstLabel, const QString& secondLabel, QW
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 }
 
-bool QKeyButton::isSwitched() const
+bool KeyButton::isSwitched() const
 {
 	return m_switched;
 }
 
-void QKeyButton::switchLabel()
+void KeyButton::switchLabel()
 {
 	setText(m_switched ? m_firstLabel : m_secondLabel);
 	m_switched = !m_switched;
 }
 
-void QKeyButton::paintEvent(QPaintEvent *)
+void KeyButton::paintEvent(QPaintEvent *)
 {
 	QPainter painter(this);
 	QFont font;

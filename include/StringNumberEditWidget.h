@@ -11,7 +11,7 @@ namespace Ui
 class MenuBar;
 class StatusBar;
 class Device;
-class QNumpadDialog;
+class NumpadDialog;
 class KeyboardDialog;
 
 class StringNumberEditWidget : public QWidget
@@ -26,7 +26,7 @@ private:
 	Device *m_device;
 	MenuBar *m_menuBar;
 	StatusBar *m_statusBar;
-	QNumpadDialog *m_numpad;
+	NumpadDialog *m_numpad;
 	KeyboardDialog *m_keyboard;
 };
 

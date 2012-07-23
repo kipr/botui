@@ -48,7 +48,7 @@ QString KeyboardDialog::input() const
 
 void KeyboardDialog::symbolPressed()
 {
-	QKeyButton *button = qobject_cast<QKeyButton *>(sender());
+	KeyButton *button = qobject_cast<KeyButton *>(sender());
 	QString newText = display->text() + button->text();
 	display->setText(newText);
 	
@@ -118,9 +118,9 @@ void KeyboardDialog::symPressed()
 	symButton->switchLabel();
 }
 
-QKeyButton *KeyboardDialog::makeButton(const char *slot, const QString& firstLabel, const QString& secondLabel)
+KeyButton *KeyboardDialog::makeButton(const char *slot, const QString& firstLabel, const QString& secondLabel)
 {
-	QKeyButton *button = new QKeyButton(firstLabel, secondLabel, this);
+	KeyButton *button = new KeyButton(firstLabel, secondLabel, this);
 	connect(button, SIGNAL(clicked()), this, slot);
 	return button;
 }

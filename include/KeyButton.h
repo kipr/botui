@@ -1,13 +1,13 @@
-#ifndef QKEYBUTTON_H
-#define QKEYBUTTON_H
+#ifndef KEYBUTTON_H
+#define KEYBUTTON_H
 
 #include <QAbstractButton>
 
-class QKeyButton : public QAbstractButton
+class KeyButton : public QAbstractButton
 {
 Q_OBJECT
 public:
-	QKeyButton(const QString& firstlabel, const QString& secondLabel, QWidget *parent = 0);
+	KeyButton(const QString& firstlabel, const QString& secondLabel, QWidget *parent = 0);
 
 	bool isSwitched() const;
 
@@ -23,4 +23,4 @@ private:
 	bool m_switched;
 };
 
-#endif // QKEYBUTTON_H
+#endif // KEYBUTTON_H

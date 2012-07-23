@@ -1,8 +1,8 @@
-#ifndef QNUMPADDIALOG_H
-#define QNUMPADDIALOG_H
+#ifndef NumpadDialog_H
+#define NumpadDialog_H
 
 #include "InputProviderDialog.h"
-#include "QKeyButton.h"
+#include "KeyButton.h"
 
 #include <QLabel>
 #include <QLineEdit>
@@ -11,10 +11,10 @@
 
 namespace Ui
 {
-	class QNumpadDialog;
+	class NumpadDialog;
 }
 
-class QNumpadDialog : public InputProviderDialog
+class NumpadDialog : public InputProviderDialog
 {
 Q_OBJECT
 public:
@@ -24,12 +24,12 @@ public:
 		Decimal
 	};
 
-	QNumpadDialog(const QString& text,
+	NumpadDialog(const QString& text,
 					InputType type = Integer,
 					const double& min = -std::numeric_limits<double>::max(),
 					const double& max = std::numeric_limits<double>::max(),
 					QWidget *parent = 0);
-	~QNumpadDialog();
+	~NumpadDialog();
 
 	QString input() const;
 
@@ -42,7 +42,7 @@ private slots:
 	void signPressed();
 	
 private:
-	Ui::QNumpadDialog *ui;
+	Ui::NumpadDialog *ui;
 	QGridLayout *grid;
 	QVBoxLayout *verticalLayout;
 	QLabel *label;
@@ -53,8 +53,8 @@ private:
 	double m_min;
 	double m_max;
 
-	QKeyButton *makeButton(const char *, const QString&, const QString& = "");
+	KeyButton *makeButton(const char *, const QString&, const QString& = "");
 	bool inBounds(const double&) const;
 };
 
-#endif // QNUMPADDIALOG_H
+#endif // NumpadDialog_H
