@@ -14,8 +14,7 @@ CameraWidget::CameraWidget(Device *device, QWidget *parent)
 	ui(new Ui::CameraWidget),
 	m_device(device),
 	m_menuBar(new MenuBar(this)),
-	m_statusBar(new StatusBar(this)),
-	m_capture(0)
+	m_statusBar(new StatusBar(this))
 {
 	ui->setupUi(this);
 	m_menuBar->addHomeAndBackButtons();
@@ -26,21 +25,25 @@ CameraWidget::CameraWidget(Device *device, QWidget *parent)
 	
 	QTimer *timer = new QTimer(this);
 	connect(timer, SIGNAL(timeout()), SLOT(updateCamera()));
-	timer->start(50); // 20 FPS
+	timer->start(75); // 15 FPS
 	
-	m_capture = cvCaptureFromCAM(CV_CAP_ANY);
-	if(m_capture) {
-		cvSetCaptureProperty(m_capture, CV_CAP_PROP_FRAME_WIDTH, 320);
-		cvSetCaptureProperty(m_capture, CV_CAP_PROP_FRAME_HEIGHT, 240);
-	} else ui->camera->updateImage(0); // Displays no camera message
+	m_capture.open(CV_CAP_ANY);
+	
+	if(!m_capture.isOpened()) return;
+	m_capture.set(CV_CAP_PROP_FRAME_WIDTH, 320);
+	m_capture.set(CV_CAP_PROP_FRAME_HEIGHT, 240);
+	m_capture.set(CV_CAP_PROP_FPS, 20);
 }
 
 void CameraWidget::updateCamera()
 {
-	if(!m_capture) return;
-	IplImage *image = cvQueryFrame(m_capture);
-	if(!image) {
-		qWarning() << "cvQueryFrame Failed";
+	ui->camera->setInvalid(!m_capture.isOpened());
+	if(!m_capture.isOpened()) return;
+	cv::Mat image;
+	if(!m_capture.grab() || !m_capture.retrieve(image)) {
+		qWarning() << "grab/retrieve pair failed";
+		ui->camera->setInvalid(true);
+		m_capture.release();
 		return;
 	}
 	ui->camera->updateImage(image);
@@ -48,7 +51,7 @@ void CameraWidget::updateCamera()
 
 CameraWidget::~CameraWidget()
 {
-	cvReleaseCapture(&m_capture);
+	m_capture.release();
 	delete ui;
 	delete m_menuBar;
 	delete m_statusBar;

@@ -13,11 +13,20 @@ CvWidget::~CvWidget()
 
 }
 
-void CvWidget::updateImage(IplImage *image)
+void CvWidget::setInvalid(bool invalid)
 {
-	m_invalid = !image;
+	m_invalid = invalid;
+}
+
+const bool& CvWidget::invalid() const
+{
+	return m_invalid;
+}
+
+void CvWidget::updateImage(cv::Mat image)
+{
 	if(m_invalid) return;
-	m_image = QImage((uchar *)image->imageData, image->width, image->height, image->widthStep, QImage::Format_RGB888);
+	m_image = QImage(image.data, image.cols, image.rows, image.step, QImage::Format_RGB888);
 	scaleImage();
 	update();
 }
