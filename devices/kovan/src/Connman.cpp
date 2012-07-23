@@ -97,6 +97,7 @@ void Connman::setNetworkState(const NetworkingProvider::NetworkState& state)
 {
 	if(state == NetworkOff) m_manager->DisableTechnology(TECHNOLOGY);
 	else if(state == NetworkOn) m_manager->EnableTechnology(TECHNOLOGY);
+	emit networkStateChanged(state);
 }
 
 NetworkPtrList Connman::list() const
