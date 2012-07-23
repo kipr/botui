@@ -150,7 +150,7 @@ void Connman::propertyChanged(const QString& name, const QDBusVariant& value)
 	qDebug() << servicesToStringList();
 }
 
-void stateChanged(const QString& name)
+void Connman::stateChanged(const QString& name)
 {
 	qDebug() << "State changed" << name;
 }
