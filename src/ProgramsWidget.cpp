@@ -39,5 +39,7 @@ void ProgramsWidget::run()
 	if(currents.size() != 1) return;
 	QModelIndex current = currents[0];
 	QString program = m_device->filesystemProvider()->programsItemModel()->program(current);
-	RootController::ref().presentWidget(new ProgramWidget(program, m_device));
+	ProgramWidget *programWidget = new ProgramWidget(program, m_device);
+	RootController::ref().presentWidget(programWidget);
+	programWidget->start();
 }

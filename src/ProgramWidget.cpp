@@ -27,12 +27,15 @@ ProgramWidget::ProgramWidget(const QString& program, Device *device, QWidget *pa
 	ui->programLabel->setText(m_program);
 }
 
-void ProgramWidget::start()
+bool ProgramWidget::start()
 {
+	QString executable = m_device->compileProvider()->executableFor(m_program);
+	if(executable.isEmpty()) return false;
 	QProcess *process = new QProcess(this);
-	process->start(m_device->compileProvider()->executableFor(m_program));
+	process->start(executable);
 	process->waitForStarted();
 	ui->console->setProcess(process);
+	return true;
 }
 
 void ProgramWidget::stop()

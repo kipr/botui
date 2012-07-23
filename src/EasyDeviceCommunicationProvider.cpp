@@ -12,6 +12,7 @@
 #include <kiss-compiler/CompilerManager.h>
 
 #include "RootController.h"
+#include "ProgramWidget.h"
 #include "CompileProvider.h"
 
 #include <QDebug>
@@ -47,7 +48,9 @@ EasyDeviceCommunicationProvider::~EasyDeviceCommunicationProvider()
 
 const bool EasyDeviceCommunicationProvider::run(const QString& name)
 {
-	return true;
+	ProgramWidget *programWidget = new ProgramWidget(name, device());
+	RootController::ref().presentWidget(programWidget);
+	return programWidget->start();
 }
 
 CompilationPtr EasyDeviceCommunicationProvider::compile(const QString& name)
