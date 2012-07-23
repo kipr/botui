@@ -388,7 +388,7 @@ void MechanicalStyle::drawControl(ControlElement ce, const QStyleOption *opt, QP
 		p->drawRect(rect.adjusted(0, 0, 0, 0));
 		mechanical_draw_styled_button(mo->rect, opt, p, false);
 		QFont font(p->font());
-		font.setPointSizeF(font.pointSizeF() - 3.0);
+		font.setPointSizeF(font.pointSizeF() - 1.0);
 		p->setFont(font);
 		p->drawText(opt->rect, mo->text, QTextOption(Qt::AlignAbsolute | Qt::AlignHCenter | Qt::AlignVCenter));
 		p->restore();
