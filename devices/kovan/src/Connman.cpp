@@ -90,12 +90,13 @@ void Connman::setup()
 
 const NetworkingProvider::NetworkState Connman::networkState() const
 {
-	return NetworkOff;
+	return m_properties["EnabledTechnologies"].toStringList().contains(TECHNOLOGY);
 }
 
 void Connman::setNetworkState(const NetworkingProvider::NetworkState& state)
 {
-	
+	if(state == NetworkOff) m_manager->DisableTechnology(TECHNOLOGY);
+	else if(state == NetworkOn) m_manager->EnableTechnology(TECHNOLOGY);
 }
 
 NetworkPtrList Connman::list() const
