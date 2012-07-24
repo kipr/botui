@@ -15,6 +15,7 @@ public:
 private:
 	QWizardPage *createIntroPage();
 	QWizardPage *createRegistrationPage();
+	QWizardPage *createNamePage();
 	QWizardPage *createConclusionPage();
 	
 	Device *m_device;

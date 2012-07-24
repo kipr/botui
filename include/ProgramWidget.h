@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QTime>
 #include <QProcess>
+#include "ButtonProvider.h"
 
 namespace Ui
 {
@@ -29,6 +30,8 @@ public slots:
 private slots:
 	void started();
 	void finished(int exitCode, QProcess::ExitStatus exitStatus);
+	
+	void buttonTextChanged(const ButtonProvider::ButtonId& id, const QString& text);
 	
 private:
 	Ui::ProgramWidget *ui;

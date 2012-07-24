@@ -7,6 +7,7 @@
 #include "CompileProvider.h"
 #include "LockScreen.h"
 
+#include <QTimer>
 #include <QDebug>
 
 ProgramWidget::ProgramWidget(const QString& program, Device *device, QWidget *parent)
@@ -32,6 +33,19 @@ ProgramWidget::ProgramWidget(const QString& program, Device *device, QWidget *pa
 	connect(ui->stop, SIGNAL(clicked()), SLOT(stop()));
 	
 	m_time.start();
+	
+	ButtonProvider *buttonProvider = m_device->buttonProvider();
+	if(!buttonProvider) return;
+	ui->a->setText(buttonProvider->text(ButtonProvider::A));
+	ui->b->setText(buttonProvider->text(ButtonProvider::B));
+	ui->z->setText(buttonProvider->text(ButtonProvider::Z));
+	connect(buttonProvider,
+		SIGNAL(buttonTextChanged(ButtonProvider::ButtonId, QString)),
+		SLOT(buttonTextChanged(ButtonProvider::ButtonId, QString)));
+		
+	QTimer *timer = new QTimer(this);
+	timer->start(1000);
+	buttonProvider->connect(timer, SIGNAL(timeout()), SLOT(refresh()));
 }
 
 void ProgramWidget::lock()
@@ -75,6 +89,15 @@ void ProgramWidget::finished(int exitCode, QProcess::ExitStatus exitStatus)
 	ui->stop->setEnabled(false);
 	const int msecs = m_time.elapsed();
 	ui->console->append(m_program + tr(" finished in %1 seconds").arg(msecs / 1000.0));
+}
+
+void ProgramWidget::buttonTextChanged(const ButtonProvider::ButtonId& id, const QString& text)
+{
+	switch(id) {
+	case ButtonProvider::A: ui->a->setText(text);
+	case ButtonProvider::B: ui->b->setText(text);
+	case ButtonProvider::Z: ui->z->setText(text);
+	}
 }
 
 ProgramWidget::~ProgramWidget()

@@ -21,6 +21,8 @@ namespace Simulator
 		virtual CompileProvider *compileProvider() const;
 		virtual BatteryLevelProvider *batteryLevelProvider() const;
 		virtual PackageManagerProvider *packageManagerProvider() const;
+		virtual SettingsProvider *settingsProvider() const;
+		virtual ButtonProvider *buttonProvider() const;
 		
 	private:
 		BatteryLevelProvider *m_batteryLevelProvider;

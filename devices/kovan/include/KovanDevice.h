@@ -24,6 +24,8 @@ namespace Kovan
 		virtual NetworkingProvider *networkingProvider() const;
 		virtual BatteryLevelProvider *batteryLevelProvider() const;
 		virtual PackageManagerProvider *packageManagerProvider() const;
+		virtual SettingsProvider *settingsProvider() const;
+		virtual ButtonProvider *buttonProvider() const;
 		
 	private:
 		virtual QString networkingProviderNeedsPasswordOfType(NetworkingProvider *networkingProvider, const QString& type);
@@ -35,6 +37,8 @@ namespace Kovan
 		CommunicationProviderList m_communicationProviders;
 		Connman *m_networkingProvider;
 		BatteryLevelProvider *m_batteryLevelProvider;
+		SettingsProvider *m_settingsProvider;
+		ButtonProvider *m_buttonProvider;
 	};
 }
 

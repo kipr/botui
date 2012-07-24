@@ -1,5 +1,7 @@
 #include "FirstRunWizard.h"
 #include "Device.h"
+#include "KeyboardDialog.h"
+#include "LineEdit.h"
 
 #include <QWizardPage>
 #include <QLabel>
@@ -11,6 +13,7 @@ FirstRunWizard::FirstRunWizard(Device *device, QWidget *parent)
 {
 	setWizardStyle(QWizard::ModernStyle);
 	addPage(createIntroPage());
+	addPage(createNamePage());
 	addPage(createRegistrationPage());
 }
 
@@ -24,6 +27,26 @@ QWizardPage *FirstRunWizard::createIntroPage()
 
 	QVBoxLayout *layout = new QVBoxLayout;
 	layout->addWidget(label);
+	page->setLayout(layout);
+
+	return page;
+}
+
+QWizardPage *FirstRunWizard::createNamePage()
+{
+	QWizardPage *page = new QWizardPage();
+	page->setTitle("Name Setup");
+
+	QLabel *label = new QLabel(tr("Please pick the name that other devices"
+		"will see when connecting to this %1.").arg(m_device->name()));
+	label->setWordWrap(true);
+
+	KeyboardDialog *keyboard = new KeyboardDialog(tr("Your %1's Name").arg(m_device->name()), KeyboardDialog::Normal, page);
+	LineEdit *lineEdit = new LineEdit(keyboard, page);
+
+	QVBoxLayout *layout = new QVBoxLayout;
+	layout->addWidget(label);
+	layout->addWidget(lineEdit);
 	page->setLayout(layout);
 
 	return page;

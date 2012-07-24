@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
 	if(device.isTouchscreen()) app.setOverrideCursor(QCursor(Qt::BlankCursor));
 	//RootController::ref().presentQml(QUrl::fromLocalFile("loading.qml"));
 	RootController::ref().presentWidget(new HomeWidget(&device));
-	RootController::ref().presentDialog(new FirstRunWizard(&device));
+	//RootController::ref().presentDialog(new FirstRunWizard(&device));
 	
 	return app.exec();
 }

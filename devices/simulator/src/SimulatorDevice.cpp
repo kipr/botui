@@ -93,3 +93,13 @@ PackageManagerProvider *Simulator::Device::packageManagerProvider() const
 {
 	return 0;
 }
+
+SettingsProvider *Simulator::Device::settingsProvider() const
+{
+	return 0;
+}
+
+ButtonProvider *Simulator::Device::buttonProvider() const
+{
+	return 0;
+}

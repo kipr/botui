@@ -4,10 +4,12 @@
 #include "NetworkingProvider.h"
 #include "CommunicationProvider.h"
 #include "FilesystemProvider.h"
+#include "SettingsProvider.h"
 #include "KovanProgramsItemModel.h"
 #include "EasyDeviceCommunicationProvider.h"
 #include "Connman.h"
 #include "KissCompileProvider.h"
+#include "KovanButtonProvider.h"
 
 #include "BuildOptions.h"
 
@@ -19,6 +21,8 @@
 #include <QMessageBox>
 
 #include <QDir>
+#include <QFile>
+#include <QDataStream>
 #include <QFileInfo>
 
 #include <kovan/kovan.hpp>
@@ -75,6 +79,19 @@ namespace Kovan
 		QString pathForProgram(const QString& program) const;
 		
 		Kovan::ProgramsItemModel *m_programsItemModel;
+	};
+	
+	class SettingsProvider : public ::SettingsProvider
+	{
+	public:
+		SettingsProvider(QObject *parent = 0);
+		~SettingsProvider();
+		virtual void setValue(const QString& key, const QVariant& value);
+		virtual QVariant value(const QString& key, const QVariant& _default = QVariant()) const;
+		virtual void sync();
+	private:
+		QMap<QString, QVariant> m_settings;
+		QFile m_settingsFile;
 	};
 }
 
@@ -205,13 +222,48 @@ QString Kovan::FilesystemProvider::pathForProgram(const QString& program) const
 	return programDir().path() + "/" + program + ".kissproj";
 }
 
+Kovan::SettingsProvider::SettingsProvider(QObject *parent)
+	: ::SettingsProvider(parent),
+	m_settingsFile(QDir::homePath() + "/botui_settings", this)
+{
+	if(!m_settingsFile.open(QIODevice::ReadOnly)) return;
+	QDataStream stream(&m_settingsFile);
+	stream >> m_settings;
+	m_settingsFile.close();
+}
+
+Kovan::SettingsProvider::~SettingsProvider()
+{
+	sync();
+}
+
+void Kovan::SettingsProvider::setValue(const QString& key, const QVariant& value)
+{
+	m_settings[key] = value;
+}
+
+QVariant Kovan::SettingsProvider::value(const QString& key, const QVariant& _default) const
+{
+	return m_settings.value(key, _default);
+}
+
+void Kovan::SettingsProvider::sync()
+{
+	if(!m_settingsFile.open(QIODevice::WriteOnly)) return;
+	QDataStream stream(&m_settingsFile);
+	stream << m_settings;
+	m_settingsFile.close();
+}
+
 Kovan::Device::Device()
 	: m_filesystemProvider(new Kovan::FilesystemProvider()),
 	m_compileProvider(new KissCompileProvider()),
 	m_communicationProviders(CommunicationProviderList()
 		<< new EasyDeviceCommunicationProvider(this)),
 	m_networkingProvider(new Kovan::Connman(this)),
-	m_batteryLevelProvider(new Kovan::BatteryLevelProvider())
+	m_batteryLevelProvider(new Kovan::BatteryLevelProvider()),
+	m_settingsProvider(new Kovan::SettingsProvider()),
+	m_buttonProvider(new Kovan::ButtonProvider(this))
 {
 	m_networkingProvider->setup();
 }
@@ -223,6 +275,8 @@ Kovan::Device::~Device()
 	qDeleteAll(m_communicationProviders);
 	delete m_batteryLevelProvider;
 	delete m_networkingProvider;
+	delete m_settingsProvider;
+	delete m_buttonProvider;
 }
 
 QString Kovan::Device::name() const
@@ -237,7 +291,7 @@ QString Kovan::Device::version() const
 
 bool Kovan::Device::isTouchscreen() const
 {
-	return true;
+	return false;
 }
 
 FilesystemProvider *Kovan::Device::filesystemProvider() const
@@ -268,6 +322,16 @@ BatteryLevelProvider *Kovan::Device::batteryLevelProvider() const
 PackageManagerProvider *Kovan::Device::packageManagerProvider() const
 {
 	return 0;
+}
+
+SettingsProvider *Kovan::Device::settingsProvider() const
+{
+	return m_settingsProvider;
+}
+
+ButtonProvider *Kovan::Device::buttonProvider() const
+{
+	return m_buttonProvider;
 }
 
 QString Kovan::Device::networkingProviderNeedsPasswordOfType(NetworkingProvider *networkingProvider, const QString& type)
