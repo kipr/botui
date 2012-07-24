@@ -24,6 +24,7 @@ ProgramsWidget::ProgramsWidget(Device *device, QWidget *parent)
 	
 	ui->programs->setModel(m_device->filesystemProvider()->programsItemModel());
 	connect(ui->run, SIGNAL(clicked()), SLOT(run()));
+	connect(ui->remove, SIGNAL(clicked()), SLOT(remove()));
 }
 
 ProgramsWidget::~ProgramsWidget()
@@ -42,4 +43,13 @@ void ProgramsWidget::run()
 	ProgramWidget *programWidget = new ProgramWidget(program, m_device);
 	RootController::ref().presentWidget(programWidget);
 	programWidget->start();
+}
+
+void ProgramsWidget::remove()
+{
+	QModelIndexList currents = ui->programs->selectionModel()->selectedIndexes();
+	if(currents.size() != 1) return;
+	QModelIndex current = currents[0];
+	QString program = m_device->filesystemProvider()->programsItemModel()->program(current);
+	m_device->filesystemProvider()->deleteProgram(program);
 }

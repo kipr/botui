@@ -11,6 +11,7 @@
 #include "ProgramsWidget.h"
 #include "Device.h"
 #include "StatusBar.h"
+#include "LockScreen.h"
 
 HomeWidget::HomeWidget(Device *device, QWidget *parent)
 	: QWidget(parent),
@@ -65,5 +66,5 @@ void HomeWidget::about()
 
 void HomeWidget::lock()
 {
-	RootController::ref().presentQml(QUrl("qrc:///qml/lock.qml"));
+	LockScreen::lock();
 }

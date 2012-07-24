@@ -18,15 +18,15 @@ Q_PROPERTY(unsigned int depth READ depth)
 public:
 	RootController();
 	
-	void presentQml(const QUrl& url);
-	int presentDialog(QDialog *dialog);
-	void presentWidget(QWidget *widget, bool owns = true);
 	const unsigned int depth() const;
 	
 	void setDismissable(bool dismissable);
 	bool isDismissable() const;
 	
 public slots:
+	void presentQml(const QUrl& url);
+	int presentDialog(QDialog *dialog);
+	void presentWidget(QWidget *widget, bool owns = true);
 	void dismissWidget();
 	void dismissAllWidgets();
 	

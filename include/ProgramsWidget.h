@@ -21,6 +21,7 @@ public:
 	
 public slots:
 	void run();
+	void remove();
 	
 private:
 	Ui::ProgramsWidget *ui;

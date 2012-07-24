@@ -99,9 +99,10 @@ const bool Kovan::BatteryLevelProvider::isCharging() const
 }
 
 Kovan::ProgramItem::ProgramItem(const QString& name)
-	: QStandardItem(name), m_name(name)
+	: QStandardItem(QIcon(":/icons/bricks.png"), name), m_name(name)
 {
 	setSizeHint(QSize(0, 30));
+	setEditable(false);
 }
 
 const QString& Kovan::ProgramItem::name() const

@@ -71,7 +71,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_5">
+      <widget class="QPushButton" name="stop">
        <property name="text">
         <string>Stop</string>
        </property>
@@ -87,6 +87,9 @@
     <widget class="ConsoleWidget" name="console">
      <property name="focusPolicy">
       <enum>Qt::NoFocus</enum>
+     </property>
+     <property name="undoRedoEnabled">
+      <bool>false</bool>
      </property>
      <property name="readOnly">
       <bool>true</bool>

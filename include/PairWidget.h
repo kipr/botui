@@ -19,14 +19,15 @@ public:
 	PairWidget(Device *device, QWidget *parent = 0);
 	~PairWidget();
 	
-public slots:
-	void back();
+	void setPassword(const QString& password);
+	
+signals:
+	void cancel();
 	
 private:
 	Ui::PairWidget *ui;
 	Device *m_device;
 	MenuBar *m_menuBar;
-	StatusBar *m_statusBar;
 };
 
 #endif

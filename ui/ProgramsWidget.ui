@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>320</width>
+    <height>240</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Programs</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="leftMargin">
@@ -28,6 +28,9 @@
    </property>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="spacing">
+      <number>2</number>
+     </property>
      <item>
       <widget class="QListView" name="programs"/>
      </item>
@@ -69,7 +72,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="delete_2">
+        <widget class="QPushButton" name="remove">
          <property name="text">
           <string>Delete</string>
          </property>

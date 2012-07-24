@@ -6,6 +6,7 @@
 #include "KovanDevice.h"
 #include <kiss-compiler/CompilerPluginManager.h>
 #include "SimulatorDevice.h"
+#include "FirstRunWizard.h"
 #include <QApplication>
 #include <QDir>
 
@@ -21,6 +22,7 @@ int main(int argc, char* argv[])
 	Kovan::Device device;
 	//RootController::ref().presentQml(QUrl::fromLocalFile("loading.qml"));
 	RootController::ref().presentWidget(new HomeWidget(&device));
+	RootController::ref().presentDialog(new FirstRunWizard(&device));
 	
 	return app.exec();
 }

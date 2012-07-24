@@ -10,26 +10,22 @@ PairWidget::PairWidget(Device *device, QWidget *parent)
 	: QWidget(parent),
 	ui(new Ui::PairWidget),
 	m_device(device),
-	m_menuBar(new MenuBar(this)),
-	m_statusBar(new StatusBar(this))
+	m_menuBar(new MenuBar(this))
 {
 	ui->setupUi(this);
 	QAction *cancelAction = m_menuBar->addAction("Cancel");
-	connect(cancelAction, SIGNAL(activated()), SLOT(back()));
+	connect(cancelAction, SIGNAL(activated()), SIGNAL(cancel()));
 	m_menuBar->setTitle("Incoming Connection");
 	layout()->setMenuBar(m_menuBar);
-	m_statusBar->loadDefaultWidgets(m_device);
-	layout()->addWidget(m_statusBar);
 }
 
 PairWidget::~PairWidget()
 {
 	delete ui;
 	delete m_menuBar;
-	delete m_statusBar;
 }
 
-void PairWidget::back()
+void PairWidget::setPassword(const QString& password)
 {
-	RootController::ref().dismissWidget();
+	ui->code->setText(password);
 }

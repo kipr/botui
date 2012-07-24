@@ -18,6 +18,8 @@ public:
 	QString executableFor(const QString& name) const;
 	
 private:
+	void sync();
+	
 	QMap<QString, QStringList> m_executables;
 };
 

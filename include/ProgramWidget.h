@@ -2,6 +2,8 @@
 #define _PROGRAMWIDGET_H_
 
 #include <QWidget>
+#include <QTime>
+#include <QProcess>
 
 namespace Ui
 {
@@ -20,8 +22,13 @@ public:
 	~ProgramWidget();
 	
 public slots:
+	void lock();
 	bool start();
 	void stop();
+	
+private slots:
+	void started();
+	void finished(int exitCode, QProcess::ExitStatus exitStatus);
 	
 private:
 	Ui::ProgramWidget *ui;
@@ -29,6 +36,8 @@ private:
 	Device *m_device;
 	MenuBar *m_menuBar;
 	StatusBar *m_statusBar;
+	
+	QTime m_time;
 };
 
 #endif
