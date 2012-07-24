@@ -29,7 +29,6 @@ ProgramWidget::ProgramWidget(const QString& program, Device *device, QWidget *pa
 	ui->programLabel->setText(m_program);
 	
 	connect(ui->stop, SIGNAL(clicked()), SLOT(stop()));
-	connect(ui->stop, SIGNAL(clicked()), SLOT(stop()));
 	
 	m_time.start();
 }
