@@ -16,6 +16,7 @@ namespace Kovan
 		
 		virtual QString name() const;
 		virtual QString version() const;
+		virtual bool isTouchscreen() const;
 		
 		virtual FilesystemProvider *filesystemProvider() const;
 		virtual CompileProvider *compileProvider() const;

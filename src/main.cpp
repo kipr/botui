@@ -14,6 +14,7 @@ int main(int argc, char* argv[])
 {
 	QApplication::setStyle(new MechanicalStyle);
 	QApplication app(argc, argv);
+	app.setOverrideCursor(QCursor(Qt::BlankCursor));
 	QDir::setCurrent(QApplication::applicationDirPath());
 	qmlRegisterType<BusyIndicator>("ZapBsComponents", 1, 0, "BusyIndicator");
 	

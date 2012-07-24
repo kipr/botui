@@ -235,6 +235,11 @@ QString Kovan::Device::version() const
 	return "0.1a";
 }
 
+bool Kovan::Device::isTouchscreen() const
+{
+	return true;
+}
+
 FilesystemProvider *Kovan::Device::filesystemProvider() const
 {
 	return m_filesystemProvider;

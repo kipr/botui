@@ -59,6 +59,11 @@ QString Simulator::Device::version() const
 	return "0.1a";
 }
 
+bool Simulator::Device::isTouchscreen() const
+{
+	return true;
+}
+
 FilesystemProvider *Simulator::Device::filesystemProvider() const
 {
 	return 0;
