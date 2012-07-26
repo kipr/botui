@@ -39,13 +39,9 @@ QIODevice *ConsoleWidget::process() const
 void ConsoleWidget::readStandardOut()
 {
 	QByteArray array = m_process->readAll();
-	int i = array.lastIndexOf('\f');
-	if(i >= 0) {
-		qDebug() << "Form feed";
-		setPlainText("");
-		array = array.mid(i);
-	}
-	insertPlainText(array);
+	if(array.lastIndexOf('\f') >= 0) setPlainText("");
+	else insertPlainText(array);
+	
 	moveCursor(QTextCursor::End, QTextCursor::KeepAnchor);
 	update();
 }
@@ -53,13 +49,9 @@ void ConsoleWidget::readStandardOut()
 void ConsoleWidget::readStandardErr()
 {
 	QByteArray array = m_process->readAll();
-	int i = array.lastIndexOf('\f');
-	if(i >= 0) {
-		qDebug() << "Form feed";
-		setPlainText("");
-		array = array.mid(i + 1);
-	}
-	insertPlainText(array);
+	if(array.lastIndexOf('\f') >= 0) setPlainText("");
+	else insertPlainText(array);
+	
 	moveCursor(QTextCursor::End, QTextCursor::KeepAnchor);
 	update();
 }
