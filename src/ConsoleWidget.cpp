@@ -39,19 +39,12 @@ QIODevice *ConsoleWidget::process() const
 void ConsoleWidget::readStandardOut()
 {
 	QByteArray array = m_process->readAll();
-	if(array.lastIndexOf('\f') >= 0) setPlainText("");
-	else insertPlainText(array);
-	
-	moveCursor(QTextCursor::End, QTextCursor::KeepAnchor);
-	update();
-}
-
-void ConsoleWidget::readStandardErr()
-{
-	QByteArray array = m_process->readAll();
-	if(array.lastIndexOf('\f') >= 0) setPlainText("");
-	else insertPlainText(array);
-	
+	int i = array.lastIndexOf('\f');
+	if(i >= 0) {
+		setPlainText("");
+		array = array.mid(i + 1);
+	}
+	insertPlainText(array);
 	moveCursor(QTextCursor::End, QTextCursor::KeepAnchor);
 	update();
 }

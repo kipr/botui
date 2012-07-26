@@ -20,7 +20,6 @@ protected:
 
 private slots:
 	void readStandardOut();
-	void readStandardErr();
 
 private:
 	void printPrompt();
