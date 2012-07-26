@@ -1,6 +1,7 @@
 #include "CvWidget.h"
 
 #include <QPainter>
+#include <QDebug>
 
 CvWidget::CvWidget(QWidget *parent)
 	: QWidget(parent),
@@ -26,7 +27,9 @@ const bool& CvWidget::invalid() const
 void CvWidget::updateImage(cv::Mat image)
 {
 	if(m_invalid) return;
-	m_image = QImage(image.data, image.cols, image.rows, image.step, QImage::Format_RGB888);
+	cv::Mat dest;
+	cv::cvtColor(image, dest,CV_BGR2RGB);
+	m_image = QImage(dest.data, dest.cols, dest.rows, dest.step, QImage::Format_RGB888);
 	scaleImage();
 	update();
 }
@@ -46,9 +49,15 @@ void CvWidget::paintEvent(QPaintEvent *event)
 			QTextOption(Qt::AlignAbsolute | Qt::AlignHCenter | Qt::AlignVCenter));
 		return;
 	}
-	painter.drawImage(0, height() / 2 - m_resizedImage.height() / 2, m_resizedImage,
+	painter.drawImage(width() / 2 - m_resizedImage.width() / 2, height() / 2 - m_resizedImage.height() / 2, m_resizedImage,
 		0, 0, m_resizedImage.width(), m_resizedImage.height());
-	painter.drawRect(0, height() / 2 - m_resizedImage.height() / 2, m_resizedImage.width(), m_resizedImage.height());
+	painter.drawRect(width() / 2 - m_resizedImage.width() / 2, height() / 2 - m_resizedImage.height() / 2, m_resizedImage.width(), m_resizedImage.height());
+}
+
+void CvWidget::mousePressEvent(QMouseEvent *event)
+{
+	qDebug() << "Emitting pressed";
+	emit pressed();
 }
 
 void CvWidget::scaleImage()

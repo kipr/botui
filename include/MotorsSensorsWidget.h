@@ -1,18 +1,14 @@
 #ifndef _MOTORSSENSORSWIDGET_H_
 #define _MOTORSSENSORSWIDGET_H_
 
-#include <QWidget>
+#include "StandardWidget.h"
 
 namespace Ui
 {
 	class MotorsSensorsWidget;
 }
 
-class MenuBar;
-class StatusBar;
-class Device;
-
-class MotorsSensorsWidget : public QWidget
+class MotorsSensorsWidget : public StandardWidget
 {
 Q_OBJECT
 public:
@@ -25,9 +21,6 @@ public slots:
 	
 private:
 	Ui::MotorsSensorsWidget *ui;
-	Device *m_device;
-	MenuBar *m_menuBar;
-	StatusBar *m_statusBar;
 };
 
 #endif

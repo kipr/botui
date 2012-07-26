@@ -8,20 +8,13 @@
 #include <QDebug>
 
 OtherNetworkWidget::OtherNetworkWidget(Device *device, QWidget *parent)
-	: QWidget(parent),
+	: StandardWidget(device, parent),
 	ui(new Ui::OtherNetworkWidget),
-	m_device(device),
-	m_menuBar(new MenuBar(this)),
-	m_statusBar(new StatusBar(this)),
 	m_ssid(new KeyboardDialog("Network Name")),
 	m_password(new KeyboardDialog("Password"))
 {
 	ui->setupUi(this);
-	m_menuBar->addHomeAndBackButtons();
-	m_menuBar->setTitle("Other Network");
-	layout()->setMenuBar(m_menuBar);
-	m_statusBar->loadDefaultWidgets(m_device);
-	layout()->addWidget(m_statusBar);
+	performStandardSetup(tr("Other Network"));
 	
 	ui->ssid->setInputProvider(m_ssid);
 	ui->password->setInputProvider(m_password);
@@ -30,8 +23,6 @@ OtherNetworkWidget::OtherNetworkWidget(Device *device, QWidget *parent)
 OtherNetworkWidget::~OtherNetworkWidget()
 {
 	delete ui;
-	delete m_menuBar;
-	delete m_statusBar;
 	
 	delete m_ssid;
 	delete m_password;

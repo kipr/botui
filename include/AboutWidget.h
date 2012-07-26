@@ -1,18 +1,14 @@
 #ifndef _ABOUTWIDGET_H_
 #define _ABOUTWIDGET_H_
 
-#include <QWidget>
+#include "StandardWidget.h"
 
 namespace Ui
 {
 	class AboutWidget;
 }
 
-class MenuBar;
-class StatusBar;
-class Device;
-
-class AboutWidget : public QWidget
+class AboutWidget : public StandardWidget
 {
 Q_OBJECT
 public:
@@ -21,9 +17,6 @@ public:
 	
 private:
 	Ui::AboutWidget *ui;
-	Device *m_device;
-	MenuBar *m_menuBar;
-	StatusBar *m_statusBar;
 };
 
 

@@ -13,19 +13,11 @@
 #include <QDebug>
 
 SettingsWidget::SettingsWidget(Device *device, QWidget *parent)
-	: QWidget(parent),
-	ui(new Ui::SettingsWidget),
-	m_device(device),
-	m_menuBar(new MenuBar(this)),
-	m_statusBar(new StatusBar(this))
+	: StandardWidget(device, parent),
+	ui(new Ui::SettingsWidget)
 {
 	ui->setupUi(this);
-	
-	m_menuBar->addHomeAndBackButtons();
-	m_menuBar->setTitle("Settings");
-	layout()->setMenuBar(m_menuBar);
-	m_statusBar->loadDefaultWidgets(m_device);
-	layout()->addWidget(m_statusBar);
+	performStandardSetup(tr("Settings"));
 	
 	ui->networkSettings->setEnabled(m_device->networkingProvider());
 	ui->packages->setEnabled(m_device->packageManagerProvider());
@@ -39,8 +31,6 @@ SettingsWidget::SettingsWidget(Device *device, QWidget *parent)
 SettingsWidget::~SettingsWidget()
 {
 	delete ui;
-	delete m_menuBar;
-	delete m_statusBar;
 }
 
 void SettingsWidget::network()

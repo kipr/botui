@@ -1,18 +1,14 @@
 #ifndef _PROGRAMSWIDGET_H_
 #define _PROGRAMSWIDGET_H_
 
-#include <QWidget>
+#include "StandardWidget.h"
 
 namespace Ui
 {
 	class ProgramsWidget;
 }
 
-class MenuBar;
-class StatusBar;
-class Device;
-
-class ProgramsWidget : public QWidget
+class ProgramsWidget : public StandardWidget
 {
 Q_OBJECT
 public:
@@ -25,9 +21,6 @@ public slots:
 	
 private:
 	Ui::ProgramsWidget *ui;
-	Device *m_device;
-	MenuBar *m_menuBar;
-	StatusBar *m_statusBar;
 };
 
 #endif

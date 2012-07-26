@@ -15,6 +15,7 @@
 #include "ProgramWidget.h"
 #include "CompileProvider.h"
 #include "PairWidget.h"
+#include "Program.h"
 
 #include <QMetaObject>
 #include <QCryptographicHash>
@@ -61,10 +62,12 @@ void EasyDeviceCommunicationProvider::canceled()
 
 const bool EasyDeviceCommunicationProvider::run(const QString& name)
 {
-	ProgramWidget *programWidget = new ProgramWidget(name, device());
+	QString executable = device()->compileProvider()->executableFor(name);
+	if(executable.isEmpty()) return false;
+	ProgramWidget *programWidget = new ProgramWidget(Program::instance(), device());
 	// Must invoke this method on the gui thread
 	QMetaObject::invokeMethod(&RootController::ref(), "presentWidget", Qt::QueuedConnection, Q_ARG(QWidget *, programWidget));
-	return programWidget->start();
+	return Program::instance()->start(executable);
 }
 
 CompilationPtr EasyDeviceCommunicationProvider::compile(const QString& name)

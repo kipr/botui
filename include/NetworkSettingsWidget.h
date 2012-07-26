@@ -1,18 +1,14 @@
 #ifndef _NETWORKSETTINGSWIDGET_H_
 #define _NETWORKSETTINGSWIDGET_H_
 
-#include <QWidget>
+#include "StandardWidget.h"
 
 namespace Ui
 {
 	class NetworkSettingsWidget;
 }
 
-class MenuBar;
-class StatusBar;
-class Device;
-
-class NetworkSettingsWidget : public QWidget
+class NetworkSettingsWidget : public StandardWidget
 {
 Q_OBJECT
 public:
@@ -27,9 +23,6 @@ public slots:
 	
 private:
 	Ui::NetworkSettingsWidget *ui;
-	Device *m_device;
-	MenuBar *m_menuBar;
-	StatusBar *m_statusBar;
 };
 
 #endif

@@ -10,28 +10,23 @@
 #include "MotorsSensorsWidget.h"
 #include "ProgramsWidget.h"
 #include "Device.h"
-#include "StatusBar.h"
+#include "ProgramSelectionWidget.h"
+#include "Program.h"
 #include "LockScreen.h"
 
 HomeWidget::HomeWidget(Device *device, QWidget *parent)
-	: QWidget(parent),
-	ui(new Ui::HomeWidget),
-	m_device(device),
-	m_menuBar(new MenuBar(this)),
-	m_statusBar(new StatusBar(this))
+	: StandardWidget(device, parent),
+	ui(new Ui::HomeWidget)
 {
 	ui->setupUi(this);
-	QAction *lock = m_menuBar->addAction("Lock Screen");
-	
-	m_menuBar->setTitle("Home Page");
-	layout()->setMenuBar(m_menuBar);
-	m_statusBar->loadDefaultWidgets(m_device);
-	layout()->addWidget(m_statusBar);
+	performStandardSetup(tr("Home Page"));
 	
 	connect(ui->programs, SIGNAL(clicked()), SLOT(programs()));
 	connect(ui->motorsSensors, SIGNAL(clicked()), SLOT(motorsSensors()));
 	connect(ui->settings, SIGNAL(clicked()), SLOT(settings()));
 	connect(ui->about, SIGNAL(clicked()), SLOT(about()));
+	
+	QAction *lock = m_menuBar->addAction("Lock Screen");
 	connect(lock, SIGNAL(activated()), SLOT(lock()));
 	
 	ui->programs->setEnabled(m_device->filesystemProvider());
@@ -40,13 +35,13 @@ HomeWidget::HomeWidget(Device *device, QWidget *parent)
 HomeWidget::~HomeWidget()
 {
 	delete ui;
-	delete m_menuBar;
-	delete m_statusBar;
 }
 
 void HomeWidget::programs()
 {
-	RootController::ref().presentWidget(new ProgramsWidget(m_device));
+	RootController::ref().presentWidget(Program::instance()->isRunning()
+		? (QWidget *)new ProgramSelectionWidget(m_device)
+		: (QWidget *)new ProgramsWidget(m_device));
 }
 
 void HomeWidget::motorsSensors()

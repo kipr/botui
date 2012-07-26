@@ -1,18 +1,14 @@
 #ifndef _CONNECTWIDGET_H_
 #define _CONNECTWIDGET_H_
 
-#include <QWidget>
+#include "StandardWidget.h"
 
 namespace Ui
 {
 	class ConnectWidget;
 }
 
-class MenuBar;
-class StatusBar;
-class Device;
-
-class ConnectWidget : public QWidget
+class ConnectWidget : public StandardWidget
 {
 Q_OBJECT
 public:
@@ -26,9 +22,6 @@ public slots:
 	
 private:
 	Ui::ConnectWidget *ui;
-	Device *m_device;
-	MenuBar *m_menuBar;
-	StatusBar *m_statusBar;
 };
 
 #endif

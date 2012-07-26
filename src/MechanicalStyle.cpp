@@ -27,6 +27,16 @@ inline static QColor mechanical_button_bottom_color()
 	return QColor(192, 192, 192);
 }
 
+inline static QColor mechanical_disabled_button_top_color()
+{
+	return QColor(130, 130, 130);
+}
+
+inline static QColor mechanical_disabled_button_bottom_color()
+{
+	return QColor(92, 92, 92);
+}
+
 inline static QColor mechanical_button_pressed_top_color()
 {
 	return QColor(200, 200, 200);
@@ -35,6 +45,26 @@ inline static QColor mechanical_button_pressed_top_color()
 inline static QColor mechanical_button_pressed_bottom_color()
 {
 	return QColor(142, 142, 142);
+}
+
+inline static QColor mechanical_stop_button_top_color()
+{
+	return QColor(230, 130, 130);
+}
+
+inline static QColor mechanical_stop_button_bottom_color()
+{
+	return QColor(192, 92, 92);
+}
+
+inline static QColor mechanical_stop_button_pressed_top_color()
+{
+	return QColor(200, 100, 100);
+}
+
+inline static QColor mechanical_stop_button_pressed_bottom_color()
+{
+	return QColor(142, 42, 42);
 }
 
 static void mechanical_draw_styled_rectangle(const QRect& rect, QPainter *p, bool withScrews = true)
@@ -295,6 +325,7 @@ void MechanicalStyle::drawComplexControl(ComplexControl cc, const QStyleOptionCo
 
 void MechanicalStyle::drawControl(ControlElement ce, const QStyleOption *opt, QPainter *p, const QWidget *widget) const
 {
+	CustomControlElement cce = (CustomControlElement)ce;
 	if(ce == CE_PushButton) {
 		const QStyleOptionButton *bo = qstyleoption_cast<const QStyleOptionButton *>(opt);
 		if(!bo) return;
@@ -302,6 +333,32 @@ void MechanicalStyle::drawControl(ControlElement ce, const QStyleOption *opt, QP
 		mechanical_draw_styled_button(bo->rect, opt, p);
 		p->restore();
 		drawControl(CE_PushButtonLabel, opt, p, widget);
+		
+		return;
+	}
+	if(cce == CE_StopButton) {
+		const QStyleOptionButton *bo = qstyleoption_cast<const QStyleOptionButton *>(opt);
+		if(!bo) return;
+		if(!(opt->state & QStyle::State_Enabled)) return;
+		p->save();
+		
+		QColor top = mechanical_stop_button_top_color();
+		QColor bottom = mechanical_stop_button_bottom_color();
+		
+		if(opt->state & QStyle::State_Sunken) {
+			top = mechanical_stop_button_pressed_top_color();
+			bottom = mechanical_stop_button_pressed_bottom_color();
+		}
+		const QRect& rect = opt->rect;
+		QLinearGradient gradient = QLinearGradient(rect.right(), rect.top(), rect.right(), rect.bottom());
+		gradient.setColorAt(0, top);
+		gradient.setColorAt(1, bottom);
+		p->setPen(Qt::black);
+		p->setBrush(gradient);
+		mechanical_draw_styled_rectangle(rect, p, false);
+		
+		p->restore();
+		p->drawText(rect, bo->text, QTextOption(Qt::AlignAbsolute | Qt::AlignHCenter | Qt::AlignVCenter));
 		
 		return;
 	}

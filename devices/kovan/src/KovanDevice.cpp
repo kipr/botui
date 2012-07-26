@@ -19,6 +19,7 @@
 #include <QStandardItemModel>
 #include <QFileSystemModel>
 #include <QMessageBox>
+#include <kiss-compiler/PlatformHintsManager.h>
 
 #include <QDir>
 #include <QFile>
@@ -154,7 +155,8 @@ void Kovan::ProgramsItemModel::programDeleted(const QString& name)
 {
 	const int count = rowCount();
 	for(int i = 0; i < count; ++i) {
-		if(ProgramItem::programitem_cast(item(i))->name() == name) {
+		ProgramItem *item = ProgramItem::programitem_cast(ProgramsItemModel::item(i));
+		if(item && item->name() == name) {
 			delete takeItem(i);
 			return;
 		}
@@ -257,7 +259,7 @@ void Kovan::SettingsProvider::sync()
 
 Kovan::Device::Device()
 	: m_filesystemProvider(new Kovan::FilesystemProvider()),
-	m_compileProvider(new KissCompileProvider()),
+	m_compileProvider(new KissCompileProvider(this)),
 	m_communicationProviders(CommunicationProviderList()
 		<< new EasyDeviceCommunicationProvider(this)),
 	m_networkingProvider(new Kovan::Connman(this)),
@@ -266,6 +268,14 @@ Kovan::Device::Device()
 	m_buttonProvider(new Kovan::ButtonProvider(this))
 {
 	m_networkingProvider->setup();
+	
+	
+	// TODO: Move these
+	FlagMap flagMap;
+	flagMap["C_FLAGS"] = "-Wall -include kovan/kovan.h";
+	flagMap["CXX_FLAGS"] = "-Wall -include kovan/kovan.hpp";
+	flagMap["LD_FLAGS"] = "-lkovan";
+	PlatformHintsManager::ref().setPlatformHints(name(), flagMap);
 }
 
 Kovan::Device::~Device()

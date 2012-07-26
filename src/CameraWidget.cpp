@@ -10,18 +10,14 @@
 #include <opencv2/opencv.hpp>
 
 CameraWidget::CameraWidget(Device *device, QWidget *parent)
-	: QWidget(parent),
-	ui(new Ui::CameraWidget),
-	m_device(device),
-	m_menuBar(new MenuBar(this)),
-	m_statusBar(new StatusBar(this))
+	: StandardWidget(device, parent),
+	ui(new Ui::CameraWidget)
 {
 	ui->setupUi(this);
-	m_menuBar->addHomeAndBackButtons();
-	m_menuBar->setTitle("Camera");
-	layout()->setMenuBar(m_menuBar);
-	m_statusBar->loadDefaultWidgets(m_device);
-	layout()->addWidget(m_statusBar);
+	performStandardSetup(tr("Camera"));
+	QAction *toggleUi = m_menuBar->addAction(tr("Hide UI"));
+	connect(toggleUi, SIGNAL(activated()), SLOT(toggleUi()));
+	toggleUi->connect(ui->camera, SIGNAL(pressed()), SLOT(trigger()));
 	
 	QTimer *timer = new QTimer(this);
 	connect(timer, SIGNAL(timeout()), SLOT(updateCamera()));
@@ -32,7 +28,7 @@ CameraWidget::CameraWidget(Device *device, QWidget *parent)
 	if(!m_capture.isOpened()) return;
 	m_capture.set(CV_CAP_PROP_FRAME_WIDTH, 320);
 	m_capture.set(CV_CAP_PROP_FRAME_HEIGHT, 240);
-	m_capture.set(CV_CAP_PROP_FPS, 20);
+	m_capture.set(CV_CAP_PROP_FPS, 15);
 }
 
 void CameraWidget::updateCamera()
@@ -49,10 +45,18 @@ void CameraWidget::updateCamera()
 	ui->camera->updateImage(image);
 }
 
+void CameraWidget::toggleUi()
+{
+	const bool toggle = !m_statusBar->isVisible();
+	m_statusBar->setVisible(toggle);
+	ui->sidebar->setVisible(toggle);
+	const int margin = toggle ? 6 : 0;
+	layout()->setContentsMargins(margin, margin, margin, 0);
+	layout()->setMenuBar(toggle ? m_menuBar : 0);
+}
+
 CameraWidget::~CameraWidget()
 {
 	m_capture.release();
 	delete ui;
-	delete m_menuBar;
-	delete m_statusBar;
 }

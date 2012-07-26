@@ -5,22 +5,17 @@
 #include "StatusBar.h"
 #include "Device.h"
 #include "FilesystemProvider.h"
+#include "CompileProvider.h"
 #include "ProgramWidget.h"
+#include "Program.h"
 #include <QDebug>
 
 ProgramsWidget::ProgramsWidget(Device *device, QWidget *parent)
-	: QWidget(parent),
-	ui(new Ui::ProgramsWidget),
-	m_device(device),
-	m_menuBar(new MenuBar(this)),
-	m_statusBar(new StatusBar(this))
+	: StandardWidget(device, parent),
+	ui(new Ui::ProgramsWidget)
 {
 	ui->setupUi(this);
-	m_menuBar->addHomeAndBackButtons();
-	m_menuBar->setTitle("Programs");
-	layout()->setMenuBar(m_menuBar);
-	m_statusBar->loadDefaultWidgets(m_device);
-	layout()->addWidget(m_statusBar);
+	performStandardSetup(tr("Programs"));
 	
 	ui->programs->setModel(m_device->filesystemProvider()->programsItemModel());
 	connect(ui->run, SIGNAL(clicked()), SLOT(run()));
@@ -30,8 +25,6 @@ ProgramsWidget::ProgramsWidget(Device *device, QWidget *parent)
 ProgramsWidget::~ProgramsWidget()
 {
 	delete ui;
-	delete m_menuBar;
-	delete m_statusBar;
 }
 
 void ProgramsWidget::run()
@@ -40,9 +33,12 @@ void ProgramsWidget::run()
 	if(currents.size() != 1) return;
 	QModelIndex current = currents[0];
 	QString program = m_device->filesystemProvider()->programsItemModel()->program(current);
-	ProgramWidget *programWidget = new ProgramWidget(program, m_device);
+	QString executable = m_device->compileProvider()->executableFor(program);
+	if(executable.isEmpty()) return;
+	
+	ProgramWidget *programWidget = new ProgramWidget(Program::instance(), m_device);
 	RootController::ref().presentWidget(programWidget);
-	programWidget->start();
+	Program::instance()->start(executable);
 }
 
 void ProgramsWidget::remove()

@@ -1,7 +1,8 @@
 #ifndef _CAMERAWIDGET_H_
 #define _CAMERAWIDGET_H_
 
-#include <QWidget>
+#include "StandardWidget.h"
+
 #include <opencv2/opencv.hpp>
 
 namespace Ui
@@ -9,11 +10,7 @@ namespace Ui
 	class CameraWidget;
 }
 
-class MenuBar;
-class StatusBar;
-class Device;
-
-class CameraWidget : public QWidget
+class CameraWidget : public StandardWidget
 {
 Q_OBJECT
 public:
@@ -22,12 +19,10 @@ public:
 	
 public slots:
 	void updateCamera();
+	void toggleUi();
 	
 private:
 	Ui::CameraWidget *ui;
-	Device *m_device;
-	MenuBar *m_menuBar;
-	StatusBar *m_statusBar;
 	cv::VideoCapture m_capture;
 };
 

@@ -1,7 +1,7 @@
 #ifndef _SERVOSWIDGET_H_
 #define _SERVOSWIDGET_H_
 
-#include <QWidget>
+#include "StandardWidget.h"
 
 namespace Ui
 {
@@ -12,7 +12,7 @@ class MenuBar;
 class StatusBar;
 class Device;
 
-class ServosWidget : public QWidget
+class ServosWidget : public StandardWidget
 {
 Q_OBJECT
 public:
@@ -21,9 +21,6 @@ public:
 	
 private:
 	Ui::ServosWidget *ui;
-	Device *m_device;
-	MenuBar *m_menuBar;
-	StatusBar *m_statusBar;
 };
 
 

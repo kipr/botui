@@ -8,11 +8,12 @@
 #include "CompileProvider.h"
 
 class TinyArchive;
+class Device;
 
 class KissCompileProvider : public CompileProvider
 {
 public:
-	KissCompileProvider(QObject *parent = 0);
+	KissCompileProvider(Device *device, QObject *parent = 0);
 	
 	CompilationPtr compile(const QString& name, TinyArchive *archive);
 	QString executableFor(const QString& name) const;
@@ -20,6 +21,7 @@ public:
 private:
 	void sync();
 	
+	Device *m_device;
 	QMap<QString, QStringList> m_executables;
 };
 

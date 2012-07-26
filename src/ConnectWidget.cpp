@@ -9,18 +9,11 @@
 #include <QDebug>
 
 ConnectWidget::ConnectWidget(Device *device, QWidget *parent)
-	: QWidget(parent),
-	ui(new Ui::ConnectWidget),
-	m_device(device),
-	m_menuBar(new MenuBar(this)),
-	m_statusBar(new StatusBar(this))
+	: StandardWidget(device, parent),
+	ui(new Ui::ConnectWidget)
 {
 	ui->setupUi(this);
-	m_menuBar->addHomeAndBackButtons();
-	m_menuBar->setTitle(tr("Connect"));
-	layout()->setMenuBar(m_menuBar);
-	m_statusBar->loadDefaultWidgets(m_device);
-	layout()->addWidget(m_statusBar);
+	performStandardSetup(tr("Connect"));
 	ui->networks->setModel(m_device->networkingProvider()->networkItemModel());
 	
 	QObject::connect(ui->refresh, SIGNAL(clicked()), SLOT(refresh()));
@@ -31,8 +24,6 @@ ConnectWidget::ConnectWidget(Device *device, QWidget *parent)
 ConnectWidget::~ConnectWidget()
 {
 	delete ui;
-	delete m_menuBar;
-	delete m_statusBar;
 }
 
 void ConnectWidget::connect()

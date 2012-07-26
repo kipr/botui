@@ -34,6 +34,9 @@ int RootController::presentDialog(QDialog *dialog)
 
 void RootController::presentWidget(QWidget *widget, bool owns)
 {
+	for(int i = 0; i < m_stack.size(); ++i) {
+		if(m_stack.at(i) == widget) m_stack.remove(i);
+	}
 	m_ownership[widget] = owns;
 	QWidget *prev = m_stack.size() ? m_stack.top() : 0;
 	m_stack.push(widget);

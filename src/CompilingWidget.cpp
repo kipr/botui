@@ -7,24 +7,16 @@
 #include <QDebug>
 
 CompilingWidget::CompilingWidget(Device *device, QWidget *parent)
-	: QWidget(parent),
-	ui(new Ui::CompilingWidget),
-	m_device(device),
-	m_menuBar(new MenuBar(this)),
-	m_statusBar(new StatusBar(this))
+	: StandardWidget(device, parent),
+	ui(new Ui::CompilingWidget)
 {
 	ui->setupUi(this);
-	m_menuBar->setTitle("Compiling...");
-	layout()->setMenuBar(m_menuBar);
-	m_statusBar->loadDefaultWidgets(m_device);
-	layout()->addWidget(m_statusBar);
+	performStandardSetup(tr("Compiling..."));
 }
 
 CompilingWidget::~CompilingWidget()
 {
 	delete ui;
-	delete m_menuBar;
-	delete m_statusBar;
 }
 
 void CompilingWidget::compileFinished()

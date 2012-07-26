@@ -7,23 +7,14 @@
 #include <QDebug>
 
 ServosWidget::ServosWidget(Device *device, QWidget *parent)
-	: QWidget(parent),
-	ui(new Ui::ServosWidget),
-	m_device(device),
-	m_menuBar(new MenuBar(this)),
-	m_statusBar(new StatusBar(this))
+	: StandardWidget(device, parent),
+	ui(new Ui::ServosWidget)
 {
 	ui->setupUi(this);
-	m_menuBar->addHomeAndBackButtons();
-	m_menuBar->setTitle("Servos");
-	layout()->setMenuBar(m_menuBar);
-	m_statusBar->loadDefaultWidgets(m_device);
-	layout()->addWidget(m_statusBar);
+	performStandardSetup(tr("Servos"));
 }
 
 ServosWidget::~ServosWidget()
 {
 	delete ui;
-	delete m_menuBar;
-	delete m_statusBar;
 }

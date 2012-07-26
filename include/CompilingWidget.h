@@ -1,18 +1,14 @@
 #ifndef _COMPILINGWIDGET_H_
 #define _COMPILINGWIDGET_H_
 
-#include <QWidget>
+#include "StandardWidget.h"
 
 namespace Ui
 {
 	class CompilingWidget;
 }
 
-class MenuBar;
-class StatusBar;
-class Device;
-
-class CompilingWidget : public QWidget
+class CompilingWidget : public StandardWidget
 {
 Q_OBJECT
 public:
@@ -24,9 +20,6 @@ private slots:
 	
 private:
 	Ui::CompilingWidget *ui;
-	Device *m_device;
-	MenuBar *m_menuBar;
-	StatusBar *m_statusBar;
 };
 
 #endif

@@ -1,18 +1,14 @@
 #ifndef _SETTINGSWIDGET_H_
 #define _SETTINGSWIDGET_H_
 
-#include <QWidget>
+#include "StandardWidget.h"
 
 namespace Ui
 {
 	class SettingsWidget;
 }
 
-class MenuBar;
-class StatusBar;
-class Device;
-
-class SettingsWidget : public QWidget
+class SettingsWidget : public StandardWidget
 {
 Q_OBJECT
 public:
@@ -28,9 +24,6 @@ public slots:
 	
 private:
 	Ui::SettingsWidget *ui;
-	Device *m_device;
-	MenuBar *m_menuBar;
-	StatusBar *m_statusBar;
 };
 
 

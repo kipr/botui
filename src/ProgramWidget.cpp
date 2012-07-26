@@ -6,44 +6,60 @@
 #include "Device.h"
 #include "CompileProvider.h"
 #include "LockScreen.h"
+#include "Program.h"
 
 #include <QTimer>
 #include <QDebug>
 
-ProgramWidget::ProgramWidget(const QString& program, Device *device, QWidget *parent)
-	: QWidget(parent),
+ProgramWidget::ProgramWidget(Program *program, Device *device, QWidget *parent)
+	: StandardWidget(device, parent),
 	ui(new Ui::ProgramWidget),
-	m_program(program),
-	m_device(device),
-	m_menuBar(new MenuBar(this)),
-	m_statusBar(new StatusBar(this))
+	m_program(program)
 {
 	ui->setupUi(this);
-	m_menuBar->addHomeAndBackButtons();
-	m_menuBar->setTitle("Program");
-	QAction *lock = m_menuBar->addAction("Lock Screen");
+	performStandardSetup(tr("Program"));
+	QAction *lock = m_menuBar->addAction("Lock");
 	connect(lock, SIGNAL(activated()), SLOT(lock()));
-	layout()->setMenuBar(m_menuBar);
-	m_statusBar->loadDefaultWidgets(m_device);
-	layout()->addWidget(m_statusBar);
-	qDebug() << "Program" << m_program;
-	ui->programLabel->setText(m_program);
 	
-	connect(ui->stop, SIGNAL(clicked()), SLOT(stop()));
+	ui->extra->setVisible(false);
 	
-	m_time.start();
+	connect(m_program, SIGNAL(started()), SLOT(started()));
+	connect(m_program,
+		SIGNAL(finished(int, QProcess::ExitStatus)),
+		SLOT(finished(int, QProcess::ExitStatus)));
+	
 	
 	ButtonProvider *buttonProvider = m_device->buttonProvider();
+	ui->normal->setEnabled(buttonProvider);
+	ui->extra->setEnabled(buttonProvider);
 	if(!buttonProvider) return;
+	ui->extra->setVisible(buttonProvider->isExtraShown());
 	ui->a->setText(buttonProvider->text(ButtonProvider::A));
 	ui->b->setText(buttonProvider->text(ButtonProvider::B));
+	ui->b->setText(buttonProvider->text(ButtonProvider::C));
+	ui->b->setText(buttonProvider->text(ButtonProvider::X));
+	ui->b->setText(buttonProvider->text(ButtonProvider::Y));
 	ui->z->setText(buttonProvider->text(ButtonProvider::Z));
-	connect(buttonProvider,
-		SIGNAL(buttonTextChanged(ButtonProvider::ButtonId, QString)),
-		SLOT(buttonTextChanged(ButtonProvider::ButtonId, QString)));
 		
+	connect(ui->a, SIGNAL(pressed()), SLOT(aPressed()));
+	connect(ui->b, SIGNAL(pressed()), SLOT(bPressed()));
+	connect(ui->c, SIGNAL(pressed()), SLOT(cPressed()));
+	connect(ui->x, SIGNAL(pressed()), SLOT(xPressed()));
+	connect(ui->y, SIGNAL(pressed()), SLOT(yPressed()));
+	connect(ui->z, SIGNAL(pressed()), SLOT(zPressed()));
+	
+	connect(ui->a, SIGNAL(released()), SLOT(aReleased()));
+	connect(ui->b, SIGNAL(released()), SLOT(bReleased()));
+	connect(ui->c, SIGNAL(released()), SLOT(cReleased()));
+	connect(ui->x, SIGNAL(released()), SLOT(xReleased()));
+	connect(ui->y, SIGNAL(released()), SLOT(yReleased()));
+	connect(ui->z, SIGNAL(released()), SLOT(zReleased()));
+	
+	connect(buttonProvider, SIGNAL(buttonTextChanged(ButtonProvider::ButtonId, QString)), SLOT(buttonTextChanged(ButtonProvider::ButtonId, QString)));
+	connect(buttonProvider, SIGNAL(extraShownChanged(bool)), SLOT(extraShownChanged(bool)));
+	
 	QTimer *timer = new QTimer(this);
-	timer->start(1000);
+	timer->start(100);
 	buttonProvider->connect(timer, SIGNAL(timeout()), SLOT(refresh()));
 }
 
@@ -52,57 +68,105 @@ void ProgramWidget::lock()
 	LockScreen::lock();
 }
 
-bool ProgramWidget::start()
-{
-	QString executable = m_device->compileProvider()->executableFor(m_program);
-	if(executable.isEmpty()) return false;
-	QProcess *process = new QProcess(this);
-	connect(process, SIGNAL(started()), SLOT(started()));
-	connect(process,
-		SIGNAL(finished(int, QProcess::ExitStatus)),
-		SLOT(finished(int, QProcess::ExitStatus)));
-	process->start(executable);
-	process->waitForStarted();
-	ui->console->setProcess(process);
-	return true;
-}
-
-void ProgramWidget::stop()
-{
-	QProcess *process = ui->console->process();
-	if(!process) return;
-	ui->console->setProcess(0);
-	process->terminate();
-	if(!process->waitForFinished(2000)) process->kill();
-	delete process;
-}
-
 void ProgramWidget::started()
 {
-	ui->stop->setEnabled(true);
-	m_time.restart();
+	ButtonProvider *buttonProvider = m_device->buttonProvider();
+	if(buttonProvider) buttonProvider->reset();
+	ui->console->setProcess(m_program->process());
 }
 
 void ProgramWidget::finished(int exitCode, QProcess::ExitStatus exitStatus)
 {
-	ui->stop->setEnabled(false);
-	const int msecs = m_time.elapsed();
-	ui->console->append(m_program + tr(" finished in %1 seconds").arg(msecs / 1000.0));
+	ui->console->setProcess(0);
 }
 
 void ProgramWidget::buttonTextChanged(const ButtonProvider::ButtonId& id, const QString& text)
 {
+	qDebug() << "Setting button" << id << "to" << text;
 	switch(id) {
-	case ButtonProvider::A: ui->a->setText(text);
-	case ButtonProvider::B: ui->b->setText(text);
-	case ButtonProvider::Z: ui->z->setText(text);
+	case ButtonProvider::A: ui->a->setText(text); break;
+	case ButtonProvider::B: ui->b->setText(text); break;
+	case ButtonProvider::C: ui->c->setText(text); break;
+	case ButtonProvider::X: ui->x->setText(text); break;
+	case ButtonProvider::Y: ui->y->setText(text); break;
+	case ButtonProvider::Z: ui->z->setText(text); break;
 	}
+}
+
+void ProgramWidget::extraShownChanged(const bool& shown)
+{
+	ui->extra->setVisible(shown);
+	update();
+	
+	aReleased();
+	bReleased();
+	cReleased();
+	xReleased();
+	yReleased();
+	zReleased();
+}
+
+void ProgramWidget::aPressed()
+{
+	m_device->buttonProvider()->setPressed(ButtonProvider::A, true);
+}
+
+void ProgramWidget::bPressed()
+{
+	m_device->buttonProvider()->setPressed(ButtonProvider::B, true);
+}
+
+void ProgramWidget::cPressed()
+{
+	m_device->buttonProvider()->setPressed(ButtonProvider::C, true);
+}
+
+void ProgramWidget::xPressed()
+{
+	m_device->buttonProvider()->setPressed(ButtonProvider::X, true);
+}
+
+void ProgramWidget::yPressed()
+{
+	m_device->buttonProvider()->setPressed(ButtonProvider::Y, true);
+}
+
+void ProgramWidget::zPressed()
+{
+	m_device->buttonProvider()->setPressed(ButtonProvider::Z, true);
+}
+
+void ProgramWidget::aReleased()
+{
+	m_device->buttonProvider()->setPressed(ButtonProvider::A, false);
+}
+
+void ProgramWidget::bReleased()
+{
+	m_device->buttonProvider()->setPressed(ButtonProvider::B, false);
+}
+
+void ProgramWidget::cReleased()
+{
+	m_device->buttonProvider()->setPressed(ButtonProvider::C, false);
+}
+
+void ProgramWidget::xReleased()
+{
+	m_device->buttonProvider()->setPressed(ButtonProvider::X, false);
+}
+
+void ProgramWidget::yReleased()
+{
+	m_device->buttonProvider()->setPressed(ButtonProvider::Y, false);
+}
+
+void ProgramWidget::zReleased()
+{
+	m_device->buttonProvider()->setPressed(ButtonProvider::Z, false);
 }
 
 ProgramWidget::~ProgramWidget()
 {
-	stop();
 	delete ui;
-	delete m_menuBar;
-	delete m_statusBar;
 }

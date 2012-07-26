@@ -8,6 +8,7 @@
 
 #include "RootController.h"
 #include "CompilingWidget.h"
+#include "Device.h"
 
 #include <QSettings>
 #include <QDebug>
@@ -15,8 +16,9 @@
 #define KISS_COMPILE_GROUP "kiss_compile"
 #define EXECUTABLES_KEY "executables"
 
-KissCompileProvider::KissCompileProvider(QObject *parent)
-	: CompileProvider(parent)
+KissCompileProvider::KissCompileProvider(Device *device, QObject *parent)
+	: CompileProvider(parent),
+	m_device(device)
 {
 	QSettings settings;
 	settings.beginGroup(KISS_COMPILE_GROUP);
@@ -35,7 +37,7 @@ CompilationPtr KissCompileProvider::compile(const QString& name, TinyArchive *ar
 	QDataStream stream(rawSettings);
 	stream >> settings;
 	
-	CompilationPtr compilation(new Compilation(CompilerManager::ref().compilers(), name, writer.files(), settings, "kovan"));
+	CompilationPtr compilation(new Compilation(CompilerManager::ref().compilers(), name, writer.files(), settings, m_device->name()));
 	bool success = compilation->start();
 	
 	qDebug() << "Results:" << compilation->compileResults();

@@ -18,9 +18,13 @@ public:
 	
 	void updateImage(cv::Mat image);
 	
+signals:
+	void pressed();
+	
 protected:
-	void resizeEvent(QResizeEvent *event);
-	void paintEvent(QPaintEvent *event);
+	virtual void resizeEvent(QResizeEvent *event);
+	virtual void paintEvent(QPaintEvent *event);
+	virtual void mousePressEvent(QMouseEvent *event);
 	
 private:
 	void scaleImage();

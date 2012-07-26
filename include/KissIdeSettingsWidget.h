@@ -1,18 +1,14 @@
 #ifndef _KISSIDESETTINGSWIDGET_H_
 #define _KISSIDESETTINGSWIDGET_H_
 
-#include <QWidget>
+#include "StandardWidget.h"
 
 namespace Ui
 {
 	class KissIdeSettingsWidget;
 }
 
-class MenuBar;
-class StatusBar;
-class Device;
-
-class KissIdeSettingsWidget : public QWidget
+class KissIdeSettingsWidget : public StandardWidget
 {
 Q_OBJECT
 public:
@@ -21,9 +17,6 @@ public:
 	
 private:
 	Ui::KissIdeSettingsWidget *ui;
-	Device *m_device;
-	MenuBar *m_menuBar;
-	StatusBar *m_statusBar;
 };
 
 #endif

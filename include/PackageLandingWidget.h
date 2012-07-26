@@ -1,18 +1,14 @@
 #ifndef _PACKAGELANDINGWIDGET_H_
 #define _PACKAGELANDINGWIDGET_H_
 
-#include <QWidget>
+#include "StandardWidget.h"
 
 namespace Ui
 {
 	class PackageLandingWidget;
 }
 
-class MenuBar;
-class StatusBar;
-class Device;
-
-class PackageLandingWidget : public QWidget
+class PackageLandingWidget : public StandardWidget
 {
 Q_OBJECT
 public:
@@ -21,9 +17,6 @@ public:
 	
 private:
 	Ui::PackageLandingWidget *ui;
-	Device *m_device;
-	MenuBar *m_menuBar;
-	StatusBar *m_statusBar;
 };
 
 #endif

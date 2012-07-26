@@ -1,19 +1,16 @@
 #ifndef _OTHERNETWORKWIDGET_H_
 #define _OTHERNETWORKWIDGET_H_
 
-#include <QWidget>
+#include "StandardWidget.h"
 
 namespace Ui
 {
 	class OtherNetworkWidget;
 }
 
-class MenuBar;
-class StatusBar;
-class Device;
 class KeyboardDialog;
 
-class OtherNetworkWidget : public QWidget
+class OtherNetworkWidget : public StandardWidget
 {
 Q_OBJECT
 public:
@@ -22,9 +19,6 @@ public:
 	
 private:
 	Ui::OtherNetworkWidget *ui;
-	Device *m_device;
-	MenuBar *m_menuBar;
-	StatusBar *m_statusBar;
 	
 	KeyboardDialog *m_ssid;
 	KeyboardDialog *m_password;

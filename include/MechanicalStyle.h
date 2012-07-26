@@ -7,6 +7,10 @@ class MechanicalStyle : public QPlastiqueStyle
 {
 Q_OBJECT
 public:
+	enum CustomControlElement {
+		CE_StopButton = CE_CustomBase + 1
+	};
+	
 	virtual QRect subControlRect(ComplexControl cc, const QStyleOptionComplex *opt, SubControl sc, const QWidget *widget) const;
 	virtual void drawComplexControl(ComplexControl cc, const QStyleOptionComplex *opt, QPainter *p, const QWidget *widget = 0) const;
 	virtual void drawControl(ControlElement ce, const QStyleOption *opt, QPainter *p, const QWidget *widget = 0) const;

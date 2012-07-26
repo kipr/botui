@@ -1,18 +1,14 @@
 #ifndef _HOMEWIDGET_H_
 #define _HOMEWIDGET_H_
 
-#include <QWidget>
+#include "StandardWidget.h"
 
 namespace Ui
 {
 	class HomeWidget;
 }
 
-class MenuBar;
-class StatusBar;
-class Device;
-
-class HomeWidget : public QWidget
+class HomeWidget : public StandardWidget
 {
 Q_OBJECT
 public:
@@ -28,9 +24,6 @@ public slots:
 	
 private:
 	Ui::HomeWidget *ui;
-	Device *m_device;
-	MenuBar *m_menuBar;
-	StatusBar *m_statusBar;
 };
 
 

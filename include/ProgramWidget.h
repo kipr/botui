@@ -1,8 +1,7 @@
 #ifndef _PROGRAMWIDGET_H_
 #define _PROGRAMWIDGET_H_
 
-#include <QWidget>
-#include <QTime>
+#include "StandardWidget.h"
 #include <QProcess>
 #include "ButtonProvider.h"
 
@@ -11,36 +10,42 @@ namespace Ui
 	class ProgramWidget;
 }
 
-class MenuBar;
-class StatusBar;
-class Device;
+class Program;
 
-class ProgramWidget : public QWidget
+class ProgramWidget : public StandardWidget
 {
 Q_OBJECT
 public:
-	ProgramWidget(const QString& program, Device *device, QWidget *parent = 0);
+	ProgramWidget(Program *program, Device *device, QWidget *parent = 0);
 	~ProgramWidget();
 	
 public slots:
 	void lock();
-	bool start();
-	void stop();
+	void started();
 	
 private slots:
-	void started();
 	void finished(int exitCode, QProcess::ExitStatus exitStatus);
 	
 	void buttonTextChanged(const ButtonProvider::ButtonId& id, const QString& text);
+	void extraShownChanged(const bool& shown);
+	
+	void aPressed();
+	void bPressed();
+	void cPressed();
+	void xPressed();
+	void yPressed();
+	void zPressed();
+	
+	void aReleased();
+	void bReleased();
+	void cReleased();
+	void xReleased();
+	void yReleased();
+	void zReleased();
 	
 private:
 	Ui::ProgramWidget *ui;
-	QString m_program;
-	Device *m_device;
-	MenuBar *m_menuBar;
-	StatusBar *m_statusBar;
-	
-	QTime m_time;
+	Program *m_program;
 };
 
 #endif

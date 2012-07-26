@@ -6,21 +6,15 @@
 #include "Device.h"
 #include "ConnectWidget.h"
 #include "NetworkingProvider.h"
+
 #include <QDebug>
 
 NetworkSettingsWidget::NetworkSettingsWidget(Device *device, QWidget *parent)
-	: QWidget(parent),
-	ui(new Ui::NetworkSettingsWidget),
-	m_device(device),
-	m_menuBar(new MenuBar(this)),
-	m_statusBar(new StatusBar(this))
+	: StandardWidget(device, parent),
+	ui(new Ui::NetworkSettingsWidget)
 {
 	ui->setupUi(this);
-	m_menuBar->addHomeAndBackButtons();
-	m_menuBar->setTitle("Network Settings");
-	layout()->setMenuBar(m_menuBar);
-	m_statusBar->loadDefaultWidgets(m_device);
-	layout()->addWidget(m_statusBar);
+	performStandardSetup(tr("Network Settings"));
 	
 	QObject::connect(ui->connect, SIGNAL(clicked()), SLOT(connect()));
 	QObject::connect(ui->turnOn, SIGNAL(clicked()), SLOT(turnOn()));
@@ -33,8 +27,6 @@ NetworkSettingsWidget::NetworkSettingsWidget(Device *device, QWidget *parent)
 NetworkSettingsWidget::~NetworkSettingsWidget()
 {
 	delete ui;
-	delete m_menuBar;
-	delete m_statusBar;
 }
 
 void NetworkSettingsWidget::connect()

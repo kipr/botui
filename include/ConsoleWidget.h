@@ -11,8 +11,8 @@ public:
 	ConsoleWidget(QWidget *parent = 0);
 	~ConsoleWidget();
 	
-	void setProcess(QProcess *process);
-	QProcess *process() const;
+	void setProcess(QIODevice *process);
+	QIODevice *process() const;
 	
 protected:
 	void keyPressEvent(QKeyEvent * event);
@@ -31,7 +31,7 @@ private:
 	QStringList cmdHistory;
 	int histLocation;
 	QString tempCmd;
-	QProcess *m_process;
+	QIODevice *m_process;
 };
 
 #endif
