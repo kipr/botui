@@ -7,6 +7,8 @@
 #include <kiss-compiler/CompilerPluginManager.h>
 #include "SimulatorDevice.h"
 #include "FirstRunWizard.h"
+#include "FactoryWidget.h"
+
 #include <QApplication>
 #include <QDir>
 
@@ -20,11 +22,13 @@ int main(int argc, char* argv[])
 	
 	CompilerPluginManager::ref().loadAll();
 	
+	srand(time(NULL));
+	
 	Kovan::Device device;
 	if(device.isTouchscreen()) app.setOverrideCursor(QCursor(Qt::BlankCursor));
 	//RootController::ref().presentQml(QUrl::fromLocalFile("loading.qml"));
 	RootController::ref().presentWidget(new HomeWidget(&device));
-	//RootController::ref().presentDialog(new FirstRunWizard(&device));
+	RootController::ref().presentWidget(new FactoryWidget(&device));
 	
 	return app.exec();
 }

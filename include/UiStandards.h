@@ -9,6 +9,7 @@ public:
 	static QString homeString();
 	static QString backString();
 	static QString cancelString();
+	static QString lockString();
 };
 
 #endif

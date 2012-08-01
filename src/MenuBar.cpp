@@ -44,8 +44,10 @@ QString MenuBar::title() const
 void MenuBar::addHomeAndBackButtons()
 {
 	clear();
-	QAction *homeAction = addAction(UiStandards::homeString());
-	connect(homeAction, SIGNAL(activated()), RootController::ptr(), SLOT(dismissAllWidgets()));
+	if(RootController::ref().depth() > 0) {
+		QAction *homeAction = addAction(UiStandards::homeString());
+		connect(homeAction, SIGNAL(activated()), RootController::ptr(), SLOT(dismissAllWidgets()));
+	}
 
 	if(RootController::ref().depth() > 1) {
 		QAction *backAction = addAction(UiStandards::backString());

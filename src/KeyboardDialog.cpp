@@ -10,20 +10,19 @@ KeyboardDialog::KeyboardDialog(const QString& text, Mode mode, QWidget *parent) 
 {
 	ui->setupUi(this);
 	
-	alphaVerticalLayout = new QVBoxLayout();
-	numVerticalLayout = new QVBoxLayout();
+	alphaVerticalLayout = new QVBoxLayout(this);
+	numVerticalLayout = new QVBoxLayout(this);
 	alphaVerticalLayout->setContentsMargins(0, 3, 0, 9);
 	numVerticalLayout->setContentsMargins(0, 3, 0, 9);
 	
-	label = new QLabel();
-	display = new QLineEdit();
+	label = new QLabel(this);
+	display = new QLineEdit(this);
 	QFont font;
 	font.setPointSize(16);
 	label->setText(text);
 	label->setFont(font);
 	display->setFont(font);
-	if(mode == Password)
-		display->setEchoMode(QLineEdit::Password);
+	if(mode == Password) display->setEchoMode(QLineEdit::Password);
 	alphaVerticalLayout->addWidget(label);
 	alphaVerticalLayout->addWidget(display);
 	
@@ -51,8 +50,7 @@ void KeyboardDialog::symbolPressed()
 	KeyButton *button = qobject_cast<KeyButton *>(sender());
 	display->insert(button->text());
 	
-	if(shifted)
-		shiftPressed();
+	if(shifted) shiftPressed();
 }
 
 void KeyboardDialog::spacePressed()
@@ -88,12 +86,8 @@ void KeyboardDialog::numPressed()
 		ui->numGrid->addWidget(numButton, 5, 0, 1, 4);
 	
 		ui->numWidget->show();
-	}
-	
-	else
-	{
-		if(symButton->isSwitched())
-			symPressed();
+	} else {
+		if(symButton->isSwitched()) symPressed();
 		ui->numWidget->hide();
 		
 		alphaVerticalLayout->addWidget(label);
@@ -154,8 +148,10 @@ void KeyboardDialog::setupAlphaButtons()
 	
 	for(int i = 0; i < 10; ++i)
 		ui->alphaGrid->addWidget(alphaButtons[i], 2, i * 2, 1, 2);
+	
 	for(int i = 0; i < 9; ++i)
 		ui->alphaGrid->addWidget(alphaButtons[i + 10], 3, i * 2 + 1, 1, 2);
+	
 	for(int i = 0; i < 7; ++i)
 		ui->alphaGrid->addWidget(alphaButtons[i + 19], 4, i * 2 + 3, 1, 2);
 }
@@ -190,11 +186,11 @@ void KeyboardDialog::setupNumButtons()
 	numButtons[23] = makeButton(SLOT(symbolPressed()), "!", "!");
 	numButtons[24] = makeButton(SLOT(symbolPressed()), "'", "'");
 
-	for(int i = 0; i < 10; i++)
-	{
+	for(int i = 0; i < 10; i++) {
 		ui->numGrid->addWidget(numButtons[i], 2, i * 2, 1, 2);
 		ui->numGrid->addWidget(numButtons[i + 10], 3, i * 2, 1, 2);
 	}
+	
 	for(int i = 0; i < 5; i++)
 		ui->numGrid->addWidget(numButtons[i + 20], 4, i * 2 + 5, 1, 2);
 }

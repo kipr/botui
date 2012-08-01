@@ -23,10 +23,27 @@ public:
 	void setDismissable(bool dismissable);
 	bool isDismissable() const;
 	
+	template<typename T>
+	void dismissUntil()
+	{
+		while(depth() > 1 && !dynamic_cast<T *>(m_stack.top())) m_stack.pop();
+	}
+	
+	template<typename T>
+	bool containsWidget()
+	{
+		QStack<QWidget *>::ConstIterator it = m_stack.begin();
+		for(; it != m_stack.end(); ++it) {
+			if(dynamic_cast<T *>(*it)) return true;
+		}
+		return false;
+	}
+	
 public slots:
 	void presentQml(const QUrl& url);
 	int presentDialog(QDialog *dialog);
 	void presentWidget(QWidget *widget, bool owns = true);
+	
 	void dismissWidget();
 	void dismissAllWidgets();
 	

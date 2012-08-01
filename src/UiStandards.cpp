@@ -16,3 +16,8 @@ QString UiStandards::cancelString()
 {
 	return QObject::tr("Cancel");
 }
+
+QString UiStandards::lockString()
+{
+	return QObject::tr("Lock Screen");
+}

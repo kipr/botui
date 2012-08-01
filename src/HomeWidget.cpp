@@ -12,6 +12,7 @@
 #include "Device.h"
 #include "ProgramSelectionWidget.h"
 #include "Program.h"
+#include "UiStandards.h"
 #include "LockScreen.h"
 
 HomeWidget::HomeWidget(Device *device, QWidget *parent)
@@ -19,14 +20,14 @@ HomeWidget::HomeWidget(Device *device, QWidget *parent)
 	ui(new Ui::HomeWidget)
 {
 	ui->setupUi(this);
-	performStandardSetup(tr("Home Page"));
+	performStandardSetup(UiStandards::homeString());
 	
 	connect(ui->programs, SIGNAL(clicked()), SLOT(programs()));
 	connect(ui->motorsSensors, SIGNAL(clicked()), SLOT(motorsSensors()));
 	connect(ui->settings, SIGNAL(clicked()), SLOT(settings()));
 	connect(ui->about, SIGNAL(clicked()), SLOT(about()));
 	
-	QAction *lock = m_menuBar->addAction("Lock Screen");
+	QAction *lock = m_menuBar->addAction(UiStandards::lockString());
 	connect(lock, SIGNAL(activated()), SLOT(lock()));
 	
 	ui->programs->setEnabled(m_device->filesystemProvider());

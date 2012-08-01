@@ -64,9 +64,15 @@ const bool EasyDeviceCommunicationProvider::run(const QString& name)
 {
 	QString executable = device()->compileProvider()->executableFor(name);
 	if(executable.isEmpty()) return false;
-	ProgramWidget *programWidget = new ProgramWidget(Program::instance(), device());
-	// Must invoke this method on the gui thread
-	QMetaObject::invokeMethod(&RootController::ref(), "presentWidget", Qt::QueuedConnection, Q_ARG(QWidget *, programWidget));
+	
+	RootController *controller = &RootController::ref();
+	
+	if(controller->containsWidget<ProgramWidget>()) controller->dismissUntil<ProgramWidget>();
+	else {
+		ProgramWidget *programWidget = new ProgramWidget(Program::instance(), device());
+		QMetaObject::invokeMethod(controller, "presentWidget", Qt::QueuedConnection,
+			Q_ARG(QWidget *, programWidget));
+	}
 	return Program::instance()->start(executable);
 }
 

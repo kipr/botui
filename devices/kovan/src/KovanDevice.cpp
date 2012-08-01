@@ -144,7 +144,7 @@ void Kovan::ProgramsItemModel::programUpdated(const QString& name)
 	for(int i = 0; i < count; ++i) {
 		Kovan::ProgramItem *item = ProgramItem::programitem_cast(QStandardItemModel::item(i));
 		if(item && item->name() == name) {
-			insertRow(0, takeItem(i));
+			insertRow(0, takeRow(i)[0]);
 			return;
 		}
 	}

@@ -7,6 +7,7 @@
 #include "CompileProvider.h"
 #include "LockScreen.h"
 #include "Program.h"
+#include "UiStandards.h"
 
 #include <QTimer>
 #include <QDebug>
@@ -18,7 +19,7 @@ ProgramWidget::ProgramWidget(Program *program, Device *device, QWidget *parent)
 {
 	ui->setupUi(this);
 	performStandardSetup(tr("Program"));
-	QAction *lock = m_menuBar->addAction("Lock");
+	QAction *lock = m_menuBar->addAction(UiStandards::lockString());
 	connect(lock, SIGNAL(activated()), SLOT(lock()));
 	
 	ui->extra->setVisible(false);
@@ -32,13 +33,17 @@ ProgramWidget::ProgramWidget(Program *program, Device *device, QWidget *parent)
 	ButtonProvider *buttonProvider = m_device->buttonProvider();
 	ui->normal->setEnabled(buttonProvider);
 	ui->extra->setEnabled(buttonProvider);
+	ui->console->setProcess(m_program->process());
+	
 	if(!buttonProvider) return;
 	ui->extra->setVisible(buttonProvider->isExtraShown());
+	
 	ui->a->setText(buttonProvider->text(ButtonProvider::A));
 	ui->b->setText(buttonProvider->text(ButtonProvider::B));
-	ui->b->setText(buttonProvider->text(ButtonProvider::C));
-	ui->b->setText(buttonProvider->text(ButtonProvider::X));
-	ui->b->setText(buttonProvider->text(ButtonProvider::Y));
+	ui->c->setText(buttonProvider->text(ButtonProvider::C));
+	
+	ui->x->setText(buttonProvider->text(ButtonProvider::X));
+	ui->y->setText(buttonProvider->text(ButtonProvider::Y));
 	ui->z->setText(buttonProvider->text(ButtonProvider::Z));
 		
 	connect(ui->a, SIGNAL(pressed()), SLOT(aPressed()));
