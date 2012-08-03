@@ -4,17 +4,15 @@ Rectangle {
 	id: root
 
 	gradient: Gradient {
-		GradientStop { position: 0.0; color: "#555555" }
+		GradientStop { position: 0.0; color: "#222222" }
 		GradientStop { position: 1.0; color: "#000000" }
 	}
 
-	Rectangle {
+	Image {
 		id: rect
 		width: 50; height: 50
-		color: "white"
-		radius: 50
 		smooth: true
-		opacity: (600.0 - rect.x) / 600
+		source: "mcdorman-lock.png"
 		x: root.width / 2 - rect.width / 2
 		y: root.height / 2 - rect.height / 2
 		
@@ -37,13 +35,5 @@ Rectangle {
 				}
 			}
 		}
-	}
-	
-	Text {
-		text: "Screen Locked. Drag the circle to unlock.";
-		color: "white"
-		anchors.horizontalCenter: root.horizontalCenter;
-		anchors.bottom: root.bottom;
-		anchors.bottomMargin: 5;
 	}
 }

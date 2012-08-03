@@ -37,6 +37,7 @@ void DeclarativeView::reload()
 
 void DeclarativeView::createWatcher()
 {
+	if(source().toLocalFile().isEmpty()) return;
 	m_watcher = new QFileSystemWatcher();
 	m_watcher->addPath(source().toLocalFile());
 	connect(m_watcher, SIGNAL(fileChanged(QString)), SLOT(reload()));

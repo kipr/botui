@@ -2,5 +2,7 @@
   <qresource prefix="/">
     <file>qml/loading.qml</file>
     <file>qml/lock.qml</file>
+    <file>qml/50-screenlock.png</file>
+    <file>qml/mcdorman-lock.png</file>
   </qresource>
 </RCC>
