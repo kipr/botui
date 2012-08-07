@@ -21,10 +21,12 @@ SerialCommunicationProvider::SerialCommunicationProvider(Device *device, const Q
 	: CommunicationProvider(device), m_serial(new SerialIODevice(path))
 {
 	connect(m_serial, SIGNAL(readyRead()), SLOT(readyRead()));
+	m_serial->open(QIODevice::ReadWrite);
 }
 
 SerialCommunicationProvider::~SerialCommunicationProvider()
 {
+	m_serial->close();
 	delete m_serial;
 }
 
