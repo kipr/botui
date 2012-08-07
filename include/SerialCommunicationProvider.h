@@ -11,7 +11,7 @@ class SerialCommunicationProvider : public CommunicationProvider
 {
 Q_OBJECT
 public:
-	SerialCommunicationProvider(Device *device, SerialIODevice *serial);
+	SerialCommunicationProvider(Device *device, const QString& path);
 	~SerialCommunicationProvider();
 	
 private slots:

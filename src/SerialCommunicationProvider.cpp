@@ -17,8 +17,8 @@
 #define LOCKED_KEY "locked"
 #define AUTHENTICATE_KEY "authenticate"
 
-SerialCommunicationProvider::SerialCommunicationProvider(Device *device, SerialIODevice *serial)
-	: CommunicationProvider(device), m_serial(serial)
+SerialCommunicationProvider::SerialCommunicationProvider(Device *device, const QString& path)
+	: CommunicationProvider(device), m_serial(new SerialIODevice(path))
 {
 	connect(m_serial, SIGNAL(readyRead()), SLOT(readyRead()));
 }

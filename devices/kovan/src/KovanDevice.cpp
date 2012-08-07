@@ -7,6 +7,7 @@
 #include "SettingsProvider.h"
 #include "KovanProgramsItemModel.h"
 #include "EasyDeviceCommunicationProvider.h"
+#include "SerialCommunicationProvider.h"
 #include "Connman.h"
 #include "KissCompileProvider.h"
 #include "KovanButtonProvider.h"
@@ -261,6 +262,7 @@ Kovan::Device::Device()
 	: m_filesystemProvider(new Kovan::FilesystemProvider()),
 	m_compileProvider(new KissCompileProvider(this)),
 	m_communicationProviders(CommunicationProviderList()
+		<< new SerialCommunicationProvider(this, "/dev/ttyGS0")
 		<< new EasyDeviceCommunicationProvider(this)),
 	m_networkingProvider(new Kovan::Connman(this)),
 	m_batteryLevelProvider(new Kovan::BatteryLevelProvider()),
