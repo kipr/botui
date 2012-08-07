@@ -8,6 +8,9 @@
 #include "Program.h"
 #include <kiss-compiler/QTinyArchiveStream.h>
 
+#include <QThread>
+#include <QThreadPool>
+
 #include <QDebug>
 
 #define AVAILABLE_KEY "available?"
@@ -18,16 +21,25 @@
 #define AUTHENTICATE_KEY "authenticate"
 
 SerialCommunicationProvider::SerialCommunicationProvider(Device *device, const QString& path)
-	: CommunicationProvider(device), m_serial(new SerialIODevice(path))
+	: CommunicationProvider(device), m_serial(new SerialIODevice(path)), m_payload(0)
 {
 	connect(m_serial, SIGNAL(readyRead()), SLOT(readyRead()));
 	m_serial->open(QIODevice::ReadWrite);
+	QThreadPool::globalInstance()->start(this, QThread::IdlePriority);
 }
 
 SerialCommunicationProvider::~SerialCommunicationProvider()
 {
 	m_serial->close();
 	delete m_serial;
+}
+
+void SerialCommunicationProvider::run()
+{
+	for(;;) {
+		readyRead();
+		QThread::yieldCurrentThread();
+	}
 }
 
 const bool SerialCommunicationProvider::run(const QString& name)
@@ -99,6 +111,7 @@ void SerialCommunicationProvider::handleCommand(const QString& command, QDataStr
 
 void SerialCommunicationProvider::readyRead()
 {
+	// qDebug() << "Got data over serial!";
 	for(;;) {
 		if(!m_payload && m_serial->bytesAvailable() < sizeof(quint32)) return;
 		if(!m_payload && m_serial->bytesAvailable() >= sizeof(quint32)) {

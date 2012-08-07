@@ -13,6 +13,8 @@
 
 #include <QDebug>
 
+
+
 SerialIODevice::SerialIODevice(const QString& path)
 	: m_path(path),
 	m_baudRate(115200)

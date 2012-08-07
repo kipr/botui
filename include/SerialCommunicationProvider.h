@@ -3,16 +3,20 @@
 
 #include "CommunicationProvider.h"
 #include <kiss-compiler/Compilation.h>
+#include <QRunnable>
 
 class FilesystemProvider;
 class SerialIODevice;
 
-class SerialCommunicationProvider : public CommunicationProvider
+class SerialCommunicationProvider : public CommunicationProvider, public QRunnable
 {
 Q_OBJECT
 public:
 	SerialCommunicationProvider(Device *device, const QString& path);
 	~SerialCommunicationProvider();
+	
+protected:
+	virtual void run();
 	
 private slots:
 	void readyRead();
