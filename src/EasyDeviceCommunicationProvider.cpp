@@ -94,6 +94,24 @@ const bool EasyDeviceCommunicationProvider::download(const QString& name, TinyAr
 	return filesystem && filesystem->setProgram(name, archive);
 }
 
+bool EasyDeviceCommunicationProvider::deleteProgram(const QString& name)
+{
+	// TODO: NYI
+	return false;
+}
+
+QStringList EasyDeviceCommunicationProvider::list() const
+{
+	// TODO: NYI
+	return QStringList();
+}
+
+QString EasyDeviceCommunicationProvider::interaction(const QString& command)
+{
+	// TODO: NYI
+	return QString();
+}
+
 const bool EasyDeviceCommunicationProvider::isAuthenticated(const QHostAddress& address)
 {
 	return m_currentAddress == address;

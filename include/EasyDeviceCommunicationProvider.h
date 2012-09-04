@@ -28,6 +28,9 @@ private:
 	virtual const bool run(const QString& name);
 	virtual CompilationPtr compile(const QString& name);
 	virtual const bool download(const QString& name, TinyArchive *archive);
+	virtual bool deleteProgram(const QString& name);
+	virtual QStringList list() const;
+	virtual QString interaction(const QString& command);
 	
 	virtual const bool isAuthenticated(const QHostAddress& address);
 	virtual const bool authenticationRequest(const QHostAddress& address);

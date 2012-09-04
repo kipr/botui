@@ -21,7 +21,7 @@
 #define AUTHENTICATE_KEY "authenticate"
 
 SerialCommunicationProvider::SerialCommunicationProvider(Device *device, const QString& path)
-	: CommunicationProvider(device), m_serial(new SerialIODevice(path)), m_payload(0)
+	: CommunicationProvider(device), m_payload(0), m_serial(new SerialIODevice(path))
 {
 	connect(m_serial, SIGNAL(readyRead()), SLOT(readyRead()));
 	m_serial->open(QIODevice::ReadWrite);
@@ -92,7 +92,7 @@ void SerialCommunicationProvider::handleCommand(const QString& command, QDataStr
 		stream >> name;
 		qDebug() << "Compiling" << name << "...";
 		CompilationPtr compilation = compile(name);
-		if(!compilation.get()) out << CompileResult(false);
+		if(!compilation.isNull()) out << CompileResult(false);
 		else out << compilation->results();
 	} else if(command == DOWNLOAD_KEY) {
 		QString name;
@@ -112,6 +112,7 @@ void SerialCommunicationProvider::handleCommand(const QString& command, QDataStr
 void SerialCommunicationProvider::readyRead()
 {
 	// qDebug() << "Got data over serial!";
+	if(m_serial->bytesAvailable() > 0) qDebug() << "Bytes ready for reading" << m_serial->bytesAvailable();
 	for(;;) {
 		if(!m_payload && m_serial->bytesAvailable() < sizeof(quint32)) return;
 		if(!m_payload && m_serial->bytesAvailable() >= sizeof(quint32)) {
