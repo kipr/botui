@@ -1,6 +1,6 @@
 #include "KissCompileProvider.h"
 
-#include <TinyArchive.h>
+#include <tinyarchive.hpp>
 #include <kiss-compiler/QTinyArchive.h>
 #include <kiss-compiler/Temporary.h>
 #include <kiss-compiler/ArchiveWriter.h>
