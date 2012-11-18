@@ -12,6 +12,8 @@ public:
 	NetworkItemModel(QObject *parent = 0);
 	~NetworkItemModel();
 	
+	void setNetworks(const NetworkList &networks);
+	
 public slots:
 	void networkAdded(const Network &network);
 	void networkRemoved(const Network &network);

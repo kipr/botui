@@ -16,11 +16,11 @@ public:
 	~NetworkManager();
 	
 	void addNetwork(const Network &network);
-	const NetworkList &networks() const;
+	NetworkList networks() const;
 	
-	bool connect();
-	void disconnect();
-	bool isConnected() const;
+	bool turnOn();
+	void turnOff();
+	bool isOn() const;
 	
 private:
 	NetworkList m_networks;

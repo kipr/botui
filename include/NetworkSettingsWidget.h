@@ -17,6 +17,7 @@ public:
 	
 public slots:
 	void connect();
+	void manage();
 	void turnOn();
 	void turnOff();
 	void updateInformation();

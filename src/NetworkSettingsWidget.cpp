@@ -34,6 +34,11 @@ void NetworkSettingsWidget::connect()
 	RootController::ref().presentWidget(new ConnectWidget(m_device));
 }
 
+void NetworkSettingsWidget::manage()
+{
+	RootController::ref().presentWidget(new ConnectWidget(m_device));
+}
+
 void NetworkSettingsWidget::turnOn()
 {
 	// m_device->networkingProvider()->setNetworkState(NetworkingProvider::NetworkOn);

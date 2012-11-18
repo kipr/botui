@@ -3,6 +3,7 @@
 #include "NMNetworkManager.h"
 #include "NMDevice.h"
 #include "NMSettings.h"
+#include "NMSettingsConnection.h"
 
 #include <QDBusConnection>
 #include <QUuid>
@@ -45,14 +46,54 @@ void NetworkManager::addNetwork(const Network &network)
 		connection["802-11-wireless-security"]["psk"] = network.password();
 	}
 	
-	NMSettings settings(NM_SERVICE,
-		"/org/freedesktop/NetworkManager/Settings", QDBusConnection::systemBus());
+	NMSettings settings(NM_SERVICE, NM_OBJECT "/Settings", QDBusConnection::systemBus());
 	settings.AddConnection(connection);
 }
 
-const NetworkList &NetworkManager::networks() const
+NetworkList NetworkManager::networks() const
 {
-	return m_networks;
+	NetworkList networks;
+	NMSettings settings(NM_SERVICE, NM_OBJECT "/Settings", QDBusConnection::systemBus());
+	QList<QDBusObjectPath> connections = settings.ListConnections();
+	
+	// TODO: It would be nice to make this static somewhere
+	QMap<QString, Network::Security> securityMap;
+	securityMap["none"] = Network::None;
+	securityMap["wep"] = Network::Wep;
+	securityMap["ieee8021x"] = Network::DynamicWep;
+	securityMap["wpa-psk"] = Network::Wpa;
+	securityMap["wpa-epa"] = Network::WpaEnterprise;
+	
+	foreach(const QDBusObjectPath &connectionPath, connections) {
+		NMSettingsConnection conn(NM_SERVICE, connectionPath.path(), QDBusConnection::systemBus());
+		Connection details = conn.GetSettings().value();
+		Network network;
+		network.setSsid(details["802-11-wireless"]["ssid"].toString());
+		network.setSecurity(securityMap[details["802-11-wireless-security"]["security"].toString()]);
+		// Technically, password only applies to WEP connections. We always store both password
+		// and psk, however, so it is a somewhat safe assumption to only try the password
+		// entry.
+		network.setPassword(details["802-11-wireless"]["password"].toString());
+		networks << network;
+	}
+	
+	return networks;
+}
+
+bool NetworkManager::turnOn()
+{
+	m_nm->Enable(true);
+	return true; // TODO: This is a bad assumption
+}
+
+void NetworkManager::turnOff()
+{
+	m_nm->Enable(false);
+}
+
+bool NetworkManager::isOn() const
+{
+	return m_nm->networkingEnabled();
 }
 
 NetworkManager::NetworkManager()
