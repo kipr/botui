@@ -1,4 +1,5 @@
 #include "NetworkManager.h"
+
 #include "NMNetworkManager.h"
 #include "NMDevice.h"
 #include "NMSettings.h"
@@ -17,22 +18,17 @@ NetworkManager::~NetworkManager()
 
 void NetworkManager::addNetwork(const Network &network)
 {
-	// Make IPv4 automatic
-	QVariantMap ip4;
-	ip4["method"] = "auto";
+	Connection connection;
+	connection["ipv4"]["method"] = "auto";
+	connection["ipv6"]["method"] = "auto";
 	
-	// Turn off IPv6
-	QVariantMap ip6;
-	ip6["method"] = "ignore";
-	
-	QVariantMap connection;
 	// For now we only handle wifi
-	connection["type"] = "802-11-wireless";
-	connection["uuid"] = QUuid::createUuid().toString();
+	connection["connection"]["type"] = "802-11-wireless";
+	connection["connection"]["uuid"] = QUuid::createUuid().toString();
 	// File name is just the SSID for now
-	connection["id"] = network.ssid();
+	connection["connection"]["id"] = network.ssid();
 	
-	const static char *securityTypes[] = {
+	const static QString securityTypes[] = {
 		"none",
 		"wep",
 		"ieee8021x",
@@ -40,32 +36,18 @@ void NetworkManager::addNetwork(const Network &network)
 		"wpa-epa"
 	};
 	
-	QVariantMap wifi;
-	wifi["ssid"] = network.ssid().toLatin1();
-	QVariantMap securityConfig;
+	connection["802-11-wireless"]["ssid"] = network.ssid().toLatin1();
 	if(network.security() != Network::None) {
-		wifi["security"] = "802-11-wireless-security";
-		securityConfig["key-mgmt"] = securityTypes[network.security()];
-		
+		connection["802-11-wireless-security"]["security"] = securityTypes[network.security()];
 		// WEP uses this key
-		securityConfig["password"] = network.password();
-		
+		connection["802-11-wireless-security"]["password"] = network.password();
 		// WPA uses this one
-		securityConfig["psk"] = network.password();
+		connection["802-11-wireless-security"]["psk"] = network.password();
 	}
-	
-	QVariantMap config;
-	config["connection"] = connection;
-	config["802-11-wireless"] = wifi;
-	if(!securityConfig.isEmpty()) {
-		config["802-11-wireless-security"] = securityConfig;
-	}
-	config["ipv4"] = ip4;
-	config["ipv6"] = ip6;
 	
 	NMSettings settings(NM_SERVICE,
 		"/org/freedesktop/NetworkManager/Settings", QDBusConnection::systemBus());
-	settings.AddConnection(config);
+	settings.AddConnection(connection);
 }
 
 const NetworkList &NetworkManager::networks() const
