@@ -1,5 +1,7 @@
 #include "HomeWidget.h"
 
+#include <QApplication>
+
 #include "ui_HomeWidget.h"
 #include "MenuBar.h"
 #include "StatusBar.h"
@@ -53,6 +55,13 @@ void HomeWidget::motorsSensors()
 void HomeWidget::settings()
 {
 	RootController::ref().presentWidget(new SettingsWidget(m_device));
+}
+
+void HomeWidget::help()
+{
+	// TODO: This is temporary
+	system("Xorg");
+	QApplication::exit(0);
 }
 
 void HomeWidget::about()

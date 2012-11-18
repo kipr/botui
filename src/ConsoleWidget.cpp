@@ -49,96 +49,119 @@ void ConsoleWidget::readStandardOut()
 	update();
 }
 
-void ConsoleWidget::changeDir(const QString & dir)
-{
-	QString theDir = QString(dir);
-	theDir = theDir.replace(QChar('/'), "\\");
-	m_process->write("cd ", 3);
-	m_process->write(theDir.toAscii().data(), theDir.length());
-	m_process->write("\r\n", 2);
-}
-
 void ConsoleWidget::keyPressEvent(QKeyEvent * event)
 {
 	int key = event->key();
-
+	Qt::KeyboardModifiers modifiers = event->modifiers();
 	setTextCursor(curCursorLoc);
-
-	if (key != Qt::Key_Backspace) {
-		if (key == Qt::Key_Return || key == Qt::Key_Enter) {
-			inputCharCount = 0;
-		} else if (key == Qt::Key_Up) {
-			if (cmdHistory.size()) {
-				if (histLocation == -1) {
-					histLocation = cmdHistory.size() - 1;
-					tempCmd = cmdStr;
-				} else if (histLocation == 0) {
-					QApplication::beep();
-					event->ignore();
-					return;
-				} else {
-					--histLocation;
-				}
-
-				for (int i = 0; i < inputCharCount; ++i) {
-					QTextEdit::keyPressEvent(new QKeyEvent(QEvent::KeyPress, Qt::Key_Backspace, Qt::NoModifier));
-				}
-
-				inputCharCount = cmdHistory.at(histLocation).length();
-				this->insertPlainText(cmdHistory.at(histLocation));
-				cmdStr = cmdHistory.at(histLocation);
-			}
-
-			event->ignore();
-			return;
-		} else if (key == Qt::Key_Down) {
-			QString str = "";
+	
+	if(key == Qt::Key_Backspace) {
+		if (inputCharCount) {
+			--inputCharCount;
+			QTextEdit::keyPressEvent(event);
+			cmdStr.remove(inputCharCount, 1);
+		}
+		else QApplication::beep();
+	} else if(key == Qt::Key_Delete) {
+		if(!curCursorLoc.atBlockEnd()) {
+			QTextEdit::keyPressEvent(event);
+			cmdStr.remove(inputCharCount, 1);
+		}
+		else QApplication::beep();
+	} else if (key == Qt::Key_Return || key == Qt::Key_Enter) {
+		inputCharCount = 0;
+	} else if (key == Qt::Key_Up) {
+		if (cmdHistory.size()) {
 			if (histLocation == -1) {
+				histLocation = cmdHistory.size() - 1;
+				tempCmd = cmdStr;
+			}
+			else if (histLocation == 0) {
 				QApplication::beep();
 				event->ignore();
 				return;
-			} else if (histLocation == cmdHistory.size() - 1) {
-				histLocation = -1;
-				str = tempCmd;
-			} else {
-				++histLocation;
-				str = cmdHistory.at(histLocation);
 			}
+			else --histLocation;
 
 			for (int i = 0; i < inputCharCount; ++i) {
 				QTextEdit::keyPressEvent(new QKeyEvent(QEvent::KeyPress, Qt::Key_Backspace, Qt::NoModifier));
 			}
 
-			inputCharCount = str.length();
-			this->insertPlainText(str);
-			cmdStr = str;
-		} else if (key == Qt::Key_Left) {
-			if (inputCharCount) {
-				--inputCharCount;
-				QTextEdit::keyPressEvent(event);
-			} else QApplication::beep();
-		} else if (key == Qt::Key_Right) {
-			QTextCursor cursor = this->textCursor();
-			if (cursor.movePosition(QTextCursor::Right)) {
-				++inputCharCount;
-				this->setTextCursor(cursor);
-			} else QApplication::beep();
-		} else if (key == Qt::Key_Tab) {
-		} else {
-			QString text = event->text();
-			for (int i = 0; i < text.length(); ++i) {
-				if (text.at(i).isPrint()) ++inputCharCount;
-			}
-			QTextEdit::keyPressEvent(event);
+			inputCharCount = cmdHistory.at(histLocation).length();
+			this->insertPlainText(cmdHistory.at(histLocation));
+			cmdStr = cmdHistory.at(histLocation);
 		}
-	} else {
+
+		event->ignore();
+		return;
+	} else if (key == Qt::Key_Down) {
+		QString str = "";
+		if (histLocation == -1) {
+			QApplication::beep();
+			event->ignore();
+			return;
+		}
+		else if (histLocation == cmdHistory.size() - 1) {
+			histLocation = -1;
+			str = tempCmd;
+		}
+		else {
+			++histLocation;
+			str = cmdHistory.at(histLocation);
+		}
+
+		for (int i = 0; i < inputCharCount; ++i) {
+			QTextEdit::keyPressEvent(new QKeyEvent(QEvent::KeyPress, Qt::Key_Backspace, Qt::NoModifier));
+		}
+
+		inputCharCount = str.length();
+		this->insertPlainText(str);
+		cmdStr = str;
+	} else if (key == Qt::Key_Left) {
 		if (inputCharCount) {
 			--inputCharCount;
 			QTextEdit::keyPressEvent(event);
-			cmdStr.remove(inputCharCount, 1);
-		} else QApplication::beep();
+		}
+		else QApplication::beep();
+	} else if (key == Qt::Key_Right) {
+		QTextCursor cursor = this->textCursor();
+		if (cursor.movePosition(QTextCursor::Right)) {
+			++inputCharCount;
+			this->setTextCursor(cursor);
+		}
+		else QApplication::beep();
 	}
-
+	
+	else if (key == Qt::Key_Tab) {}
+	
+	// else if (modifiers == Qt::ControlModifier && key == Qt::Key_C) emit abortRequested();
+	
+	else if ((modifiers == Qt::ControlModifier && key == Qt::Key_A) || key == Qt::Key_Home) {
+		inputCharCount = 0;
+		moveCursor(QTextCursor::StartOfLine);
+	} else if ((modifiers == Qt::ControlModifier && key == Qt::Key_E) || key == Qt::Key_End) {
+		inputCharCount = cmdStr.length();
+		moveCursor(QTextCursor::EndOfLine);
+	} else if (modifiers == Qt::ControlModifier && key == Qt::Key_K) {
+		moveCursor(QTextCursor::EndOfLine);
+		for (int i = inputCharCount; i < cmdStr.length(); ++i) {
+			QTextEdit::keyPressEvent(new QKeyEvent(QEvent::KeyPress, Qt::Key_Backspace, Qt::NoModifier));
+		}
+		cmdStr.remove(inputCharCount, cmdStr.length() - inputCharCount);
+	} else if (modifiers == Qt::ControlModifier && key == Qt::Key_U) {
+		for(int i = 0; i < inputCharCount; ++i) {
+			QTextEdit::keyPressEvent(new QKeyEvent(QEvent::KeyPress, Qt::Key_Backspace, Qt::NoModifier));
+		}
+		cmdStr.remove(0, inputCharCount);
+		inputCharCount = 0;
+	} else {
+		QString text = event->text();
+		for (int i = 0; i < text.length(); ++i) {
+			if (text.at(i).isPrint()) ++inputCharCount;
+		}
+		QTextEdit::keyPressEvent(event);
+	}
+	
 	if (key == Qt::Key_Return || key == Qt::Key_Enter) {
 		moveCursor(QTextCursor::End);
 		m_process->write(cmdStr.toAscii().data(), cmdStr.length());
@@ -154,5 +177,6 @@ void ConsoleWidget::keyPressEvent(QKeyEvent * event)
 			if (input.at(i).isPrint()) cmdStr.insert(inputCharCount - 1, input.at(i));
 		}
 	}
+	
 	curCursorLoc = textCursor();
 }

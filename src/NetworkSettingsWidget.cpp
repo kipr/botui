@@ -5,7 +5,7 @@
 #include "StatusBar.h"
 #include "Device.h"
 #include "ConnectWidget.h"
-#include "NetworkingProvider.h"
+#include "NetworkManager.h"
 
 #include <QDebug>
 
@@ -19,7 +19,7 @@ NetworkSettingsWidget::NetworkSettingsWidget(Device *device, QWidget *parent)
 	QObject::connect(ui->connect, SIGNAL(clicked()), SLOT(connect()));
 	QObject::connect(ui->turnOn, SIGNAL(clicked()), SLOT(turnOn()));
 	QObject::connect(ui->turnOff, SIGNAL(clicked()), SLOT(turnOff()));
-	QObject::connect(m_device->networkingProvider(), SIGNAL(networkStateChanged(NetworkState)), SLOT(updateInformation()));
+	// QObject::connect(m_device->networkingProvider(), SIGNAL(networkStateChanged(NetworkState)), SLOT(updateInformation()));
 	
 	updateInformation();
 }
@@ -36,16 +36,17 @@ void NetworkSettingsWidget::connect()
 
 void NetworkSettingsWidget::turnOn()
 {
-	m_device->networkingProvider()->setNetworkState(NetworkingProvider::NetworkOn);
+	// m_device->networkingProvider()->setNetworkState(NetworkingProvider::NetworkOn);
 }
 
 void NetworkSettingsWidget::turnOff()
 {
-	m_device->networkingProvider()->setNetworkState(NetworkingProvider::NetworkOff);
+	// m_device->networkingProvider()->setNetworkState(NetworkingProvider::NetworkOff);
 }
 
 void NetworkSettingsWidget::updateInformation()
 {
+#if 0
 	setUpdatesEnabled(false);
 	NetworkingProvider::NetworkState newState = m_device->networkingProvider()->networkState();
 	ui->turnOn->setVisible(false);
@@ -63,6 +64,6 @@ void NetworkSettingsWidget::updateInformation()
 	ui->ssid->setText(networkOn ? "" : "");
 	ui->security->setText(networkOn ? "" : "");
 	
-	
 	setUpdatesEnabled(true);
+#endif
 }

@@ -146,7 +146,7 @@
        <item>
         <widget class="QPushButton" name="stringNumber">
          <property name="text">
-          <string>String/Number</string>
+          <string>Calibrate</string>
          </property>
         </widget>
        </item>

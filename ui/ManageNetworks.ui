@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ManageNetworks</class>
+ <widget class="QWidget" name="ManageNetworks">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>320</width>
+    <height>240</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>6</number>
+   </property>
+   <property name="topMargin">
+    <number>6</number>
+   </property>
+   <property name="rightMargin">
+    <number>6</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QListView" name="networks"/>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="forget">
+       <property name="text">
+        <string>Forget</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../rc/icons.qrc">
+         <normaloff>:/icons/transmit_delete.png</normaloff>:/icons/transmit_delete.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="info">
+       <property name="text">
+        <string>Information</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../rc/icons.qrc">
+         <normaloff>:/icons/information.png</normaloff>:/icons/information.png</iconset>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../rc/icons.qrc"/>
+ </resources>
+ <connections/>
+</ui>

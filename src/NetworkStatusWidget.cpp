@@ -1,38 +1,20 @@
 #include "NetworkStatusWidget.h"
 
-#include "NetworkingProvider.h"
+#include "NetworkManager.h"
 
 #include <QTime>
 #include <QPainter>
 #include <QDebug>
 
 NetworkStatusWidget::NetworkStatusWidget(QWidget *parent)
-	: QWidget(parent), m_networkingProvider(0)
+	: QWidget(parent)
 {
 	constrain();
-}
-
-NetworkStatusWidget::NetworkStatusWidget(NetworkingProvider *networkingProvider, QWidget *parent)
-	: QWidget(parent), m_networkingProvider(networkingProvider)
-{
-	constrain();
-}
-
-void NetworkStatusWidget::setNetworkingProvider(NetworkingProvider *networkingProvider)
-{
-	if(m_networkingProvider) m_networkingProvider->disconnect(this);
-	m_networkingProvider = networkingProvider;
-	if(m_networkingProvider) connect(m_networkingProvider,
-		SIGNAL(networkStateChanged(NetworkState)), SLOT(networkStateChanged()));
-}
-
-NetworkingProvider *NetworkStatusWidget::networkingProvider() const
-{
-	return m_networkingProvider;
 }
 
 void NetworkStatusWidget::paintEvent(QPaintEvent *event)
 {
+#if 0
 	QPainter painter(this);
 	painter.setRenderHint(QPainter::Antialiasing);
 	const int w = width();
@@ -81,6 +63,7 @@ void NetworkStatusWidget::paintEvent(QPaintEvent *event)
 	
 	painter.drawEllipse(w / 2.0 - ellipseSize / 2.0, 3.5 * h / 5.0 - ellipseSize / 2.0,
 		ellipseSize, ellipseSize);
+#endif
 
 }
 

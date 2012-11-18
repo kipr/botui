@@ -3,13 +3,11 @@
 #include "FilesystemProvider.h"
 #include "CompilingWidget.h"
 
-#include <easydevice/Server.h>
-#include <easydevice/DiscoveryClient.h>
-#include <easydevice/DeviceInfo.h>
+#include <easydevice/server.hpp>
+#include <easydevice/discovery_client.hpp>
+#include <easydevice/device_info.hpp>
 
-#include <kiss-compiler/ArchiveWriter.h>
-#include <kiss-compiler/Temporary.h>
-#include <kiss-compiler/CompilerManager.h>
+#include <pcompiler/output.hpp>
 
 #include "RootController.h"
 #include "ProgramWidget.h"
@@ -76,18 +74,20 @@ const bool EasyDeviceCommunicationProvider::run(const QString& name)
 	return Program::instance()->start(executable);
 }
 
-CompilationPtr EasyDeviceCommunicationProvider::compile(const QString& name)
+Compiler::OutputList EasyDeviceCommunicationProvider::compile(const QString& name)
 {
 	FilesystemProvider *filesystem = device()->filesystemProvider();
-	if(!filesystem) return CompilationPtr();
+	if(!filesystem) return Compiler::OutputList() << Compiler::Output(name, 1,
+		QByteArray(), "error: Device does not have a filesystem provider.");
 	
-	TinyArchive *archive = filesystem->program(name);
-	if(!archive) return CompilationPtr();
+	Kiss::KarPtr archive = filesystem->program(name);
+	if(!archive) return Compiler::OutputList() << Compiler::Output(name, 1,
+		QByteArray(), "error: Failed to load KISS Archive.");
 	
 	return device()->compileProvider()->compile(name, archive);
 }
 
-const bool EasyDeviceCommunicationProvider::download(const QString& name, TinyArchive *archive)
+const bool EasyDeviceCommunicationProvider::download(const QString& name, const Kiss::KarPtr& archive)
 {
 	FilesystemProvider *filesystem = device()->filesystemProvider();
 	qDebug() << "Calling setProgram";

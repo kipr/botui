@@ -19,7 +19,7 @@ SettingsWidget::SettingsWidget(Device *device, QWidget *parent)
 	ui->setupUi(this);
 	performStandardSetup(tr("Settings"));
 	
-	ui->networkSettings->setEnabled(m_device->networkingProvider());
+	// ui->networkSettings->setEnabled(m_device->networkingProvider());
 	ui->packages->setEnabled(m_device->packageManagerProvider());
 	
 	connect(ui->networkSettings, SIGNAL(clicked()), SLOT(network()));

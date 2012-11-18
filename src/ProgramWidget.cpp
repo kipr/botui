@@ -45,7 +45,7 @@ ProgramWidget::ProgramWidget(Program *program, Device *device, QWidget *parent)
 	ui->x->setText(buttonProvider->text(ButtonProvider::X));
 	ui->y->setText(buttonProvider->text(ButtonProvider::Y));
 	ui->z->setText(buttonProvider->text(ButtonProvider::Z));
-		
+	
 	connect(ui->a, SIGNAL(pressed()), SLOT(aPressed()));
 	connect(ui->b, SIGNAL(pressed()), SLOT(bPressed()));
 	connect(ui->c, SIGNAL(pressed()), SLOT(cPressed()));
@@ -83,6 +83,7 @@ void ProgramWidget::started()
 void ProgramWidget::finished(int exitCode, QProcess::ExitStatus exitStatus)
 {
 	ui->console->setProcess(0);
+	m_program->stop();
 }
 
 void ProgramWidget::buttonTextChanged(const ButtonProvider::ButtonId& id, const QString& text)
@@ -173,5 +174,6 @@ void ProgramWidget::zReleased()
 
 ProgramWidget::~ProgramWidget()
 {
+	ui->console->setProcess(0);
 	delete ui;
 }

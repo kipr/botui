@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>320</width>
+    <height>240</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -111,13 +111,13 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
-          <widget class="QPushButton" name="help">
+          <widget class="QPushButton" name="exit">
            <property name="text">
-            <string>Help</string>
+            <string>Exit</string>
            </property>
            <property name="icon">
             <iconset resource="../rc/icons.qrc">
-             <normaloff>:/icons/help.png</normaloff>:/icons/help.png</iconset>
+             <normaloff>:/icons/application_osx_terminal.png</normaloff>:/icons/application_osx_terminal.png</iconset>
            </property>
           </widget>
          </item>
