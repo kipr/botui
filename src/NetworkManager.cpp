@@ -50,6 +50,24 @@ void NetworkManager::addNetwork(const Network &network)
 	settings.AddConnection(connection);
 }
 
+void NetworkManager::forgetNetwork(const QString& ssid)
+{
+	NMSettings settings(NM_SERVICE, NM_OBJECT "/Settings", QDBusConnection::systemBus());
+	QList<QDBusObjectPath> connections = settings.ListConnections();
+	
+	foreach(const QDBusObjectPath &connectionPath, connections) {
+		NMSettingsConnection conn(NM_SERVICE, connectionPath.path(), QDBusConnection::systemBus());
+		Connection details = conn.GetSettings().value();
+		
+		// This connection is not a wifi one. Skip.
+		if(!details.contains("802-11-wireless")) continue;
+		
+		if(ssid == details["802-11-wireless"]["ssid"].toString()) {
+			conn.Delete();
+		}
+	}
+}
+
 NetworkList NetworkManager::networks() const
 {
 	NetworkList networks;

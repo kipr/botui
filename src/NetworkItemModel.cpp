@@ -8,6 +8,10 @@ public:
 		: QStandardItem(network.ssid()),
 		m_network(network)
 	{
+		setSizeHint(QSize(32, 32));
+		if(m_network.security() != Network::None) {
+			setIcon(QIcon(":/tango/network-wireless-encrypted.png"));
+		}
 	}
 	
 	const Network &network() const
@@ -26,6 +30,15 @@ NetworkItemModel::NetworkItemModel(QObject *parent)
 
 NetworkItemModel::~NetworkItemModel()
 {
+}
+
+Network NetworkItemModel::indexToNetwork(const QModelIndex &index) const
+{
+	QStandardItem *item = itemFromIndex(index);
+	if(!item) return Network();
+	NetworkItem *networkItem = dynamic_cast<NetworkItem *>(item);
+	if(!networkItem) return Network();
+	return networkItem->network();
 }
 
 void NetworkItemModel::setNetworks(const NetworkList &networks)

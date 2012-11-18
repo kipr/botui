@@ -5,6 +5,8 @@
 #include "NetworkManager.h"
 #include "NetworkItemModel.h"
 
+#include <QItemSelectionModel>
+
 ManageNetworksWidget::ManageNetworksWidget(Device *device, QWidget *parent)
 	: StandardWidget(device, parent),
 	ui(new Ui::ManageNetworks),
@@ -12,6 +14,8 @@ ManageNetworksWidget::ManageNetworksWidget(Device *device, QWidget *parent)
 	m_model(new NetworkItemModel(this))
 {
 	ui->setupUi(this);
+	performStandardSetup(tr("Manage Networks"));
+	
 	ui->networks->setModel(m_model);
 	
 	m_model->setNetworks(NetworkManager::ref().networks());
@@ -27,7 +31,11 @@ ManageNetworksWidget::~ManageNetworksWidget()
 
 void ManageNetworksWidget::forget()
 {
-	// TODO
+	QItemSelectionModel *selectionModel = ui->networks->selectionModel();
+	QItemSelection selection = selectionModel->selection();
+	if(selection.indexes().size() != 1) return;
+	
+	NetworkManager::ref().forgetNetwork(m_model->indexToNetwork(selection.indexes()[0]).ssid());
 }
 
 void ManageNetworksWidget::information()

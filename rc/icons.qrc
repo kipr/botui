@@ -1000,5 +1000,6 @@
     <file>icons/zoom_in.png</file>
     <file>icons/zoom_out.png</file>
     <file>icons/zoom.png</file>
+    <file>tango/network-wireless-encrypted.png</file>
   </qresource>
 </RCC>

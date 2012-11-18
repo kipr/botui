@@ -16,6 +16,7 @@ public:
 	~NetworkManager();
 	
 	void addNetwork(const Network &network);
+	void forgetNetwork(const QString& ssid);
 	NetworkList networks() const;
 	
 	bool turnOn();

@@ -12,6 +12,8 @@ public:
 	NetworkItemModel(QObject *parent = 0);
 	~NetworkItemModel();
 	
+	Network indexToNetwork(const QModelIndex &index) const;
+	
 	void setNetworks(const NetworkList &networks);
 	
 public slots:
