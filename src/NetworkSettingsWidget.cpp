@@ -5,6 +5,7 @@
 #include "StatusBar.h"
 #include "Device.h"
 #include "ConnectWidget.h"
+#include "ManageNetworksWidget.h"
 #include "NetworkManager.h"
 
 #include <QDebug>
@@ -36,7 +37,7 @@ void NetworkSettingsWidget::connect()
 
 void NetworkSettingsWidget::manage()
 {
-	RootController::ref().presentWidget(new ConnectWidget(m_device));
+	RootController::ref().presentWidget(new ManageNetworksWidget(m_device));
 }
 
 void NetworkSettingsWidget::turnOn()
