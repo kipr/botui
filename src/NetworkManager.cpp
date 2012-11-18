@@ -24,7 +24,7 @@ void NetworkManager::addNetwork(const Network &network)
 	
 	// For now we only handle wifi
 	connection["connection"]["type"] = "802-11-wireless";
-	connection["connection"]["uuid"] = QUuid::createUuid().toString();
+	connection["connection"]["uuid"] = QUuid::createUuid().toString().remove('{').remove('}');
 	// File name is just the SSID for now
 	connection["connection"]["id"] = network.ssid();
 	
