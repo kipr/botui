@@ -32,7 +32,7 @@ void NetworkManager::addNetwork(const Network &network)
 	// File name is just the SSID for now
 	connection["id"] = network.ssid();
 	
-	const static const char *securityTypes[] = {
+	const static char *securityTypes[] = {
 		"none",
 		"wep",
 		"ieee8021x",
