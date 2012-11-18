@@ -59,6 +59,9 @@ NetworkManager::NetworkManager()
 	: m_networks(),
 	m_nm(new NMNetworkManager(NM_SERVICE, NM_OBJECT,QDBusConnection::systemBus(), this))
 {
+	// Register our metatype with dbus
+	qDBusRegisterMetaType<Connection>();
+	
 	QList<QDBusObjectPath> objectPaths = m_nm->GetDevices().value();
 	foreach(const QDBusObjectPath &objectPath, objectPaths) {
 		qDebug() << "OBJECT:" << objectPath.path();
