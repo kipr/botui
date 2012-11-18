@@ -10,6 +10,7 @@ class NetworkManager : public QObject, public Singleton<NetworkManager>
 {
 Q_OBJECT
 public:
+	NetworkManager();
 	~NetworkManager();
 	
 	const NetworkList &networks() const;
@@ -19,7 +20,6 @@ public:
 	bool isConnected() const;
 	
 private:
-	NetworkManager();
 	
 	NetworkList m_networks;
 };

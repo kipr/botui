@@ -27,6 +27,7 @@ HomeWidget::HomeWidget(Device *device, QWidget *parent)
 	connect(ui->programs, SIGNAL(clicked()), SLOT(programs()));
 	connect(ui->motorsSensors, SIGNAL(clicked()), SLOT(motorsSensors()));
 	connect(ui->settings, SIGNAL(clicked()), SLOT(settings()));
+	connect(ui->exit, SIGNAL(exit()), SLOT(exit()));
 	connect(ui->about, SIGNAL(clicked()), SLOT(about()));
 	
 	QAction *lock = m_menuBar->addAction(UiStandards::lockString());
@@ -57,7 +58,7 @@ void HomeWidget::settings()
 	RootController::ref().presentWidget(new SettingsWidget(m_device));
 }
 
-void HomeWidget::help()
+void HomeWidget::exit()
 {
 	// TODO: This is temporary
 	system("Xorg");

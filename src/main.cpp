@@ -7,6 +7,7 @@
 #include "SimulatorDevice.h"
 #include "FirstRunWizard.h"
 #include "FactoryWidget.h"
+#include "NetworkManager.h"
 
 #include <QApplication>
 #include <QDir>
@@ -25,6 +26,7 @@ int main(int argc, char* argv[])
 	if(device.isTouchscreen()) {
 		app.setOverrideCursor(QCursor(Qt::BlankCursor));
 	}
+	NetworkManager::ref();
 	//RootController::ref().presentQml(QUrl::fromLocalFile("loading.qml"));
 	RootController::ref().presentWidget(new HomeWidget(&device));
 	RootController::ref().presentWidget(new FactoryWidget(&device));
