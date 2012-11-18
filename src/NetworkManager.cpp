@@ -1,9 +1,7 @@
 #include "NetworkManager.h"
+#include "NMNetworkManager.h"
 
-NetworkManager::NetworkManager()
-{
-	
-}
+#include <QDBusConnection>
 
 NetworkManager::~NetworkManager()
 {
@@ -13,4 +11,14 @@ NetworkManager::~NetworkManager()
 const NetworkList &NetworkManager::networks() const
 {
 	return m_networks;
+}
+
+NetworkManager::NetworkManager()
+{
+	org::freedesktop::NetworkManager nm("org.freedesktop.NetworkManager",
+		"/org/freedesktop/NetworkManager", QDBusConnection::systemBus());
+	QList<QDBusObjectPath> objectPaths = nm.GetDevices().value();
+	foreach(const QDBusObjectPath &objectPath, objectPaths) {
+		qDebug() << "OBJECT:" << objectPath.path();
+	}
 }
