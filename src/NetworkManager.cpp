@@ -67,6 +67,10 @@ NetworkList NetworkManager::networks() const
 	foreach(const QDBusObjectPath &connectionPath, connections) {
 		NMSettingsConnection conn(NM_SERVICE, connectionPath.path(), QDBusConnection::systemBus());
 		Connection details = conn.GetSettings().value();
+		
+		// This connection is not a wifi one. Skip.
+		if(!details.contains("802-11-wireless")) continue;
+		
 		Network network;
 		network.setSsid(details["802-11-wireless"]["ssid"].toString());
 		network.setSecurity(securityMap[details["802-11-wireless-security"]["security"].toString()]);
