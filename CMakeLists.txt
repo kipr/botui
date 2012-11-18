@@ -57,4 +57,4 @@ ELSEIF(WIN32)
 ENDIF()
 
 SET(EXECUTABLE_OUTPUT_PATH ${botui_SOURCE_DIR}/deploy)
-TARGET_LINK_LIBRARIES(botui ${QT_LIBRARIES} easydevice kiss-compiler tinyarchive z opencv_core opencv_highgui opencv_imgproc kovan)
+TARGET_LINK_LIBRARIES(botui ${QT_LIBRARIES} easydevice pcompiler kar z opencv_core opencv_highgui opencv_imgproc kovan)

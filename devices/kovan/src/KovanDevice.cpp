@@ -1,14 +1,11 @@
 #include "KovanDevice.h"
 
 #include "BatteryLevelProvider.h"
-#include "NetworkingProvider.h"
 #include "CommunicationProvider.h"
 #include "FilesystemProvider.h"
 #include "SettingsProvider.h"
 #include "KovanProgramsItemModel.h"
 #include "EasyDeviceCommunicationProvider.h"
-#include "SerialCommunicationProvider.h"
-#include "Connman.h"
 #include "KissCompileProvider.h"
 #include "KovanButtonProvider.h"
 
@@ -17,10 +14,11 @@
 #include "RootController.h"
 #include "KeyboardDialog.h"
 
+#include <kar.hpp>
+
 #include <QStandardItemModel>
 #include <QFileSystemModel>
 #include <QMessageBox>
-#include <kiss-compiler/PlatformHintsManager.h>
 
 #include <QDir>
 #include <QFile>
@@ -69,9 +67,9 @@ namespace Kovan
 		FilesystemProvider();
 		~FilesystemProvider();
 		
-		virtual const bool setProgram(const QString& name, const TinyArchive *archive);
+		virtual const bool setProgram(const QString& name, const Kiss::KarPtr& program);
 		virtual const bool deleteProgram(const QString& name);
-		virtual TinyArchive *program(const QString& name) const;
+		virtual Kiss::KarPtr program(const QString& name) const;
 		virtual const QStringList programs() const;
 		virtual ::ProgramsItemModel *programsItemModel() const;
 		
@@ -134,7 +132,7 @@ Kovan::ProgramsItemModel::ProgramsItemModel(Kovan::FilesystemProvider *filesyste
 {
 	foreach(const QString& program, m_filesystemProvider->programs()) appendRow(new ProgramItem(program));
 	
-	connect(m_filesystemProvider, SIGNAL(programUpdated(QString, const TinyArchive *)), SLOT(programUpdated(QString)));
+	connect(m_filesystemProvider, SIGNAL(programUpdated(QString, const Kiss::KarPtr&)), SLOT(programUpdated(QString)));
 	connect(m_filesystemProvider, SIGNAL(programDeleted(QString)), SLOT(programDeleted(QString)));
 }
 
@@ -158,7 +156,7 @@ void Kovan::ProgramsItemModel::programDeleted(const QString& name)
 	for(int i = 0; i < count; ++i) {
 		ProgramItem *item = ProgramItem::programitem_cast(ProgramsItemModel::item(i));
 		if(item && item->name() == name) {
-			delete takeItem(i);
+			qDeleteAll(takeRow(i));
 			return;
 		}
 	}
@@ -175,14 +173,17 @@ Kovan::FilesystemProvider::~FilesystemProvider()
 	delete m_programsItemModel;
 }
 
-const bool Kovan::FilesystemProvider::setProgram(const QString& name, const TinyArchive *archive)
+const bool Kovan::FilesystemProvider::setProgram(const QString& name, const Kiss::KarPtr& program)
 {
 	qDebug() << "Set Program Called";
-	TinyArchiveFile fileWriter(pathForProgram(name).toStdString());
-	const bool ret = fileWriter.write(archive);
-	if(ret) emit programUpdated(name, archive);
-	qDebug() << "Program Updated?" << ret;
-	return ret;
+	QFile out(pathForProgram(name));
+	if(!out.open(QIODevice::WriteOnly)) return false;
+	QDataStream stream(&out);
+	stream << *program.data();
+	out.close();
+	emit programUpdated(name, program);
+	qDebug() << "Program" << name << "Updated";
+	return true;
 }
 
 const bool Kovan::FilesystemProvider::deleteProgram(const QString& name)
@@ -192,16 +193,21 @@ const bool Kovan::FilesystemProvider::deleteProgram(const QString& name)
 	return ret;
 }
 
-TinyArchive *Kovan::FilesystemProvider::program(const QString& name) const
+Kiss::KarPtr Kovan::FilesystemProvider::program(const QString& name) const
 {
-	TinyArchiveFile fileReader(pathForProgram(name).toStdString());
-	return fileReader.read();
+	QFile in(pathForProgram(name));
+	if(!in.open(QIODevice::ReadOnly)) return Kiss::KarPtr();
+	QDataStream stream(&in);
+	Kiss::Kar *program = new Kiss::Kar();
+	stream >> (*program);
+	in.close();
+	return Kiss::KarPtr(program);
 }
 
 const QStringList Kovan::FilesystemProvider::programs() const
 {
 	QStringList ret;
-	const QFileInfoList& entries = programDir().entryInfoList(QStringList() << "*.kissproj",
+	const QFileInfoList& entries = programDir().entryInfoList(QStringList() << "*.kissar",
 		QDir::NoDot | QDir::NoDotDot | QDir::Files);
 	foreach(const QFileInfo& info, entries) ret << info.completeBaseName();
 	return ret;
@@ -222,7 +228,7 @@ QDir Kovan::FilesystemProvider::programDir() const
 
 QString Kovan::FilesystemProvider::pathForProgram(const QString& program) const
 {
-	return programDir().path() + "/" + program + ".kissproj";
+	return programDir().path() + "/" + program + ".kissar";
 }
 
 Kovan::SettingsProvider::SettingsProvider(QObject *parent)
@@ -262,22 +268,11 @@ Kovan::Device::Device()
 	: m_filesystemProvider(new Kovan::FilesystemProvider()),
 	m_compileProvider(new KissCompileProvider(this)),
 	m_communicationProviders(CommunicationProviderList()
-		<< new SerialCommunicationProvider(this, "/dev/ttyGS0")
 		<< new EasyDeviceCommunicationProvider(this)),
-	m_networkingProvider(new Kovan::Connman(this)),
 	m_batteryLevelProvider(new Kovan::BatteryLevelProvider()),
 	m_settingsProvider(new Kovan::SettingsProvider()),
 	m_buttonProvider(new Kovan::ButtonProvider(this))
 {
-	m_networkingProvider->setup();
-	
-	
-	// TODO: Move these
-	FlagMap flagMap;
-	flagMap["C_FLAGS"] = "-Wall -include kovan/kovan.h";
-	flagMap["CXX_FLAGS"] = "-Wall -include kovan/kovan.hpp";
-	flagMap["LD_FLAGS"] = "-lkovan";
-	PlatformHintsManager::ref().setPlatformHints(name(), flagMap);
 }
 
 Kovan::Device::~Device()
@@ -286,7 +281,6 @@ Kovan::Device::~Device()
 	delete m_compileProvider;
 	qDeleteAll(m_communicationProviders);
 	delete m_batteryLevelProvider;
-	delete m_networkingProvider;
 	delete m_settingsProvider;
 	delete m_buttonProvider;
 }
@@ -321,11 +315,6 @@ CommunicationProviderList Kovan::Device::communicationProviders() const
 	return m_communicationProviders;
 }
 
-NetworkingProvider *Kovan::Device::networkingProvider() const
-{
-	return m_networkingProvider;
-}
-
 BatteryLevelProvider *Kovan::Device::batteryLevelProvider() const
 {
 	return m_batteryLevelProvider;
@@ -344,23 +333,4 @@ SettingsProvider *Kovan::Device::settingsProvider() const
 ButtonProvider *Kovan::Device::buttonProvider() const
 {
 	return m_buttonProvider;
-}
-
-QString Kovan::Device::networkingProviderNeedsPasswordOfType(NetworkingProvider *networkingProvider, const QString& type)
-{
-	KeyboardDialog keyboard("Password (" + type + ")");
-	const int ret = RootController::ref().presentDialog(&keyboard);
-	return ret == QDialog::Accepted ? keyboard.input() : "";
-}
-
-QString Kovan::Device::networkingProviderNeedsNetworkName(NetworkingProvider *networkingProvider)
-{
-	KeyboardDialog keyboard("Network Name");
-	const int ret = RootController::ref().presentDialog(&keyboard);
-	return ret == QDialog::Accepted ? keyboard.input() : "";
-}
-
-void Kovan::Device::networkingProviderReportedError(NetworkingProvider *networkingProvider, const QString& message)
-{
-	QMessageBox::critical(0, tr("Networking Error"), message);
 }

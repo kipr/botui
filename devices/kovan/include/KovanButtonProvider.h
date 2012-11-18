@@ -15,10 +15,10 @@ namespace Kovan
 		ButtonProvider(QObject *parent = 0);
 		~ButtonProvider();
 		
-		
 		virtual bool isExtraShown() const;
 		virtual QString text(const ButtonProvider::ButtonId& id) const;
 		virtual bool setPressed(const ButtonProvider::ButtonId& id, bool pressed) const;
+		
 	public slots:
 		virtual void reset();
 		virtual void refresh();
