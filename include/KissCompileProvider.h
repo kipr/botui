@@ -7,7 +7,6 @@
 
 #include "CompileProvider.h"
 
-class TinyArchive;
 class Device;
 
 class KissCompileProvider : public CompileProvider
@@ -15,14 +14,17 @@ class KissCompileProvider : public CompileProvider
 public:
 	KissCompileProvider(Device *device, QObject *parent = 0);
 	
-	CompilationPtr compile(const QString& name, TinyArchive *archive);
+	Compiler::OutputList compile(const QString& name, const Kiss::KarPtr& archive);
 	QString executableFor(const QString& name) const;
 	
 private:
+	QString tempPath() const;
+	QString cachePath(const QString& name) const;
+	
 	void sync();
 	
 	Device *m_device;
-	QMap<QString, QStringList> m_executables;
+	QMap<QString, QString> m_executables;
 };
 
 #endif

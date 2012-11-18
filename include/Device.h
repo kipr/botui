@@ -28,7 +28,6 @@ public:
 	virtual FilesystemProvider *filesystemProvider() const = 0;
 	virtual CompileProvider *compileProvider() const = 0;
 	virtual CommunicationProviderList communicationProviders() const = 0;
-	virtual NetworkingProvider *networkingProvider() const = 0;
 	virtual BatteryLevelProvider *batteryLevelProvider() const = 0;
 	virtual PackageManagerProvider *packageManagerProvider() const = 0;
 	virtual SettingsProvider *settingsProvider() const = 0;

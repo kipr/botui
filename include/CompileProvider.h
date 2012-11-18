@@ -4,7 +4,8 @@
 #include <QObject>
 #include <QString>
 
-#include <kiss-compiler/Compilation.h>
+#include <kar.hpp>
+#include <pcompiler/output.hpp>
 
 class TinyArchive;
 
@@ -14,12 +15,12 @@ Q_OBJECT
 public:
 	CompileProvider(QObject *parent = 0);
 	virtual ~CompileProvider();
-	virtual CompilationPtr compile(const QString& name, TinyArchive *archive) = 0;
+	virtual Compiler::OutputList compile(const QString& name, const Kiss::KarPtr& program) = 0;
 	
 	virtual QString executableFor(const QString& name) const = 0;
 	
 signals:
-	void compileFinished(CompileResult result);
+	void compileFinished(const Compiler::OutputList& output);
 };
 
 #endif

@@ -1,0 +1,20 @@
+#ifndef _NETWORKITEMMODEL_H_
+#define _NETWORKITEMMODEL_H_
+
+#include <QStandardItemModel>
+
+#include "Network.h"
+
+class NetworkItemModel : public QStandardItemModel
+{
+Q_OBJECT
+public:
+	NetworkItemModel(QObject *parent = 0);
+	~NetworkItemModel();
+	
+public slots:
+	void networkAdded(const Network &network);
+	void networkRemoved(const Network &network);
+};
+
+#endif

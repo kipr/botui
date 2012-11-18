@@ -15,8 +15,7 @@ public:
 	QIODevice *process() const;
 	
 protected:
-	void keyPressEvent(QKeyEvent * event);
-	void changeDir(const QString & dir);
+	void keyPressEvent(QKeyEvent *event);
 
 private slots:
 	void readStandardOut();

@@ -2,8 +2,8 @@
 #define _COMMUNICATIONPROVIDER_H_
 
 #include <QObject>
+#include <kar.hpp>
 
-class TinyArchive;
 class Device;
 
 class CommunicationProvider : public QObject
@@ -16,7 +16,7 @@ public:
 	void setDevice(Device *device);
 	Device *device() const;
 signals:
-	void programReceived(const TinyArchive *tinyArchive);
+	void programReceived(const Kiss::KarPtr& archive);
 	
 private:
 	Device *m_device;

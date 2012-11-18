@@ -2,8 +2,8 @@
 #define _EASYDEVICECOMMUNICATIONPROVIDER_H_
 
 #include "CommunicationProvider.h"
-#include <easydevice/ServerDelegate.h>
-#include <easydevice/PasswordGenerator.h>
+#include <easydevice/server_delegate.hpp>
+#include <easydevice/password_generator.hpp>
 #include <QHostAddress>
 
 namespace EasyDevice
@@ -26,8 +26,8 @@ private slots:
 	
 private:
 	virtual const bool run(const QString& name);
-	virtual CompilationPtr compile(const QString& name);
-	virtual const bool download(const QString& name, TinyArchive *archive);
+	virtual Compiler::OutputList compile(const QString& name);
+	virtual const bool download(const QString& name, const Kiss::KarPtr& archive);
 	virtual bool deleteProgram(const QString& name);
 	virtual QStringList list() const;
 	virtual QString interaction(const QString& command);

@@ -19,6 +19,7 @@ public slots:
 	void programs();
 	void motorsSensors();
 	void settings();
+	void help();
 	void about();
 	void lock();
 	
