@@ -17,6 +17,9 @@ public:
 	OtherNetworkWidget(Device *device, QWidget *parent = 0);
 	~OtherNetworkWidget();
 	
+private slots:
+	void join();
+	
 private:
 	Ui::OtherNetworkWidget *ui;
 	

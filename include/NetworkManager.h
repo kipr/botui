@@ -6,6 +6,8 @@
 
 #include <QObject>
 
+class NMNetworkManager;
+
 class NetworkManager : public QObject, public Singleton<NetworkManager>
 {
 Q_OBJECT
@@ -13,6 +15,7 @@ public:
 	NetworkManager();
 	~NetworkManager();
 	
+	void addNetwork(const Network &network);
 	const NetworkList &networks() const;
 	
 	bool connect();
@@ -20,8 +23,8 @@ public:
 	bool isConnected() const;
 	
 private:
-	
 	NetworkList m_networks;
+	NMNetworkManager *m_nm;
 };
 
 #endif

@@ -1,5 +1,10 @@
 #include "Network.h"
 
+Network::Network()
+{
+	
+}
+
 void Network::setSsid(const QString& ssid)
 {
 	m_ssid = ssid;
