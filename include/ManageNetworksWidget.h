@@ -19,7 +19,6 @@ public:
 	
 private slots:
 	void forget();
-	void information();
 	
 private:
 	Ui::ManageNetworks *ui;

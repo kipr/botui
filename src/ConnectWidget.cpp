@@ -4,17 +4,20 @@
 #include "RootController.h"
 #include "StatusBar.h"
 #include "NetworkManager.h"
+#include "NetworkItemModel.h"
 #include "OtherNetworkWidget.h"
 #include "Device.h"
 #include <QDebug>
 
 ConnectWidget::ConnectWidget(Device *device, QWidget *parent)
 	: StandardWidget(device, parent),
-	ui(new Ui::ConnectWidget)
+	ui(new Ui::ConnectWidget),
+	m_model(new NetworkItemModel(this))
 {
 	ui->setupUi(this);
 	performStandardSetup(tr("Connect"));
-	// ui->networks->setModel(m_device->networkingProvider()->networkItemModel());
+	
+	ui->networks->setModel(m_model);
 	
 	QObject::connect(ui->refresh, SIGNAL(clicked()), SLOT(refresh()));
 	QObject::connect(ui->other, SIGNAL(clicked()), SLOT(other()));

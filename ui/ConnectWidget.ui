@@ -40,7 +40,7 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/connect.png</normaloff>:/icons/connect.png</iconset>
+           <normaloff>:/icons/transmit_go.png</normaloff>:/icons/transmit_go.png</iconset>
          </property>
         </widget>
        </item>
@@ -51,7 +51,7 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
+           <normaloff>:/icons/transmit_add.png</normaloff>:/icons/transmit_add.png</iconset>
          </property>
         </widget>
        </item>

@@ -1,5 +1,7 @@
 #include "Network.h"
 
+#include <QDebug>
+
 Network::Network()
 {
 	
@@ -33,4 +35,52 @@ void Network::setPassword(const QString& password)
 const QString& Network::password() const
 {
 	return m_password;
+}
+
+void Network::setMode(const Network::Mode &mode)
+{
+	m_mode = mode;
+}
+
+const Network::Mode &Network::mode() const
+{
+	return m_mode;
+}
+
+bool Network::isComplete() const
+{
+	if(m_security == Network::None) return true;
+	return !m_password.isEmpty();
+}
+
+bool operator==(const Network &lhs, const Network &rhs)
+{
+	return lhs.ssid() == rhs.ssid();
+}
+
+QDebug operator<<(QDebug dbg, const Network &network)
+{
+	dbg.nospace() << network.ssid() << "("
+		<< (network.mode() == Network::AdHoc ? "ad-hoc" : "infrastructure")
+		<< ")" << " with ";
+	
+	switch(network.security()) {
+	case Network::None:
+		dbg.nospace() << "no security";
+		return dbg.space();
+	case Network::Wep:
+		dbg.nospace() << "WEP";
+		break;
+	case Network::DynamicWep:
+		dbg.nospace() << "Dynamic WEP";
+		break;
+	case Network::Wpa:
+		dbg.nospace() << "WPA";
+		break;
+	case Network::WpaEnterprise:
+		dbg.nospace() << "WPA Enterprise";
+		break;
+	}
+	dbg.nospace() << " (password: " << network.password() << ")";
+	return dbg.space();
 }

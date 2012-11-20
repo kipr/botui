@@ -5,7 +5,9 @@
 #include <QMap>
 #include <QVariant>
 
-typedef QMap<QString, QMap<QString, QVariant> > Connection;
-Q_DECLARE_METATYPE(Connection)
+typedef QMap<QString, QVariant> StringVariantMap;
+typedef QMap<QString, StringVariantMap> Connection;
+Q_DECLARE_METATYPE(StringVariantMap);
+Q_DECLARE_METATYPE(Connection);
 
 #endif

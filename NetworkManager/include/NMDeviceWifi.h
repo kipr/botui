@@ -8,8 +8,8 @@
  * Do not edit! All changes made to it will be lost.
  */
 
-#ifndef NMDEVICEWIFI_H_1353213530
-#define NMDEVICEWIFI_H_1353213530
+#ifndef NMDEVICEWIFI_H_1353454821
+#define NMDEVICEWIFI_H_1353454821
 
 #include <QtCore/QObject>
 #include <QtCore/QByteArray>
@@ -67,10 +67,17 @@ public Q_SLOTS: // METHODS
         return asyncCallWithArgumentList(QLatin1String("GetAccessPoints"), argumentList);
     }
 
+    inline QDBusPendingReply<> RequestScan(StringVariantMap options)
+    {
+        QList<QVariant> argumentList;
+        argumentList << qVariantFromValue(options);
+        return asyncCallWithArgumentList(QLatin1String("RequestScan"), argumentList);
+    }
+
 Q_SIGNALS: // SIGNALS
     void AccessPointAdded(const QDBusObjectPath &access_point);
     void AccessPointRemoved(const QDBusObjectPath &access_point);
-    void PropertiesChanged(const QVariantMap &properties);
+    void PropertiesChanged(StringVariantMap properties);
 };
 
 #endif

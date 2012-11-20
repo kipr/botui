@@ -3,26 +3,34 @@
 rm -Rf include
 rm -Rf src
 
+generate()
+{
+	qdbusxml2cpp -c NM${1} -p NM${1} -N -i NetworkManagerConnection.h ${2}.xml
+}
+
 echo "Generating NetworkManager class..."
-qdbusxml2cpp -c NMNetworkManager -p NMNetworkManager -N -i NetworkManagerConnection.h nm-manager.xml
+generate NetworkManager nm-manager
 
 echo "Generating Device class..."
-qdbusxml2cpp -c NMDevice -p NMDevice -N -i NetworkManagerConnection.h nm-device.xml
+generate Device nm-device
 
 echo "Generating DeviceEthernet class..."
-qdbusxml2cpp -c NMDeviceEthernet -p NMDeviceEthernet -N -i NetworkManagerConnection.h nm-device-wifi.xml
+generate DeviceEthernet nm-device-ethernet
 
 echo "Generating DeviceWifi class..."
-qdbusxml2cpp -c NMDeviceWifi -p NMDeviceWifi -N -i NetworkManagerConnection.h nm-device-wifi.xml
+generate DeviceWifi nm-device-wifi
 
 echo "Generating Settings class..."
-qdbusxml2cpp -c NMSettings -p NMSettings -N -i NetworkManagerConnection.h nm-settings.xml
+generate Settings nm-settings
 
 echo "Generating SettingsConnection class..."
-qdbusxml2cpp -c NMSettingsConnection -p NMSettingsConnection -N -i NetworkManagerConnection.h nm-settings-connection.xml
+generate SettingsConnection nm-settings-connection
 
 echo "Generating SecretAgent class..."
-qdbusxml2cpp -c NMSecretAgent -p NMSecretAgent -N -i NetworkManagerConnection.h nm-secret-agent.xml
+generate SecretAgent nm-secret-agent
+
+echo "Generating AccessPoint class..."
+generate AccessPoint nm-access-point
 
 mkdir -p src
 mkdir -p include

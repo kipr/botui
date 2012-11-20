@@ -32,6 +32,7 @@
     </property>
 
     <signal name="PropertiesChanged">
+	<annotation name="com.trolltech.QtDBus.QtTypeName.In0" value="StringVariantMap"/>
         <arg name="properties" type="a{sv}" tp:type="String_Variant_Map">
             <tp:docstring>
                 A dictionary mapping property names to variant boxed values

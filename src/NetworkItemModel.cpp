@@ -44,15 +44,18 @@ Network NetworkItemModel::indexToNetwork(const QModelIndex &index) const
 void NetworkItemModel::setNetworks(const NetworkList &networks)
 {
 	clear();
-	foreach(const Network &network, networks) networkAdded(network);
+	foreach(const Network &network, networks) addNetwork(network);
 }
 
-void NetworkItemModel::networkAdded(const Network &network)
+void NetworkItemModel::addNetwork(const Network &network)
 {
 	appendRow(new NetworkItem(network));
 }
 
-void NetworkItemModel::networkRemoved(const Network &network)
+void NetworkItemModel::removeNetwork(const Network &network)
 {
-	// FIXME: NYI
+	for(int i = 0; i < rowCount(); ++i) {
+		NetworkItem *networkItem = dynamic_cast<NetworkItem *>(item(i));
+		if(network == networkItem->network()) qDeleteAll(takeRow(i));
+	}
 }

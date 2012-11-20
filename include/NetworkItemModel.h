@@ -17,8 +17,8 @@ public:
 	void setNetworks(const NetworkList &networks);
 	
 public slots:
-	void networkAdded(const Network &network);
-	void networkRemoved(const Network &network);
+	void addNetwork(const Network &network);
+	void removeNetwork(const Network &network);
 };
 
 #endif

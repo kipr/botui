@@ -8,6 +8,8 @@ namespace Ui
 	class ConnectWidget;
 }
 
+class NetworkItemModel;
+
 class ConnectWidget : public StandardWidget
 {
 Q_OBJECT
@@ -22,6 +24,7 @@ public slots:
 	
 private:
 	Ui::ConnectWidget *ui;
+	NetworkItemModel *m_model;
 };
 
 #endif

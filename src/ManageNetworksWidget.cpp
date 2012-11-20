@@ -16,12 +16,19 @@ ManageNetworksWidget::ManageNetworksWidget(Device *device, QWidget *parent)
 	ui->setupUi(this);
 	performStandardSetup(tr("Manage Networks"));
 	
+	m_model->connect(&NetworkManager::ref(),
+		SIGNAL(networkAdded(Network)),
+		SLOT(addNetwork(Network)));
+	
+	m_model->connect(&NetworkManager::ref(),
+		SIGNAL(networkRemoved(Network)),
+		SLOT(removeNetwork(Network)));
+	
 	ui->networks->setModel(m_model);
 	
 	m_model->setNetworks(NetworkManager::ref().networks());
 	
 	connect(ui->forget, SIGNAL(clicked()), SLOT(forget()));
-	connect(ui->info, SIGNAL(clicked()), SLOT(information()));
 }
 
 ManageNetworksWidget::~ManageNetworksWidget()
@@ -35,10 +42,5 @@ void ManageNetworksWidget::forget()
 	QItemSelection selection = selectionModel->selection();
 	if(selection.indexes().size() != 1) return;
 	
-	NetworkManager::ref().forgetNetwork(m_model->indexToNetwork(selection.indexes()[0]).ssid());
-}
-
-void ManageNetworksWidget::information()
-{
-	// TODO
+	NetworkManager::ref().forgetNetwork(m_model->indexToNetwork(selection.indexes()[0]));
 }

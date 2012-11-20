@@ -15,6 +15,12 @@ public:
 		WpaEnterprise
 	};
 	
+	enum Mode {
+		Unknown = 0,
+		Infrastructure,
+		AdHoc
+	};
+	
 	Network();
 	
 	void setSsid(const QString& ssid);
@@ -25,12 +31,24 @@ public:
 	
 	void setPassword(const QString& password);
 	const QString& password() const;
+	
+	void setMode(const Mode &mode);
+	const Mode &mode() const;
+	
+	bool isComplete() const;
+	
 private:
 	QString m_ssid;
 	Security m_security;
 	QString m_password;
+	Mode m_mode;
 };
 
 typedef QList<Network> NetworkList;
+
+bool operator==(const Network &lhs, const Network &rhs);
+
+QDebug operator<<(QDebug dbg, const Network &network);
+
 
 #endif
