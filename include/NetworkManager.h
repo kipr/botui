@@ -3,6 +3,7 @@
 
 #include "Singleton.h"
 #include "Network.h"
+#include "NetworkManagerConnection.h"
 
 #include <QObject>
 #include <QDBusObjectPath>
@@ -20,6 +21,8 @@ public:
 	void addNetwork(const Network &network);
 	void forgetNetwork(const Network &network);
 	NetworkList networks() const;
+	
+	Network active() const;
 	
 	void requestScan();
 	
@@ -41,6 +44,7 @@ private slots:
 	void nmAccessPointRemoved(const QDBusObjectPath &path);
 	
 private:
+	Network networkFromConnection(const Connection &connection) const;
 	Network createAccessPoint(const QDBusObjectPath &accessPoint) const;
 	
 	NetworkList m_accessPoints;

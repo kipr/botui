@@ -130,29 +130,12 @@ NetworkList NetworkManager::networks() const
 	NMSettings settings(NM_SERVICE, NM_OBJECT "/Settings", QDBusConnection::systemBus());
 	QList<QDBusObjectPath> connections = settings.ListConnections();
 	
-	// TODO: It would be nice to make this static somewhere
-	QMap<QString, Network::Security> securityMap;
-	securityMap["none"] = Network::None;
-	securityMap["wep"] = Network::Wep;
-	securityMap["ieee8021x"] = Network::DynamicWep;
-	securityMap["wpa-psk"] = Network::Wpa;
-	securityMap["wpa-epa"] = Network::WpaEnterprise;
-	
 	foreach(const QDBusObjectPath &connectionPath, connections) {
 		NMSettingsConnection conn(NM_SERVICE, connectionPath.path(), QDBusConnection::systemBus());
 		Connection details = conn.GetSettings().value();
-		
 		// This connection is not a wifi one. Skip.
 		if(!details.contains("802-11-wireless")) continue;
-		
-		Network network;
-		network.setSsid(details["802-11-wireless"]["ssid"].toString());
-		network.setSecurity(securityMap[details["802-11-wireless-security"]["security"].toString()]);
-		// Technically, password only applies to WEP connections. We always store both password
-		// and psk, however, so it is a somewhat safe assumption to only try the password
-		// entry.
-		network.setPassword(details["802-11-wireless"]["password"].toString());
-		networks << network;
+		networks << networkFromConnection(details);
 	}
 	
 	return networks;
@@ -160,7 +143,9 @@ NetworkList NetworkManager::networks() const
 
 void NetworkManager::requestScan()
 {
-	m_wifi->RequestScan(StringVariantMap());
+	QDBusPendingReply<> reply = m_wifi->RequestScan(StringVariantMap());
+	if(!reply.isError()) return;
+	qWarning() << "NetworkManager::requestScan" << reply.error().message();
 }
 
 bool NetworkManager::turnOn()
@@ -177,6 +162,11 @@ void NetworkManager::turnOff()
 bool NetworkManager::isOn() const
 {
 	return m_nm->networkingEnabled();
+}
+
+Network NetworkManager::active() const
+{
+	return Network();
 }
 
 const NetworkList &NetworkManager::accessPoints() const
@@ -231,6 +221,27 @@ void NetworkManager::nmAccessPointRemoved(const QDBusObjectPath &accessPoint)
 	
 	m_accessPoints.removeAll(network);
 	emit accessPointRemoved(network);
+}
+
+Network NetworkManager::networkFromConnection(const Connection &connection) const
+{
+	// TODO: It would be nice to make this static somewhere
+	QMap<QString, Network::Security> securityMap;
+	securityMap["none"] = Network::None;
+	securityMap["wep"] = Network::Wep;
+	securityMap["ieee8021x"] = Network::DynamicWep;
+	securityMap["wpa-psk"] = Network::Wpa;
+	securityMap["wpa-epa"] = Network::WpaEnterprise;
+	
+	// TODO: Does not set Network::mode()
+	Network network;
+	network.setSsid(connection["802-11-wireless"]["ssid"].toString());
+	network.setSecurity(securityMap[connection["802-11-wireless-security"]["security"].toString()]);
+	// Technically, password only applies to WEP connections. We always store both password
+	// and psk, however, so it is a somewhat safe assumption to only try the password
+	// entry.
+	network.setPassword(connection["802-11-wireless"]["password"].toString());
+	return network;
 }
 
 Network NetworkManager::createAccessPoint(const QDBusObjectPath &accessPoint) const

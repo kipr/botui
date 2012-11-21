@@ -21,7 +21,7 @@ ManageNetworksWidget::ManageNetworksWidget(Device *device, QWidget *parent)
 		SLOT(addNetwork(Network)));
 	
 	m_model->connect(&NetworkManager::ref(),
-		SIGNAL(networkRemoved(Network)),
+		SIGNAL(networkForgotten(Network)),
 		SLOT(removeNetwork(Network)));
 	
 	ui->networks->setModel(m_model);

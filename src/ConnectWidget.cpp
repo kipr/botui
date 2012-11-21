@@ -17,7 +17,14 @@ ConnectWidget::ConnectWidget(Device *device, QWidget *parent)
 	ui->setupUi(this);
 	performStandardSetup(tr("Connect"));
 	
+	m_model->setNetworks(NetworkManager::ref().accessPoints());
+	
 	ui->networks->setModel(m_model);
+	
+	m_model->connect(&NetworkManager::ref(), SIGNAL(accessPointAdded(Network)),
+		SLOT(addNetwork(Network)));
+	m_model->connect(&NetworkManager::ref(), SIGNAL(accessPointRemoved(Network)),
+		SLOT(removeNetwork(Network)));
 	
 	QObject::connect(ui->refresh, SIGNAL(clicked()), SLOT(refresh()));
 	QObject::connect(ui->other, SIGNAL(clicked()), SLOT(other()));
@@ -48,5 +55,5 @@ void ConnectWidget::other()
 
 void ConnectWidget::refresh()
 {
-	// m_device->networkingProvider()->scan();
+	NetworkManager::ref().requestScan();
 }
