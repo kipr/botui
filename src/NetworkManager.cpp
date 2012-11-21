@@ -143,6 +143,7 @@ NetworkList NetworkManager::networks() const
 
 void NetworkManager::requestScan()
 {
+	qDebug() << "Requesting scan";
 	QDBusPendingReply<> reply = m_wifi->RequestScan(StringVariantMap());
 	if(!reply.isError()) return;
 	qWarning() << "NetworkManager::requestScan" << reply.error().message();
@@ -194,8 +195,9 @@ NetworkManager::NetworkManager()
 		return;
 	}
 	
-	m_wifi = new NMDeviceWifi(NM_SERVICE, wifiPath.path(), QDBusConnection::systemBus(), this);
+	qDebug() << "Wifi device found.";
 	
+	m_wifi = new NMDeviceWifi(NM_SERVICE, wifiPath.path(), QDBusConnection::systemBus(), this);
 	
 	connect(m_wifi, SIGNAL(AccessPointAdded(QDBusObjectPath)),
 		SLOT(nmAccessPointAdded(QDBusObjectPath)));
