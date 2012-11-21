@@ -30,7 +30,7 @@ public:
 	void turnOff();
 	bool isOn() const;
 	
-	const NetworkList &accessPoints() const;
+	NetworkList accessPoints() const;
 	
 signals:
 	void networkAdded(const Network &network);

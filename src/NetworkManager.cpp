@@ -143,6 +143,7 @@ NetworkList NetworkManager::networks() const
 
 void NetworkManager::requestScan()
 {
+	if(!m_wifi) return;
 	qDebug() << "Requesting scan";
 	QDBusPendingReply<> reply = m_wifi->RequestScan(StringVariantMap());
 	reply.waitForFinished();
@@ -171,9 +172,16 @@ Network NetworkManager::active() const
 	return Network();
 }
 
-const NetworkList &NetworkManager::accessPoints() const
+NetworkList NetworkManager::accessPoints() const
 {
-	return m_accessPoints;
+	if(!m_wifi) return NetworkList();
+	QList<QDBusObjectPath> aps = m_wifi->GetAccessPoints().value();
+	NetworkList networks;
+	foreach(const QDBusObjectPath& ap, aps) {
+		networks << createAccessPoint(ap);
+	}
+	
+	return networks;
 }
 
 NetworkManager::NetworkManager()
@@ -214,7 +222,7 @@ void NetworkManager::nmAccessPointAdded(const QDBusObjectPath &accessPoint)
 	qDebug() << "Access Point Added: " << network;
 	
 	emit accessPointAdded(network);
-	m_accessPoints.append(network);
+	// m_accessPoints.append(network);
 }
 
 void NetworkManager::nmAccessPointRemoved(const QDBusObjectPath &accessPoint)
@@ -223,7 +231,7 @@ void NetworkManager::nmAccessPointRemoved(const QDBusObjectPath &accessPoint)
 	qDebug() << "Access Point Removed: " << network;
 	
 	m_accessPoints.removeAll(network);
-	emit accessPointRemoved(network);
+	// emit accessPointRemoved(network);
 }
 
 Network NetworkManager::networkFromConnection(const Connection &connection) const
