@@ -145,6 +145,7 @@ void NetworkManager::requestScan()
 {
 	qDebug() << "Requesting scan";
 	QDBusPendingReply<> reply = m_wifi->RequestScan(StringVariantMap());
+	reply.waitForFinished();
 	if(!reply.isError()) return;
 	qWarning() << "NetworkManager::requestScan" << reply.error().message();
 }
