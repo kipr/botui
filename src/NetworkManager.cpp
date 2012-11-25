@@ -192,7 +192,11 @@ NetworkManager::NetworkManager()
 	qDBusRegisterMetaType<Connection>();
 	qDBusRegisterMetaType<StringVariantMap>();
 	
-	QList<QDBusObjectPath> objectPaths = m_nm->GetDevices().value();
+	QDBusPendingReply<QList<QDBusObjectPath> > reply = m_nm->GetDevices();
+	
+	if(reply.isError()) return;
+	
+	QList<QDBusObjectPath> objectPaths = reply.value();
 	QDBusObjectPath wifiPath;
 	foreach(const QDBusObjectPath &objectPath, objectPaths) {
 		NMDevice device(NM_SERVICE, objectPath.path(), QDBusConnection::systemBus());
