@@ -20,7 +20,7 @@ public slots:
 	void kissIde();
 	void packages();
 	
-	void tmp(); // remove
+	void calibrate();
 	
 private:
 	Ui::SettingsWidget *ui;

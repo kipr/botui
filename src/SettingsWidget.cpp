@@ -4,6 +4,7 @@
 #include "RootController.h"
 #include "StatusBar.h"
 #include "Device.h"
+#include "Calibrate.h"
 
 #include "NetworkSettingsWidget.h"
 #include "KissIdeSettingsWidget.h"
@@ -25,7 +26,7 @@ SettingsWidget::SettingsWidget(Device *device, QWidget *parent)
 	connect(ui->networkSettings, SIGNAL(clicked()), SLOT(network()));
 	connect(ui->kissIdeSettings, SIGNAL(clicked()), SLOT(kissIde()));
 	connect(ui->packages, SIGNAL(clicked()), SLOT(packages()));
-	connect(ui->stringNumber, SIGNAL(clicked()), SLOT(tmp())); // remove
+	connect(ui->calibrate, SIGNAL(clicked()), SLOT(calibrate()));
 }
 
 SettingsWidget::~SettingsWidget()
@@ -48,7 +49,7 @@ void SettingsWidget::packages()
 	RootController::ref().presentWidget(new PackageLandingWidget(m_device));
 }
 
-void SettingsWidget::tmp() // remove
+void SettingsWidget::calibrate()
 {
-	RootController::ref().presentWidget(new StringNumberEditWidget(m_device));
+	Calibrate::calibrate();
 }

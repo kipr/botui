@@ -144,9 +144,13 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="stringNumber">
+        <widget class="QPushButton" name="calibrate">
          <property name="text">
           <string>Calibrate</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../rc/icons.qrc">
+           <normaloff>:/icons/monitor.png</normaloff>:/icons/monitor.png</iconset>
          </property>
         </widget>
        </item>
