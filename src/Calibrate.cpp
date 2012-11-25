@@ -2,6 +2,8 @@
 
 #include <QProcess>
 #include <QFile>
+#include <QDir>
+#include <QFileInfo>
 #include <QString>
 #include <QStringList>
 #include <QByteArray>
@@ -41,6 +43,7 @@ bool Calibrate::calibrate()
 		return false;
 	}
 	
+	QDir().mkpath(QFileInfo(CALIB_FILE).absolutePath());
 	QFile file(CALIB_FILE);
 	if(!file.open(QIODevice::WriteOnly)) {
 		qWarning() << "Unable to open " CALIB_FILE;
