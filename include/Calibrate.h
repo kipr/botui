@@ -3,6 +3,7 @@
 
 class Calibrate
 {
+public:
 	static bool calibrate();
 	
 private:
