@@ -54,6 +54,8 @@ Compiler::OutputList KissCompileProvider::compile(const QString& name, const Kis
 	QStringList terminalFiles;
 	bool success = true;
 	foreach(const Output& out, ret) {
+		QTextStream stream(stdout);
+		out.dump(stream);
 		if(out.isTerminal() && out.generatedFiles().size() == 1) {
 			terminalFiles << out.generatedFiles()[0];
 		}
