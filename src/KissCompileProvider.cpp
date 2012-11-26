@@ -79,9 +79,8 @@ Compiler::OutputList KissCompileProvider::compile(const QString& name, const Kis
 	}
 	
 	if(terminalFiles.size() > 1) {
-		ret << Output(name, 0,
-			"warning: Terminal ambiguity in compilation. " 
-			"Running the ouput of this compilation is undefined.", QByteArray());
+		qWarning() << "Multiple Terminals:" << terminalFiles;
+		ret << Output(name, 1, QByteArray(), "error: Terminal ambiguity in compilation. ");
 	}
 	
 	QString cachedResult = cachePath(name) + "/" + QFileInfo(terminalFiles[0]).fileName();
