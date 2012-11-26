@@ -2,6 +2,7 @@
 #define _NETWORKSETTINGSWIDGET_H_
 
 #include "StandardWidget.h"
+#include "NetworkManager.h"
 
 namespace Ui
 {
@@ -21,6 +22,9 @@ public slots:
 	void turnOn();
 	void turnOff();
 	void updateInformation();
+	
+private slots:
+	void stateChanged(const NetworkManager::State &newState, const NetworkManager::State &oldState);
 	
 private:
 	Ui::NetworkSettingsWidget *ui;

@@ -26,7 +26,7 @@
       <item>
        <widget class="QComboBox" name="plot1">
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 102, 102);</string>
+         <string notr="true"/>
         </property>
         <item>
          <property name="text">
@@ -73,7 +73,7 @@
       <item>
        <widget class="QComboBox" name="plot2">
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(102, 102, 255);</string>
+         <string notr="true"/>
         </property>
         <item>
          <property name="text">

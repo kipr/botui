@@ -27,6 +27,17 @@ const Network::Security& Network::security() const
 	return m_security;
 }
 
+QString Network::securityString() const
+{
+	switch(m_security) {
+	case Network::Wep: return "WEP";
+	case Network::DynamicWep: return "Dynamic WEP";
+	case Network::Wpa: return "WPA";
+	case Network::WpaEnterprise: return "WPA Enterprise";
+	}
+	return "None";
+}
+
 void Network::setPassword(const QString& password)
 {
 	m_password = password;

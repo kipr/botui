@@ -8,6 +8,8 @@
 #include "ManageNetworksWidget.h"
 #include "NetworkManager.h"
 
+#include <QTimer>
+
 #include <QDebug>
 
 NetworkSettingsWidget::NetworkSettingsWidget(Device *device, QWidget *parent)
@@ -24,7 +26,10 @@ NetworkSettingsWidget::NetworkSettingsWidget(Device *device, QWidget *parent)
 	QObject::connect(ui->manage, SIGNAL(clicked()), SLOT(manage()));
 	QObject::connect(ui->turnOn, SIGNAL(clicked()), SLOT(turnOn()));
 	QObject::connect(ui->turnOff, SIGNAL(clicked()), SLOT(turnOff()));
-	// QObject::connect(m_device->networkingProvider(), SIGNAL(networkStateChanged(NetworkState)), SLOT(updateInformation()));
+	
+	QObject::connect(&NetworkManager::ref(),
+		SIGNAL(stateChanged(const NetworkManager::State &, const NetworkManager::State &)),
+		SLOT(stateChanged(const NetworkManager::State &, const NetworkManager::State &)));
 	
 	updateInformation();
 }
@@ -56,24 +61,14 @@ void NetworkSettingsWidget::turnOff()
 
 void NetworkSettingsWidget::updateInformation()
 {
-#if 0
-	setUpdatesEnabled(false);
-	NetworkingProvider::NetworkState newState = m_device->networkingProvider()->networkState();
-	ui->turnOn->setVisible(false);
-	ui->turnOff->setVisible(false);
-	const bool networkOn = newState == NetworkingProvider::NetworkOn;
-	
-	ui->turnOn->setVisible(!networkOn);
-	ui->turnOff->setVisible(networkOn);
-	
-	ui->state->setText(networkOn ? tr("ON") : tr("OFF"));
-	ui->ssidLabel->setEnabled(networkOn);
-	ui->securityLabel->setEnabled(networkOn);
-	ui->security->setEnabled(networkOn);
-	
-	ui->ssid->setText(networkOn ? "" : "");
-	ui->security->setText(networkOn ? "" : "");
-	
-	setUpdatesEnabled(true);
-#endif
+	Network active = NetworkManager::ref().active();
+	ui->ssid->setText(active.ssid());
+	ui->security->setText(active.securityString());
+	ui->ip->setText(NetworkManager::ref().ipAddress());
+}
+
+void NetworkSettingsWidget::stateChanged(const NetworkManager::State &newState, const NetworkManager::State &oldState)
+{
+	qDebug() << "State Changed to" << newState;
+	QTimer::singleShot(300, this, SLOT(updateInformation()));
 }

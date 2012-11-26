@@ -7,6 +7,17 @@
 #include "NMSettings.h"
 #include "NMSettingsConnection.h"
 
+#include <stdio.h>
+
+#include <string.h> /* for strncpy */
+
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <sys/ioctl.h>
+#include <netinet/in.h>
+#include <net/if.h>
+#include <arpa/inet.h>
+
 #include <QDBusConnection>
 #include <QUuid>
 
@@ -169,6 +180,7 @@ bool NetworkManager::isOn() const
 
 Network NetworkManager::active() const
 {
+	if(!m_wifi) return Network();
 	return createAccessPoint(m_wifi->activeAccessPoint());
 }
 
@@ -184,8 +196,20 @@ NetworkList NetworkManager::accessPoints() const
 	return networks;
 }
 
+QString NetworkManager::ipAddress() const
+{
+	int fd = socket(AF_INET, SOCK_DGRAM, 0);
+	ifreq ifr;
+	ifr.ifr_addr.sa_family = AF_INET;
+	strncpy(ifr.ifr_name, "wlan0", IFNAMSIZ - 1);
+	ioctl(fd, SIOCGIFADDR, &ifr);
+	close(fd);
+	return QString(inet_ntoa(((sockaddr_in *)&ifr.ifr_addr)->sin_addr));
+}
+
 NetworkManager::NetworkManager()
 	: m_nm(new NMNetworkManager(NM_SERVICE, NM_OBJECT, QDBusConnection::systemBus(), this)),
+	m_device(0),
 	m_wifi(0)
 {
 	// Register our metatype with dbus
@@ -210,8 +234,11 @@ NetworkManager::NetworkManager()
 	
 	qDebug() << "Wifi device found.";
 	
+	m_device = new NMDevice(NM_SERVICE, wifiPath.path(), QDBusConnection::systemBus(), this);
 	m_wifi = new NMDeviceWifi(NM_SERVICE, wifiPath.path(), QDBusConnection::systemBus(), this);
 	
+	connect(m_device, SIGNAL(StateChanged(uint, uint, uint)),
+		SLOT(stateChangedBouncer(uint, uint)));
 	connect(m_wifi, SIGNAL(AccessPointAdded(QDBusObjectPath)),
 		SLOT(nmAccessPointAdded(QDBusObjectPath)));
 	connect(m_wifi, SIGNAL(AccessPointRemoved(QDBusObjectPath)),
@@ -236,6 +263,13 @@ void NetworkManager::nmAccessPointRemoved(const QDBusObjectPath &accessPoint)
 	
 	m_accessPoints.removeAll(network);
 	// emit accessPointRemoved(network);
+}
+
+void NetworkManager::stateChangedBouncer(uint newState, uint oldState)
+{
+	NetworkManager::State networkStateNew = (NetworkManager::State)newState;
+	NetworkManager::State networkStateOld = (NetworkManager::State)oldState;
+	emit stateChanged(networkStateNew, networkStateOld);
 }
 
 Network NetworkManager::networkFromConnection(const Connection &connection) const

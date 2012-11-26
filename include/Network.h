@@ -28,6 +28,7 @@ public:
 	
 	void setSecurity(const Security& security);
 	const Security& security() const;
+	QString securityString() const;
 	
 	void setPassword(const QString& password);
 	const QString& password() const;
