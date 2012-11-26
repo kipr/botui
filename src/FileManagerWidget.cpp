@@ -8,13 +8,16 @@
 #include "AreYouSureDialog.h"
 #include "NotYetImplementedDialog.h"
 #include "Clipboard.h"
+#include "FileActions.h"
+#include "Device.h"
 #include <QFileSystemModel>
 #include <QFile>
 #include <QDebug>
 
-FileManagerWidget::FileManagerWidget(QWidget *parent)
+FileManagerWidget::FileManagerWidget(Device *device, QWidget *parent)
 	: QWidget(parent),
 	ui(new Ui::FileManagerWidget),
+	m_device(device),
 	m_menuBar(new MenuBar(this)),
 	m_fs(new QFileSystemModel(this)),
 	m_up(new QAction(tr("Go Up"), this))
@@ -38,6 +41,10 @@ FileManagerWidget::FileManagerWidget(QWidget *parent)
 	connect(ui->copy, SIGNAL(clicked()), SLOT(copy()));
 	connect(ui->paste, SIGNAL(clicked()), SLOT(paste()));
 	connect(ui->home, SIGNAL(clicked()), SLOT(home()));
+	
+	connect(ui->files->selectionModel(),
+		SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
+		SLOT(selectionChanged(QItemSelection)));
 }
 
 FileManagerWidget::~FileManagerWidget()
@@ -62,7 +69,21 @@ void FileManagerWidget::open()
 {
 	QModelIndexList indexes = ui->files->selectionModel()->selection().indexes();
 	if(indexes.size() != 1) return;
-	ui->files->setRootIndex(indexes[0]);
+	
+	// Open in File Manager if directory
+	if(m_fs->isDir(indexes[0])) {
+		ui->files->setRootIndex(indexes[0]);
+		return;
+	}
+	
+	// Use FileActions registery to execute file
+	const QString ext = QFileInfo(m_fs->fileName(indexes[0])).completeSuffix();
+	FileAction *action = FileActions::ref().action(ext);
+	if(!action) {
+		qWarning() << "No FileAction found for" << ext;
+		return;
+	}
+	action->act(m_fs->filePath(indexes[0]), m_device);
 }
 
 void FileManagerWidget::copy()
@@ -113,6 +134,18 @@ void FileManagerWidget::home()
 {
 	ui->files->setRootIndex(m_fs->index(m_fs->rootPath()));
 	updateOptions();
+}
+
+void FileManagerWidget::selectionChanged(const QItemSelection &selected)
+{
+	QModelIndexList indexes = selected.indexes();
+	if(indexes.size() != 1) return;
+	QModelIndex index = indexes[0];
+	const QString ext = QFileInfo(m_fs->fileName(index)).completeSuffix();
+	FileAction *action = FileActions::ref().action(ext);
+	ui->open->setEnabled(m_fs->isDir(index) || action);
+	if(action) ui->open->setText(action->name());
+	else ui->open->setText(tr("Open"));
 }
 
 void FileManagerWidget::updateOptions()

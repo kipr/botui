@@ -52,7 +52,7 @@ void HomeWidget::programs()
 
 void HomeWidget::fileManager()
 {
-	RootController::ref().presentWidget(new FileManagerWidget());
+	RootController::ref().presentWidget(new FileManagerWidget(m_device));
 }
 
 void HomeWidget::motorsSensors()

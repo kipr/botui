@@ -17,6 +17,7 @@ public:
 	QProcess *process() const;
 	
 	static Program *instance();
+	
 public slots:
 	void stop();
 	

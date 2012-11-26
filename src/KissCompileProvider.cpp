@@ -57,8 +57,7 @@ Compiler::OutputList KissCompileProvider::compile(const QString& name, const Kis
 		if(out.isTerminal() && out.generatedFiles().size() == 1) {
 			terminalFiles << out.generatedFiles()[0];
 		}
-		
-		success &= out.exitCode() == 0 && out.error().isEmpty();
+		success &= out.isSuccess();
 	}
 	
 	foreach(const Output& out, ret) {
