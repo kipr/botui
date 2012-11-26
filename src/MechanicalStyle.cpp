@@ -459,9 +459,9 @@ void MechanicalStyle::drawControl(ControlElement ce, const QStyleOption *opt, QP
 		p->setPen(Qt::darkGray);
 		p->setBrush(Qt::darkGray);
 		QPointF polygon[3] = {
-			QPointF(rect.left() + rect.width() / 2.0 - 5, rect.top() + rect.height() / 2.0 - 2),
-			QPointF(rect.left() + rect.width() / 2.0 + 5, rect.top() + rect.height() / 2.0 - 2),
-			QPointF(rect.left() + rect.width() / 2.0 + 0, rect.top() + rect.height() / 2.0 + 4)
+			QPoint(rect.left() + rect.width() / 2 - 5, rect.top() + rect.height() / 2 - 2),
+			QPoint(rect.left() + rect.width() / 2 + 5, rect.top() + rect.height() / 2 - 2),
+			QPoint(rect.left() + rect.width() / 2 + 0, rect.top() + rect.height() / 2 + 4)
 		};
 		p->drawPolygon(polygon, 3);
 		p->restore();
@@ -475,9 +475,9 @@ void MechanicalStyle::drawControl(ControlElement ce, const QStyleOption *opt, QP
 		p->setPen(Qt::darkGray);
 		p->setBrush(Qt::darkGray);
 		QPointF polygon[3] = {
-			QPointF(rect.left() + rect.width() / 2.0 - 5, rect.top() + rect.height() / 2.0 + 2),
-			QPointF(rect.left() + rect.width() / 2.0 + 5, rect.top() + rect.height() / 2.0 + 2),
-			QPointF(rect.left() + rect.width() / 2.0 + 0, rect.top() + rect.height() / 2.0 - 4)
+			QPoint(rect.left() + rect.width() / 2 - 5, rect.top() + rect.height() / 2 + 2),
+			QPoint(rect.left() + rect.width() / 2 + 5, rect.top() + rect.height() / 2 + 2),
+			QPoint(rect.left() + rect.width() / 2 + 0, rect.top() + rect.height() / 2 - 4)
 		};
 		p->drawPolygon(polygon, 3);
 		p->restore();
