@@ -169,7 +169,7 @@ bool NetworkManager::isOn() const
 
 Network NetworkManager::active() const
 {
-	return Network();
+	return createAccessPoint(m_wifi->activeAccessPoint());
 }
 
 NetworkList NetworkManager::accessPoints() const

@@ -11,6 +11,7 @@
 #include "UnderConstructionWidget.h"
 #include "MotorsSensorsWidget.h"
 #include "ProgramsWidget.h"
+#include "FileManagerWidget.h"
 #include "Device.h"
 #include "ProgramSelectionWidget.h"
 #include "Program.h"
@@ -25,6 +26,7 @@ HomeWidget::HomeWidget(Device *device, QWidget *parent)
 	performStandardSetup(UiStandards::homeString());
 	
 	connect(ui->programs, SIGNAL(clicked()), SLOT(programs()));
+	connect(ui->fileManager, SIGNAL(clicked()), SLOT(fileManager()));
 	connect(ui->motorsSensors, SIGNAL(clicked()), SLOT(motorsSensors()));
 	connect(ui->settings, SIGNAL(clicked()), SLOT(settings()));
 	connect(ui->exit, SIGNAL(clicked()), SLOT(exit()));
@@ -46,6 +48,11 @@ void HomeWidget::programs()
 	RootController::ref().presentWidget(Program::instance()->isRunning()
 		? (QWidget *)new ProgramSelectionWidget(m_device)
 		: (QWidget *)new ProgramsWidget(m_device));
+}
+
+void HomeWidget::fileManager()
+{
+	RootController::ref().presentWidget(new FileManagerWidget());
 }
 
 void HomeWidget::motorsSensors()

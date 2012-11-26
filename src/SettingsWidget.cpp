@@ -5,6 +5,7 @@
 #include "StatusBar.h"
 #include "Device.h"
 #include "Calibrate.h"
+#include "NotYetImplementedDialog.h"
 
 #include "NetworkSettingsWidget.h"
 #include "KissIdeSettingsWidget.h"

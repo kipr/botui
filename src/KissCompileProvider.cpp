@@ -51,13 +51,11 @@ Compiler::OutputList KissCompileProvider::compile(const QString& name, const Kis
 	Engine engine(Compilers::instance()->compilers());
 	OutputList ret = engine.compile(input, opts);
 	
-	QString firstTerminalFile;
-	unsigned int terminals = 0;
+	QStringList terminalFiles;
 	bool success = true;
 	foreach(const Output& out, ret) {
 		if(out.isTerminal() && out.generatedFiles().size() == 1) {
-			if(!terminals) firstTerminalFile = out.generatedFiles()[0];
-			++terminals;
+			terminalFiles << out.generatedFiles()[0];
 		}
 		
 		success &= out.exitCode() == 0 && out.error().isEmpty();
@@ -75,23 +73,23 @@ Compiler::OutputList KissCompileProvider::compile(const QString& name, const Kis
 		return ret;
 	}
 	
-	if(!terminals) {
+	if(terminalFiles.isEmpty()) {
 		ret << OutputList() << Output(name, 1,
 			QByteArray(), "error: No terminals detected from compilation.");
 		return ret;
 	}
 	
-	if(terminals > 1) {
+	if(terminalFiles.size() > 1) {
 		ret << Output(name, 0,
 			"warning: Terminal ambiguity in compilation. " 
 			"Running the ouput of this compilation is undefined.", QByteArray());
 	}
 	
-	QString cachedResult = cachePath(name) + "/" + QFileInfo(firstTerminalFile).fileName();
+	QString cachedResult = cachePath(name) + "/" + QFileInfo(terminalFiles[0]).fileName();
 	QFile::remove(cachedResult);
-	if(!QFile::copy(firstTerminalFile, cachedResult)) {
+	if(!QFile::copy(terminalFiles[0], cachedResult)) {
 		ret << OutputList() << Output(name, 1, QByteArray(),
-			("error: Failed to copy \"" + firstTerminalFile
+			("error: Failed to copy \"" + terminalFiles[0]
 				+ "\" to \"" + cachedResult + "\"").toLatin1());
 	}
 	

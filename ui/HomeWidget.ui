@@ -74,6 +74,17 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="fileManager">
+         <property name="text">
+          <string>File Manager</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../rc/icons.qrc">
+           <normaloff>:/icons/folder_magnify.png</normaloff>:/icons/folder_magnify.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="motorsSensors">
          <property name="text">
           <string>Motors and Sensors</string>

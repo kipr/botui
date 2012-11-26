@@ -9,6 +9,8 @@
 #include "Device.h"
 #include <QTimer>
 
+#include <kovan/kovan.h>
+
 #include <QDebug>
 
 #include <math.h> // Temporary
@@ -44,8 +46,9 @@ void SensorsWidget::update()
 {
 	static double value = 0.0;
 	
-	ui->plot->push(m_plots[0], sin(value));
-	ui->plot->push(m_plots[1], cos(value));
+	publish();
+	ui->plot->push(m_plots[0], analog10(ui->plot1->currentIndex()) / 512.0 - 1.0);
+	ui->plot->push(m_plots[1], analog10(ui->plot2->currentIndex()) / 512.0 - 1.0);
 	ui->plot->inc();
 	
 	value += 0.1;

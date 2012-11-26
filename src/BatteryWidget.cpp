@@ -87,7 +87,7 @@ void BatteryWidget::paintEvent(QPaintEvent *event)
 	QRectF textRect(adjustedWidth + connectorSize + offset, 0, textSize - offset, h);
 	QTextOption textOpt(Qt::AlignAbsolute | Qt::AlignHCenter | Qt::AlignVCenter);
 	if(m_batteryLevelProvider) {
-		if(!m_batteryLevelProvider->isCharging()) painter.drawText(textRect, QString::number(percentage * 100, 'g', 4) + "\%", textOpt);
+		if(!m_batteryLevelProvider->isCharging()) painter.drawText(textRect, QString::number(percentage * 100, 'g', 2) + "\%", textOpt);
 		else painter.drawText(textRect, "CHRG", textOpt);
 	} else painter.drawText(textRect, "N/A", textOpt);
 	

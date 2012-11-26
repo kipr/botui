@@ -17,6 +17,9 @@ NetworkSettingsWidget::NetworkSettingsWidget(Device *device, QWidget *parent)
 	ui->setupUi(this);
 	performStandardSetup(tr("Network Settings"));
 	
+	ui->turnOn->setVisible(false);
+	ui->turnOff->setVisible(false);
+	
 	QObject::connect(ui->connect, SIGNAL(clicked()), SLOT(connect()));
 	QObject::connect(ui->manage, SIGNAL(clicked()), SLOT(manage()));
 	QObject::connect(ui->turnOn, SIGNAL(clicked()), SLOT(turnOn()));
