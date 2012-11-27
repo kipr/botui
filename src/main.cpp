@@ -23,9 +23,9 @@ int main(int argc, char* argv[])
 	QDir::setCurrent(QApplication::applicationDirPath());
 	qmlRegisterType<BusyIndicator>("ZapBsComponents", 1, 0, "BusyIndicator");
 	
-	// TODO: tmp
-	QFontDatabase database;
-	qDebug() << "Fonts:" << database.families();
+	QFontDatabase::addApplicationFont(":/fonts/DejaVuSans-ExtraLight.ttf");
+	QFontDatabase::addApplicationFont(":/fonts/DejaVuSans.ttf");
+	QFontDatabase::addApplicationFont(":/fonts/DejaVuSansMono.ttf");
 	
 	srand(time(NULL));
 	

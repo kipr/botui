@@ -3,6 +3,7 @@
 #include <QStyleOption>
 #include <QPainter>
 
+#include <QApplication>
 #include <QDebug>
 
 #define BUTTON_DECORATION_OFFSET 4
@@ -416,11 +417,11 @@ void MechanicalStyle::drawControl(ControlElement ce, const QStyleOption *opt, QP
 
 		if (button->features & QStyleOptionButton::HasMenu) {
 			int indicatorSize = proxy()->pixelMetric(PM_MenuButtonIndicator, button, widget);
-			if (button->direction == Qt::LeftToRight) textRect = textRect.adjusted(0, 0, -indicatorSize, 0);
+			if(button->direction == Qt::LeftToRight) textRect = textRect.adjusted(0, 0, -indicatorSize, 0);
 			else textRect = textRect.adjusted(indicatorSize, 0, 0, 0);
 		}
-		proxy()->drawItemText(p, textRect, tf, button->palette, (button->state & State_Enabled),
-			button->text, QPalette::ButtonText);
+		
+		p->drawText(textRect, tf, button->text);
 
 		return;
 	}

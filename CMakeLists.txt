@@ -40,7 +40,12 @@ SET(botui_SRCS_CXX ${SOURCES})
 SET(botui_UI ${UIS})
 SET(botui_MOC_SRCS ${INCLUDES})
 
-SET(botui_QRC_FILES ${RC}/icons.qrc ${RC}/construction.qrc ${RC}/qml.qrc)
+SET(botui_QRC_FILES
+	${RC}/icons.qrc
+	${RC}/construction.qrc
+	${RC}/qml.qrc
+	${RC}/fonts.qrc
+)
 
 QT4_WRAP_CPP(botui_SRCS_CXX ${botui_MOC_SRCS})
 QT4_WRAP_UI(botui_SRCS_CXX ${botui_UI})
