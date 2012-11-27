@@ -31,10 +31,14 @@ void ProgramsWidget::run()
 {
 	QModelIndexList currents = ui->programs->selectionModel()->selectedIndexes();
 	if(currents.size() != 1) return;
+	
 	QModelIndex current = currents[0];
 	QString program = m_device->filesystemProvider()->programsItemModel()->program(current);
 	QString executable = m_device->compileProvider()->executableFor(program);
-	if(executable.isEmpty()) return;
+	if(executable.isEmpty()) {
+		qWarning() << "Could not find executable for" << program;
+		return;
+	}
 	
 	ProgramWidget *programWidget = new ProgramWidget(Program::instance(), m_device);
 	RootController::ref().presentWidget(programWidget);

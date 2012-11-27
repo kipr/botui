@@ -12,6 +12,9 @@
 #include <QApplication>
 #include <QDir>
 
+#include <QFontDatabase>
+#include <QDebug>
+
 int main(int argc, char* argv[])
 {
 	QApplication::setStyle(new MechanicalStyle);
@@ -19,6 +22,10 @@ int main(int argc, char* argv[])
 	
 	QDir::setCurrent(QApplication::applicationDirPath());
 	qmlRegisterType<BusyIndicator>("ZapBsComponents", 1, 0, "BusyIndicator");
+	
+	// TODO: tmp
+	QFontDatabase database;
+	qDebug() << "Fonts:" << database.families();
 	
 	srand(time(NULL));
 	
