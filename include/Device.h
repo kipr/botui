@@ -9,7 +9,6 @@ class NetworkingProvider;
 class CommunicationProvider;
 class FilesystemProvider;
 class CompileProvider;
-class PackageManagerProvider;
 class SettingsProvider;
 class ButtonProvider;
 
@@ -29,7 +28,6 @@ public:
 	virtual CompileProvider *compileProvider() const = 0;
 	virtual CommunicationProviderList communicationProviders() const = 0;
 	virtual BatteryLevelProvider *batteryLevelProvider() const = 0;
-	virtual PackageManagerProvider *packageManagerProvider() const = 0;
 	virtual SettingsProvider *settingsProvider() const = 0;
 	virtual ButtonProvider *buttonProvider() const = 0;
 };

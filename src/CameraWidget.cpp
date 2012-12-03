@@ -49,7 +49,6 @@ void CameraWidget::toggleUi()
 {
 	const bool toggle = !m_statusBar->isVisible();
 	m_statusBar->setVisible(toggle);
-	ui->sidebar->setVisible(toggle);
 	const int margin = toggle ? 6 : 0;
 	layout()->setContentsMargins(margin, margin, margin, 0);
 	layout()->setMenuBar(toggle ? m_menuBar : 0);

@@ -9,7 +9,6 @@
 
 #include "NetworkSettingsWidget.h"
 #include "KissIdeSettingsWidget.h"
-#include "PackageLandingWidget.h"
 #include "StringNumberEditWidget.h"
 
 #include <QDebug>
@@ -22,11 +21,10 @@ SettingsWidget::SettingsWidget(Device *device, QWidget *parent)
 	performStandardSetup(tr("Settings"));
 	
 	// ui->networkSettings->setEnabled(m_device->networkingProvider());
-	ui->packages->setEnabled(m_device->packageManagerProvider());
 	
 	connect(ui->networkSettings, SIGNAL(clicked()), SLOT(network()));
 	connect(ui->kissIdeSettings, SIGNAL(clicked()), SLOT(kissIde()));
-	connect(ui->packages, SIGNAL(clicked()), SLOT(packages()));
+	connect(ui->channels, SIGNAL(clicked()), SLOT(channels()));
 	connect(ui->calibrate, SIGNAL(clicked()), SLOT(calibrate()));
 }
 
@@ -45,9 +43,8 @@ void SettingsWidget::kissIde()
 	RootController::ref().presentWidget(new KissIdeSettingsWidget(m_device));
 }
 
-void SettingsWidget::packages()
+void SettingsWidget::channels()
 {
-	RootController::ref().presentWidget(new PackageLandingWidget(m_device));
 }
 
 void SettingsWidget::calibrate()

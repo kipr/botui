@@ -18,7 +18,7 @@ public:
 public slots:
 	void network();
 	void kissIde();
-	void packages();
+	void channels();
 	
 	void calibrate();
 	

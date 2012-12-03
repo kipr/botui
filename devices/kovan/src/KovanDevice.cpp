@@ -321,11 +321,6 @@ BatteryLevelProvider *Kovan::Device::batteryLevelProvider() const
 	return m_batteryLevelProvider;
 }
 
-PackageManagerProvider *Kovan::Device::packageManagerProvider() const
-{
-	return 0;
-}
-
 SettingsProvider *Kovan::Device::settingsProvider() const
 {
 	return m_settingsProvider;

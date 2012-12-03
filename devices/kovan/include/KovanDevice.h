@@ -21,7 +21,6 @@ namespace Kovan
 		virtual CompileProvider *compileProvider() const;
 		virtual CommunicationProviderList communicationProviders() const;
 		virtual BatteryLevelProvider *batteryLevelProvider() const;
-		virtual PackageManagerProvider *packageManagerProvider() const;
 		virtual SettingsProvider *settingsProvider() const;
 		virtual ButtonProvider *buttonProvider() const;
 		

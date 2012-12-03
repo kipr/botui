@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CameraWidget</class>
- <widget class="QWidget" name="CameraWidget">
+ <class>ChanneHsvWidget</class>
+ <widget class="QWidget" name="ChanneHsvWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,20 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Camera</string>
+   <string>Channel HSV</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2">
-   <property name="leftMargin">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="1,1">
+   <property name="margin">
     <number>6</number>
-   </property>
-   <property name="topMargin">
-    <number>6</number>
-   </property>
-   <property name="rightMargin">
-    <number>6</number>
-   </property>
-   <property name="bottomMargin">
-    <number>0</number>
    </property>
    <item>
     <widget class="CvWidget" name="camera" native="true">
@@ -36,6 +27,9 @@
      </property>
     </widget>
    </item>
+   <item>
+    <widget class="HsvWidget" name="widget" native="true"/>
+   </item>
   </layout>
  </widget>
  <customwidgets>
@@ -43,6 +37,12 @@
    <class>CvWidget</class>
    <extends>QWidget</extends>
    <header>CvWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>HsvWidget</class>
+   <extends>QWidget</extends>
+   <header>HsvWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

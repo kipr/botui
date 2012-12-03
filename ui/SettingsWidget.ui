@@ -39,6 +39,45 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="channels">
+         <property name="text">
+          <string>Channels</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../rc/icons.qrc">
+           <normaloff>:/icons/television.png</normaloff>:/icons/television.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="programSettings">
+         <property name="text">
+          <string>Program</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../rc/icons.qrc">
+           <normaloff>:/icons/application_osx_terminal.png</normaloff>:/icons/application_osx_terminal.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
         <widget class="QPushButton" name="kissIdeSettings">
          <property name="text">
           <string>KISS IDE</string>
@@ -61,13 +100,13 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="programSettings">
+        <widget class="QPushButton" name="calibrate">
          <property name="text">
-          <string>Program</string>
+          <string>Calibrate</string>
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/application_osx_terminal.png</normaloff>:/icons/application_osx_terminal.png</iconset>
+           <normaloff>:/icons/monitor.png</normaloff>:/icons/monitor.png</iconset>
          </property>
         </widget>
        </item>
@@ -79,67 +118,6 @@
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
            <normaloff>:/icons/world.png</normaloff>:/icons/world.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="verticalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <item>
-        <widget class="QPushButton" name="pushButton_8">
-         <property name="text">
-          <string>Purge Cache</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/database_delete.png</normaloff>:/icons/database_delete.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_7">
-         <property name="text">
-          <string>Reset Device</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/arrow_refresh.png</normaloff>:/icons/arrow_refresh.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="packages">
-         <property name="text">
-          <string>Packages</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/package.png</normaloff>:/icons/package.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="calibrate">
-         <property name="text">
-          <string>Calibrate</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/monitor.png</normaloff>:/icons/monitor.png</iconset>
          </property>
         </widget>
        </item>
