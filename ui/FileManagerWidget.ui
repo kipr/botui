@@ -91,7 +91,7 @@
      <item>
       <widget class="QPushButton" name="home">
        <property name="text">
-        <string>Home</string>
+        <string>User Dir</string>
        </property>
        <property name="icon">
         <iconset resource="../rc/icons.qrc">

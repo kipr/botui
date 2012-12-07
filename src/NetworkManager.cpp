@@ -202,9 +202,12 @@ QString NetworkManager::ipAddress() const
 	ifreq ifr;
 	ifr.ifr_addr.sa_family = AF_INET;
 	strncpy(ifr.ifr_name, "wlan0", IFNAMSIZ - 1);
-	ioctl(fd, SIOCGIFADDR, &ifr);
+	QString ret = "";
+	if(!ioctl(fd, SIOCGIFADDR, &ifr)) {
+		ret = QString(inet_ntoa(((sockaddr_in *)&ifr.ifr_addr)->sin_addr));
+	}
 	close(fd);
-	return QString(inet_ntoa(((sockaddr_in *)&ifr.ifr_addr)->sin_addr));
+	return ret;
 }
 
 NetworkManager::NetworkManager()

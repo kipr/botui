@@ -5,6 +5,7 @@
 #include "CameraWidget.h"
 #include "ServosWidget.h"
 #include "SensorsWidget.h"
+#include "NotYetImplementedDialog.h"
 
 MotorsSensorsWidget::MotorsSensorsWidget(Device *device, QWidget *parent)
 	: StandardWidget(device, parent),
@@ -25,6 +26,8 @@ MotorsSensorsWidget::~MotorsSensorsWidget()
 
 void MotorsSensorsWidget::servos()
 {
+	NotYetImplementedDialog::nyi();
+	return;
 	RootController::ref().presentWidget(new ServosWidget(m_device));
 }
 

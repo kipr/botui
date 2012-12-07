@@ -64,7 +64,8 @@ void NetworkSettingsWidget::updateInformation()
 	Network active = NetworkManager::ref().active();
 	ui->ssid->setText(active.ssid());
 	ui->security->setText(active.securityString());
-	ui->ip->setText(NetworkManager::ref().ipAddress());
+	const QString ip = NetworkManager::ref().ipAddress();
+	ui->ip->setText(ip.isEmpty() ? tr("No IP") : ip);
 }
 
 void NetworkSettingsWidget::stateChanged(const NetworkManager::State &newState, const NetworkManager::State &oldState)
