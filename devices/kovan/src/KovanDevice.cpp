@@ -97,7 +97,7 @@ namespace Kovan
 
 const float Kovan::BatteryLevelProvider::batteryLevel() const
 {
-	//publish();
+	publish(); // TODO: Remove eventually.
 	return Battery::powerLevel();
 }
 
