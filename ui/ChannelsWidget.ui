@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>301</width>
+    <width>320</width>
     <height>240</height>
    </rect>
   </property>
@@ -51,6 +51,17 @@
      <property name="topMargin">
       <number>0</number>
      </property>
+     <item>
+      <widget class="QPushButton" name="edit">
+       <property name="text">
+        <string>Edit</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../rc/icons.qrc">
+         <normaloff>:/icons/wrench.png</normaloff>:/icons/wrench.png</iconset>
+       </property>
+      </widget>
+     </item>
      <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">

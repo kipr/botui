@@ -2,13 +2,16 @@
 #include "BatteryLevelProvider.h"
 
 #include <QPainter>
+#include <QTimer>
 
 #define TEXT_SIZE 45
 
 BatteryWidget::BatteryWidget(QWidget *parent)
 	: QWidget(parent), m_batteryLevelProvider(0)
 {
-	
+	QTimer *timer = new QTimer(this);
+	timer->start(30000);
+	connect(timer, SIGNAL(timeout()), SLOT(update()));
 }
 
 BatteryWidget::BatteryWidget(BatteryLevelProvider *batteryLevelProvider, QWidget *parent)

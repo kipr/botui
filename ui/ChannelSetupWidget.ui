@@ -51,7 +51,7 @@
        </item>
        <item>
         <property name="text">
-         <string>Face Detection (NYI)</string>
+         <string>Face Detection</string>
         </property>
        </item>
       </widget>
