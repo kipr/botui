@@ -97,18 +97,18 @@ namespace Kovan
 
 const float Kovan::BatteryLevelProvider::batteryLevel() const
 {
-	publish(); // TODO: Remove eventually.
+	publish();
 	return Battery::powerLevel();
 }
 
 const float Kovan::BatteryLevelProvider::batteryLevelMin() const
 {
-	return 500.0; // That's bogus
+	return 490.0;
 }
 
 const float Kovan::BatteryLevelProvider::batteryLevelMax() const
 {
-	return 625.0; // That's also bogus
+	return 620.0;
 }
 
 const bool Kovan::BatteryLevelProvider::isCharging() const
@@ -298,7 +298,7 @@ QString Kovan::Device::version() const
 
 bool Kovan::Device::isTouchscreen() const
 {
-	return false;
+	return true;
 }
 
 FilesystemProvider *Kovan::Device::filesystemProvider() const

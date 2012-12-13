@@ -10,7 +10,7 @@ BatteryWidget::BatteryWidget(QWidget *parent)
 	: QWidget(parent), m_batteryLevelProvider(0)
 {
 	QTimer *timer = new QTimer(this);
-	timer->start(30000);
+	timer->start(10000);
 	connect(timer, SIGNAL(timeout()), SLOT(update()));
 }
 
