@@ -44,6 +44,7 @@ ServosWidget::~ServosWidget()
 
 void ServosWidget::valueChanged(const double &value)
 {
+	ui->number->setText(QString::number(ui->dial->value()));
 	set_servo_position(ui->dial->label(), value);
 }
 
@@ -69,7 +70,6 @@ void ServosWidget::activeChanged()
 	enable_servo(label);
 	ui->dial->setLabel(label);
 	ui->dial->setValue(512);
-	ui->number->setText(QString::number(ui->dial->value()));
 }
 
 void ServosWidget::manualEntry(const QString &text)
