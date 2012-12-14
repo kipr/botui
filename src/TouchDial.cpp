@@ -107,11 +107,13 @@ void TouchDial::paintEvent(QPaintEvent *)
 	double printValue = m_value;
 	if(printValue < 0.0 && printValue >= -0.5) printValue = 0.0;
 	
-	p.drawText(xoff + r * 0.6, yoff + r * 1.4, r * 0.8, r * 0.4, Qt::AlignHCenter | Qt::AlignVCenter, QString().sprintf("%.0f", printValue));
+	p.drawText(xoff + r * 0.6 + 0.5, yoff + r * 1.4 + 0.5, r * 0.8, r * 0.4,
+		Qt::AlignHCenter | Qt::AlignVCenter, QString().sprintf("%.0f", printValue));
 	
 	if(m_label != 0xFFFF) {
 		p.setPen(Qt::white);
-		p.drawText(xoff + r * 0.6, yoff + r * 0.6, r * 0.8, r * 0.8, Qt::AlignHCenter | Qt::AlignVCenter, QString::number(m_label));
+		p.drawText(xoff + r * 0.6 + 0.5, yoff + r * 0.6 + 0.5, r * 0.8, r * 0.8,
+			Qt::AlignHCenter | Qt::AlignVCenter, QString::number(m_label));
 	}
 }
 

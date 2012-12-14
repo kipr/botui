@@ -20,6 +20,9 @@ ServosWidget::ServosWidget(Device *device, QWidget *parent)
 	connect(ui->_2, SIGNAL(clicked()), SLOT(activeChanged()));
 	connect(ui->_3, SIGNAL(clicked()), SLOT(activeChanged()));
 	
+	ui->dial->setMinimumValue(0);
+	ui->dial->setMinimumValue(1024);
+	ui->dial->setValue(512);
 	ui->dial->setLabel(0);
 }
 
@@ -36,6 +39,8 @@ void ServosWidget::valueChanged(const double &value)
 void ServosWidget::activeChanged()
 {
 	QObject *from = sender();
+	if(!from) return;
+	
 	quint16 label = 0xFFFF;
 	
 	if(from == ui->_0) label = 0;
@@ -43,5 +48,12 @@ void ServosWidget::activeChanged()
 	else if(from == ui->_2) label = 2;
 	else if(from == ui->_3) label = 3;
 	
+	ui->_0->setEnabled(from != ui->_0);
+	ui->_1->setEnabled(from != ui->_1);
+	ui->_2->setEnabled(from != ui->_3);
+	ui->_3->setEnabled(from != ui->_3);
+	
 	ui->dial->setLabel(label);
+	ui->dial->setValue(512);
+	
 }
