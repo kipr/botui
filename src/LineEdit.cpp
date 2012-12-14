@@ -59,7 +59,7 @@ void LineEdit::paintEvent(QPaintEvent *e)
 	static const int offset = 5;
 	const bool right = alignment() == Qt::AlignRight;
 	p.drawText(QRect(right ? offset : 0, 0, width() - offset, height()),
-		isEnabled() ? tr("Disabled", "Text for disabled line edit") : tr("Tap to Edit...", "Text for enabled line edit"),
+		!isEnabled() ? tr("Disabled", "Text for disabled line edit") : tr("Tap to Edit...", "Text for enabled line edit"),
 		QTextOption(Qt::AlignAbsolute | (right ? Qt::AlignLeft : Qt::AlignRight) | Qt::AlignVCenter));
 }
 
