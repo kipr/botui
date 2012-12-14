@@ -30,7 +30,7 @@ int main(int argc, char* argv[])
 	
 	srand(time(NULL));
 	
-	Simulator::Device device;
+	Kovan::Device device;
 	if(device.isTouchscreen()) {
 		app.setOverrideCursor(QCursor(Qt::BlankCursor));
 	}
