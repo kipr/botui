@@ -23,7 +23,9 @@ ServosWidget::ServosWidget(Device *device, QWidget *parent)
 	ui->dial->setMinimumValue(0);
 	ui->dial->setMinimumValue(1024);
 	ui->dial->setValue(512);
+	
 	ui->dial->setLabel(0);
+	ui->_0->setEnabled(false);
 }
 
 ServosWidget::~ServosWidget()
