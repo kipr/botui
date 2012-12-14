@@ -28,8 +28,7 @@ bool LineEdit::event(QEvent *e)
 		e->ignore();
 		return false;
 	}
-	
-	if(e->type() == QEvent::MouseButtonPress) {
+	if(isEnabled() && e->type() == QEvent::MouseButtonPress) {
 		int ret = RootController::ref().presentDialog(m_inputProvider);
 		if(ret == QDialog::Accepted) setText(m_inputProvider->input());
 		e->accept();
@@ -41,7 +40,6 @@ bool LineEdit::event(QEvent *e)
 
 void LineEdit::setInputProvider(InputProviderDialog *inputProvider)
 {
-	qDebug() << "Input" << m_inputProvider;
 	m_inputProvider = inputProvider;
 	setReadOnly(!m_inputProvider);
 }
@@ -61,7 +59,7 @@ void LineEdit::paintEvent(QPaintEvent *e)
 	static const int offset = 5;
 	const bool right = alignment() == Qt::AlignRight;
 	p.drawText(QRect(right ? offset : 0, 0, width() - offset, height()),
-		tr("Tap to Edit..."),
+		isEnabled() ? tr("Disabled", "Text for disabled line edit") : tr("Tap to Edit...", "Text for enabled line edit"),
 		QTextOption(Qt::AlignAbsolute | (right ? Qt::AlignLeft : Qt::AlignRight) | Qt::AlignVCenter));
 }
 

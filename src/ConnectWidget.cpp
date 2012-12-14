@@ -29,6 +29,10 @@ ConnectWidget::ConnectWidget(Device *device, QWidget *parent)
 	QObject::connect(ui->refresh, SIGNAL(clicked()), SLOT(refresh()));
 	QObject::connect(ui->other, SIGNAL(clicked()), SLOT(other()));
 	QObject::connect(ui->connect, SIGNAL(clicked()), SLOT(connect()));
+	QObject::connect(ui->networks->selectionModel(),
+		SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
+		SLOT(selectionChanged(QItemSelection)));
+	selectionChanged(QItemSelection());
 }
 
 ConnectWidget::~ConnectWidget()
@@ -41,7 +45,9 @@ void ConnectWidget::connect()
 	QModelIndexList selection = ui->networks->selectionModel()->selectedIndexes();
 	if(selection.size() != 1) return;
 	Network network = m_model->indexToNetwork(selection[0]);
-	qDebug() << "Connect to" << network;
+	OtherNetworkWidget *other = new OtherNetworkWidget(m_device);
+	other->fillNetworkInfo(network);
+	RootController::ref().presentWidget(other);
 }
 
 void ConnectWidget::other()
@@ -52,4 +58,9 @@ void ConnectWidget::other()
 void ConnectWidget::refresh()
 {
 	NetworkManager::ref().requestScan();
+}
+
+void ConnectWidget::selectionChanged(const QItemSelection &selection)
+{
+	ui->connect->setEnabled(selection.indexes().size());
 }

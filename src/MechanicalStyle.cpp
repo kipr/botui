@@ -507,7 +507,6 @@ void MechanicalStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt
 	if(pe == PE_FrameFocusRect) return;
 	if(pe == PE_FrameStatusBar) return;
 	
-	
 	QPlastiqueStyle::drawPrimitive(pe, opt, p, w);
 }
 

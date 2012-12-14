@@ -3,6 +3,8 @@
 
 #include "StandardWidget.h"
 
+#include <QItemSelection>
+
 namespace Ui
 {
 	class ConnectWidget;
@@ -21,6 +23,7 @@ public slots:
 	void connect();
 	void other();
 	void refresh();
+	void selectionChanged(const QItemSelection &selection);
 	
 private:
 	Ui::ConnectWidget *ui;

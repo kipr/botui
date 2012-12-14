@@ -122,6 +122,12 @@
      </item>
      <item>
       <widget class="QPushButton" name="join">
+       <property name="maximumSize">
+        <size>
+         <width>120</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="text">
         <string>Join</string>
        </property>

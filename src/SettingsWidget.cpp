@@ -9,7 +9,6 @@
 
 #include "NetworkSettingsWidget.h"
 #include "KissIdeSettingsWidget.h"
-#include "StringNumberEditWidget.h"
 
 #include <QDebug>
 

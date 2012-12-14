@@ -5,6 +5,7 @@
 #include "StatusBar.h"
 #include "KovanDevice.h"
 #include "SimulatorDevice.h"
+#include "SimulatorDevice.h"
 #include "FirstRunWizard.h"
 #include "FactoryWidget.h"
 #include "NetworkManager.h"
@@ -29,7 +30,7 @@ int main(int argc, char* argv[])
 	
 	srand(time(NULL));
 	
-	Kovan::Device device;
+	Simulator::Device device;
 	if(device.isTouchscreen()) {
 		app.setOverrideCursor(QCursor(Qt::BlankCursor));
 	}
