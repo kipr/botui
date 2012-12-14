@@ -19,6 +19,10 @@ public:
 	ServosWidget(Device *device, QWidget *parent = 0);
 	~ServosWidget();
 	
+private slots:
+	void valueChanged(const double &value);
+	void activeChanged();
+	
 private:
 	Ui::ServosWidget *ui;
 };

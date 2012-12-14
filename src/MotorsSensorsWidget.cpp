@@ -26,8 +26,6 @@ MotorsSensorsWidget::~MotorsSensorsWidget()
 
 void MotorsSensorsWidget::servos()
 {
-	NotYetImplementedDialog::nyi();
-	return;
 	RootController::ref().presentWidget(new ServosWidget(m_device));
 }
 
