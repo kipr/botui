@@ -4,21 +4,27 @@
 #include "RootController.h"
 #include "StatusBar.h"
 #include "Device.h"
+#include "NumpadDialog.h"
 #include "kovan/kovan.h"
+
 #include <QDebug>
 
 ServosWidget::ServosWidget(Device *device, QWidget *parent)
 	: StandardWidget(device, parent),
-	ui(new Ui::ServosWidget)
+	ui(new Ui::ServosWidget),
+	m_provider(new NumpadDialog(QString()))
 {
 	ui->setupUi(this);
 	performStandardSetup(tr("Servos"));
+	
+	ui->number->setInputProvider(m_provider);
 	
 	connect(ui->dial, SIGNAL(valueChanged(double)), SLOT(valueChanged(double)));
 	connect(ui->_0, SIGNAL(clicked()), SLOT(activeChanged()));
 	connect(ui->_1, SIGNAL(clicked()), SLOT(activeChanged()));
 	connect(ui->_2, SIGNAL(clicked()), SLOT(activeChanged()));
 	connect(ui->_3, SIGNAL(clicked()), SLOT(activeChanged()));
+	connect(ui->number, SIGNAL(textEdited(QString)), SLOT(manualEntry(QString)));
 	
 	ui->dial->setMinimumValue(0);
 	ui->dial->setMaximumValue(1024);
@@ -33,6 +39,7 @@ ServosWidget::~ServosWidget()
 {
 	disable_servo(ui->dial->label());
 	delete ui;
+	delete m_provider;
 }
 
 void ServosWidget::valueChanged(const double &value)
@@ -62,5 +69,11 @@ void ServosWidget::activeChanged()
 	enable_servo(label);
 	ui->dial->setLabel(label);
 	ui->dial->setValue(512);
-	
+	ui->number->setText(QString::number(ui->dial->value()));
+}
+
+void ServosWidget::manualEntry(const QString &text)
+{
+	qDebug() << "Manual entry";
+	ui->dial->setValue(text.toInt());
 }

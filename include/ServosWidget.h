@@ -11,6 +11,7 @@ namespace Ui
 class MenuBar;
 class StatusBar;
 class Device;
+class InputProviderDialog;
 
 class ServosWidget : public StandardWidget
 {
@@ -23,8 +24,10 @@ private slots:
 	void valueChanged(const double &value);
 	void activeChanged();
 	
+	void manualEntry(const QString &text);
 private:
 	Ui::ServosWidget *ui;
+	InputProviderDialog *m_provider;
 };
 
 

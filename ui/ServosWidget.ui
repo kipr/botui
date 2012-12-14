@@ -7,51 +7,105 @@
     <x>0</x>
     <y>0</y>
     <width>320</width>
-    <height>240</height>
+    <height>250</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Servos</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0">
+  <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="spacing">
     <number>2</number>
    </property>
-   <property name="margin">
+   <property name="leftMargin">
     <number>6</number>
    </property>
+   <property name="topMargin">
+    <number>6</number>
+   </property>
+   <property name="rightMargin">
+    <number>6</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item>
-    <widget class="TouchDial" name="dial" native="true"/>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="TouchDial" name="dial" native="true"/>
+     </item>
+     <item>
+      <widget class="LineEdit" name="number"/>
+     </item>
+    </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QPushButton" name="_0">
+       <property name="minimumSize">
+        <size>
+         <width>75</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="text">
-        <string>0</string>
+        <string>Port 0</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../rc/icons.qrc">
+         <normaloff>:/icons/bullet_blue.png</normaloff>:/icons/bullet_blue.png</iconset>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="_1">
        <property name="text">
-        <string>1</string>
+        <string>Port 1</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../rc/icons.qrc">
+         <normaloff>:/icons/bullet_yellow.png</normaloff>:/icons/bullet_yellow.png</iconset>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="_2">
        <property name="text">
-        <string>2</string>
+        <string>Port 2</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../rc/icons.qrc">
+         <normaloff>:/icons/bullet_red.png</normaloff>:/icons/bullet_red.png</iconset>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="_3">
        <property name="text">
-        <string>3</string>
+        <string>Port 3</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../rc/icons.qrc">
+         <normaloff>:/icons/bullet_green.png</normaloff>:/icons/bullet_green.png</iconset>
        </property>
       </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
      </item>
     </layout>
    </item>
@@ -59,12 +113,19 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>LineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>LineEdit.h</header>
+  </customwidget>
+  <customwidget>
    <class>TouchDial</class>
    <extends>QWidget</extends>
    <header>TouchDial.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../rc/icons.qrc"/>
+ </resources>
  <connections/>
 </ui>
