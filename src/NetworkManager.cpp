@@ -64,6 +64,9 @@ NetworkManager::~NetworkManager()
 	
 }
 
+#define NM_802_11_WIRELESS_KEY ("802-11-wireless")
+#define NM_802_11_SECURITY_KEY ("802-11-wireless-security")
+
 void NetworkManager::addNetwork(const Network &network)
 {
 	// Yes, yes... this is a hard coded mess.
@@ -80,15 +83,15 @@ void NetworkManager::addNetwork(const Network &network)
 	connection["connection"]["id"] = network.ssid();
 	
 	// SSID
-	connection["802-11-wireless"]["ssid"] = network.ssid().toLatin1();
+	connection[NM_802_11_WIRELESS_KEY]["ssid"] = network.ssid().toLatin1();
 	
 	// Network Mode (adhoc or infrastructure)
 	switch(network.mode()) {
 	case Network::Infrastructure:
-		connection["802-11-wireless"]["mode"] = "infrastructure";
+		connection[NM_802_11_WIRELESS_KEY]["mode"] = "infrastructure";
 		break;
 	case Network::AdHoc:
-		connection["802-11-wireless"]["mode"] = "adhoc";
+		connection[NM_802_11_WIRELESS_KEY]["mode"] = "adhoc";
 		break;
 	default: break;
 	}
@@ -102,16 +105,19 @@ void NetworkManager::addNetwork(const Network &network)
 	};
 	
 	if(network.security() != Network::None) {
-		connection["802-11-wireless-security"]["security"] = securityTypes[network.security()];
+		connection[NM_802_11_SECURITY_KEY]["key-mgmt"] = securityTypes[network.security()];
 		// WEP uses this key
-		connection["802-11-wireless-security"]["password"] = network.password();
+		connection[NM_802_11_SECURITY_KEY]["password"] = network.password();
 		// WPA uses this one
-		connection["802-11-wireless-security"]["psk"] = network.password();
+		connection[NM_802_11_SECURITY_KEY]["psk"] = network.password();
+		
+		// Finally, tell our configuration about the security
+		connection[NM_802_11_WIRELESS_KEY]["security"] = NM_802_11_SECURITY_KEY;
 	}
 	
+	// Send our config via dbus to NetworkManager
 	NMSettings settings(NM_SERVICE, NM_OBJECT "/Settings", QDBusConnection::systemBus());
 	settings.AddConnection(connection);
-	
 	emit networkAdded(network);
 }
 
