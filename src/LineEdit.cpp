@@ -30,7 +30,10 @@ bool LineEdit::event(QEvent *e)
 	}
 	if(isEnabled() && e->type() == QEvent::MouseButtonPress) {
 		int ret = RootController::ref().presentDialog(m_inputProvider);
-		if(ret == QDialog::Accepted) setText(m_inputProvider->input());
+		if(ret == QDialog::Accepted) {
+			setText(m_inputProvider->input());
+			emit textEdited(text());
+		}
 		e->accept();
 		return true;
 	}
