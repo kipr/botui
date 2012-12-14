@@ -47,6 +47,8 @@ public:
 	void turnOff();
 	bool isOn() const;
 	
+	State state() const;
+	
 	NetworkList accessPoints() const;
 	
 	QString ipAddress() const;

@@ -184,6 +184,11 @@ bool NetworkManager::isOn() const
 	return m_nm->networkingEnabled();
 }
 
+NetworkManager::State NetworkManager::state() const
+{
+	return (NetworkManager::State)m_device->state();
+}
+
 Network NetworkManager::active() const
 {
 	if(!m_wifi) return Network();
@@ -309,6 +314,7 @@ Network NetworkManager::createAccessPoint(const QDBusObjectPath &accessPoint) co
 	Network newNetwork;
 	// SSID
 	newNetwork.setSsid(accessPointObject.ssid());
+	newNetwork.setStrength(accessPointObject.strength());
 	
 	// Security
 	const uint securityMode = accessPointObject.wpaFlags();

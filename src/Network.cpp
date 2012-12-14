@@ -58,6 +58,16 @@ const Network::Mode &Network::mode() const
 	return m_mode;
 }
 
+void Network::setStrength(const double &strength)
+{
+	m_strength = strength;
+}
+
+const double &Network::strength() const
+{
+	return m_strength;
+}
+
 bool Network::isComplete() const
 {
 	if(m_security == Network::None) return true;

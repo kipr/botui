@@ -36,6 +36,9 @@ public:
 	void setMode(const Mode &mode);
 	const Mode &mode() const;
 	
+	void setStrength(const double &strength);
+	const double &strength() const;
+	
 	bool isComplete() const;
 	
 private:
@@ -43,6 +46,7 @@ private:
 	Security m_security;
 	QString m_password;
 	Mode m_mode;
+	double m_strength;
 };
 
 typedef QList<Network> NetworkList;

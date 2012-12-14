@@ -10,11 +10,13 @@ NetworkStatusWidget::NetworkStatusWidget(QWidget *parent)
 	: QWidget(parent)
 {
 	constrain();
+	connect(&NetworkManager::ref(),
+		SIGNAL(stateChanged(NetworkManager::State, NetworkManager::State)),
+		SLOT(networkStateChanged()));
 }
 
 void NetworkStatusWidget::paintEvent(QPaintEvent *event)
 {
-#if 0
 	QPainter painter(this);
 	painter.setRenderHint(QPainter::Antialiasing);
 	const int w = width();
@@ -22,11 +24,16 @@ void NetworkStatusWidget::paintEvent(QPaintEvent *event)
 	const int ellipseSize = w / 6;
 	const int startAngle = 30 * 16;
 	const int spanAngle = 120 * 16;
+	
 	static const QColor green = QColor(50, 150, 50);
 	static const QColor red = QColor(250, 100, 100);
+	static const QColor orange = QColor(250, 127, 0);
 	
-	const bool off = !m_networkingProvider || m_networkingProvider->networkState() == NetworkingProvider::NetworkOff;
-	const QColor color = off ? red : green;
+	const bool off = !NetworkManager::ref().isOn();
+	QColor color = off ? red : green;
+	if(!off && NetworkManager::ref().state() < NetworkManager::Activated) {
+		color = orange;
+	}
 	
 	painter.setPen(QPen(color, w / 10));
 	painter.setBrush(color);
@@ -41,15 +48,7 @@ void NetworkStatusWidget::paintEvent(QPaintEvent *event)
 		return;
 	}
 	
-	const float networkStrength = 0.0;
-	const float networkStrengthMin = m_networkingProvider
-		? m_networkingProvider->networkStrengthMin() : 0.0;
-	const float networkStrengthMax = m_networkingProvider
-		? m_networkingProvider->networkStrengthMax() : 0.0;
-	
-	const float percentage = m_networkingProvider
-		? (networkStrength - networkStrengthMin) / (networkStrengthMax - networkStrengthMin)
-		: 0.0;
+	const float percentage = NetworkManager::ref().active().strength() / 100.0;
 	
 	QRectF rectangle(0, h / 5.0, w, h);
 	if(percentage > 0.66) {
@@ -63,8 +62,6 @@ void NetworkStatusWidget::paintEvent(QPaintEvent *event)
 	
 	painter.drawEllipse(w / 2.0 - ellipseSize / 2.0, 3.5 * h / 5.0 - ellipseSize / 2.0,
 		ellipseSize, ellipseSize);
-#endif
-
 }
 
 void NetworkStatusWidget::networkStateChanged()
