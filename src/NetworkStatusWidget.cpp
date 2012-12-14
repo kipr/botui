@@ -3,6 +3,7 @@
 #include "NetworkManager.h"
 
 #include <QTime>
+#include <QTimer>
 #include <QPainter>
 #include <QDebug>
 
@@ -13,6 +14,9 @@ NetworkStatusWidget::NetworkStatusWidget(QWidget *parent)
 	connect(&NetworkManager::ref(),
 		SIGNAL(stateChanged(NetworkManager::State, NetworkManager::State)),
 		SLOT(networkStateChanged()));
+	QTimer *updateTimer = new QTimer(this);
+	connect(updateTimer, SIGNAL(timeout()), SLOT(update()));
+	updateTimer->start(10000);
 }
 
 void NetworkStatusWidget::paintEvent(QPaintEvent *event)
