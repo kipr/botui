@@ -21,7 +21,7 @@ ServosWidget::ServosWidget(Device *device, QWidget *parent)
 	connect(ui->_3, SIGNAL(clicked()), SLOT(activeChanged()));
 	
 	ui->dial->setMinimumValue(0);
-	ui->dial->setMinimumValue(1024);
+	ui->dial->setMaximumValue(1024);
 	ui->dial->setValue(512);
 	
 	ui->dial->setLabel(0);
