@@ -26,7 +26,7 @@ ServosWidget::ServosWidget(Device *device, QWidget *parent)
 	
 	ui->dial->setLabel(0);
 	ui->_0->setEnabled(false);
-	servo_enable(0);
+	enable_servo(0);
 }
 
 ServosWidget::~ServosWidget()
@@ -45,7 +45,7 @@ void ServosWidget::activeChanged()
 	QObject *from = sender();
 	if(!from) return;
 	
-	servo_disable(ui->dial->label());
+	disable_servo(ui->dial->label());
 	
 	quint16 label = 0xFFFF;
 	
@@ -59,7 +59,7 @@ void ServosWidget::activeChanged()
 	ui->_2->setEnabled(from != ui->_3);
 	ui->_3->setEnabled(from != ui->_3);
 	
-	servo_enable(label);
+	enable_servo(label);
 	ui->dial->setLabel(label);
 	ui->dial->setValue(512);
 	
