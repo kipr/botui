@@ -44,7 +44,7 @@ ServosWidget::~ServosWidget()
 
 void ServosWidget::valueChanged(const double &value)
 {
-	ui->number->setText(QString::number(ui->dial->value()));
+	ui->number->setText(QString::number((int)ui->dial->value()));
 	set_servo_position(ui->dial->label(), value);
 }
 
