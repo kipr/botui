@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ServosWidget</class>
- <widget class="QWidget" name="ServosWidget">
+ <class>MotorsWidget</class>
+ <widget class="QWidget" name="MotorsWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Servos</string>
+   <string>Motors</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_4">
    <property name="spacing">
@@ -55,7 +55,7 @@
        <item>
         <widget class="QLabel" name="label">
          <property name="text">
-          <string>Servos</string>
+          <string>Motors</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>

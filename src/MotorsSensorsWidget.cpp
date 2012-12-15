@@ -4,6 +4,7 @@
 #include <QDebug>
 #include "CameraWidget.h"
 #include "ServosWidget.h"
+#include "MotorsWidget.h"
 #include "SensorsWidget.h"
 #include "NotYetImplementedDialog.h"
 
@@ -15,6 +16,7 @@ MotorsSensorsWidget::MotorsSensorsWidget(Device *device, QWidget *parent)
 	performStandardSetup(tr("Motors and Sensors"));
 	
 	connect(ui->servos, SIGNAL(clicked()), SLOT(servos()));
+	connect(ui->motors, SIGNAL(clicked()), SLOT(motors()));
 	connect(ui->sensors, SIGNAL(clicked()), SLOT(sensors()));
 	connect(ui->camera, SIGNAL(clicked()), SLOT(camera()));
 }
@@ -27,6 +29,11 @@ MotorsSensorsWidget::~MotorsSensorsWidget()
 void MotorsSensorsWidget::servos()
 {
 	RootController::ref().presentWidget(new ServosWidget(device()));
+}
+
+void MotorsSensorsWidget::motors()
+{
+	RootController::ref().presentWidget(new MotorsWidget(device()));
 }
 
 void MotorsSensorsWidget::sensors()

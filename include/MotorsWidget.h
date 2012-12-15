@@ -1,21 +1,21 @@
-#ifndef _SERVOSWIDGET_H_
-#define _SERVOSWIDGET_H_
+#ifndef _MOTORSWIDGET_H_
+#define _MOTORSWIDGET_H_
 
 #include "StandardWidget.h"
 
 namespace Ui
 {
-	class ServosWidget;
+	class MotorsWidget;
 }
 
 class InputProviderDialog;
 
-class ServosWidget : public StandardWidget
+class MotorsWidget : public StandardWidget
 {
 Q_OBJECT
 public:
-	ServosWidget(Device *device, QWidget *parent = 0);
-	~ServosWidget();
+	MotorsWidget(Device *device, QWidget *parent = 0);
+	~MotorsWidget();
 	
 private slots:
 	void valueChanged(const double &value);
@@ -23,7 +23,7 @@ private slots:
 	
 	void manualEntry(const QString &text);
 private:
-	Ui::ServosWidget *ui;
+	Ui::MotorsWidget *ui;
 	InputProviderDialog *m_provider;
 };
 

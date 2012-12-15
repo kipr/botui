@@ -1,5 +1,5 @@
-#include "ServosWidget.h"
-#include "ui_ServosWidget.h"
+#include "MotorsWidget.h"
+#include "ui_MotorsWidget.h"
 #include "MenuBar.h"
 #include "RootController.h"
 #include "StatusBar.h"
@@ -9,13 +9,13 @@
 
 #include <QDebug>
 
-ServosWidget::ServosWidget(Device *device, QWidget *parent)
+MotorsWidget::MotorsWidget(Device *device, QWidget *parent)
 	: StandardWidget(device, parent),
-	ui(new Ui::ServosWidget),
+	ui(new Ui::MotorsWidget),
 	m_provider(new NumpadDialog(QString()))
 {
 	ui->setupUi(this);
-	performStandardSetup(tr("Servos"));
+	performStandardSetup(tr("Motors"));
 	
 	ui->number->setInputProvider(m_provider);
 	
@@ -26,34 +26,34 @@ ServosWidget::ServosWidget(Device *device, QWidget *parent)
 	connect(ui->_3, SIGNAL(clicked()), SLOT(activeChanged()));
 	connect(ui->number, SIGNAL(textEdited(QString)), SLOT(manualEntry(QString)));
 	
-	ui->dial->setMinimumValue(0);
-	ui->dial->setMaximumValue(1024);
-	ui->dial->setValue(512);
+	ui->dial->setMinimumValue(-100);
+	ui->dial->setMaximumValue(100);
+	ui->dial->setValue(0);
 	
 	ui->dial->setLabel(0);
 	ui->_0->setEnabled(false);
-	enable_servo(0);
+	ao();
 }
 
-ServosWidget::~ServosWidget()
+MotorsWidget::~MotorsWidget()
 {
 	disable_servo(ui->dial->label());
 	delete ui;
 	delete m_provider;
 }
 
-void ServosWidget::valueChanged(const double &value)
+void MotorsWidget::valueChanged(const double &value)
 {
 	ui->number->setText(QString::number((int)ui->dial->value()));
-	set_servo_position(ui->dial->label(), value);
+	motor(ui->dial->label(), value);
 }
 
-void ServosWidget::activeChanged()
+void MotorsWidget::activeChanged()
 {
 	QObject *from = sender();
 	if(!from) return;
 	
-	disable_servo(ui->dial->label());
+	off(ui->dial->label());
 	
 	quint16 label = 0xFFFF;
 	
@@ -67,12 +67,12 @@ void ServosWidget::activeChanged()
 	ui->_2->setEnabled(from != ui->_2);
 	ui->_3->setEnabled(from != ui->_3);
 	
-	enable_servo(label);
+	off(label);
 	ui->dial->setLabel(label);
-	ui->dial->setValue(512);
+	ui->dial->setValue(0);
 }
 
-void ServosWidget::manualEntry(const QString &text)
+void MotorsWidget::manualEntry(const QString &text)
 {
 	ui->dial->setValue(text.toInt());
 }

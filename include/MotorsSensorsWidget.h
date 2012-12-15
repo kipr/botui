@@ -15,8 +15,9 @@ public:
 	MotorsSensorsWidget(Device *device, QWidget *parent = 0);
 	~MotorsSensorsWidget();
 	
-public slots:
+private slots:
 	void servos();
+	void motors();
 	void sensors();
 	void camera();
 	
