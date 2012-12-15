@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>GuiSettingsWidget</class>
+ <widget class="QWidget" name="GuiSettingsWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>GUI Settings</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="margin">
@@ -27,7 +27,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="comboBox">
+      <widget class="QComboBox" name="colors">
        <item>
         <property name="text">
          <string>Black</string>
@@ -40,12 +40,27 @@
        </item>
        <item>
         <property name="text">
+         <string>Pink</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
          <string>Blue</string>
         </property>
        </item>
        <item>
         <property name="text">
          <string>Green</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Orange</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>White</string>
         </property>
        </item>
       </widget>

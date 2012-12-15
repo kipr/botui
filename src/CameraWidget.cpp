@@ -15,7 +15,7 @@ CameraWidget::CameraWidget(Device *device, QWidget *parent)
 {
 	ui->setupUi(this);
 	performStandardSetup(tr("Camera"));
-	QAction *toggleUi = m_menuBar->addAction(tr("Hide UI"));
+	QAction *toggleUi = menuBar()->addAction(tr("Hide UI"));
 	connect(toggleUi, SIGNAL(activated()), SLOT(toggleUi()));
 	toggleUi->connect(ui->camera, SIGNAL(pressed()), SLOT(trigger()));
 	
@@ -47,11 +47,11 @@ void CameraWidget::updateCamera()
 
 void CameraWidget::toggleUi()
 {
-	const bool toggle = !m_statusBar->isVisible();
-	m_statusBar->setVisible(toggle);
+	const bool toggle = !statusBar()->isVisible();
+	statusBar()->setVisible(toggle);
 	const int margin = toggle ? 6 : 0;
 	layout()->setContentsMargins(margin, margin, margin, 0);
-	layout()->setMenuBar(toggle ? m_menuBar : 0);
+	layout()->setMenuBar(toggle ? menuBar() : 0);
 }
 
 CameraWidget::~CameraWidget()

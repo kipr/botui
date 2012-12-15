@@ -28,3 +28,18 @@ void StandardWidget::performStandardSetup(const QString& title)
 	m_statusBar->loadDefaultWidgets(m_device);
 	layout()->addWidget(m_statusBar);
 }
+
+Device *StandardWidget::device() const
+{
+	return m_device;
+}
+
+MenuBar *StandardWidget::menuBar() const
+{
+	return m_menuBar;
+}
+
+StatusBar *StandardWidget::statusBar() const
+{
+	return m_statusBar;
+}

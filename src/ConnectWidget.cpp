@@ -45,14 +45,14 @@ void ConnectWidget::connect()
 	QModelIndexList selection = ui->networks->selectionModel()->selectedIndexes();
 	if(selection.size() != 1) return;
 	Network network = m_model->indexToNetwork(selection[0]);
-	OtherNetworkWidget *other = new OtherNetworkWidget(m_device);
+	OtherNetworkWidget *other = new OtherNetworkWidget(device());
 	other->fillNetworkInfo(network);
 	RootController::ref().presentWidget(other);
 }
 
 void ConnectWidget::other()
 {
-	RootController::ref().presentWidget(new OtherNetworkWidget(m_device));
+	RootController::ref().presentWidget(new OtherNetworkWidget(device()));
 }
 
 void ConnectWidget::refresh()

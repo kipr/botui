@@ -9,6 +9,7 @@
 #include "FirstRunWizard.h"
 #include "FactoryWidget.h"
 #include "NetworkManager.h"
+#include "GuiSettingsWidget.h"
 
 #include <QApplication>
 #include <QDir>
@@ -34,6 +35,8 @@ int main(int argc, char* argv[])
 	if(device.isTouchscreen()) {
 		app.setOverrideCursor(QCursor(Qt::BlankCursor));
 	}
+	
+	GuiSettingsWidget::updateStyle(&device);
 	
 	NetworkManager::ref();
 	//RootController::ref().presentQml(QUrl::fromLocalFile("loading.qml"));

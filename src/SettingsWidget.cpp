@@ -9,6 +9,7 @@
 
 #include "NetworkSettingsWidget.h"
 #include "KissIdeSettingsWidget.h"
+#include "GuiSettingsWidget.h"
 
 #include <QDebug>
 
@@ -21,9 +22,10 @@ SettingsWidget::SettingsWidget(Device *device, QWidget *parent)
 	
 	// ui->networkSettings->setEnabled(m_device->networkingProvider());
 	
-	connect(ui->networkSettings, SIGNAL(clicked()), SLOT(network()));
-	connect(ui->kissIdeSettings, SIGNAL(clicked()), SLOT(kissIde()));
+	connect(ui->network, SIGNAL(clicked()), SLOT(network()));
+	connect(ui->kissIde, SIGNAL(clicked()), SLOT(kissIde()));
 	connect(ui->channels, SIGNAL(clicked()), SLOT(channels()));
+	connect(ui->gui, SIGNAL(clicked()), SLOT(gui()));
 	connect(ui->calibrate, SIGNAL(clicked()), SLOT(calibrate()));
 }
 
@@ -34,16 +36,21 @@ SettingsWidget::~SettingsWidget()
 
 void SettingsWidget::network()
 {
-	RootController::ref().presentWidget(new NetworkSettingsWidget(m_device));
+	RootController::ref().presentWidget(new NetworkSettingsWidget(device()));
 }
 
 void SettingsWidget::kissIde()
 {
-	RootController::ref().presentWidget(new KissIdeSettingsWidget(m_device));
+	RootController::ref().presentWidget(new KissIdeSettingsWidget(device()));
 }
 
 void SettingsWidget::channels()
 {
+}
+
+void SettingsWidget::gui()
+{
+	RootController::ref().presentWidget(new GuiSettingsWidget(device()));
 }
 
 void SettingsWidget::calibrate()

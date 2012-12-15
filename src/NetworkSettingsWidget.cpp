@@ -41,12 +41,12 @@ NetworkSettingsWidget::~NetworkSettingsWidget()
 
 void NetworkSettingsWidget::connect()
 {
-	RootController::ref().presentWidget(new ConnectWidget(m_device));
+	RootController::ref().presentWidget(new ConnectWidget(device()));
 }
 
 void NetworkSettingsWidget::manage()
 {
-	RootController::ref().presentWidget(new ManageNetworksWidget(m_device));
+	RootController::ref().presentWidget(new ManageNetworksWidget(device()));
 }
 
 void NetworkSettingsWidget::turnOn()

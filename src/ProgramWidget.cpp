@@ -19,7 +19,7 @@ ProgramWidget::ProgramWidget(Program *program, Device *device, QWidget *parent)
 {
 	ui->setupUi(this);
 	performStandardSetup(tr("Program"));
-	QAction *lock = m_menuBar->addAction(UiStandards::lockString());
+	QAction *lock = menuBar()->addAction(UiStandards::lockString());
 	connect(lock, SIGNAL(activated()), SLOT(lock()));
 	
 	ui->extra->setVisible(false);
@@ -30,7 +30,7 @@ ProgramWidget::ProgramWidget(Program *program, Device *device, QWidget *parent)
 		SLOT(finished(int, QProcess::ExitStatus)));
 	
 	
-	ButtonProvider *buttonProvider = m_device->buttonProvider();
+	ButtonProvider *buttonProvider = device->buttonProvider();
 	ui->normal->setEnabled(buttonProvider);
 	ui->extra->setEnabled(buttonProvider);
 	ui->console->setProcess(m_program->process());
@@ -75,7 +75,7 @@ void ProgramWidget::lock()
 
 void ProgramWidget::started()
 {
-	ButtonProvider *buttonProvider = m_device->buttonProvider();
+	ButtonProvider *buttonProvider = device()->buttonProvider();
 	if(buttonProvider) buttonProvider->reset();
 	ui->console->setProcess(m_program->process());
 }
@@ -114,62 +114,62 @@ void ProgramWidget::extraShownChanged(const bool& shown)
 
 void ProgramWidget::aPressed()
 {
-	m_device->buttonProvider()->setPressed(ButtonProvider::A, true);
+	device()->buttonProvider()->setPressed(ButtonProvider::A, true);
 }
 
 void ProgramWidget::bPressed()
 {
-	m_device->buttonProvider()->setPressed(ButtonProvider::B, true);
+	device()->buttonProvider()->setPressed(ButtonProvider::B, true);
 }
 
 void ProgramWidget::cPressed()
 {
-	m_device->buttonProvider()->setPressed(ButtonProvider::C, true);
+	device()->buttonProvider()->setPressed(ButtonProvider::C, true);
 }
 
 void ProgramWidget::xPressed()
 {
-	m_device->buttonProvider()->setPressed(ButtonProvider::X, true);
+	device()->buttonProvider()->setPressed(ButtonProvider::X, true);
 }
 
 void ProgramWidget::yPressed()
 {
-	m_device->buttonProvider()->setPressed(ButtonProvider::Y, true);
+	device()->buttonProvider()->setPressed(ButtonProvider::Y, true);
 }
 
 void ProgramWidget::zPressed()
 {
-	m_device->buttonProvider()->setPressed(ButtonProvider::Z, true);
+	device()->buttonProvider()->setPressed(ButtonProvider::Z, true);
 }
 
 void ProgramWidget::aReleased()
 {
-	m_device->buttonProvider()->setPressed(ButtonProvider::A, false);
+	device()->buttonProvider()->setPressed(ButtonProvider::A, false);
 }
 
 void ProgramWidget::bReleased()
 {
-	m_device->buttonProvider()->setPressed(ButtonProvider::B, false);
+	device()->buttonProvider()->setPressed(ButtonProvider::B, false);
 }
 
 void ProgramWidget::cReleased()
 {
-	m_device->buttonProvider()->setPressed(ButtonProvider::C, false);
+	device()->buttonProvider()->setPressed(ButtonProvider::C, false);
 }
 
 void ProgramWidget::xReleased()
 {
-	m_device->buttonProvider()->setPressed(ButtonProvider::X, false);
+	device()->buttonProvider()->setPressed(ButtonProvider::X, false);
 }
 
 void ProgramWidget::yReleased()
 {
-	m_device->buttonProvider()->setPressed(ButtonProvider::Y, false);
+	device()->buttonProvider()->setPressed(ButtonProvider::Y, false);
 }
 
 void ProgramWidget::zReleased()
 {
-	m_device->buttonProvider()->setPressed(ButtonProvider::Z, false);
+	device()->buttonProvider()->setPressed(ButtonProvider::Z, false);
 }
 
 ProgramWidget::~ProgramWidget()

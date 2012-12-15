@@ -8,14 +8,9 @@
 
 #define BUTTON_DECORATION_OFFSET 4
 
-inline static QColor mechanical_menubar_top_color()
+inline static QColor mechanical_menubar_bottom_color(const QColor &top)
 {
-	return QColor(50, 50, 50);
-}
-
-inline static QColor mechanical_menubar_bottom_color()
-{
-	return QColor(20, 20, 20);
+	return QColor(top.red() - 30, top.green() - 30, top.blue() - 30);
 }
 
 inline static QColor mechanical_button_top_color()
@@ -108,6 +103,16 @@ static void mechanical_draw_styled_button(const QRect& rect, const QStyleOption 
 	p->setPen(Qt::black);
 	p->setBrush(gradient);
 	mechanical_draw_styled_rectangle(rect, p, withScrews);
+}
+
+void MechanicalStyle::setUserColor(const QColor &userColor)
+{
+	m_userColor = userColor;
+}
+
+const QColor &MechanicalStyle::userColor() const
+{
+	return m_userColor;
 }
 
 QRect MechanicalStyle::subControlRect(ComplexControl cc, const QStyleOptionComplex *opt, SubControl sc, const QWidget *widget) const
@@ -274,8 +279,8 @@ void MechanicalStyle::drawComplexControl(ComplexControl cc, const QStyleOptionCo
 		const QRect& rect = opt->rect;
 		qDebug() << "Slider rect:" << rect;
 		QLinearGradient gradient = QLinearGradient(rect.right(), rect.top(), rect.right(), rect.bottom());
-		gradient.setColorAt(0, mechanical_menubar_top_color());
-		gradient.setColorAt(1, mechanical_menubar_bottom_color());
+		gradient.setColorAt(0, m_userColor);
+		gradient.setColorAt(1, mechanical_menubar_bottom_color(m_userColor));
 		p->save();
 		p->setBrush(QColor(0, 0, 0));
 		p->setPen(QPen(QColor(0, 0, 0, 0)));
@@ -369,8 +374,8 @@ void MechanicalStyle::drawControl(ControlElement ce, const QStyleOption *opt, QP
 		const QRect& rect = opt->rect;
 		
 		QLinearGradient gradient = QLinearGradient(rect.right(), rect.top(), rect.right(), rect.bottom());
-		gradient.setColorAt(0, mechanical_menubar_top_color());
-		gradient.setColorAt(1, mechanical_menubar_bottom_color());
+		gradient.setColorAt(0, m_userColor);
+		gradient.setColorAt(1, mechanical_menubar_bottom_color(m_userColor));
 		p->save();
 		p->setPen(QPen(QColor(Qt::black), 0));
 		p->setBrush(gradient);
@@ -438,8 +443,8 @@ void MechanicalStyle::drawControl(ControlElement ce, const QStyleOption *opt, QP
 		if(!mo) return;
 		const QRect& rect = opt->rect;
 		QLinearGradient gradient = QLinearGradient(rect.right(), rect.top(), rect.right(), rect.bottom());
-		gradient.setColorAt(0, mechanical_menubar_top_color());
-		gradient.setColorAt(1, mechanical_menubar_bottom_color());
+		gradient.setColorAt(0, m_userColor);
+		gradient.setColorAt(1, mechanical_menubar_bottom_color(m_userColor));
 		p->save();
 		p->setBrush(gradient);
 		p->setPen(QPen(QColor(0, 0, 0, 0)));

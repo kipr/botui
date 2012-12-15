@@ -32,10 +32,10 @@ HomeWidget::HomeWidget(Device *device, QWidget *parent)
 	connect(ui->exit, SIGNAL(clicked()), SLOT(exit()));
 	connect(ui->about, SIGNAL(clicked()), SLOT(about()));
 	
-	QAction *lock = m_menuBar->addAction(UiStandards::lockString());
+	QAction *lock = menuBar()->addAction(UiStandards::lockString());
 	connect(lock, SIGNAL(activated()), SLOT(lock()));
 	
-	ui->programs->setEnabled(m_device->filesystemProvider());
+	ui->programs->setEnabled(device->filesystemProvider());
 }
 
 HomeWidget::~HomeWidget()
@@ -46,23 +46,23 @@ HomeWidget::~HomeWidget()
 void HomeWidget::programs()
 {
 	RootController::ref().presentWidget(Program::instance()->isRunning()
-		? (QWidget *)new ProgramSelectionWidget(m_device)
-		: (QWidget *)new ProgramsWidget(m_device));
+		? (QWidget *)new ProgramSelectionWidget(device())
+		: (QWidget *)new ProgramsWidget(device()));
 }
 
 void HomeWidget::fileManager()
 {
-	RootController::ref().presentWidget(new FileManagerWidget(m_device));
+	RootController::ref().presentWidget(new FileManagerWidget(device()));
 }
 
 void HomeWidget::motorsSensors()
 {
-	RootController::ref().presentWidget(new MotorsSensorsWidget(m_device));
+	RootController::ref().presentWidget(new MotorsSensorsWidget(device()));
 }
 
 void HomeWidget::settings()
 {
-	RootController::ref().presentWidget(new SettingsWidget(m_device));
+	RootController::ref().presentWidget(new SettingsWidget(device()));
 }
 
 void HomeWidget::exit()
@@ -74,7 +74,7 @@ void HomeWidget::exit()
 
 void HomeWidget::about()
 {
-	RootController::ref().presentWidget(new AboutWidget(m_device));
+	RootController::ref().presentWidget(new AboutWidget(device()));
 }
 
 void HomeWidget::lock()

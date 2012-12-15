@@ -17,7 +17,7 @@ ProgramsWidget::ProgramsWidget(Device *device, QWidget *parent)
 	ui->setupUi(this);
 	performStandardSetup(tr("Programs"));
 	
-	ui->programs->setModel(m_device->filesystemProvider()->programsItemModel());
+	ui->programs->setModel(device->filesystemProvider()->programsItemModel());
 	connect(ui->run, SIGNAL(clicked()), SLOT(run()));
 	connect(ui->remove, SIGNAL(clicked()), SLOT(remove()));
 }
@@ -33,14 +33,14 @@ void ProgramsWidget::run()
 	if(currents.size() != 1) return;
 	
 	QModelIndex current = currents[0];
-	QString program = m_device->filesystemProvider()->programsItemModel()->program(current);
-	QString executable = m_device->compileProvider()->executableFor(program);
+	QString program = device()->filesystemProvider()->programsItemModel()->program(current);
+	QString executable = device()->compileProvider()->executableFor(program);
 	if(executable.isEmpty()) {
 		qWarning() << "Could not find executable for" << program;
 		return;
 	}
 	
-	ProgramWidget *programWidget = new ProgramWidget(Program::instance(), m_device);
+	ProgramWidget *programWidget = new ProgramWidget(Program::instance(), device());
 	RootController::ref().presentWidget(programWidget);
 	Program::instance()->start(executable);
 }
@@ -50,6 +50,6 @@ void ProgramsWidget::remove()
 	QModelIndexList currents = ui->programs->selectionModel()->selectedIndexes();
 	if(currents.size() != 1) return;
 	QModelIndex current = currents[0];
-	QString program = m_device->filesystemProvider()->programsItemModel()->program(current);
-	m_device->filesystemProvider()->deleteProgram(program);
+	QString program = device()->filesystemProvider()->programsItemModel()->program(current);
+	device()->filesystemProvider()->deleteProgram(program);
 }

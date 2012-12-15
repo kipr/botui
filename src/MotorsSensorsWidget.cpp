@@ -26,15 +26,15 @@ MotorsSensorsWidget::~MotorsSensorsWidget()
 
 void MotorsSensorsWidget::servos()
 {
-	RootController::ref().presentWidget(new ServosWidget(m_device));
+	RootController::ref().presentWidget(new ServosWidget(device()));
 }
 
 void MotorsSensorsWidget::sensors()
 {
-	RootController::ref().presentWidget(new SensorsWidget(m_device));
+	RootController::ref().presentWidget(new SensorsWidget(device()));
 }
 
 void MotorsSensorsWidget::camera()
 {
-	RootController::ref().presentWidget(new CameraWidget(m_device));
+	RootController::ref().presentWidget(new CameraWidget(device()));
 }

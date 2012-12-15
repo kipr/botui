@@ -14,9 +14,15 @@ public:
 	StandardWidget(Device *device, QWidget *parent = 0);
 	~StandardWidget();
 	
+	Device *device() const;
+	
 protected:
 	void performStandardSetup(const QString& title);
 	
+	MenuBar *menuBar() const;
+	StatusBar *statusBar() const;
+	
+private:
 	Device *m_device;
 	MenuBar *m_menuBar;
 	StatusBar *m_statusBar;

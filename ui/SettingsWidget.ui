@@ -28,7 +28,7 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
-        <widget class="QPushButton" name="networkSettings">
+        <widget class="QPushButton" name="network">
          <property name="text">
           <string>Network</string>
          </property>
@@ -78,7 +78,7 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <widget class="QPushButton" name="kissIdeSettings">
+        <widget class="QPushButton" name="kissIde">
          <property name="text">
           <string>KISS IDE</string>
          </property>
@@ -89,7 +89,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="guiSettings">
+        <widget class="QPushButton" name="gui">
          <property name="text">
           <string>GUI</string>
          </property>
