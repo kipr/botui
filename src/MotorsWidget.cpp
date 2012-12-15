@@ -37,7 +37,7 @@ MotorsWidget::MotorsWidget(Device *device, QWidget *parent)
 
 MotorsWidget::~MotorsWidget()
 {
-	disable_servo(ui->dial->label());
+	ao();
 	delete ui;
 	delete m_provider;
 }
