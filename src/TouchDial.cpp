@@ -15,12 +15,10 @@ TouchDial::TouchDial(QWidget *parent)
 	m_value(0.0),
 	m_label(0xFFFF)
 {
-	
 }
 
 TouchDial::~TouchDial()
 {
-	
 }
 
 void TouchDial::setMinimumValue(const double &minimumValue)
@@ -139,8 +137,9 @@ void TouchDial::mouseMoveEvent(QMouseEvent *event)
 	else angle -= M_PI / 4;
 	
 	double value = angleToValue(angle) * (m_maximumValue - m_minimumValue) + m_minimumValue;
+	
 	// Correct dead zone
-	if(angle < M_PI && angle > M_PI / 2.0 && value > 0.5) value = m_minimumValue;
+	if(angle < (3.0 * M_PI) / 4.0 && angle > M_PI / 2.0 && value > 0.5) value = m_minimumValue;
 
 	setValue(value);
 }
