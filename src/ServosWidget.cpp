@@ -45,7 +45,11 @@ ServosWidget::~ServosWidget()
 void ServosWidget::valueChanged(const double &value)
 {
 	ui->number->setText(QString::number((int)ui->dial->value()));
-	set_servo_position(ui->dial->label(), value);
+	double safeValue = value;
+	if(safeValue < 10.0) safeValue = 10.0;
+	else if(safeValue > 1014.0) safeValue = 1014.0;
+	
+	set_servo_position(ui->dial->label(), safeValue);
 }
 
 void ServosWidget::activeChanged()
