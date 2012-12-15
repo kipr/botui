@@ -45,12 +45,12 @@ inline static QColor mechanical_button_pressed_bottom_color()
 
 inline static QColor mechanical_stop_button_top_color()
 {
-	return QColor(230, 130, 130);
+	return QColor(250, 150, 150);
 }
 
 inline static QColor mechanical_stop_button_bottom_color()
 {
-	return QColor(192, 92, 92);
+	return QColor(212, 112, 112);
 }
 
 inline static QColor mechanical_stop_button_pressed_top_color()
