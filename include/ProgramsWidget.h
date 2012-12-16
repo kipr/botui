@@ -17,6 +17,7 @@ public:
 	
 public slots:
 	void run();
+	void args();
 	void remove();
 	
 private:

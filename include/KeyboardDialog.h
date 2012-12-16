@@ -27,6 +27,7 @@ public:
 	KeyboardDialog(const QString& text, Mode mode = Normal, QWidget *parent = 0);
 	~KeyboardDialog();
 	
+	void setInput(const QString &input);
 	QString input() const;
 	
 private slots:

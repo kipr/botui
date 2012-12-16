@@ -40,6 +40,11 @@ KeyboardDialog::~KeyboardDialog()
 	delete ui;
 }
 
+void KeyboardDialog::setInput(const QString &input)
+{
+	display->setText(input);
+}
+
 QString KeyboardDialog::input() const
 {
 	return display->text();

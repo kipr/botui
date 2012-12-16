@@ -74,7 +74,9 @@ void BatteryWidget::paintEvent(QPaintEvent *event)
 	const int offset = 2;
 	painter.setPen(Qt::NoPen);
 	
-	if(m_batteryLevelProvider && m_batteryLevelProvider->isCharging())
+	const bool charging = m_batteryLevelProvider->isCharging();
+	
+	if(m_batteryLevelProvider && charging)
 		painter.setBrush(QColor(0x7D, 0xF9, 0xFF)); // Electric Blue
 	else if(percentage < 0.33) painter.setBrush(Qt::red);
 	else if(percentage < 0.66) painter.setBrush(Qt::yellow);
@@ -94,7 +96,7 @@ void BatteryWidget::paintEvent(QPaintEvent *event)
 		else painter.drawText(textRect, "CHRG", textOpt);
 	} else painter.drawText(textRect, "N/A", textOpt);
 	
-	if(m_batteryLevelProvider && m_batteryLevelProvider->isCharging()) {
+	if(m_batteryLevelProvider && charging) {
 		painter.drawLine(3.0 * adjustedWidth / 7.0, 4, 3.0 * adjustedWidth / 7.0, 6);
 		painter.drawLine(4.0 * adjustedWidth / 7.0, 4, 4.0 * adjustedWidth / 7.0, 6);
 		painter.setBrush(Qt::black);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ProgramsWidget</class>
- <widget class="QWidget" name="ProgramsWidget">
+ <class>ProgramArgsWidget</class>
+ <widget class="QWidget" name="ProgramArgsWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Programs</string>
+   <string>Program Arguments</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="leftMargin">
@@ -32,34 +32,45 @@
       <number>2</number>
      </property>
      <item>
-      <widget class="QListView" name="programs"/>
+      <widget class="QListWidget" name="args"/>
      </item>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="QPushButton" name="run">
+        <widget class="QPushButton" name="edit">
          <property name="text">
-          <string>Run</string>
+          <string>Edit</string>
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/cog_go.png</normaloff>:/icons/cog_go.png</iconset>
+           <normaloff>:/icons/page_white_edit.png</normaloff>:/icons/page_white_edit.png</iconset>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="args">
+        <widget class="QPushButton" name="up">
          <property name="text">
-          <string>Args</string>
+          <string>Up</string>
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/wrench.png</normaloff>:/icons/wrench.png</iconset>
+           <normaloff>:/icons/arrow_up.png</normaloff>:/icons/arrow_up.png</iconset>
          </property>
         </widget>
        </item>
        <item>
-        <spacer name="verticalSpacer">
+        <widget class="QPushButton" name="down">
+         <property name="text">
+          <string>Down</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../rc/icons.qrc">
+           <normaloff>:/icons/arrow_down.png</normaloff>:/icons/arrow_down.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_2">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -72,9 +83,20 @@
         </spacer>
        </item>
        <item>
+        <widget class="QPushButton" name="add">
+         <property name="text">
+          <string>Add</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../rc/icons.qrc">
+           <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="remove">
          <property name="text">
-          <string>Delete</string>
+          <string>Remove</string>
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">

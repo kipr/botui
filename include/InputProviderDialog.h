@@ -11,6 +11,7 @@ Q_PROPERTY(QString input READ input)
 public:
 	InputProviderDialog(QWidget *parent = 0);
 	
+	virtual void setInput(const QString &input) = 0;
 	virtual QString input() const = 0;
 };
 

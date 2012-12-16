@@ -31,6 +31,7 @@ public:
 					QWidget *parent = 0);
 	~NumpadDialog();
 
+	void setInput(const QString &input);
 	QString input() const;
 
 private slots:

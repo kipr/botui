@@ -2,6 +2,7 @@
 #define _PROGRAM_H_
 
 #include <QString>
+#include <QStringList>
 #include <QProcess>
 #include <QTime>
 
@@ -11,7 +12,7 @@ Q_OBJECT
 public:
 	~Program();
 	
-	bool start(const QString& path);
+	bool start(const QString& path, const QStringList &arguments);
 	bool isRunning();
 	
 	QProcess *process() const;

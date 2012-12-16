@@ -8,6 +8,8 @@
 #include "CompileProvider.h"
 #include "ProgramWidget.h"
 #include "Program.h"
+#include "ProgramArgsWidget.h"
+#include "ProgramArguments.h"
 #include <QDebug>
 
 ProgramsWidget::ProgramsWidget(Device *device, QWidget *parent)
@@ -20,6 +22,10 @@ ProgramsWidget::ProgramsWidget(Device *device, QWidget *parent)
 	ui->programs->setModel(device->filesystemProvider()->programsItemModel());
 	connect(ui->run, SIGNAL(clicked()), SLOT(run()));
 	connect(ui->remove, SIGNAL(clicked()), SLOT(remove()));
+	connect(ui->args, SIGNAL(clicked()), SLOT(args()));
+	
+	QModelIndex first = device->filesystemProvider()->programsItemModel()->index(0, 0);
+	if(first.isValid()) ui->programs->selectionModel()->select(first, QItemSelectionModel::Select);
 }
 
 ProgramsWidget::~ProgramsWidget()
@@ -42,7 +48,17 @@ void ProgramsWidget::run()
 	
 	ProgramWidget *programWidget = new ProgramWidget(Program::instance(), device());
 	RootController::ref().presentWidget(programWidget);
-	Program::instance()->start(executable);
+	Program::instance()->start(executable,
+		ProgramArguments::arguments(device()->filesystemProvider()->program(program)));
+}
+
+void ProgramsWidget::args()
+{
+	QModelIndexList currents = ui->programs->selectionModel()->selectedIndexes();
+	if(currents.size() != 1) return;
+	QModelIndex current = currents[0];
+	QString program = device()->filesystemProvider()->programsItemModel()->program(current);
+	RootController::ref().presentWidget(new ProgramArgsWidget(program, device()));
 }
 
 void ProgramsWidget::remove()

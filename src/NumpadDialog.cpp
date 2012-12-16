@@ -71,6 +71,11 @@ NumpadDialog::~NumpadDialog()
 	delete ui;
 }
 
+void NumpadDialog::setInput(const QString &input)
+{
+	display->setText(input);
+}
+
 QString NumpadDialog::input() const
 {
 	return display->text();

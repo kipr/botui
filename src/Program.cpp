@@ -6,7 +6,7 @@ Program::~Program()
 	stop();
 }
 
-bool Program::start(const QString& path)
+bool Program::start(const QString& path, const QStringList &arguments)
 {
 	if(path.isEmpty()) return false;
 	stop();
@@ -14,7 +14,7 @@ bool Program::start(const QString& path)
 	m_process->setProcessChannelMode(QProcess::MergedChannels);
 	connect(m_process, SIGNAL(finished(int, QProcess::ExitStatus)), SIGNAL(finished(int, QProcess::ExitStatus)));
 	connect(m_process, SIGNAL(readyRead()), SIGNAL(readyRead()));
-	m_process->start(path);
+	m_process->start(path, arguments);
 	m_process->waitForStarted();
 	emit started();
 	m_time.restart();

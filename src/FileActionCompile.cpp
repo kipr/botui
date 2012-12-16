@@ -8,6 +8,7 @@
 #include "ConcurrentCompile.h"
 #include "Program.h"
 #include "ProgramWidget.h"
+#include "ProgramsWidget.h"
 #include "CompileProvider.h"
 
 #include <kar.hpp>
@@ -71,17 +72,11 @@ bool FileActionCompile::act(const QString &path, Device *device) const
 	
 	const QString exec = device->compileProvider()->executableFor(name);
 	
-	// Present the console
-	
-	if(RootController::ref().containsWidget<ProgramWidget>()) RootController::ref().dismissUntil<ProgramWidget>();
-	else {
-		ProgramWidget *programWidget = new ProgramWidget(Program::instance(), device);
-		RootController::ref().presentWidget(programWidget);
-	}
-	
-	// Run the program
-	
-	return Program::instance()->start(exec);
+	// TODO: We're taking advantage of the fact
+	// that our program will be listed first and
+	// will be selected. Maybe make this a bit
+	// more assured in the future.
+	RootController::ref().presentWidget(new ProgramsWidget(device));
 }
 
 void FileActionCompile::compileStarted(const QString &name, ConcurrentCompile *compiler)

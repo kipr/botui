@@ -45,6 +45,7 @@ MotorsWidget::~MotorsWidget()
 void MotorsWidget::valueChanged(const double &value)
 {
 	ui->number->setText(QString::number((int)ui->dial->value()));
+	
 	motor(ui->dial->label(), value);
 }
 

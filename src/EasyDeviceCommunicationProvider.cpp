@@ -13,6 +13,7 @@
 #include "ProgramWidget.h"
 #include "CompileProvider.h"
 #include "PairWidget.h"
+#include "ProgramArguments.h"
 #include "Program.h"
 
 #include <QMetaObject>
@@ -71,7 +72,13 @@ const bool EasyDeviceCommunicationProvider::run(const QString& name)
 		QMetaObject::invokeMethod(controller, "presentWidget", Qt::QueuedConnection,
 			Q_ARG(QWidget *, programWidget));
 	}
-	return Program::instance()->start(executable);
+	FilesystemProvider *filesystem = device()->filesystemProvider();
+	QStringList args;
+	if(filesystem) {
+		args = ProgramArguments::arguments(filesystem->program(name));
+	}
+	
+	return Program::instance()->start(executable, args);
 }
 
 Compiler::OutputList EasyDeviceCommunicationProvider::compile(const QString& name)
