@@ -10,7 +10,7 @@ class ConfigurationPaths : public Singleton<ConfigurationPaths>
 public:
 	ConfigurationPaths();
 	
-	QString channelsPath() const;
+
 };
 
 #endif

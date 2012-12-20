@@ -2,6 +2,7 @@
 
 #include <QPainter>
 #include <QDebug>
+#include <QMouseEvent>
 
 CvWidget::CvWidget(QWidget *parent)
 	: QWidget(parent),
@@ -44,6 +45,7 @@ void CvWidget::paintEvent(QPaintEvent *event)
 {
 	QPainter painter(this);
 	if(m_invalid) {
+		painter.fillRect(0, 0, width() - 1, height() - 1, Qt::transparent);
 		painter.drawText(QRect(0, 0, width(), height()),
 			tr("No Camera"),
 			QTextOption(Qt::AlignAbsolute | Qt::AlignHCenter | Qt::AlignVCenter));
@@ -51,13 +53,14 @@ void CvWidget::paintEvent(QPaintEvent *event)
 	}
 	painter.drawImage(width() / 2 - m_resizedImage.width() / 2, height() / 2 - m_resizedImage.height() / 2, m_resizedImage,
 		0, 0, m_resizedImage.width(), m_resizedImage.height());
-	painter.drawRect(width() / 2 - m_resizedImage.width() / 2, height() / 2 - m_resizedImage.height() / 2, m_resizedImage.width(), m_resizedImage.height());
+	painter.drawRect(width() / 2 - m_resizedImage.width() / 2, height() / 2 - m_resizedImage.height() / 2, m_resizedImage.width() - 1, m_resizedImage.height() - 1);
 }
 
 void CvWidget::mousePressEvent(QMouseEvent *event)
 {
-	qDebug() << "Emitting pressed";
-	emit pressed();
+	const QPointF &pos = event->pos();
+	emit pressed(pos.x() / width() * m_image.width(),
+		pos.y() / height() * m_image.height());
 }
 
 void CvWidget::scaleImage()

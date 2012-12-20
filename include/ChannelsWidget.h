@@ -1,31 +1,35 @@
 #ifndef _CHANNELSWIDGET_H_
 #define _CHANNELSWIDGET_H_
 
-#include "Channels.h"
+#include "StandardWidget.h"
 
-#include <QWidget>
+#include <QPixmap>
 
 namespace Ui
 {
 	class ChannelsWidget;
 }
 
-class ChannelsWidget : public QWidget
+class CameraConfigModel;
+
+class ChannelsWidget : public StandardWidget
 {
 Q_OBJECT
 public:
-	ChannelsWidget(QWidget *parent = 0);
+	ChannelsWidget(Device *device, QWidget *parent = 0);
 	~ChannelsWidget();
 	
 private slots:
 	void save();
+	void edit();
+	void up();
+	void down();
 	void add();
 	void remove();
-	void activeChanged(const int &index);
 	
 private:
 	Ui::ChannelsWidget *ui;
-	ChannelsPtr m_channels;
+	CameraConfigModel *m_model;
 };
 
 #endif

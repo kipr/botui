@@ -29,7 +29,7 @@
    <item>
     <widget class="QLabel" name="title">
      <property name="text">
-      <string>Channel X Configuration:</string>
+      <string>Channel X Setup:</string>
      </property>
     </widget>
    </item>
@@ -87,9 +87,9 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="setup">
+      <widget class="QPushButton" name="configure">
        <property name="text">
-        <string>Setup...</string>
+        <string>Configure...</string>
        </property>
        <property name="icon">
         <iconset resource="../rc/icons.qrc">

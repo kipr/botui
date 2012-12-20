@@ -19,7 +19,7 @@ public:
 	void updateImage(cv::Mat image);
 	
 signals:
-	void pressed();
+	void pressed(const int &x, const int &y);
 	
 protected:
 	virtual void resizeEvent(QResizeEvent *event);

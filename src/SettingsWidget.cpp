@@ -9,6 +9,7 @@
 
 #include "NetworkSettingsWidget.h"
 #include "KissIdeSettingsWidget.h"
+#include "ChannelConfigurationsWidget.h"
 #include "GuiSettingsWidget.h"
 
 #include <QDebug>
@@ -46,6 +47,7 @@ void SettingsWidget::kissIde()
 
 void SettingsWidget::channels()
 {
+	RootController::ref().presentWidget(new ChannelConfigurationsWidget(device()));
 }
 
 void SettingsWidget::gui()

@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Channels</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -21,81 +21,90 @@
     <number>6</number>
    </property>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <property name="spacing">
+      <number>2</number>
+     </property>
      <item>
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Active Config:</string>
-       </property>
-      </widget>
+      <widget class="QListView" name="channels"/>
      </item>
      <item>
-      <widget class="QComboBox" name="active">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="sizeConstraint">
+        <enum>QLayout::SetFixedSize</enum>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
        <item>
-        <property name="text">
-         <string>New Configuration</string>
-        </property>
+        <widget class="QPushButton" name="edit">
+         <property name="text">
+          <string>Edit</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../rc/icons.qrc">
+           <normaloff>:/icons/wrench.png</normaloff>:/icons/wrench.png</iconset>
+         </property>
+        </widget>
        </item>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <widget class="QListView" name="channels"/>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
-     <property name="sizeConstraint">
-      <enum>QLayout::SetFixedSize</enum>
-     </property>
-     <property name="topMargin">
-      <number>0</number>
-     </property>
-     <item>
-      <widget class="QPushButton" name="edit">
-       <property name="text">
-        <string>Edit</string>
-       </property>
-       <property name="icon">
-        <iconset resource="../rc/icons.qrc">
-         <normaloff>:/icons/wrench.png</normaloff>:/icons/wrench.png</iconset>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="add">
-       <property name="text">
-        <string>Add</string>
-       </property>
-       <property name="icon">
-        <iconset resource="../rc/icons.qrc">
-         <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="remove">
-       <property name="text">
-        <string>Remove</string>
-       </property>
-       <property name="icon">
-        <iconset resource="../rc/icons.qrc">
-         <normaloff>:/icons/delete.png</normaloff>:/icons/delete.png</iconset>
-       </property>
-      </widget>
+       <item>
+        <widget class="QPushButton" name="up">
+         <property name="text">
+          <string>Up</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../rc/icons.qrc">
+           <normaloff>:/icons/arrow_up.png</normaloff>:/icons/arrow_up.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="down">
+         <property name="text">
+          <string>Down</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../rc/icons.qrc">
+           <normaloff>:/icons/arrow_down.png</normaloff>:/icons/arrow_down.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="add">
+         <property name="text">
+          <string>Add</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../rc/icons.qrc">
+           <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="remove">
+         <property name="text">
+          <string>Remove</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../rc/icons.qrc">
+           <normaloff>:/icons/delete.png</normaloff>:/icons/delete.png</iconset>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
     </layout>
    </item>
