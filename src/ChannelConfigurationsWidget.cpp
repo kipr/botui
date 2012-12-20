@@ -11,6 +11,7 @@
 #include <QFileSystemModel>
 #include <QItemDelegate>
 #include <QPainter>
+#include <QDir>
 #include <QDebug>
 
 #include <kovan/camera.hpp>
@@ -62,7 +63,8 @@ ChannelConfigurationsWidget::ChannelConfigurationsWidget(Device *device, QWidget
 	m_model->setNameFilters(QStringList() << ("*." + QString::fromStdString(Camera::ConfigPath::extension())));
 	m_model->setNameFilterDisables(false);
 	
-	const QString configPath = QString::fromStdString(Camera::ConfigPath::path());;
+	const QString configPath = QString::fromStdString(Camera::ConfigPath::path());
+	QDir().mkpath(configPath);
 	ui->configs->setRootIndex(m_model->setRootPath(configPath));
 
 	connect(ui->edit, SIGNAL(clicked()), SLOT(edit()));
