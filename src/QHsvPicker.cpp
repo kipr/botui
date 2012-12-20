@@ -65,7 +65,7 @@ void QHsvPicker::paintEvent(QPaintEvent *)
 	grad.setStart(QPoint(0, 0));
 	grad.setColorAt(0.0, Qt::white);
 	grad.setColorAt(1.0, Qt::black);
-	const int hStep = qMax(1.0f, (width() / 360.0f) + 0.5f);
+	const int hStep = qMax(1.0f, (width() / 70.0f) + 0.5f);
 	for(int h = 0; h < 360; h += hStep) {
 		int realH = 359 - translate(h);
 		grad.setFinalStop(QPoint(0, height()));
