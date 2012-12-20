@@ -51,7 +51,7 @@ const QColor &QHsvPicker::min() const
 
 unsigned QHsvPicker::dragHintRadius() const
 {
-	return std::min(width(), height()) / 12;
+	return std::min(width(), height()) / 6;
 }
 
 void QHsvPicker::paintEvent(QPaintEvent *)
