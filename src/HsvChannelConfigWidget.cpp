@@ -97,7 +97,7 @@ void HsvChannelConfigWidget::refresh()
 void HsvChannelConfigWidget::update()
 {
 	if(!m_camera->isOpen()) {
-		if(!m_camera->open(1)) {
+		if(!m_camera->open(0)) {
 			setSlowUpdate();
 			return;
 		}
