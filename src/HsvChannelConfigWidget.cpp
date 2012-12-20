@@ -63,6 +63,8 @@ HsvChannelConfigWidget::~HsvChannelConfigWidget()
 {
 	m_camera->close();
 	delete m_camera;
+	delete ui;
+	delete m_numpad;
 }
 
 void HsvChannelConfigWidget::refresh()
