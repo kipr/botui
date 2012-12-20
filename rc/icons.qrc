@@ -733,6 +733,7 @@
     <file>icons/printer_empty.png</file>
     <file>icons/printer_error.png</file>
     <file>icons/printer.png</file>
+    <file>icons/qr.png</file>
     <file>icons/rainbow.png</file>
     <file>icons/report_add.png</file>
     <file>icons/report_delete.png</file>

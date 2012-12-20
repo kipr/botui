@@ -58,6 +58,7 @@ void CvWidget::paintEvent(QPaintEvent *event)
 
 void CvWidget::mousePressEvent(QMouseEvent *event)
 {
+	if(m_invalid) return;
 	const QPointF &pos = event->pos();
 	emit pressed(pos.x() / width() * m_image.width(),
 		pos.y() / height() * m_image.height());

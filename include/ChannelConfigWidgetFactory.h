@@ -2,6 +2,7 @@
 #define _CHANNELCONFIGWIDGETFACTORY_H_
 
 #include <QString>
+#include <QModelIndex>
 
 class ChannelConfigWidget;
 
@@ -10,7 +11,8 @@ class ChannelConfigWidgetFactory
 public:
 	~ChannelConfigWidgetFactory();
 	
-	static ChannelConfigWidget *create(const QString &type);
+	static bool hasConfig(const QString &type);
+	static ChannelConfigWidget *create(const QModelIndex &index, const QString &type);
 	
 private:
 	ChannelConfigWidgetFactory();

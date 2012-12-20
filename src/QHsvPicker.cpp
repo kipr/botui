@@ -67,7 +67,7 @@ void QHsvPicker::paintEvent(QPaintEvent *)
 	grad.setColorAt(1.0, Qt::black);
 	const int hStep = qMax(1.0f, (width() / 360.0f) + 0.5f);
 	for(int h = 0; h < 360; h += hStep) {
-		int realH = translate(h);
+		int realH = 359 - translate(h);
 		grad.setFinalStop(QPoint(0, height()));
 		grad.setColorAt(0.5, QColor::fromHsv(realH, 255, 255));
 		painter.fillRect(QRectF(h * widthRatio, 0, widthRatio * hStep, height()), grad);

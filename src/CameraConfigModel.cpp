@@ -107,6 +107,7 @@ void CameraConfigModel::setConfig(const Config &config)
 	int numChannels = m_config.intValue(CAMERA_NUM_CHANNELS_KEY);
 	for(int i = 0; i < numChannels; ++i) {
 		char buffer[32];
+		memset(buffer, 0, 32);
 		sprintf(buffer, "%s%d", CAMERA_CHANNEL_GROUP_PREFIX, i);
 		m_config.beginGroup(buffer);
 		QString type = QString::fromStdString(m_config.stringValue(CAMERA_CHANNEL_TYPE_KEY));
@@ -121,16 +122,36 @@ const Config &CameraConfigModel::config() const
 	return m_config;
 }
 
-void CameraConfigModel::addChannel()
+void CameraConfigModel::addChannel(const QString &type)
 {
-	if(rowCount() >= 4) return; // Soft cap of 4 channels
-	appendRow(new ChannelItem(rowCount(), CAMERA_CHANNEL_TYPE_HSV_KEY));
+	appendRow(new ChannelItem(rowCount(), type));
 	updateConfig();
 }
 
 void CameraConfigModel::removeChannel(const int &i)
 {
 	removeRow(i);
+	updateConfig();
+	for(int j = i; j < rowCount(); ++j) {
+		ChannelItem *item = ChannelItem::cast(CameraConfigModel::item(j));
+		if(!item) continue;
+		item->setI(item->i() - 1);
+	}
+}
+
+void CameraConfigModel::swapChannels(const int &i, const int &j)
+{
+	if(i < 0 || j < 0 || i >= rowCount() || j >= rowCount()) return;
+	int a = qMin(i, j);
+	int b = qMax(i, j);
+	QList<QStandardItem *> bItems = takeRow(b);
+	QList<QStandardItem *> aItems = takeRow(a);
+	insertRow(a, bItems);
+	insertRow(b, aItems);
+	ChannelItem *newA = ChannelItem::cast(bItems[0]);
+	ChannelItem *newB = ChannelItem::cast(aItems[0]);
+	newA->setI(a);
+	newB->setI(b);
 	updateConfig();
 }
 
@@ -147,8 +168,9 @@ void CameraConfigModel::updateConfig()
 		}
 		
 		char buffer[32];
-		sprintf(buffer, "%s%d", CAMERA_CHANNEL_GROUP_PREFIX, i);
+		sprintf(buffer, "%s%d", CAMERA_CHANNEL_GROUP_PREFIX, channelItem->i());
 		m_config.beginGroup(buffer);
+		m_config.setValue(CAMERA_CHANNEL_TYPE_KEY, channelItem->channelType().toStdString());
 		m_config.addValues(channelItem->config());
 		m_config.endGroup();
 	}

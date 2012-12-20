@@ -12,8 +12,8 @@
 #include <QTimer>
 #include <QDebug>
 
-HsvChannelConfigWidget::HsvChannelConfigWidget(QWidget *parent)
-	: ChannelConfigWidget(parent),
+HsvChannelConfigWidget::HsvChannelConfigWidget(const QModelIndex &index, QWidget *parent)
+	: ChannelConfigWidget(index, parent),
 	ui(new Ui::HsvChannelConfigWidget),
 	m_numpad(new NumpadDialog("Enter Value")),
 	m_camera(new Camera::Device()),

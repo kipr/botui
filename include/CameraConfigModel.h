@@ -15,15 +15,17 @@ public:
 	
 	const QString &channelType(const QModelIndex &index) const;
 	
-	Config channelConfig(const QModelIndex &index) const;
-	void setChannelConfig(const QModelIndex &index, const Config &config);
-	
+	Q_PROPERTY(Config config READ config WRITE setConfig)
 	void setConfig(const Config &config);
 	const Config &config() const;
 	
 public slots:
-	void addChannel();
+	void addChannel(const QString &type);
 	void removeChannel(const int &i);
+	void swapChannels(const int &i, const int &j);
+	
+	Config channelConfig(const QModelIndex &index) const;
+	void setChannelConfig(const QModelIndex &index, const Config &config);
 	
 private:
 	void updateConfig();

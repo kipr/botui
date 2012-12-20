@@ -11,6 +11,7 @@ namespace Ui
 }
 
 class QFileSystemModel;
+class QAction;
 
 class ChannelConfigurationsWidget : public StandardWidget
 {
@@ -19,9 +20,12 @@ public:
 	ChannelConfigurationsWidget(Device *device, QWidget *parent = 0);
 	~ChannelConfigurationsWidget();
 	
+	bool isDefaultPath(const QModelIndex &index) const;
+	
 private slots:
 	void edit();
 	void rename();
+	void default_();
 	void add();
 	void remove();
 	
@@ -30,6 +34,8 @@ private slots:
 private:
 	Ui::ChannelConfigurationsWidget *ui;
 	QFileSystemModel *m_model;
+	QAction *m_import;
+	QString m_defaultPath;
 };
 
 #endif

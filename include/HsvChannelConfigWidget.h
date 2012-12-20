@@ -21,7 +21,7 @@ class HsvChannelConfigWidget : public ChannelConfigWidget
 {
 Q_OBJECT
 public:
-	HsvChannelConfigWidget(QWidget *parent = 0);
+	HsvChannelConfigWidget(const QModelIndex &index, QWidget *parent = 0);
 	~HsvChannelConfigWidget();
 	
 	virtual void refresh();

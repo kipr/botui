@@ -19,17 +19,26 @@ public:
 	ChannelsWidget(Device *device, QWidget *parent = 0);
 	~ChannelsWidget();
 	
+	void setFile(const QString &path);
+	const QString &file() const;
+	
 private slots:
-	void save();
 	void edit();
 	void up();
 	void down();
 	void add();
 	void remove();
 	
+	void updateOptions();
+	
 private:
+	bool save() const;
+	
+	bool isFull();
+	
 	Ui::ChannelsWidget *ui;
 	CameraConfigModel *m_model;
+	QString m_path;
 };
 
 #endif

@@ -9,9 +9,16 @@ ChannelConfigWidgetFactory::~ChannelConfigWidgetFactory()
 {
 }
 
-ChannelConfigWidget *ChannelConfigWidgetFactory::create(const QString &type)
+bool ChannelConfigWidgetFactory::hasConfig(const QString &type)
 {
-	if(type == CAMERA_CHANNEL_TYPE_HSV_KEY) return new HsvChannelConfigWidget();
+	if(type == CAMERA_CHANNEL_TYPE_HSV_KEY) return true;
+	
+	return false;
+}
+
+ChannelConfigWidget *ChannelConfigWidgetFactory::create(const QModelIndex &index, const QString &type)
+{
+	if(type == CAMERA_CHANNEL_TYPE_HSV_KEY) return new HsvChannelConfigWidget(index);
 	return 0;
 }
 
