@@ -11,7 +11,9 @@
 
 CameraWidget::CameraWidget(Device *device, QWidget *parent)
 	: StandardWidget(device, parent),
-	ui(new Ui::CameraWidget)
+	ui(new Ui::CameraWidget),
+	m_capture(new cv::VideoCapture),
+	m_timer(new QTimer(this))
 {
 	ui->setupUi(this);
 	performStandardSetup(tr("Camera"));
@@ -19,27 +21,35 @@ CameraWidget::CameraWidget(Device *device, QWidget *parent)
 	connect(toggleUi, SIGNAL(activated()), SLOT(toggleUi()));
 	toggleUi->connect(ui->camera, SIGNAL(pressed()), SLOT(trigger()));
 	
-	QTimer *timer = new QTimer(this);
-	connect(timer, SIGNAL(timeout()), SLOT(updateCamera()));
-	timer->start(75); // 15 FPS
-	
-	m_capture.open(CV_CAP_ANY);
-	
-	if(!m_capture.isOpened()) return;
-	m_capture.set(CV_CAP_PROP_FRAME_WIDTH, 320);
-	m_capture.set(CV_CAP_PROP_FRAME_HEIGHT, 240);
-	m_capture.set(CV_CAP_PROP_FPS, 15);
+	connect(m_timer, SIGNAL(timeout()), SLOT(updateCamera()));
+}
+
+CameraWidget::~CameraWidget()
+{
+	m_capture->release();
+	delete ui;
+	delete m_capture;
 }
 
 void CameraWidget::updateCamera()
 {
-	ui->camera->setInvalid(!m_capture.isOpened());
-	if(!m_capture.isOpened()) return;
+	if(!m_capture->isOpened()) {
+		if(!m_capture->open(CV_CAP_ANY)) {
+			setUpdateSlow();
+			return;
+		}
+		m_capture->set(CV_CAP_PROP_FRAME_WIDTH, 320);
+		m_capture->set(CV_CAP_PROP_FRAME_HEIGHT, 240);
+		m_capture->set(CV_CAP_PROP_FPS, 15);
+		ui->camera->setInvalid(false);
+		setUpdateFast();
+	}
 	cv::Mat image;
-	if(!m_capture.grab() || !m_capture.retrieve(image)) {
+	if(!m_capture->grab() || !m_capture->retrieve(image)) {
 		qWarning() << "grab/retrieve pair failed";
 		ui->camera->setInvalid(true);
-		m_capture.release();
+		m_capture->release();
+		setUpdateSlow();
 		return;
 	}
 	ui->camera->updateImage(image);
@@ -54,8 +64,12 @@ void CameraWidget::toggleUi()
 	layout()->setMenuBar(toggle ? menuBar() : 0);
 }
 
-CameraWidget::~CameraWidget()
+void CameraWidget::setUpdateFast()
 {
-	m_capture.release();
-	delete ui;
+	m_timer->start(75); // 15 FPS
+}
+
+void CameraWidget::setUpdateSlow()
+{
+	m_timer->start(1000);
 }

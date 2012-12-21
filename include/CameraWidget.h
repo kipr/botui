@@ -3,11 +3,14 @@
 
 #include "StandardWidget.h"
 
-#include <opencv2/opencv.hpp>
-
 namespace Ui
 {
 	class CameraWidget;
+}
+
+namespace cv
+{
+	class VideoCapture;
 }
 
 class CameraWidget : public StandardWidget
@@ -22,8 +25,12 @@ public slots:
 	void toggleUi();
 	
 private:
+	void setUpdateFast();
+	void setUpdateSlow();
+	
 	Ui::CameraWidget *ui;
-	cv::VideoCapture m_capture;
+	cv::VideoCapture *m_capture;
+	QTimer *m_timer;
 };
 
 #endif

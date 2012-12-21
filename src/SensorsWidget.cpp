@@ -62,5 +62,8 @@ double SensorsWidget::value(const int &i)
 	double val = 0.0;
 	if(i < 8) val = analog10(i) / 512.0 - 1.0;
 	else if(i < 12) val = get_backemf(i - 8) / 32768.0;
+	else if(i == 12) val = accel_x() / 127.5 - 1.0;
+	else if(i == 13) val = accel_y() / 127.5 - 1.0;
+	else if(i == 14) val = accel_z() / 127.5 - 1.0;
 	return val;
 }
