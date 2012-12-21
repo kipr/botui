@@ -39,14 +39,8 @@ int main(int argc, char* argv[])
 	
 	GuiSettingsWidget::updateStyle(&device);
 	
-	TestWizard wizard(&device);
-	wizard.setMinimumSize(QSize(320, 240));
-	wizard.setMaximumSize(QSize(320, 240));
-	wizard.show();
-	wizard.raise();
-	
 	NetworkManager::ref();
-	// RootController::ref().presentWidget(new HomeWidget(&device));
+	RootController::ref().presentWidget(new HomeWidget(&device));
 	
 	
 	return app.exec();
