@@ -24,6 +24,8 @@ private slots:
 	void toggleUi();
 	
 private:
+	double value(const int &i);
+	
 	MenuBar *m_menuBar;
 	QAction m_hideOptions;
 	Ui::SensorsWidget *ui;

@@ -68,6 +68,41 @@
           <string>Analog 7</string>
          </property>
         </item>
+        <item>
+         <property name="text">
+          <string>Back EMF 0</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Back EMF 1</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Back EMF 2</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Back EMF 3</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Accel X</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Accel Y</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Accel Z</string>
+         </property>
+        </item>
        </widget>
       </item>
       <item>
@@ -113,6 +148,41 @@
         <item>
          <property name="text">
           <string>Analog 7</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Back EMF 0</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Back EMF 1</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Back EMF 2</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Back EMF 3</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Accel X</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Accel Y</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Accel Z</string>
          </property>
         </item>
        </widget>

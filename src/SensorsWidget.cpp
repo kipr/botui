@@ -44,18 +44,23 @@ SensorsWidget::~SensorsWidget()
 
 void SensorsWidget::update()
 {
-	static double value = 0.0;
-	
 	publish();
-	ui->plot->push(m_plots[0], analog10(ui->plot1->currentIndex()) / 512.0 - 1.0);
-	ui->plot->push(m_plots[1], analog10(ui->plot2->currentIndex()) / 512.0 - 1.0);
-	ui->plot->inc();
 	
-	value += 0.1;
+	ui->plot->push(m_plots[0], value(ui->plot1->currentIndex()));
+	ui->plot->push(m_plots[1], value(ui->plot2->currentIndex()));
+	ui->plot->inc();
 }
 
 void SensorsWidget::toggleUi()
 {
 	ui->options->setVisible(!ui->options->isVisible());
 	m_hideOptions.setText(ui->options->isVisible() ? "Hide Options" : "Show Options");
+}
+
+double SensorsWidget::value(const int &i)
+{
+	double val = 0.0;
+	if(i < 8) val = analog10(i) / 512.0 - 1.0;
+	else if(i < 12) val = get_backemf(i - 8) / 32768.0;
+	return val;
 }
