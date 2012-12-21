@@ -6,6 +6,7 @@
 
 NetworkTestWizardPage::NetworkTestWizardPage(QWidget *parent)
 	: QWizardPage(parent),
+	ui(new Ui::NetworkTestWizardPage),
 	m_model(new NetworkItemModel(this))
 {
 	ui->setupUi(this);
