@@ -43,4 +43,5 @@ void CreateTestWizardPage::createConnect()
 void CreateTestWizardPage::turn()
 {
 	Create::instance()->turn(50, 300);
+	Create::instance()->turn(-50, 300);
 }

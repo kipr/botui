@@ -42,6 +42,7 @@ int main(int argc, char* argv[])
 	TestWizard wizard(&device);
 	wizard.show();
 	wizard.raise();
+	wizard.setMinimumSize(QSize(320, 240));
 	wizard.setMaximumSize(QSize(320, 240));
 	
 	NetworkManager::ref();
