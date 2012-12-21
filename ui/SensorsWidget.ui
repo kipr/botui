@@ -6,187 +6,214 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>365</width>
-    <height>240</height>
+    <width>320</width>
+    <height>234</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Sensors</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,1">
    <property name="margin">
     <number>6</number>
    </property>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1,1,0">
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="../rc/icons.qrc">:/icons/bullet_red.png</pixmap>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="plot1">
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <item>
+        <property name="text">
+         <string>Analog 0</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Analog 1</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Analog 2</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Analog 3</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Analog 4</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Analog 5</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Analog 6</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Analog 7</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Back EMF 0</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Back EMF 1</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Back EMF 2</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Back EMF 3</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Accel X</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Accel Y</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Accel Z</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="plot2">
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <item>
+        <property name="text">
+         <string>Analog 0</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Analog 1</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Analog 2</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Analog 3</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Analog 4</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Analog 5</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Analog 6</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Analog 7</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Back EMF 0</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Back EMF 1</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Back EMF 2</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Back EMF 3</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Accel X</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Accel Y</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Accel Z</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="../rc/icons.qrc">:/icons/bullet_blue.png</pixmap>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
    <item>
     <widget class="QWidget" name="options" native="true">
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <property name="margin">
        <number>2</number>
       </property>
-      <item>
-       <widget class="QComboBox" name="plot1">
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
-        <item>
-         <property name="text">
-          <string>Analog 0</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Analog 1</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Analog 2</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Analog 3</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Analog 4</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Analog 5</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Analog 6</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Analog 7</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Back EMF 0</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Back EMF 1</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Back EMF 2</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Back EMF 3</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Accel X</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Accel Y</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Accel Z</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item>
-       <widget class="QComboBox" name="plot2">
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
-        <item>
-         <property name="text">
-          <string>Analog 0</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Analog 1</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Analog 2</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Analog 3</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Analog 4</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Analog 5</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Analog 6</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Analog 7</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Back EMF 0</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Back EMF 1</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Back EMF 2</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Back EMF 3</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Accel X</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Accel Y</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Accel Z</string>
-         </property>
-        </item>
-       </widget>
-      </item>
      </layout>
     </widget>
    </item>
@@ -203,6 +230,8 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../rc/icons.qrc"/>
+ </resources>
  <connections/>
 </ui>
