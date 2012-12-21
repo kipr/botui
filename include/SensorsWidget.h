@@ -20,14 +20,10 @@ public:
 public slots:
 	void update();
 	
-private slots:
-	void toggleUi();
-	
 private:
 	double value(const int &i);
 	
 	MenuBar *m_menuBar;
-	QAction m_hideOptions;
 	Ui::SensorsWidget *ui;
 	PlotHandle m_plots[2];
 };

@@ -18,19 +18,15 @@
 SensorsWidget::SensorsWidget(Device *device, QWidget *parent)
 	: QWidget(parent),
 	m_menuBar(new MenuBar(this)),
-	m_hideOptions("Hide Options", this),
 	ui(new Ui::SensorsWidget)
 {
 	ui->setupUi(this);
 	m_menuBar->addHomeAndBackButtons();
 	m_menuBar->setTitle("Sensors");
-	m_menuBar->addAction(&m_hideOptions);
 	layout()->setMenuBar(m_menuBar);
 	
-	m_plots[0] = ui->plot->addPlot(QColor(0, 0, 200));
-	m_plots[1] = ui->plot->addPlot(QColor(200, 0, 0));
-	
-	connect(&m_hideOptions, SIGNAL(activated()), SLOT(toggleUi()));
+	m_plots[0] = ui->plot->addPlot(QColor(200, 0, 0));
+	m_plots[1] = ui->plot->addPlot(QColor(0, 0, 200));
 	
 	QTimer *updateTimer = new QTimer(this);
 	connect(updateTimer, SIGNAL(timeout()), SLOT(update()));
@@ -46,15 +42,15 @@ void SensorsWidget::update()
 {
 	publish();
 	
-	ui->plot->push(m_plots[0], value(ui->plot1->currentIndex()));
-	ui->plot->push(m_plots[1], value(ui->plot2->currentIndex()));
+	const double val1 = value(ui->plot1->currentIndex());
+	const double val2 = value(ui->plot2->currentIndex());
+	
+	ui->val1->setText(QString::number(val1));
+	ui->val2->setText(QString::number(val2));
+	
+	ui->plot->push(m_plots[0], val1);
+	ui->plot->push(m_plots[1], val2);
 	ui->plot->inc();
-}
-
-void SensorsWidget::toggleUi()
-{
-	ui->options->setVisible(!ui->options->isVisible());
-	m_hideOptions.setText(ui->options->isVisible() ? "Hide Options" : "Show Options");
 }
 
 double SensorsWidget::value(const int &i)
