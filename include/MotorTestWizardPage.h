@@ -3,6 +3,8 @@
 
 #include "OnOffWizardPage.h"
 
+class QTimer;
+
 class MotorTestWizardPage : public OnOffWizardPage
 {
 Q_OBJECT
@@ -15,6 +17,12 @@ public:
 private slots:
 	void motorOn(const quint16 &port);
 	void motorOff(const quint16 &port);
+	void update();
+	
+private:
+	QTimer *m_timer;
+	double m_theta;
+	bool m_on[4];
 };
 
 #endif

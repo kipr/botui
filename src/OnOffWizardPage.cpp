@@ -18,6 +18,13 @@ OnOffWizardPage::OnOffWizardPage(QWidget *parent)
 	m_on[1] = ui->on1;
 	m_on[2] = ui->on2;
 	m_on[3] = ui->on3;
+	
+	for(int i = 0; i < sizeof_array(m_off); ++i) {
+		m_off[i]->hide();
+		m_on[i]->show();
+		connect(m_off[i], SIGNAL(clicked()), SLOT(clicked()));
+		connect(m_on[i], SIGNAL(clicked()), SLOT(clicked()));
+	}
 }
 
 OnOffWizardPage::~OnOffWizardPage()
@@ -49,8 +56,10 @@ void OnOffWizardPage::clicked()
 			break;
 		} else if(m_off[i] == from) break;
 	}
-	m_off[i]->setEnabled(isOn);
-	m_on[i]->setEnabled(!isOn);
+	setUpdatesEnabled(false);
+	m_off[i]->setVisible(isOn);
+	m_on[i]->setVisible(!isOn);
+	setUpdatesEnabled(true);
 	
 	if(isOn) emit on(i);
 	else emit off(i);

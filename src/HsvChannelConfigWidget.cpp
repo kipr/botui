@@ -117,12 +117,18 @@ void HsvChannelConfigWidget::update()
 		return;
 	}
 	
-	m_camera->update();
-	const Camera::ObjectVector &objs = m_camera->channels()[0]->objects();
-	Camera::ObjectVector::const_iterator it = objs.begin();
+	const Camera::ObjectVector *objs = m_camera->channels()[0]->objects();
+	if(!objs) {
+		qWarning() << "Objects invalid";
+		ui->camera->setInvalid(true);
+		return;
+	}
+	
+	qDebug() << "Num objects:" << objs->size();
+	Camera::ObjectVector::const_iterator it = objs->begin();
 	cv::Mat image = m_camera->rawImage();
-	for(; it != objs.end(); ++it) {
-		Camera::Object obj = *it;
+	for(; it != objs->end(); ++it) {
+		const Camera::Object &obj = *it;
 		cv::rectangle(image, cv::Rect(obj.boundingBox().x(), obj.boundingBox().y(),
 			obj.boundingBox().width(), obj.boundingBox().height()),
 			cv::Scalar(255, 0, 0), 2);

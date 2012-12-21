@@ -10,6 +10,7 @@
 #include "FactoryWidget.h"
 #include "NetworkManager.h"
 #include "GuiSettingsWidget.h"
+#include "TestWizard.h"
 
 #include <QApplication>
 #include <QDir>
@@ -38,10 +39,14 @@ int main(int argc, char* argv[])
 	
 	GuiSettingsWidget::updateStyle(&device);
 	
+	TestWizard wizard(&device);
+	wizard.show();
+	wizard.raise();
+	wizard.setMaximumSize(QSize(320, 240));
+	
 	NetworkManager::ref();
-	//RootController::ref().presentQml(QUrl::fromLocalFile("loading.qml"));
-	RootController::ref().presentWidget(new HomeWidget(&device));
-	// RootController::ref().presentWidget(new FactoryWidget(&device));
+	// RootController::ref().presentWidget(new HomeWidget(&device));
+	
 	
 	return app.exec();
 }
