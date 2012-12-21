@@ -85,6 +85,7 @@ private:
 	
 	unsigned m_slideTimeout;
 	QTimer *m_slideTimer;
+	QPixmap m_hsv;
 };
 
 #endif

@@ -141,7 +141,7 @@ void FileManagerWidget::selectionChanged(const QItemSelection &selected)
 	QModelIndexList indexes = selected.indexes();
 	if(indexes.size() != 1) return;
 	QModelIndex index = indexes[0];
-	const QString ext = QFileInfo(m_fs->fileName(index)).completeSuffix();
+	const QString ext = QFileInfo(m_fs->fileName(index)).suffix();
 	FileAction *action = FileActions::ref().action(ext);
 	ui->open->setEnabled(m_fs->isDir(index) || action);
 	if(action) ui->open->setText(action->name());

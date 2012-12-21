@@ -97,7 +97,7 @@ namespace Kovan
 
 const float Kovan::BatteryLevelProvider::batteryLevel() const
 {
-	// publish();
+	publish();
 	return Battery::powerLevel();
 }
 
@@ -113,7 +113,8 @@ const float Kovan::BatteryLevelProvider::batteryLevelMax() const
 
 const bool Kovan::BatteryLevelProvider::isCharging() const
 {
-	return batteryLevel() > batteryLevelMax();
+	publish();
+	return Battery::isCharging();
 }
 
 Kovan::ProgramItem::ProgramItem(const QString& name)
