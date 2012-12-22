@@ -64,9 +64,3 @@ void PidWidget::go()
 	int position = ui->position->text().toInt();
 	move_to_position(m_currentPort, position, ui->speed->value());
 }
-
-void PidWidget::statusUpdate()
-{
-	publish();
-	ui->status->setText("???");
-}

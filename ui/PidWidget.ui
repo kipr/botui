@@ -13,9 +13,9 @@
   <property name="windowTitle">
    <string>PID Motor Control</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,1,0">
+  <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,0">
    <property name="spacing">
-    <number>2</number>
+    <number>6</number>
    </property>
    <property name="leftMargin">
     <number>6</number>
@@ -30,27 +30,6 @@
     <number>0</number>
    </property>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,1">
-     <property name="topMargin">
-      <number>0</number>
-     </property>
-     <item>
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>Status:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="status">
-       <property name="text">
-        <string>Stopped</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,0">
      <property name="spacing">
       <number>0</number>
@@ -63,7 +42,7 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0,0,0">
        <property name="spacing">
-        <number>6</number>
+        <number>5</number>
        </property>
        <item>
         <widget class="QLabel" name="label_3">

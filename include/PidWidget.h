@@ -20,7 +20,6 @@ public:
 private slots:
 	void portClicked();
 	void go();
-	void statusUpdate();
 	
 private:
 	Ui::PidWidget *ui;
