@@ -15,6 +15,7 @@ PidWidget::PidWidget(Device *device, QWidget *parent)
 	ui(new Ui::PidWidget)
 {
 	ui->setupUi(this);
+	performStandardSetup(tr("Motor Control"));
 	
 	m_ports[0] = ui->_0;
 	m_ports[1] = ui->_1;
