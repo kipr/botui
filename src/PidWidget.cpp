@@ -57,6 +57,8 @@ void PidWidget::portClicked()
 	for(quint8 j = 0; j < sizeof_array(m_ports); ++j) {
 		m_ports[j]->setEnabled(j != m_currentPort);
 	}
+	
+	ui->speed->setLabel(m_currentPort);
 }
 
 void PidWidget::go()
