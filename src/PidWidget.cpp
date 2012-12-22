@@ -22,7 +22,7 @@ PidWidget::PidWidget(Device *device, QWidget *parent)
 	m_ports[2] = ui->_2;
 	m_ports[3] = ui->_3;
 	
-	ui->position->setInputProvider(new NumpadDialog(tr("Update Motor Position"),
+	ui->position->setInputProvider(new NumpadDialog(tr("Position"),
 		NumpadDialog::Integer,
 		std::numeric_limits<short>::min(),
 		std::numeric_limits<short>::max(),
