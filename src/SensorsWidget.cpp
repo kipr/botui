@@ -42,24 +42,32 @@ void SensorsWidget::update()
 {
 	publish();
 	
-	const double val1 = value(ui->plot1->currentIndex());
-	const double val2 = value(ui->plot2->currentIndex());
+	ui->val1->setText(QString::number(rawValue(ui->plot1->currentIndex())));
+	ui->val2->setText(QString::number(rawValue(ui->plot2->currentIndex())));
 	
-	ui->val1->setText(QString::number(val1));
-	ui->val2->setText(QString::number(val2));
-	
-	ui->plot->push(m_plots[0], val1);
-	ui->plot->push(m_plots[1], val2);
+	ui->plot->push(m_plots[0], value(ui->plot1->currentIndex()));
+	ui->plot->push(m_plots[1], value(ui->plot2->currentIndex()));
 	ui->plot->inc();
 }
 
-double SensorsWidget::value(const int &i)
+double SensorsWidget::rawValue(const int &i) const
 {
-	double val = 0.0;
-	if(i < 8) val = analog10(i) / 512.0 - 1.0;
-	else if(i < 12) val = get_backemf(i - 8) / 32768.0;
-	else if(i == 12) val = accel_x() / 127.5 - 1.0;
-	else if(i == 13) val = accel_y() / 127.5 - 1.0;
-	else if(i == 14) val = accel_z() / 127.5 - 1.0;
+	double val = 0;
+	if(i < 8) val = analog10(i);
+	else if(i < 12) val = get_backemf(i - 8);
+	else if(i == 12) val = accel_x();
+	else if(i == 13) val = accel_y();
+	else if(i == 14) val = accel_z();
+}
+
+double SensorsWidget::value(const int &i) const
+{
+	double val = rawValue(i);
+	
+	if(i < 8) val = val / 512.0 - 1.0;
+	else if(i < 12) val = val / 32768.0;
+	else if(i < 15) val = val / 127.5 - 1.0;
+	else val = 0.0;
+	
 	return val;
 }

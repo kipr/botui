@@ -21,7 +21,8 @@ public slots:
 	void update();
 	
 private:
-	double value(const int &i);
+	double rawValue(const int &i) const;
+	double value(const int &i) const;
 	
 	MenuBar *m_menuBar;
 	Ui::SensorsWidget *ui;
