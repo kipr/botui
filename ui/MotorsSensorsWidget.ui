@@ -59,11 +59,22 @@
        <item>
         <widget class="QPushButton" name="motors">
          <property name="text">
-          <string>Motors</string>
+          <string>Motor PWM</string>
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
            <normaloff>:/icons/car.png</normaloff>:/icons/car.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pid">
+         <property name="text">
+          <string>Motor Control</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../rc/icons.qrc">
+           <normaloff>:/icons/sum.png</normaloff>:/icons/sum.png</iconset>
          </property>
         </widget>
        </item>
@@ -80,7 +91,7 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/cog.png</normaloff>:/icons/cog.png</iconset>
+           <normaloff>:/icons/lightning.png</normaloff>:/icons/lightning.png</iconset>
          </property>
         </widget>
        </item>

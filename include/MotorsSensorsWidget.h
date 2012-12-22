@@ -18,6 +18,7 @@ public:
 private slots:
 	void servos();
 	void motors();
+	void pid();
 	void sensors();
 	void camera();
 	
