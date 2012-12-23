@@ -8,7 +8,7 @@
 #include <kovan/motors.h>
 
 #include <QTimer>
-#include <QTimer>
+#include <QDebug>
 
 PidWidget::PidWidget(Device *device, QWidget *parent)
 	: StandardWidget(device, parent),
@@ -63,6 +63,7 @@ void PidWidget::portClicked()
 
 void PidWidget::go()
 {
-	int position = ui->position->text().toInt();
+	int position = ui->position->text().toDouble();
+	qDebug() << position;
 	move_to_position(m_currentPort, position, ui->speed->value());
 }
