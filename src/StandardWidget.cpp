@@ -9,7 +9,7 @@ StandardWidget::StandardWidget(Device *device, QWidget *parent)
 	: QWidget(parent),
 	m_device(device),
 	m_menuBar(new MenuBar(this)),
-	m_statusBar(new StatusBar(this))
+	m_statusBar(0)
 {
 
 }
@@ -20,11 +20,14 @@ StandardWidget::~StandardWidget()
 	delete m_statusBar;
 }
 
-void StandardWidget::performStandardSetup(const QString& title)
+void StandardWidget::performStandardSetup(const QString& title, const bool &statusBar)
 {
 	m_menuBar->addHomeAndBackButtons();
 	m_menuBar->setTitle(title);
 	layout()->setMenuBar(m_menuBar);
+	
+	if(!statusBar) return;
+	m_statusBar = new StatusBar(this);
 	m_statusBar->loadDefaultWidgets(m_device);
 	layout()->addWidget(m_statusBar);
 }

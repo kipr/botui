@@ -10,7 +10,7 @@ namespace Ui
 	class ChannelConfigurationsWidget;
 }
 
-class QFileSystemModel;
+class ChannelConfigurationsModel;
 class QAction;
 
 class ChannelConfigurationsWidget : public StandardWidget
@@ -33,7 +33,7 @@ private slots:
 	
 private:
 	Ui::ChannelConfigurationsWidget *ui;
-	QFileSystemModel *m_model;
+	ChannelConfigurationsModel *m_model;
 	QAction *m_import;
 	QString m_defaultPath;
 };

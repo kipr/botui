@@ -70,16 +70,37 @@ HsvChannelConfigWidget::~HsvChannelConfigWidget()
 void HsvChannelConfigWidget::refresh()
 {
 	const Config &config = ChannelConfigWidget::config();
-	const int th = config.intValue("th") * 2;
-	const int ts = config.intValue("ts");
-	const int tv = config.intValue("tv");
-	const int bh = config.intValue("bh") * 2;
-	const int bs = config.intValue("bs");
-	const int bv = config.intValue("bv");
+	int th = config.intValue("th") * 2;
+	int ts = config.intValue("ts");
+	int tv = config.intValue("tv");
+	int bh = config.intValue("bh") * 2;
+	int bs = config.intValue("bs");
+	int bv = config.intValue("bv");
 	
 	qDebug() << "Values:";
 	qDebug() << th << ts << tv;
 	qDebug() << bh << bs << bv;
+	
+	if(th == bh) {
+		th += 5;
+		th %= 360;
+		bh -= 5;
+		if(bh < 0) bh += 360;
+	}
+	
+	if(ts == bs) {
+		ts += 5;
+		ts = ts > 255 ? 255 : ts;
+		bs -= 5;
+		bs = bs < 0 ? 0 : bs;
+	}
+	
+	if(tv == bv) {
+		tv += 5;
+		tv = tv > 255 ? 255 : tv;
+		bv -= 5;
+		bv = bv < 0 ? 0 : bv;
+	}
 	
 	// Visual
 	ui->visual->setMax(QColor::fromHsv(th, ts, tv));
@@ -124,7 +145,6 @@ void HsvChannelConfigWidget::update()
 		return;
 	}
 	
-	qDebug() << "Num objects:" << objs->size();
 	Camera::ObjectVector::const_iterator it = objs->begin();
 	cv::Mat image = m_camera->rawImage();
 	for(; it != objs->end(); ++it) {

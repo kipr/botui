@@ -17,7 +17,7 @@ public:
 	Device *device() const;
 	
 protected:
-	void performStandardSetup(const QString& title);
+	void performStandardSetup(const QString& title, const bool &statusBar = true);
 	
 	MenuBar *menuBar() const;
 	StatusBar *statusBar() const;

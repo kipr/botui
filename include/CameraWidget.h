@@ -8,10 +8,12 @@ namespace Ui
 	class CameraWidget;
 }
 
-namespace cv
+namespace Camera
 {
-	class VideoCapture;
+	class Device;
 }
+
+class ChannelConfigurationsModel;
 
 class CameraWidget : public StandardWidget
 {
@@ -22,15 +24,16 @@ public:
 	
 public slots:
 	void updateCamera();
-	void toggleUi();
+	void currentIndexChanged(const int &index);
 	
 private:
 	void setUpdateFast();
 	void setUpdateSlow();
 	
 	Ui::CameraWidget *ui;
-	cv::VideoCapture *m_capture;
+	Camera::Device *m_device;
 	QTimer *m_timer;
+	ChannelConfigurationsModel *m_model;
 };
 
 #endif

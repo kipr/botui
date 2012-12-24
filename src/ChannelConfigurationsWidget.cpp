@@ -4,11 +4,11 @@
 #include "KeyboardDialog.h"
 #include "RootController.h"
 #include "ChannelsWidget.h"
+#include "ChannelConfigurationsModel.h"
 #include "MenuBar.h"
 
 #include <QItemSelection>
 #include <QFileInfo>
-#include <QFileSystemModel>
 #include <QItemDelegate>
 #include <QPainter>
 #include <QDir>
@@ -49,7 +49,7 @@ private:
 ChannelConfigurationsWidget::ChannelConfigurationsWidget(Device *device, QWidget *parent)
 	: StandardWidget(device, parent),
 	ui(new Ui::ChannelConfigurationsWidget),
-	m_model(new QFileSystemModel(this)),
+	m_model(new ChannelConfigurationsModel(this)),
 	m_import(new QAction(tr("Import"), this)),
 	m_defaultPath("")
 {
@@ -60,12 +60,7 @@ ChannelConfigurationsWidget::ChannelConfigurationsWidget(Device *device, QWidget
 	ui->configs->setModel(m_model);
 	ui->configs->setItemDelegate(new ConfigItemDelegate(this));
 	
-	m_model->setNameFilters(QStringList() << ("*." + QString::fromStdString(Camera::ConfigPath::extension())));
-	m_model->setNameFilterDisables(false);
-	
-	const QString configPath = QString::fromStdString(Camera::ConfigPath::path());
-	QDir().mkpath(configPath);
-	ui->configs->setRootIndex(m_model->setRootPath(configPath));
+	ui->configs->setRootIndex(m_model->index(m_model->rootPath()));
 
 	connect(ui->edit, SIGNAL(clicked()), SLOT(edit()));
 	connect(ui->rename, SIGNAL(clicked()), SLOT(rename()));
@@ -75,9 +70,8 @@ ChannelConfigurationsWidget::ChannelConfigurationsWidget(Device *device, QWidget
 	connect(ui->configs->selectionModel(),
 		SIGNAL(currentChanged(QModelIndex, QModelIndex)),
 		SLOT(currentChanged(QModelIndex)));
-		
-	QModelIndex index = m_model->index(QString::fromStdString(Camera::ConfigPath::defaultConfigPath()));
-	m_defaultPath = m_model->filePath(index);
+	
+	m_defaultPath = m_model->filePath(m_model->defaultConfiguration());
 	
 	currentChanged(QModelIndex());
 }
@@ -128,7 +122,7 @@ void ChannelConfigurationsWidget::default_()
 	m_defaultPath = m_model->filePath(index);
 	ui->default_->setEnabled(false);
 	Camera::ConfigPath::setDefaultConfigPath(m_model->fileInfo(index).baseName().toStdString());
-	ui->configs->update();
+	ui->configs->repaint();
 }
 
 void ChannelConfigurationsWidget::add()
@@ -147,6 +141,7 @@ void ChannelConfigurationsWidget::remove()
 {
 	QItemSelection selection = ui->configs->selectionModel()->selection();
 	if(selection.indexes().size() != 1) return;
+	QFile::remove(m_model->filePath(selection.indexes()[0]));
 }
 
 void ChannelConfigurationsWidget::currentChanged(const QModelIndex &index)

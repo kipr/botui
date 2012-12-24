@@ -77,6 +77,8 @@ bool FileActionCompile::act(const QString &path, Device *device) const
 	// will be selected. Maybe make this a bit
 	// more assured in the future.
 	RootController::ref().presentWidget(new ProgramsWidget(device));
+	
+	return true;
 }
 
 void FileActionCompile::compileStarted(const QString &name, ConcurrentCompile *compiler)

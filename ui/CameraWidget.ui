@@ -14,17 +14,8 @@
    <string>Camera</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
-   <property name="leftMargin">
+   <property name="margin">
     <number>6</number>
-   </property>
-   <property name="topMargin">
-    <number>6</number>
-   </property>
-   <property name="rightMargin">
-    <number>6</number>
-   </property>
-   <property name="bottomMargin">
-    <number>0</number>
    </property>
    <item>
     <widget class="CvWidget" name="camera" native="true">
@@ -36,6 +27,23 @@
      </property>
     </widget>
    </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,2">
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Configuration:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="config"/>
+     </item>
+    </layout>
+   </item>
   </layout>
  </widget>
  <customwidgets>
@@ -46,6 +54,8 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../rc/icons.qrc"/>
+ </resources>
  <connections/>
 </ui>
