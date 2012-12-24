@@ -28,9 +28,8 @@ const bool& CvWidget::invalid() const
 void CvWidget::updateImage(cv::Mat image)
 {
 	if(m_invalid) return;
-	cv::Mat dest;
-	cv::cvtColor(image, dest,CV_BGR2RGB);
-	m_image = QImage(dest.data, dest.cols, dest.rows, dest.step, QImage::Format_RGB888);
+	cv::cvtColor(image, m_image, CV_BGR2RGB);
+	
 	scaleImage();
 	update();
 }
@@ -60,11 +59,13 @@ void CvWidget::mousePressEvent(QMouseEvent *event)
 {
 	if(m_invalid) return;
 	const QPointF &pos = event->pos();
-	emit pressed(pos.x() / width() * m_image.width(),
-		pos.y() / height() * m_image.height());
+	emit pressed(pos.x() / width() * m_image.cols,
+		pos.y() / height() * m_image.rows);
 }
 
 void CvWidget::scaleImage()
 {
-	m_resizedImage = m_image.scaled(size(), Qt::KeepAspectRatio, Qt::FastTransformation);
+	cv::Mat resized;
+	cv::resize(m_image, resized, cv::Size(width(), height()));
+	m_resizedImage = QImage(resized.data, resized.cols, resized.rows, resized.step, QImage::Format_RGB888);
 }

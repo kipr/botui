@@ -30,7 +30,7 @@ private:
 	void scaleImage();
 	
 	bool m_invalid;
-	QImage m_image;
+	cv::Mat m_image;
 	QImage m_resizedImage;
 };
 
