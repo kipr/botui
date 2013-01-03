@@ -119,32 +119,6 @@
          </property>
         </spacer>
        </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
-         <item>
-          <widget class="QPushButton" name="exit">
-           <property name="text">
-            <string>Exit</string>
-           </property>
-           <property name="icon">
-            <iconset resource="../rc/icons.qrc">
-             <normaloff>:/icons/application_osx_terminal.png</normaloff>:/icons/application_osx_terminal.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="about">
-           <property name="text">
-            <string>About</string>
-           </property>
-           <property name="icon">
-            <iconset resource="../rc/icons.qrc">
-             <normaloff>:/icons/information.png</normaloff>:/icons/information.png</iconset>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
       </layout>
      </item>
      <item>

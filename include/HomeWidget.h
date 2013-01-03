@@ -20,7 +20,6 @@ public slots:
 	void fileManager();
 	void motorsSensors();
 	void settings();
-	void exit();
 	void about();
 	void lock();
 	

@@ -29,11 +29,11 @@ HomeWidget::HomeWidget(Device *device, QWidget *parent)
 	connect(ui->fileManager, SIGNAL(clicked()), SLOT(fileManager()));
 	connect(ui->motorsSensors, SIGNAL(clicked()), SLOT(motorsSensors()));
 	connect(ui->settings, SIGNAL(clicked()), SLOT(settings()));
-	connect(ui->exit, SIGNAL(clicked()), SLOT(exit()));
-	connect(ui->about, SIGNAL(clicked()), SLOT(about()));
 	
 	QAction *lock = menuBar()->addAction(UiStandards::lockString());
 	connect(lock, SIGNAL(activated()), SLOT(lock()));
+	QAction *about = menuBar()->addAction(tr("About"));
+	connect(about, SIGNAL(activated()), SLOT(about()));
 	
 	ui->programs->setEnabled(device->archivesManager());
 }
@@ -63,13 +63,6 @@ void HomeWidget::motorsSensors()
 void HomeWidget::settings()
 {
 	RootController::ref().presentWidget(new SettingsWidget(device()));
-}
-
-void HomeWidget::exit()
-{
-	// TODO: This is temporary
-	system("Xorg");
-	QApplication::exit(0);
 }
 
 void HomeWidget::about()
