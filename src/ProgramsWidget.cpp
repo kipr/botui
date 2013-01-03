@@ -65,7 +65,7 @@ void ProgramsWidget::run()
 	
 	const QString name = m_model->name(currents[0]);
 	
-	if(device()->archivesManager()->hasBinary(name)) {
+	if(!device()->archivesManager()->hasBinary(name)) {
 		qWarning() << "Could not find executable for" << name << ". Trying to compile.";
 		LogDialog logger;
 		ConcurrentCompile compiler(name, device()->archivesManager()->archive(name),
