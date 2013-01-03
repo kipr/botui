@@ -29,7 +29,7 @@ private slots:
 	
 private:
 	Ui::ProgramArgsWidget *ui;
-	QString m_program;
+	QString m_name;
 	
 	bool m_dirty;
 };

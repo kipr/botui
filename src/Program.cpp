@@ -15,7 +15,11 @@ bool Program::start(const QString& path, const QStringList &arguments)
 	connect(m_process, SIGNAL(finished(int, QProcess::ExitStatus)), SIGNAL(finished(int, QProcess::ExitStatus)));
 	connect(m_process, SIGNAL(readyRead()), SIGNAL(readyRead()));
 	m_process->start(path, arguments);
-	m_process->waitForStarted();
+	if(!m_process->waitForStarted()) {
+		delete m_process;
+		m_process = 0;
+		return false;
+	}
 	emit started();
 	m_time.restart();
 	return true;

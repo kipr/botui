@@ -1,7 +1,7 @@
 #include "FileActionCompile.h"
 
 #include "Device.h"
-#include "FilesystemProvider.h"
+#include "ArchivesManager.h"
 
 #include "LogDialog.h"
 #include "RootController.h"
@@ -10,6 +10,7 @@
 #include "ProgramWidget.h"
 #include "ProgramsWidget.h"
 #include "CompileProvider.h"
+#include "CompileHelpers.h"
 
 #include <kar.hpp>
 #include <QFileInfo>
@@ -26,10 +27,13 @@ FileActionCompile::FileActionCompile()
 bool FileActionCompile::act(const QString &path, Device *device) const
 {
 	// Sanity check
-	
 	QFileInfo input(path);
 	if(!input.isFile()) {
 		qWarning() << "We don't know how to compile a non-file";
+		return false;
+	}
+	if(!device->archivesManager()) {
+		qWarning() << "No archives manager";
 		return false;
 	}
 	
@@ -47,7 +51,7 @@ bool FileActionCompile::act(const QString &path, Device *device) const
 	// Add this program to the virtual filesystem
 	
 	const QString name = input.completeBaseName();
-	device->filesystemProvider()->setProgram(name, archive);
+	device->archivesManager()->set(name, archive);
 	
 	// Compile the program
 	
@@ -66,11 +70,9 @@ bool FileActionCompile::act(const QString &path, Device *device) const
 	
 	if(!Compiler::Output::isSuccess(compiler.output())) {
 		// Clean up
-		device->filesystemProvider()->deleteProgram(name);
+		device->archivesManager()->remove(name);
 		return false;
 	}
-	
-	const QString exec = device->compileProvider()->executableFor(name);
 	
 	// TODO: We're taking advantage of the fact
 	// that our program will be listed first and
@@ -101,8 +103,8 @@ void FileActionCompile::compileFinished(const Compiler::OutputList &output, Conc
 
 	LogDialog *log = reinterpret_cast<LogDialog *>(compiler->userData());
 	foreach(const Compiler::Output& out, output) {
-		log->appendText(postProcess(out.output()));
-		log->appendText(postProcess(out.error()));
+		log->appendText(CompileHelpers::postProcess(out.output()));
+		log->appendText(CompileHelpers::postProcess(out.error()));
 	}
 	
 	// This is more so something will be in the log.
@@ -111,20 +113,6 @@ void FileActionCompile::compileFinished(const Compiler::OutputList &output, Conc
 	
 	log->setStatus(Compiler::Output::isSuccess(output) ? tr("Success!") : tr("Failure."));
 	log->setDismissable(true);
-}
-
-QString FileActionCompile::postProcess(const QString &output) const
-{
-	QString ret = output;
-	QRegExp rx("([a-zA-Z]:)?(/[a-zA-Z0-9_.-]+)*([a-zA-Z0-9_-]+\\.[a-zA-Z]+)/?:");
-	int pos = 0;
-	while ((pos = rx.indexIn(ret, pos)) != -1) {
-		const QString path = ret.mid(pos, rx.matchedLength() - 1);
-		const QString ins = QFileInfo(path).fileName();
-		ret.replace(pos, path.length(), ins);
-		pos += ins.length();
-	}
-	return ret;
 }
 
 REGISTER_FILE_ACTION(FileActionCompile)

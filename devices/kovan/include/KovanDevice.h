@@ -17,17 +17,15 @@ namespace Kovan
 		virtual QString version() const;
 		virtual bool isTouchscreen() const;
 		
-		virtual FilesystemProvider *filesystemProvider() const;
+		virtual ArchivesManager *archivesManager() const;
 		virtual CompileProvider *compileProvider() const;
-		virtual CommunicationProviderList communicationProviders() const;
 		virtual BatteryLevelProvider *batteryLevelProvider() const;
 		virtual SettingsProvider *settingsProvider() const;
 		virtual ButtonProvider *buttonProvider() const;
 		
 	private:
-		FilesystemProvider *m_filesystemProvider;
+		ArchivesManager *m_archivesManager;
 		CompileProvider *m_compileProvider;
-		CommunicationProviderList m_communicationProviders;
 		Connman *m_networkingProvider;
 		BatteryLevelProvider *m_batteryLevelProvider;
 		SettingsProvider *m_settingsProvider;

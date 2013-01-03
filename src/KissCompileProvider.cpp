@@ -24,7 +24,7 @@ KissCompileProvider::KissCompileProvider(Device *device, QObject *parent)
 {
 }
 
-Compiler::OutputList KissCompileProvider::compile(const QString& name, const Kiss::KarPtr& program)
+Compiler::OutputList KissCompileProvider::compile(const QString &name, const Kiss::KarPtr &program)
 {
 	if(program.isNull()) {
 		return OutputList() << Output(name, 1,
@@ -40,13 +40,10 @@ Compiler::OutputList KissCompileProvider::compile(const QString& name, const Kis
 			QByteArray(), "error: Failed to extract KISS Archive.");
 	}
 	
-	QStringList extractedFiles;
-	foreach(const QString& file, program->files()) {
-		qDebug() << "Extracted" << path + "/" + file;
-		extractedFiles << path + "/" + file;
-	}
+	QStringList extracted;
+	foreach(const QString& file, program->files()) extracted << path + "/" + file;
 	
-	Input input = Input::fromList(extractedFiles);
+	Input input = Input::fromList(extracted);
 	Options opts = Options::load("/etc/botui/platform.hints");
 	Engine engine(Compilers::instance()->compilers());
 	OutputList ret = engine.compile(input, opts);
@@ -62,17 +59,10 @@ Compiler::OutputList KissCompileProvider::compile(const QString& name, const Kis
 		success &= out.isSuccess();
 	}
 	
-	foreach(const Output& out, ret) {
-		qDebug() << out.error();
-		qDebug() << out.output();
-	}
+	QString result = QDir(binariesPath()).filePath(name);
+	QFile::remove(result);
 	
-	QFile::remove(m_executables.value(name));
-	
-	if(!success) {
-		m_executables.remove(name);
-		return ret;
-	}
+	if(!success) return ret;
 	
 	if(terminalFiles.isEmpty()) {
 		ret << OutputList() << Output(name, 1,
@@ -85,17 +75,11 @@ Compiler::OutputList KissCompileProvider::compile(const QString& name, const Kis
 		ret << Output(name, 1, QByteArray(), "error: Terminal ambiguity in compilation. ");
 	}
 	
-	QString cachedResult = cachePath(name) + "/" + QFileInfo(terminalFiles[0]).fileName();
-	QFile::remove(cachedResult);
-	if(!QFile::copy(terminalFiles[0], cachedResult)) {
+	if(!QFile::copy(terminalFiles[0], result)) {
 		ret << OutputList() << Output(name, 1, QByteArray(),
 			("error: Failed to copy \"" + terminalFiles[0]
-				+ "\" to \"" + cachedResult + "\"").toLatin1());
+				+ "\" to \"" + result + "\"").toLatin1());
 	}
-	
-	m_executables[name] = cachedResult;
-	
-	sync();
 	
 	return ret;
 }
@@ -103,21 +87,4 @@ Compiler::OutputList KissCompileProvider::compile(const QString& name, const Kis
 QString KissCompileProvider::tempPath() const
 {
 	return QDir::tempPath() + "/" + QDateTime::currentDateTime().toString("yyMMddhhmmss") + ".botui";
-}
-
-QString KissCompileProvider::cachePath(const QString& name) const
-{
-	QString ret = QDir::homePath() + "/cache/" + name;
-	QDir().mkpath(ret);
-	return ret;
-}
-
-QString KissCompileProvider::executableFor(const QString& name) const
-{
-	return m_executables.value(name);
-}
-
-void KissCompileProvider::sync()
-{
-	qDebug() << "Persistent binary caching is not yet implemented.";
 }

@@ -3,17 +3,17 @@
 
 #include "RootController.h"
 #include "KeyboardDialog.h"
-#include "FilesystemProvider.h"
+#include "ArchivesManager.h"
 #include "Device.h"
 #include "ProgramArguments.h"
 
 #include <QListWidgetItem>
 #include <QDebug>
 
-ProgramArgsWidget::ProgramArgsWidget(const QString &program, Device *device, QWidget *parent)
+ProgramArgsWidget::ProgramArgsWidget(const QString &name, Device *device, QWidget *parent)
 	: StandardWidget(device, parent),
 	ui(new Ui::ProgramArgsWidget),
-	m_program(program),
+	m_name(name),
 	m_dirty(false)
 {
 	ui->setupUi(this);
@@ -30,8 +30,7 @@ ProgramArgsWidget::ProgramArgsWidget(const QString &program, Device *device, QWi
 	
 	delete ui->args->takeItem(0);
 	
-	Kiss::KarPtr archive = device->filesystemProvider()->program(m_program);
-	ui->args->addItems(ProgramArguments::arguments(archive));
+	ui->args->addItems(ProgramArguments::arguments(device->archivesManager()->archive(m_name)));
 	
 	currentItemChanged(0);
 }
@@ -43,13 +42,14 @@ ProgramArgsWidget::~ProgramArgsWidget()
 	// be overwritten.
 	
 	if(!m_dirty) return;
-	Kiss::KarPtr archive = device()->filesystemProvider()->program(m_program);
 	QStringList args;
 	for(int i = 0; i < ui->args->count(); ++i) {
 		args << ui->args->item(i)->text();
 	}
+	
+	Kiss::KarPtr archive = device()->archivesManager()->archive(m_name);
 	ProgramArguments::setArguments(archive, args);
-	device()->filesystemProvider()->setProgram(m_program, archive);
+	device()->archivesManager()->set(m_name, archive);
 	
 	delete ui;
 }
@@ -58,7 +58,7 @@ void ProgramArgsWidget::edit()
 {
 	QListWidgetItem *item = ui->args->currentItem();
 	if(!item) return;
-	KeyboardDialog dialog("Argument");
+	KeyboardDialog dialog(tr("Edit Argument"));
 	dialog.setInput(item->text());
 	RootController::ref().presentDialog(&dialog);
 	const QString input = dialog.input();
@@ -70,7 +70,6 @@ void ProgramArgsWidget::edit()
 		item->setText(input);
 		m_dirty = true;
 	}
-	
 }
 
 void ProgramArgsWidget::up()
@@ -99,7 +98,7 @@ void ProgramArgsWidget::add()
 {
 	QListWidgetItem *item = ui->args->currentItem();
 	
-	KeyboardDialog dialog("Argument");
+	KeyboardDialog dialog(tr("Add Argument"));
 	RootController::ref().presentDialog(&dialog);
 	const QString input = dialog.input();
 	if(input.isEmpty()) return;

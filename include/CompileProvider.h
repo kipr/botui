@@ -15,12 +15,17 @@ Q_OBJECT
 public:
 	CompileProvider(QObject *parent = 0);
 	virtual ~CompileProvider();
-	virtual Compiler::OutputList compile(const QString& name, const Kiss::KarPtr& program) = 0;
 	
-	virtual QString executableFor(const QString& name) const = 0;
+	void setBinariesPath(const QString &binariesPath);
+	const QString &binariesPath() const;
+	virtual Compiler::OutputList compile(const QString &name, const Kiss::KarPtr &program) = 0;
+	
 	
 signals:
-	void compileFinished(const Compiler::OutputList& output);
+	void compileFinished(const Compiler::OutputList &output);
+
+private:
+	QString m_binariesPath;
 };
 
 #endif

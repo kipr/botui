@@ -26,6 +26,10 @@ public:
 	void setLabel(const quint16 &label);
 	const quint16 &label() const;
 	
+	Q_PROPERTY(bool readOnly READ readOnly WRITE setReadOnly)
+	void setReadOnly(const bool& readOnly);
+	const bool &readOnly() const;
+	
 signals:
 	void valueChanged(double fraction);
 	
@@ -42,6 +46,8 @@ private:
 	double m_value;
 	
 	quint16 m_label;
+	
+	bool m_readOnly;
 };
 
 #endif

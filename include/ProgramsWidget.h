@@ -3,10 +3,15 @@
 
 #include "StandardWidget.h"
 
+#include <pcompiler/output.hpp>
+
 namespace Ui
 {
 	class ProgramsWidget;
 }
+
+class ArchivesModel;
+class ConcurrentCompile;
 
 class ProgramsWidget : public StandardWidget
 {
@@ -20,8 +25,14 @@ public slots:
 	void args();
 	void remove();
 	
+private slots:
+	void compileStarted(const QString &name, ConcurrentCompile *compiler);
+	void compileFinished(const Compiler::OutputList &output, ConcurrentCompile *compiler);
+	void update();
+	
 private:
 	Ui::ProgramsWidget *ui;
+	ArchivesModel *m_model;
 };
 
 #endif

@@ -7,7 +7,7 @@
 class BatteryLevelProvider;
 class NetworkingProvider;
 class CommunicationProvider;
-class FilesystemProvider;
+class ArchivesManager;
 class CompileProvider;
 class SettingsProvider;
 class ButtonProvider;
@@ -24,9 +24,8 @@ public:
 	virtual QString version() const = 0;
 	virtual bool isTouchscreen() const = 0;
 	
-	virtual FilesystemProvider *filesystemProvider() const = 0;
+	virtual ArchivesManager *archivesManager() const = 0;
 	virtual CompileProvider *compileProvider() const = 0;
-	virtual CommunicationProviderList communicationProviders() const = 0;
 	virtual BatteryLevelProvider *batteryLevelProvider() const = 0;
 	virtual SettingsProvider *settingsProvider() const = 0;
 	virtual ButtonProvider *buttonProvider() const = 0;

@@ -13,15 +13,10 @@ class KissCompileProvider : public CompileProvider
 {
 public:
 	KissCompileProvider(Device *device, QObject *parent = 0);
-	
-	Compiler::OutputList compile(const QString& name, const Kiss::KarPtr& archive);
-	QString executableFor(const QString& name) const;
+	Compiler::OutputList compile(const QString &name, const Kiss::KarPtr &archive);
 	
 private:
 	QString tempPath() const;
-	QString cachePath(const QString& name) const;
-	
-	void sync();
 	
 	Device *m_device;
 	QMap<QString, QString> m_executables;

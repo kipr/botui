@@ -37,6 +37,11 @@
    </property>
    <item>
     <widget class="ConsoleWidget" name="console">
+     <property name="font">
+      <font>
+       <family>Courier New</family>
+      </font>
+     </property>
      <property name="focusPolicy">
       <enum>Qt::NoFocus</enum>
      </property>

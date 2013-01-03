@@ -20,9 +20,6 @@ public:
 public slots:
 	void compileStarted(const QString &name, ConcurrentCompile *compiler);
 	void compileFinished(const Compiler::OutputList &output, ConcurrentCompile *compiler);
-
-private:
-	QString postProcess(const QString &output) const;
 };
 
 #endif

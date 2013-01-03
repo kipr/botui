@@ -35,7 +35,7 @@ HomeWidget::HomeWidget(Device *device, QWidget *parent)
 	QAction *lock = menuBar()->addAction(UiStandards::lockString());
 	connect(lock, SIGNAL(activated()), SLOT(lock()));
 	
-	ui->programs->setEnabled(device->filesystemProvider());
+	ui->programs->setEnabled(device->archivesManager());
 }
 
 HomeWidget::~HomeWidget()

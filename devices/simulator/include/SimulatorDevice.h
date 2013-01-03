@@ -15,8 +15,7 @@ namespace Simulator
 		virtual QString version() const;
 		virtual bool isTouchscreen() const;
 		
-		virtual FilesystemProvider *filesystemProvider() const;
-		virtual CommunicationProviderList communicationProviders() const;
+		virtual ArchivesManager *archivesManager() const;
 		virtual NetworkingProvider *networkingProvider() const;
 		virtual CompileProvider *compileProvider() const;
 		virtual BatteryLevelProvider *batteryLevelProvider() const;

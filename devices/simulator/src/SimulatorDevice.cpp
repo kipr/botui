@@ -64,14 +64,9 @@ bool Simulator::Device::isTouchscreen() const
 	return false;
 }
 
-FilesystemProvider *Simulator::Device::filesystemProvider() const
+ArchivesManager *Simulator::Device::archivesManager() const
 {
 	return 0;
-}
-
-CommunicationProviderList Simulator::Device::communicationProviders() const
-{
-	return CommunicationProviderList();
 }
 
 CompileProvider *Simulator::Device::compileProvider() const

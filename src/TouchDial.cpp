@@ -68,6 +68,16 @@ const quint16 &TouchDial::label() const
 	return m_label;
 }
 
+void TouchDial::setReadOnly(const bool& readOnly)
+{
+	m_readOnly = readOnly;
+}
+
+const bool &TouchDial::readOnly() const
+{
+	return m_readOnly;
+}
+
 void TouchDial::paintEvent(QPaintEvent *)
 {
 	const int w = width();
@@ -117,6 +127,8 @@ void TouchDial::paintEvent(QPaintEvent *)
 
 void TouchDial::mouseMoveEvent(QMouseEvent *event)
 {
+	if(m_readOnly) return;
+	
 	const int w = width();
 	const int h = height();
 	
