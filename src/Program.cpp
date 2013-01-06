@@ -1,4 +1,6 @@
 #include "Program.h"
+#include <kovan/general.h>
+
 #include <QDebug>
 
 Program::~Program()
@@ -34,6 +36,8 @@ void Program::stop()
 	// write(tr("Finished in %1 seconds").arg(msecs / 1000.0).toAscii());
 	delete m_process;
 	m_process = 0;
+	
+	halt();
 }
 
 bool Program::isRunning()

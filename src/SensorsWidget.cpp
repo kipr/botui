@@ -54,10 +54,11 @@ double SensorsWidget::rawValue(const int &i) const
 {
 	double val = 0;
 	if(i < 8) val = analog10(i);
-	else if(i < 12) val = get_backemf(i - 8);
+	else if(i < 12) val = get_motor_position_counter(i - 8);
 	else if(i == 12) val = accel_x();
 	else if(i == 13) val = accel_y();
 	else if(i == 14) val = accel_z();
+	return val;
 }
 
 double SensorsWidget::value(const int &i) const

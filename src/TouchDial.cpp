@@ -13,7 +13,8 @@ TouchDial::TouchDial(QWidget *parent)
 	m_minimumValue(-1.0),
 	m_maximumValue(1.0),
 	m_value(0.0),
-	m_label(0xFFFF)
+	m_label(0xFFFF),
+	m_readOnly(false)
 {
 }
 
