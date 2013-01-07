@@ -44,7 +44,7 @@ Compiler::OutputList KissCompileProvider::compile(const QString &name, const Kis
 	foreach(const QString& file, program->files()) extracted << path + "/" + file;
 	
 	Input input = Input::fromList(extracted);
-	Options opts = Options::load("/etc/botui/platform.hints");
+	Options opts = Options::load("/etc/kovan/platform.hints");
 	Engine engine(Compilers::instance()->compilers());
 	OutputList ret = engine.compile(input, opts);
 	
