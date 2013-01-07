@@ -132,12 +132,12 @@ Kovan::Device::~Device()
 
 QString Kovan::Device::name() const
 {
-	return "Kovan";
+	return "Link";
 }
 
 QString Kovan::Device::version() const
 {
-	return "0.5a";
+	return "0.5b";
 }
 
 bool Kovan::Device::isTouchscreen() const

@@ -28,8 +28,8 @@ PidWidget::PidWidget(Device *device, QWidget *parent)
 		std::numeric_limits<short>::max(),
 		this));
 	
-	ui->speed->setMinimumValue(-4096);
-	ui->speed->setMaximumValue(4095);
+	ui->speed->setMinimumValue(-2600);
+	ui->speed->setMaximumValue(2600);
 	ui->speed->setValue(0.0);
 	
 	connect(ui->go, SIGNAL(clicked()), SLOT(go()));
