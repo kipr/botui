@@ -130,7 +130,7 @@ void QHsvPicker::mouseMoveEvent(QMouseEvent *event)
 	int newHue = 360 - translate((float)p.x() / width() * 360.0f);
 	
 	const float half = height() / 2.0f;
-	int newS = 255.0f - p.y() / half * 255.0f;
+	int newS = p.y() / half * 255.0f;
 	
 	const static int minSize = 20;
 	if(m_activeS == TopLeft) {
@@ -205,8 +205,8 @@ void QHsvPicker::slide()
 
 QRect QHsvPicker::selectionS() const
 {
-	const int startY = 255 - m_max.saturation();
-	const int endY = 255 - m_min.saturation();
+	const int startY = m_max.saturation();
+	const int endY = m_min.saturation();
 	
 	const int selMinH = roll(m_centerHue - 180 - m_min.hue());
 	const int selMaxH = roll(m_centerHue - 180 - m_max.hue());
