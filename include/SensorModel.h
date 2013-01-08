@@ -11,7 +11,7 @@ public:
 		Analog,
 		Digital,
 		Other
-	}
+	};
 	
 	SensorModel(QObject *parent = 0);
 	~SensorModel();
