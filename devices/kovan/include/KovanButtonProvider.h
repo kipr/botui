@@ -24,6 +24,8 @@ namespace Kovan
 		virtual void refresh();
 	private:
 		AbstractTextButton *lookup(const ButtonProvider::ButtonId& id) const;
+		
+		bool m_shown;
 	};
 }
 

@@ -52,9 +52,10 @@ void Kovan::ButtonProvider::refresh()
 	if(Button::X.isTextDirty()) emit buttonTextChanged(X, text(X));
 	if(Button::Y.isTextDirty()) emit buttonTextChanged(Y, text(Y));
 	if(Button::Z.isTextDirty()) emit buttonTextChanged(Z, text(Z));
-	if(ExtraButtons::isShownDirty()) {
+	if(m_shown != ExtraButtons::isShown()) {
 		qDebug() << "Shown was dirty!";
-		emit extraShownChanged(ExtraButtons::isShown());
+		m_shown = ExtraButtons::isShown();
+		emit extraShownChanged(m_shown);
 	}
 }
 
