@@ -66,6 +66,8 @@ ProgramWidget::ProgramWidget(Program *program, Device *device, QWidget *parent)
 	QTimer *timer = new QTimer(this);
 	timer->start(100);
 	buttonProvider->connect(timer, SIGNAL(timeout()), SLOT(refresh()));
+	
+	buttonProvider->reset();
 }
 
 void ProgramWidget::lock()

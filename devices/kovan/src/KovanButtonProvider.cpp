@@ -3,7 +3,8 @@
 #include <QDebug>
 
 Kovan::ButtonProvider::ButtonProvider(QObject *parent)
-	: ::ButtonProvider(parent)
+	: ::ButtonProvider(parent),
+	m_shown(false)
 {
 }
 
@@ -42,6 +43,9 @@ void Kovan::ButtonProvider::reset()
 	for(size_t i = 0; i < len; ++i) {
 		Button::all[i]->resetText();
 	}
+	ExtraButtons::hide();
+	m_shown = false;
+	emit extraShownChanged(false);
 }
 
 void Kovan::ButtonProvider::refresh()
