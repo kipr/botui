@@ -1,5 +1,6 @@
 #include "KovanButtonProvider.h"
 #include <kovan/button.hpp>
+#include <kovan/general.h>
 #include <QDebug>
 
 Kovan::ButtonProvider::ButtonProvider(QObject *parent)
@@ -28,6 +29,7 @@ bool Kovan::ButtonProvider::setPressed(const ButtonProvider::ButtonId& id, bool 
 	AbstractTextButton *button = lookup(id);
 	if(!button) return false;
 	button->setPressed(pressed);
+	publish();
 	return true;
 }
 
@@ -44,6 +46,7 @@ void Kovan::ButtonProvider::reset()
 		Button::all[i]->resetText();
 	}
 	ExtraButtons::hide();
+	publish();
 	m_shown = false;
 	emit extraShownChanged(false);
 }

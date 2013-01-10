@@ -3,6 +3,7 @@
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
+#include <QDateTime>
 #include <QFileSystemWatcher>
 
 DefaultArchivesManager::DefaultArchivesManager(const QString &archivesPath,
@@ -34,11 +35,14 @@ QString DefaultArchivesManager::binaryPath(const QString &name) const
 
 bool DefaultArchivesManager::hasBinary(const QString &name) const
 {
-	return QFile::exists(binaryPath(name));
+	const QString binPath = binaryPath(name);
+	return QFile::exists(binPath) && QFileInfo(archivePath(name)).lastModified()
+		< QFileInfo(binPath).lastModified();
 }
 
 bool DefaultArchivesManager::set(const QString &name, const Kiss::KarPtr &archive)
 {
+	remove(name);
 	bool ret = archive->save(archivePath(name));
 	if(ret) emit archiveChanged(name);
 	return ret;

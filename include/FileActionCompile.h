@@ -10,7 +10,7 @@
 class Device;
 class ConcurrentCompile;
 
-class FileActionCompile : public QObject, public FileAction
+class FileActionCompile : public QObject, public FileActionExtension
 {
 Q_OBJECT
 public:

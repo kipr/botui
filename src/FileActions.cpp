@@ -1,8 +1,9 @@
 #include "FileActions.h"
 
-FileAction::FileAction(const QString &name, const QStringList &extensions)
-	: m_name(name),
-	m_extensions(extensions)
+#include <QFileInfo>
+
+FileAction::FileAction(const QString &name)
+	: m_name(name)
 {
 }
 
@@ -15,9 +16,15 @@ const QString &FileAction::name() const
 	return m_name;
 }
 
-const QStringList &FileAction::extensions() const
+FileActionExtension::FileActionExtension(const QString &name, const QStringList &extensions)
+	: FileAction(name),
+	m_extensions(extensions)
 {
-	return m_extensions;
+}
+
+bool FileActionExtension::canHandle(const QString &path) const
+{
+	return m_extensions.contains(QFileInfo(path).suffix());
 }
 
 FileActions::FileActions()
@@ -34,15 +41,13 @@ void FileActions::addAction(FileAction *action)
 	m_actions.append(action);
 }
 
-FileAction *FileActions::action(const QString &extension) const
+FileAction *FileActions::action(const QString &path) const
 {
 	// Yes, we're doing a linear search.
 	// In the future, it would be nice
 	// to have a QMap or something.
 	foreach(FileAction *action, m_actions) {
-		if(action->extensions().contains(extension)) {
-			return action;
-		}
+		if(action->canHandle(path)) return action;
 	}
 	return 0;
 }

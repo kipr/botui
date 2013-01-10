@@ -12,15 +12,25 @@ class Device;
 class FileAction
 {
 public:
-	FileAction(const QString &name, const QStringList &extensions);
+	FileAction(const QString &name);
 	virtual ~FileAction();
 	
 	const QString &name() const;
-	const QStringList &extensions() const;
+	virtual bool canHandle(const QString &path) const = 0;
 	
 	virtual bool act(const QString &path, Device *device) const = 0;
+
 private:
 	QString m_name;
+};
+
+class FileActionExtension : public FileAction
+{
+public:
+	FileActionExtension(const QString &name, const QStringList &extensions);
+	bool canHandle(const QString &path) const;
+	
+private:
 	QStringList m_extensions;
 };
 
@@ -34,7 +44,7 @@ public:
 	
 	void addAction(FileAction *action);
 	
-	FileAction *action(const QString &extension) const;
+	FileAction *action(const QString &path) const;
 	const FileActionList &actions() const;
 private:
 	FileActionList m_actions;
