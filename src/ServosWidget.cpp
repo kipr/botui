@@ -33,11 +33,13 @@ ServosWidget::ServosWidget(Device *device, QWidget *parent)
 	ui->dial->setLabel(0);
 	ui->_0->setEnabled(false);
 	enable_servo(0);
+	publish();
 }
 
 ServosWidget::~ServosWidget()
 {
 	disable_servo(ui->dial->label());
+	publish();
 	delete ui;
 	delete m_provider;
 }
@@ -50,6 +52,7 @@ void ServosWidget::valueChanged(const double &value)
 	else if(safeValue > 973.0) safeValue = 973.0;
 	
 	set_servo_position(ui->dial->label(), safeValue);
+	publish();
 }
 
 void ServosWidget::activeChanged()
@@ -74,6 +77,8 @@ void ServosWidget::activeChanged()
 	enable_servo(label);
 	ui->dial->setLabel(label);
 	ui->dial->setValue(512);
+	
+	publish();
 }
 
 void ServosWidget::manualEntry(const QString &text)
