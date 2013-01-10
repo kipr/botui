@@ -8,8 +8,9 @@
 #include <QLabel>
 #include <QLineEdit>
 
-namespace Ui {
-class KeyboardDialog;
+namespace Ui
+{
+	class KeyboardDialog;
 }
 
 class KeyboardDialog : public InputProviderDialog
