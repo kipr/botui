@@ -8,7 +8,7 @@
 #include "NotYetImplementedDialog.h"
 
 #include "NetworkSettingsWidget.h"
-#include "KissIdeSettingsWidget.h"
+#include "CommunicationSettingsWidget.h"
 #include "ChannelConfigurationsWidget.h"
 #include "GuiSettingsWidget.h"
 
@@ -24,7 +24,7 @@ SettingsWidget::SettingsWidget(Device *device, QWidget *parent)
 	// ui->networkSettings->setEnabled(m_device->networkingProvider());
 	
 	connect(ui->network, SIGNAL(clicked()), SLOT(network()));
-	connect(ui->kissIde, SIGNAL(clicked()), SLOT(kissIde()));
+	connect(ui->comm, SIGNAL(clicked()), SLOT(comm()));
 	connect(ui->channels, SIGNAL(clicked()), SLOT(channels()));
 	connect(ui->gui, SIGNAL(clicked()), SLOT(gui()));
 	connect(ui->calibrate, SIGNAL(clicked()), SLOT(calibrate()));
@@ -40,9 +40,9 @@ void SettingsWidget::network()
 	RootController::ref().presentWidget(new NetworkSettingsWidget(device()));
 }
 
-void SettingsWidget::kissIde()
+void SettingsWidget::comm()
 {
-	RootController::ref().presentWidget(new KissIdeSettingsWidget(device()));
+	RootController::ref().presentWidget(new CommunicationSettingsWidget(device()));
 }
 
 void SettingsWidget::channels()

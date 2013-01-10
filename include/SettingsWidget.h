@@ -17,7 +17,7 @@ public:
 	
 public slots:
 	void network();
-	void kissIde();
+	void comm();
 	void channels();
 	void gui();
 	

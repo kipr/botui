@@ -78,13 +78,13 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <widget class="QPushButton" name="kissIde">
+        <widget class="QPushButton" name="comm">
          <property name="text">
-          <string>KISS IDE</string>
+          <string>Comm</string>
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/bricks.png</normaloff>:/icons/bricks.png</iconset>
+           <normaloff>:/icons/server.png</normaloff>:/icons/server.png</iconset>
          </property>
         </widget>
        </item>
