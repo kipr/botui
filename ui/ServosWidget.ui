@@ -35,7 +35,7 @@
       <number>0</number>
      </property>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,0">
        <property name="spacing">
         <number>0</number>
        </property>
@@ -43,7 +43,11 @@
         <widget class="TouchDial" name="dial" native="true"/>
        </item>
        <item>
-        <widget class="LineEdit" name="number"/>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="LineEdit" name="number"/>
+         </item>
+        </layout>
        </item>
       </layout>
      </item>
@@ -124,6 +128,28 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="enable">
+         <property name="text">
+          <string>Enable</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../rc/icons.qrc">
+           <normaloff>:/icons/control_play.png</normaloff>:/icons/control_play.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="disable">
+         <property name="text">
+          <string>Disable</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../rc/icons.qrc">
+           <normaloff>:/icons/control_stop.png</normaloff>:/icons/control_stop.png</iconset>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>

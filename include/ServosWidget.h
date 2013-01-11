@@ -21,6 +21,9 @@ private slots:
 	void valueChanged(const double &value);
 	void activeChanged();
 	
+	void enable();
+	void disable();
+	
 	void manualEntry(const QString &text);
 private:
 	Ui::ServosWidget *ui;

@@ -26,8 +26,10 @@ QString Kovan::ButtonProvider::text(const ButtonProvider::ButtonId& id) const
 
 bool Kovan::ButtonProvider::setPressed(const ButtonProvider::ButtonId& id, bool pressed) const
 {
+	qDebug() << "setPressed lookup";
 	AbstractTextButton *button = lookup(id);
 	if(!button) return false;
+	qDebug() << "Setting" << id << "pressed =" << pressed;
 	button->setPressed(pressed);
 	publish();
 	return true;

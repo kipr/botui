@@ -71,9 +71,8 @@ void MotorsWidget::activeChanged()
 	ui->_2->setEnabled(from != ui->_2);
 	ui->_3->setEnabled(from != ui->_3);
 	
-	off(label);
 	ui->dial->setLabel(label);
-	ui->dial->setValue(0);
+	ui->dial->setValue(getpwm(label));
 }
 
 void MotorsWidget::manualEntry(const QString &text)

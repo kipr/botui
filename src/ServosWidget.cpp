@@ -27,8 +27,8 @@ ServosWidget::ServosWidget(Device *device, QWidget *parent)
 	connect(ui->number, SIGNAL(textEdited(QString)), SLOT(manualEntry(QString)));
 	
 	ui->dial->setMinimumValue(0);
-	ui->dial->setMaximumValue(1023);
-	ui->dial->setValue(512);
+	ui->dial->setMaximumValue(2047);
+	ui->dial->setValue(1024);
 	
 	ui->dial->setLabel(0);
 	ui->_0->setEnabled(false);
@@ -38,7 +38,7 @@ ServosWidget::ServosWidget(Device *device, QWidget *parent)
 
 ServosWidget::~ServosWidget()
 {
-	disable_servo(ui->dial->label());
+	disable_servos();
 	publish();
 	delete ui;
 	delete m_provider;
@@ -49,7 +49,7 @@ void ServosWidget::valueChanged(const double &value)
 	ui->number->setText(QString::number((int)ui->dial->value()));
 	double safeValue = value;
 	if(safeValue < 50.0) safeValue = 50.0;
-	else if(safeValue > 973.0) safeValue = 973.0;
+	else if(safeValue > 1998.0) safeValue = 1998.0;
 	
 	set_servo_position(ui->dial->label(), safeValue);
 	publish();
@@ -74,10 +74,21 @@ void ServosWidget::activeChanged()
 	ui->_2->setEnabled(from != ui->_2);
 	ui->_3->setEnabled(from != ui->_3);
 	
-	enable_servo(label);
-	ui->dial->setLabel(label);
-	ui->dial->setValue(512);
 	
+	ui->dial->setLabel(label);
+	publish();
+	ui->dial->setValue(get_servo_position(label));
+}
+
+void ServosWidget::enable()
+{
+	enable_servo(ui->dial->label());
+	publish();
+}
+
+void ServosWidget::disable()
+{
+	disable_servo(ui->dial->label());
 	publish();
 }
 
