@@ -31,7 +31,8 @@ FileManagerWidget::FileManagerWidget(Device *device, QWidget *parent)
 	m_menuBar->addAction(ex);
 	m_menuBar->addAction(m_up);
 	
-	m_fs->setRootPath("/");
+	// TODO: Maybe not hardcode?
+	m_fs->setRootPath("/kovan");
 	
 	ui->files->setModel(m_fs);
 	home();
