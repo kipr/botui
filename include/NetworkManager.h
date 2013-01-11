@@ -43,8 +43,6 @@ public:
 	
 	void requestScan();
 	
-	bool turnOn();
-	void turnOff();
 	bool isOn() const;
 	
 	State state() const;
@@ -52,6 +50,10 @@ public:
 	NetworkList accessPoints() const;
 	
 	QString ipAddress() const;
+	
+public slots:
+	bool turnOn();
+	void turnOff();
 	
 signals:
 	void networkAdded(const Network &network);

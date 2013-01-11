@@ -24,8 +24,8 @@ NetworkSettingsWidget::NetworkSettingsWidget(Device *device, QWidget *parent)
 	
 	QObject::connect(ui->connect, SIGNAL(clicked()), SLOT(connect()));
 	QObject::connect(ui->manage, SIGNAL(clicked()), SLOT(manage()));
-	QObject::connect(ui->turnOn, SIGNAL(clicked()), SLOT(turnOn()));
-	QObject::connect(ui->turnOff, SIGNAL(clicked()), SLOT(turnOff()));
+	NetworkManager::ref().connect(ui->turnOn, SIGNAL(clicked()), SLOT(turnOn()));
+	NetworkManager::ref().connect(ui->turnOff, SIGNAL(clicked()), SLOT(turnOff()));
 	
 	QObject::connect(&NetworkManager::ref(),
 		SIGNAL(stateChanged(const NetworkManager::State &, const NetworkManager::State &)),
@@ -49,18 +49,11 @@ void NetworkSettingsWidget::manage()
 	RootController::ref().presentWidget(new ManageNetworksWidget(device()));
 }
 
-void NetworkSettingsWidget::turnOn()
-{
-	// m_device->networkingProvider()->setNetworkState(NetworkingProvider::NetworkOn);
-}
-
-void NetworkSettingsWidget::turnOff()
-{
-	// m_device->networkingProvider()->setNetworkState(NetworkingProvider::NetworkOff);
-}
-
 void NetworkSettingsWidget::updateInformation()
 {
+	const bool on = NetworkManager::ref().isOn();
+	ui->turnOn->setVisible(!on);
+	ui->turnOff->setVisible(on);
 	Network active = NetworkManager::ref().active();
 	ui->ssid->setText(active.ssid());
 	ui->security->setText(active.securityString());
