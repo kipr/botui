@@ -60,7 +60,8 @@ ProgramWidget::ProgramWidget(Program *program, Device *device, QWidget *parent)
 	connect(ui->y, SIGNAL(released()), SLOT(yReleased()));
 	connect(ui->z, SIGNAL(released()), SLOT(zReleased()));
 	
-	connect(buttonProvider, SIGNAL(buttonTextChanged(ButtonProvider::ButtonId, QString)), SLOT(buttonTextChanged(ButtonProvider::ButtonId, QString)));
+	connect(buttonProvider, SIGNAL(buttonTextChanged(ButtonProvider::ButtonId, QString)),
+		SLOT(buttonTextChanged(ButtonProvider::ButtonId, QString)));
 	connect(buttonProvider, SIGNAL(extraShownChanged(bool)), SLOT(extraShownChanged(bool)));
 	
 	QTimer *timer = new QTimer(this);
@@ -116,6 +117,7 @@ void ProgramWidget::extraShownChanged(const bool& shown)
 
 void ProgramWidget::aPressed()
 {
+	qDebug() << "SETTING A PRESSED";
 	device()->buttonProvider()->setPressed(ButtonProvider::A, true);
 }
 
