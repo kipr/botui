@@ -61,7 +61,7 @@ void ConsoleWidget::startBeep()
 	QPalette p = palette();
 	p.setColor(QPalette::Base, QColor(255, 200, 200));
 	setPalette(p);
-	QTimer::singleShot(50, this, SLOT(endBeep()));
+	QTimer::singleShot(155, this, SLOT(endBeep()));
 }
 
 void ConsoleWidget::endBeep()
