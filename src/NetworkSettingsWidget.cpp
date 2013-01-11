@@ -54,6 +54,7 @@ void NetworkSettingsWidget::updateInformation()
 	const bool on = NetworkManager::ref().isOn();
 	ui->turnOn->setVisible(!on);
 	ui->turnOff->setVisible(on);
+	ui->connect->setEnabled(on);
 	Network active = NetworkManager::ref().active();
 	ui->ssid->setText(active.ssid());
 	ui->security->setText(active.securityString());
