@@ -49,6 +49,7 @@ void ConsoleWidget::readStandardOut()
 	}
 	i = array.lastIndexOf('\a');
 	if(i >= 0) startBeep();
+	array.remove(i, 1);
 	
 	insertPlainText(array);
 	moveCursor(QTextCursor::End, QTextCursor::KeepAnchor);
