@@ -13,13 +13,12 @@ public:
 	
 	void setProcess(QIODevice *process);
 	QIODevice *process() const;
-	
-protected:
-	void keyPressEvent(QKeyEvent *event);
 
 private slots:
 	void readStandardOut();
 
+	void startBeep();
+	void endBeep();
 private:
 	void printPrompt();
 	
@@ -30,6 +29,8 @@ private:
 	int histLocation;
 	QString tempCmd;
 	QIODevice *m_process;
+	
+	QPalette m_savedPalette;
 };
 
 #endif
