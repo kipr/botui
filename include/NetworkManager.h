@@ -44,6 +44,7 @@ public:
 	void requestScan();
 	
 	bool isOn() const;
+	bool isPersistentOn() const;
 	
 	State state() const;
 	

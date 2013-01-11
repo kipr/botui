@@ -168,20 +168,40 @@ void NetworkManager::requestScan()
 	qWarning() << "NetworkManager::requestScan" << reply.error().message();
 }
 
+#define NETWORK_MANAGER_GROUP "NetworkManager"
+#define ON_KEY "on"
+
 bool NetworkManager::turnOn()
 {
 	m_nm->Enable(true);
+	QSettings settings;
+	settings.beginGroup(NETWORK_MANAGER_GROUP);
+	settings.setValue(ON_KEY, true);
+	settings.endGroup();
 	return true; // TODO: This is a bad assumption
 }
 
 void NetworkManager::turnOff()
 {
 	m_nm->Enable(false);
+	QSettings settings;
+	settings.beginGroup(NETWORK_MANAGER_GROUP);
+	settings.setValue(ON_KEY, false);
+	settings.endGroup();
 }
 
 bool NetworkManager::isOn() const
 {
 	return m_nm->networkingEnabled();
+}
+
+bool NetworkManager::isPersistentOn() const
+{
+	QSettings settings;
+	settings.beginGroup(NETWORK_MANAGER_GROUP);
+	bool ret = settings.value(ON_KEY, false).toBool();
+	settings.endGroup();
+	return ret;
 }
 
 NetworkManager::State NetworkManager::state() const
@@ -257,6 +277,8 @@ NetworkManager::NetworkManager()
 		SLOT(nmAccessPointAdded(QDBusObjectPath)));
 	connect(m_wifi, SIGNAL(AccessPointRemoved(QDBusObjectPath)),
 		SLOT(nmAccessPointRemoved(QDBusObjectPath)));
+	
+	if(isPersistentOn()) turnOn(); else turnOff();
 	
 	requestScan();
 }

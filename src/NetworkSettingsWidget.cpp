@@ -52,6 +52,7 @@ void NetworkSettingsWidget::manage()
 void NetworkSettingsWidget::updateInformation()
 {
 	const bool on = NetworkManager::ref().isOn();
+	ui->state->setText(on ? tr("ON") : tr("OFF"));
 	ui->turnOn->setVisible(!on);
 	ui->turnOff->setVisible(on);
 	ui->connect->setEnabled(on);
