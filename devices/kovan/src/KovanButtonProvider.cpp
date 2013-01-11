@@ -30,6 +30,8 @@ bool Kovan::ButtonProvider::setPressed(const ButtonProvider::ButtonId& id, bool 
 	AbstractTextButton *button = lookup(id);
 	if(!button) return false;
 	qDebug() << "Setting" << id << "pressed =" << pressed;
+	
+	publish();
 	button->setPressed(pressed);
 	publish();
 	return true;
@@ -55,6 +57,7 @@ void Kovan::ButtonProvider::reset()
 
 void Kovan::ButtonProvider::refresh()
 {
+	publish();
 	if(Button::A.isTextDirty()) emit buttonTextChanged(A, text(A));
 	if(Button::B.isTextDirty()) emit buttonTextChanged(B, text(B));
 	if(Button::C.isTextDirty()) emit buttonTextChanged(C, text(C));
