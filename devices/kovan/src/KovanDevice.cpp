@@ -119,6 +119,7 @@ Kovan::Device::Device()
 	m_buttonProvider(new Kovan::ButtonProvider(this))
 {
 	m_compileProvider->setBinariesPath("/kovan/binaries");
+	halt();
 	set_auto_publish(0);
 }
 

@@ -16,6 +16,11 @@ bool Program::start(const QString& path, const QStringList &arguments)
 	m_process->setProcessChannelMode(QProcess::MergedChannels);
 	connect(m_process, SIGNAL(finished(int, QProcess::ExitStatus)), SIGNAL(finished(int, QProcess::ExitStatus)));
 	connect(m_process, SIGNAL(readyRead()), SIGNAL(readyRead()));
+	
+	set_auto_publish(true);
+	halt();
+	set_auto_publish(false);
+	
 	m_process->start(path, arguments);
 	if(!m_process->waitForStarted()) {
 		delete m_process;
