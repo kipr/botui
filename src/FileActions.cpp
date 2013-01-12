@@ -25,7 +25,7 @@ FileActionExtension::FileActionExtension(const QString &name, const QStringList 
 
 bool FileActionExtension::canHandle(const QString &path) const
 {
-	qDebug() << m_extensions << "contains" << QFileInfo(path).suffix() << "?";
+	qWarning() << m_extensions << "contains" << QFileInfo(path).suffix() << "?";
 	return m_extensions.contains(QFileInfo(path).suffix());
 }
 
@@ -45,6 +45,7 @@ void FileActions::addAction(FileAction *action)
 
 FileAction *FileActions::action(const QString &path) const
 {
+	qWarning() << path;
 	// Yes, we're doing a linear search.
 	// In the future, it would be nice
 	// to have a QMap or something.
