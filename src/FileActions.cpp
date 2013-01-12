@@ -1,6 +1,7 @@
 #include "FileActions.h"
 
 #include <QFileInfo>
+#include <QDebug>
 
 FileAction::FileAction(const QString &name)
 	: m_name(name)
@@ -24,6 +25,7 @@ FileActionExtension::FileActionExtension(const QString &name, const QStringList 
 
 bool FileActionExtension::canHandle(const QString &path) const
 {
+	qDebug() << m_extensions << "contains" << QFileInfo(path).suffix() << "?";
 	return m_extensions.contains(QFileInfo(path).suffix());
 }
 
