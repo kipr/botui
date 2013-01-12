@@ -78,7 +78,7 @@ void FileManagerWidget::open()
 	}
 	
 	// Use FileActions registery to execute file
-	const QString ext = QFileInfo(m_fs->fileName(indexes[0])).completeSuffix();
+	const QString ext = QFileInfo(m_fs->fileName(indexes[0])).absoluteFilePath();
 	FileAction *action = FileActions::ref().action(ext);
 	if(!action) {
 		qWarning() << "No FileAction found for" << ext;
