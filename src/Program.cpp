@@ -37,8 +37,9 @@ void Program::stop()
 	delete m_process;
 	m_process = 0;
 	
+	set_auto_publish(true);
 	halt();
-	publish();
+	set_auto_publish(false);
 }
 
 bool Program::isRunning()
