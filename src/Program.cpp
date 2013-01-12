@@ -38,6 +38,7 @@ void Program::stop()
 	m_process = 0;
 	
 	halt();
+	publish();
 }
 
 bool Program::isRunning()
