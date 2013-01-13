@@ -34,6 +34,8 @@ ServosWidget::ServosWidget(Device *device, QWidget *parent)
 	
 	ui->dial->setLabel(0);
 	ui->_0->setEnabled(false);
+	
+	activeChanged();
 
 	publish();
 }
@@ -60,7 +62,7 @@ void ServosWidget::valueChanged(const double &value)
 void ServosWidget::activeChanged()
 {
 	QObject *from = sender();
-	if(!from) return;
+	if(!from) from = ui->_0;
 	
 	disable_servo(ui->dial->label());
 	
