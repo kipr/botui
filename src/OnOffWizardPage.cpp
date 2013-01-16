@@ -19,7 +19,7 @@ OnOffWizardPage::OnOffWizardPage(QWidget *parent)
 	m_on[2] = ui->on2;
 	m_on[3] = ui->on3;
 	
-	for(int i = 0; i < sizeof_array(m_off); ++i) {
+	for(unsigned int i = 0; i < sizeof_array(m_off); ++i) {
 		m_off[i]->hide();
 		m_on[i]->show();
 		connect(m_off[i], SIGNAL(clicked()), SLOT(clicked()));

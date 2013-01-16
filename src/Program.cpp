@@ -37,7 +37,7 @@ void Program::stop()
 	if(!m_process) return;
 	m_process->terminate();
 	if(!m_process->waitForFinished(2000)) m_process->kill();
-	const int msecs = m_time.elapsed();
+	//unused: const int msecs = m_time.elapsed();
 	// write(tr("Finished in %1 seconds").arg(msecs / 1000.0).toAscii());
 	delete m_process;
 	m_process = 0;
