@@ -2,6 +2,7 @@
 
 #include <QDebug>
 #include <QPainter>
+#include <QMouseEvent>
 
 #define GOLDEN_RATIO 2.39996
 
@@ -61,6 +62,23 @@ void PlotWidget::inc()
 	update();
 }
 
+#define MOUSE_TO_ASD ((height() - event->pos().y()) / (double)height() * 2.0 - 1.0)
+
+void PlotWidget::mousePressEvent(QMouseEvent *event)
+{
+	emit mouseEvent(MOUSE_TO_ASD);
+}
+
+void PlotWidget::mouseMoveEvent(QMouseEvent *event)
+{
+	emit mouseEvent(MOUSE_TO_ASD);
+}
+
+void PlotWidget::mouseReleaseEvent(QMouseEvent *event)
+{
+	emit mouseEvent(MOUSE_TO_ASD);
+}
+
 void PlotWidget::paintEvent(QPaintEvent *event)
 {
 	QPainter painter(this);
@@ -74,8 +92,9 @@ void PlotWidget::paintEvent(QPaintEvent *event)
 		double oldX = 0.0;
 		double oldY = max - plot->values[0] * max;
 		for(quint32 i = 0; i < m_resolution - 1; ++i) {
+			const int off = (i + m_location) % m_resolution;
 			double newX = (i + 1) * widthRatio;
-			double newY = height() / 2.0 - plot->values[i + 1] * max;
+			double newY = height() / 2.0 - plot->values[off] * max;
 			painter.drawLine(oldX, oldY, newX, newY);
 			oldX = newX;
 			oldY = newY;

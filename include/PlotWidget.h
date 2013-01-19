@@ -21,7 +21,13 @@ public:
 	void push(const PlotHandle &handle, const double &value);
 	void inc();
 	
+signals:
+	void mouseEvent(const double y);
+
 protected:
+	void mousePressEvent(QMouseEvent *event);
+	void mouseMoveEvent(QMouseEvent *event);
+	void mouseReleaseEvent(QMouseEvent *event);
 	void paintEvent(QPaintEvent *event);
 	
 private:

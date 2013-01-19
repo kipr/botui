@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PidTunerWidget</class>
+ <widget class="QWidget" name="PidTunerWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>320</width>
+    <height>240</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>PID Tuner</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,0">
+   <property name="margin">
+    <number>6</number>
+   </property>
+   <item>
+    <widget class="QComboBox" name="motor">
+     <item>
+      <property name="text">
+       <string>Motor 0</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Motor 1</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Motor 2</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Motor 3</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item>
+    <widget class="PlotWidget" name="plot" native="true"/>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>P:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="LineEdit" name="p"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>I:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="LineEdit" name="i"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>D:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="LineEdit" name="d"/>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PlotWidget</class>
+   <extends>QWidget</extends>
+   <header>PlotWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>LineEdit.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

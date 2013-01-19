@@ -21,6 +21,7 @@ private slots:
 	void pid();
 	void sensors();
 	void camera();
+	void pidTuner();
 	
 private:
 	Ui::MotorsSensorsWidget *ui;

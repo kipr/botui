@@ -31,6 +31,8 @@
 
 #include <QDebug>
 
+//#define NOT_A_KOVAN
+
 namespace Kovan
 {
 	class BatteryLevelProvider : public ::BatteryLevelProvider
@@ -58,7 +60,9 @@ namespace Kovan
 
 const float Kovan::BatteryLevelProvider::batteryLevel() const
 {
+#ifndef NOT_A_KOVAN
 	publish();
+#endif
 	return Battery::powerLevel();
 }
 
@@ -74,7 +78,9 @@ const float Kovan::BatteryLevelProvider::batteryLevelMax() const
 
 const bool Kovan::BatteryLevelProvider::isCharging() const
 {
+#ifndef NOT_A_KOVAN
 	publish();
+#endif
 	return Battery::isCharging();
 }
 
@@ -119,7 +125,9 @@ Kovan::Device::Device()
 	m_buttonProvider(new Kovan::ButtonProvider(this))
 {
 	m_compileProvider->setBinariesPath("/kovan/binaries");
+#ifndef NOT_A_KOVAN
 	halt();
+#endif
 	set_auto_publish(0);
 }
 
@@ -144,7 +152,11 @@ QString Kovan::Device::version() const
 
 bool Kovan::Device::isTouchscreen() const
 {
+#ifndef NOT_A_KOVAN
 	return true;
+#else
+	return false;
+#endif
 }
 
 ArchivesManager *Kovan::Device::archivesManager() const
