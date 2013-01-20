@@ -6,8 +6,9 @@
 
 #include <kovan/motors.h>
 #include <kovan/general.h>
+#include <cmath>
 
-//#define NOT_A_KOVAN
+#define MOTOR_SCALING (1500.0)
 
 PidTunerWidget::PidTunerWidget(Device *device, QWidget *parent)
 	: StandardWidget(device, parent),
@@ -40,7 +41,7 @@ PidTunerWidget::PidTunerWidget(Device *device, QWidget *parent)
 
 	QTimer *updateTimer = new QTimer(this);
 	connect(updateTimer, SIGNAL(timeout()), SLOT(update()));
-	updateTimer->start(10);
+	updateTimer->start(25);
 
 	connect(ui->plot, SIGNAL(mouseEvent(double)), SLOT(mouseEvent(double)));
 
@@ -67,7 +68,7 @@ double PidTunerWidget::getFeedbackValue()
 #endif
 	int position = get_motor_position_counter(ui->motor->currentIndex());
 
-	double vel = position - m_position_1;
+	double vel = (position - m_position_1) / MOTOR_SCALING;
 
 	m_position_1 = position;
 
@@ -76,7 +77,9 @@ double PidTunerWidget::getFeedbackValue()
 
 void PidTunerWidget::mouseEvent(double y)
 {
-	mav(ui->motor->currentIndex(), 1200.0 * y); // TODO: 1200?
+	if (fabs(y - m_setpointVal) < 0.20) return;
+
+	mav(ui->motor->currentIndex(), MOTOR_SCALING * y); // TODO: 1200?
 #ifndef NOT_A_KOVAN
 	publish();
 #endif
