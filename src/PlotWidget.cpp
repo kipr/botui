@@ -93,7 +93,7 @@ void PlotWidget::paintEvent(QPaintEvent *event)
 		double oldY = max - plot->values[0] * max;
 		for(quint32 i = 0; i < m_resolution - 1; ++i) {
 			const int off = (i + m_location) % m_resolution;
-			double newX = (i + 1) * widthRatio;
+			double newX = i * widthRatio;
 			double newY = height() / 2.0 - plot->values[off] * max;
 			painter.drawLine(oldX, oldY, newX, newY);
 			oldX = newX;
