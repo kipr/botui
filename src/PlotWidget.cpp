@@ -71,7 +71,7 @@ void PlotWidget::mousePressEvent(QMouseEvent *event)
 
 void PlotWidget::mouseMoveEvent(QMouseEvent *event)
 {
-	emit mouseEvent(MOUSE_TO_ASD);
+	// emit mouseEvent(MOUSE_TO_ASD);
 }
 
 void PlotWidget::mouseReleaseEvent(QMouseEvent *event)

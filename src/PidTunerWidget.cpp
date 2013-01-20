@@ -68,7 +68,7 @@ double PidTunerWidget::getFeedbackValue()
 #endif
 	int position = get_motor_position_counter(ui->motor->currentIndex());
 
-	double vel = (position - m_position_1) / MOTOR_SCALING;
+	double vel = 25.0 * (position - m_position_1) / MOTOR_SCALING;
 
 	m_position_1 = position;
 
