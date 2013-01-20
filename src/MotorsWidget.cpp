@@ -7,6 +7,7 @@
 #include "NumpadDialog.h"
 #include "kovan/kovan.h"
 
+#include <QTimer>
 #include <QDebug>
 
 MotorsWidget::MotorsWidget(Device *device, QWidget *parent)
@@ -34,6 +35,10 @@ MotorsWidget::MotorsWidget(Device *device, QWidget *parent)
 	ui->_0->setEnabled(false);
 	ao();
 	publish();
+	
+	QTimer *timer = new QTimer(this);
+	connect(timer, SIGNAL(timeout()), SLOT(update()));
+	timer->start(100);
 }
 
 MotorsWidget::~MotorsWidget()
@@ -78,4 +83,10 @@ void MotorsWidget::activeChanged()
 void MotorsWidget::manualEntry(const QString &text)
 {
 	ui->dial->setValue(text.toInt());
+}
+
+void MotorsWidget::update()
+{
+	publish();
+	ui->ticks->setText(QString::number(get_motor_position_counter(ui->dial->label())));
 }

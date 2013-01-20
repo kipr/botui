@@ -22,6 +22,8 @@ private slots:
 	void activeChanged();
 	
 	void manualEntry(const QString &text);
+	
+	void update();
 private:
 	Ui::MotorsWidget *ui;
 	InputProviderDialog *m_provider;
