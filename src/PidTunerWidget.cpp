@@ -9,6 +9,8 @@
 #include <cmath>
 
 #define MOTOR_SCALING (1500.0)
+#define UPDATE_MS (25.0)
+#define LPF_ALPHA (0.5)
 
 PidTunerWidget::PidTunerWidget(Device *device, QWidget *parent)
 	: StandardWidget(device, parent),
@@ -41,7 +43,7 @@ PidTunerWidget::PidTunerWidget(Device *device, QWidget *parent)
 
 	QTimer *updateTimer = new QTimer(this);
 	connect(updateTimer, SIGNAL(timeout()), SLOT(update()));
-	updateTimer->start(25);
+	updateTimer->start(UPDATE_MS);
 
 	connect(ui->plot, SIGNAL(mouseEvent(double)), SLOT(mouseEvent(double)));
 
@@ -49,6 +51,7 @@ PidTunerWidget::PidTunerWidget(Device *device, QWidget *parent)
 	m_setpointVal = 0.0;
 	m_feedbackVal = 0.0;
 	m_position_1 = 0;
+	m_vel_1 = 0;
 
 }
 
@@ -68,9 +71,11 @@ double PidTunerWidget::getFeedbackValue()
 #endif
 	int position = get_motor_position_counter(ui->motor->currentIndex());
 
-	double vel = 25.0 * (position - m_position_1) / MOTOR_SCALING;
+	double vel = (1.0-LPF_ALPHA) * m_vel_1
+		+ LPF_ALPHA * (1000 / UPDATE_MS) * (position - m_position_1) / MOTOR_SCALING;
 
 	m_position_1 = position;
+	m_vel_1 = vel;
 
 	return vel;
 }

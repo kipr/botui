@@ -33,6 +33,7 @@ private:
 	double m_setpointVal;
 	double m_feedbackVal;
 	int m_position_1;
+	double m_vel_1;
 
 
 	double getFeedbackValue();
