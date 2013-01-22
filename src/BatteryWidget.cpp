@@ -11,7 +11,7 @@ BatteryWidget::BatteryWidget(QWidget *parent)
 {
 	QTimer *timer = new QTimer(this);
 	timer->start(10000);
-	connect(timer, SIGNAL(timeout()), SLOT(update()));
+	connect(timer, SIGNAL(timeout()), SLOT(repaint()));
 }
 
 BatteryWidget::BatteryWidget(BatteryLevelProvider *batteryLevelProvider, QWidget *parent)
@@ -36,14 +36,10 @@ void BatteryWidget::paintEvent(QPaintEvent *event)
 {
 	const float batteryLevel = m_batteryLevelProvider
 		? m_batteryLevelProvider->batteryLevel() : 0.0;
-	const float batteryLevelMin = m_batteryLevelProvider
-		? m_batteryLevelProvider->batteryLevelMin() : 0.0;
-	const float batteryLevelMax = m_batteryLevelProvider
-		? m_batteryLevelProvider->batteryLevelMax() : 0.0;
 	
 	float percentage = m_batteryLevelProvider
-		? (batteryLevel - batteryLevelMin) / (batteryLevelMax - batteryLevelMin)
-		: 0.0;
+		? batteryLevel : 0.0;
+
 	percentage = percentage < 0 ? 0 : percentage;
 	percentage = percentage > 1.0 ? 1.0 : percentage;
 	

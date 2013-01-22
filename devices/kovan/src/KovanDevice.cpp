@@ -39,8 +39,6 @@ namespace Kovan
 	{
 	public:
 		virtual const float batteryLevel() const;
-		virtual const float batteryLevelMin() const;
-		virtual const float batteryLevelMax() const;
 		virtual const bool isCharging() const;
 	};
 	
@@ -63,18 +61,24 @@ const float Kovan::BatteryLevelProvider::batteryLevel() const
 #ifndef NOT_A_KOVAN
 	publish();
 #endif
-	return Battery::powerLevel();
+	float batteryLevel = Battery::powerLevel();
+
+	float batteryLevelMin;
+	float batteryLevelMax;
+
+	if (batteryLevel > 450){
+		// user has selected VANA=3.3v
+		batteryLevelMin = 490;
+		batteryLevelMax = 620;
+	}else{
+		// user has selected VANA=5.0v
+		batteryLevelMin = 320;
+		batteryLevelMax = 415;
+	}
+
+	return (batteryLevel - batteryLevelMin) / (batteryLevelMax - batteryLevelMin);
 }
 
-const float Kovan::BatteryLevelProvider::batteryLevelMin() const
-{
-	return 490.0;
-}
-
-const float Kovan::BatteryLevelProvider::batteryLevelMax() const
-{
-	return 620.0;
-}
 
 const bool Kovan::BatteryLevelProvider::isCharging() const
 {
