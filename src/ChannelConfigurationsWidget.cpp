@@ -131,9 +131,20 @@ void ChannelConfigurationsWidget::add()
 	RootController::ref().presentDialog(&keyboard);
 	Config blank;
 	std::string savePath = Camera::ConfigPath::path(keyboard.input().toStdString());
+	QString qSavePath = QString::fromStdString(savePath);
 	if(!blank.save(savePath)) {
-		qWarning() << "Error saving" << QString::fromStdString(savePath);
+		qWarning() << "Error saving" << qSavePath;
 		return;
+	}
+	
+	// Select it and set as default if it's the first one
+	QDir saves = QDir(QFileInfo(qSavePath).path(), "*." + QString::fromStdString(
+		Camera::ConfigPath::extension()));
+	if(saves.entryList(QDir::Files).size() == 1) {
+		QModelIndex index = m_model->index(qSavePath);
+		ui->configs->selectionModel()->select(index, QItemSelectionModel::Select);
+		default_();
+		currentChanged(index);
 	}
 }
 
@@ -142,6 +153,7 @@ void ChannelConfigurationsWidget::remove()
 	QItemSelection selection = ui->configs->selectionModel()->selection();
 	if(selection.indexes().size() != 1) return;
 	QFile::remove(m_model->filePath(selection.indexes()[0]));
+	currentChanged(QModelIndex());
 }
 
 void ChannelConfigurationsWidget::currentChanged(const QModelIndex &index)
