@@ -13,12 +13,12 @@ SET(DEVICES ${botui_SOURCE_DIR}/devices)
 SET(KOVAN ${DEVICES}/kovan)
 SET(SIMULATOR ${DEVICES}/simulator)
 
-SET(NETWORK_MANAGER ${CMAKE_SOURCE_DIR}/NetworkManager)
+SET(DBUS ${CMAKE_SOURCE_DIR}/dbus)
 
 INCLUDE_DIRECTORIES(
 	${CMAKE_SOURCE_DIR}
 	${CMAKE_SOURCE_DIR}/src
-	${NETWORK_MANAGER}/include
+	${DBUS}/include
 	${botui_SOURCE_DIR} 
 	${botui_BINARY_DIR}
 	${KOVAN}/include
@@ -32,8 +32,8 @@ SET(QT_USE_QTDBUS TRUE)
 
 INCLUDE(${QT_USE_FILE})
 
-FILE(GLOB INCLUDES ${INCLUDE}/*.h ${KOVAN}/include/*.h ${SIMULATOR}/include/*.h ${NETWORK_MANAGER}/include/*.h)
-FILE(GLOB SOURCES ${SRC}/*.cpp ${KOVAN}/src/*.cpp ${SIMULATOR}/src/*.cpp ${NETWORK_MANAGER}/src/*.cpp)
+FILE(GLOB INCLUDES ${INCLUDE}/*.h ${KOVAN}/include/*.h ${SIMULATOR}/include/*.h ${DBUS}/include/*.h)
+FILE(GLOB SOURCES ${SRC}/*.cpp ${KOVAN}/src/*.cpp ${SIMULATOR}/src/*.cpp ${DBUS}/src/*.cpp)
 FILE(GLOB UIS ${UI}/*)
 
 SET(botui_SRCS_CXX ${SOURCES})

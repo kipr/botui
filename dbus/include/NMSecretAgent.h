@@ -8,8 +8,8 @@
  * Do not edit! All changes made to it will be lost.
  */
 
-#ifndef NMSECRETAGENT_H_1353454821
-#define NMSECRETAGENT_H_1353454821
+#ifndef NMSECRETAGENT_H_1359245779
+#define NMSECRETAGENT_H_1359245779
 
 #include <QtCore/QObject>
 #include <QtCore/QByteArray>

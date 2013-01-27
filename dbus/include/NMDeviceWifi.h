@@ -8,8 +8,8 @@
  * Do not edit! All changes made to it will be lost.
  */
 
-#ifndef NMDEVICEWIFI_H_1353454821
-#define NMDEVICEWIFI_H_1353454821
+#ifndef NMDEVICEWIFI_H_1359245778
+#define NMDEVICEWIFI_H_1359245778
 
 #include <QtCore/QObject>
 #include <QtCore/QByteArray>

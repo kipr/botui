@@ -12,7 +12,6 @@ Q_OBJECT
 public:
 	~Program();
 	
-	bool start(const QString& path, const QStringList &arguments);
 	bool isRunning();
 	
 	QProcess *process() const;
@@ -20,6 +19,7 @@ public:
 	static Program *instance();
 	
 public slots:
+	bool start(const QString& path, const QStringList &arguments = QStringList());
 	void stop();
 	
 signals:

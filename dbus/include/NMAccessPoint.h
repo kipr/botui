@@ -8,8 +8,8 @@
  * Do not edit! All changes made to it will be lost.
  */
 
-#ifndef NMACCESSPOINT_H_1353454821
-#define NMACCESSPOINT_H_1353454821
+#ifndef NMACCESSPOINT_H_1359245779
+#define NMACCESSPOINT_H_1359245779
 
 #include <QtCore/QObject>
 #include <QtCore/QByteArray>

@@ -8,8 +8,8 @@
  * Do not edit! All changes made to it will be lost.
  */
 
-#ifndef NMSETTINGS_H_1353454821
-#define NMSETTINGS_H_1353454821
+#ifndef NMSETTINGS_H_1359245779
+#define NMSETTINGS_H_1359245779
 
 #include <QtCore/QObject>
 #include <QtCore/QByteArray>

@@ -8,8 +8,8 @@
  * Do not edit! All changes made to it will be lost.
  */
 
-#ifndef NMNETWORKMANAGER_H_1353454821
-#define NMNETWORKMANAGER_H_1353454821
+#ifndef NMNETWORKMANAGER_H_1359245778
+#define NMNETWORKMANAGER_H_1359245778
 
 #include <QtCore/QObject>
 #include <QtCore/QByteArray>
