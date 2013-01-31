@@ -51,6 +51,9 @@
        </item>
        <item>
         <widget class="QPushButton" name="programSettings">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="text">
           <string>Program</string>
          </property>
@@ -112,6 +115,9 @@
        </item>
        <item>
         <widget class="QPushButton" name="pushButton">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="text">
           <string>Language</string>
          </property>
