@@ -62,9 +62,9 @@ void OtherNetworkWidget::fillNetworkInfo(const Network &network)
 void OtherNetworkWidget::join()
 {
 	Network config;
-	config.setSsid(m_ssid->input());
+	config.setSsid(ui->ssid->text());
 	config.setSecurity(securityChoices[ui->security->currentIndex()]);
-	config.setPassword(m_password->input());
+	config.setPassword(ui->password->text());
 	NetworkManager::ref().addNetwork(config);
 	RootController::ref().dismissWidget();
 }
