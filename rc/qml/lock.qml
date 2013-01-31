@@ -10,7 +10,7 @@ Rectangle {
 
 	Image {
 		id: rect
-		width: 50; height: 50
+		width: 64; height: 64
 		smooth: true
 		source: "50-screenlock.png"
 		x: root.width / 2 - rect.width / 2
