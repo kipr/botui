@@ -23,6 +23,8 @@ protected:
 private:
 	void constrain();
 	
+	void startTimer();
+	
 	BatteryLevelProvider *m_batteryLevelProvider;
 };
 

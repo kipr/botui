@@ -3,15 +3,14 @@
 
 #include <QPainter>
 #include <QTimer>
+#include <QDebug>
 
 #define TEXT_SIZE 45
 
 BatteryWidget::BatteryWidget(QWidget *parent)
 	: QWidget(parent), m_batteryLevelProvider(0)
 {
-	QTimer *timer = new QTimer(this);
-	timer->start(10000);
-	connect(timer, SIGNAL(timeout()), SLOT(repaint()));
+	startTimer();
 }
 
 BatteryWidget::BatteryWidget(BatteryLevelProvider *batteryLevelProvider, QWidget *parent)
@@ -19,6 +18,8 @@ BatteryWidget::BatteryWidget(BatteryLevelProvider *batteryLevelProvider, QWidget
 {
 	setMinimumSize(25 + TEXT_SIZE, 14);
 	setMaximumSize(25 + TEXT_SIZE, 14);
+	
+	startTimer();
 }
 
 
@@ -105,4 +106,11 @@ void BatteryWidget::constrain()
 {
 	setMinimumSize(45, 14);
 	setMaximumSize(45, 14);
+}
+
+void BatteryWidget::startTimer()
+{
+	QTimer *timer = new QTimer(this);
+	connect(timer, SIGNAL(timeout()), SLOT(repaint()));
+	timer->start(10000);
 }
