@@ -9,7 +9,7 @@
 
 #include "NumpadDialog.h"
 
-// #define A_KOVAN
+#define A_KOVAN
 
 CombinedMotorWidget::CombinedMotorWidget(Device *device, QWidget *parent)
 	: StandardWidget(device, parent),
