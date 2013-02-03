@@ -9,7 +9,7 @@
 
 #include "NumpadDialog.h"
 
-#define A_KOVAN
+// #define A_KOVAN
 
 CombinedMotorWidget::CombinedMotorWidget(Device *device, QWidget *parent)
 	: StandardWidget(device, parent),
@@ -81,7 +81,7 @@ void CombinedMotorWidget::pwmChanged(double pwm)
 void CombinedMotorWidget::velChanged(double vel)
 {
 	ui->velocityStop->setEnabled(qAbs(vel) > 0.5);
-	mav(ui->motors->currentIndex(), vel);
+	move_at_velocity(ui->motors->currentIndex(), vel);
 #ifdef A_KOVAN
 	publish();
 #endif
@@ -98,6 +98,7 @@ void CombinedMotorWidget::stop()
 	ui->pwm->setValue(0.0);
 	ui->velocity->setValue(0.0);
 	off(ui->motors->currentIndex());
+	qDebug() << ui->motors->currentIndex();
 #ifdef A_KOVAN
 	publish();
 #endif
@@ -105,7 +106,9 @@ void CombinedMotorWidget::stop()
 
 void CombinedMotorWidget::go()
 {
-	move_to_position(ui->motors->currentIndex(), ui->speed->text().toInt(), ui->goalPos->text().toInt());
+	move_to_position(ui->motors->currentIndex(),
+		ui->speed->text().toInt(),
+		ui->goalPos->text().toInt());
 #ifdef A_KOVAN
 	publish();
 #endif
@@ -128,6 +131,6 @@ void CombinedMotorWidget::update()
 #endif
 	int port = ui->motors->currentIndex();
 	ui->position->setText(QString::number(get_motor_position_counter(port)));
-	ui->positionStop->setEnabled(get_motor_done(port) ? false : true);
-	ui->go->setEnabled(get_motor_done(port) ? true : false);
+	ui->positionStop->setEnabled(get_motor_done(port) ? true : false);
+	ui->go->setEnabled(get_motor_done(port) ? false : true);
 }
