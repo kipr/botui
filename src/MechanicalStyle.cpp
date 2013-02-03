@@ -87,6 +87,30 @@ static void mechanical_draw_styled_rectangle(const QRect& rect, QPainter *p, boo
 	p->drawEllipse(QPoint(rect.left() + screwOffset, rect.bottom() - screwOffset), screwRadius, screwRadius);
 }
 
+static void mechanical_draw_rectangle(const QRect& rect, QPainter *p, bool withScrews = true)
+{
+	const static unsigned int edgeOffset = BUTTON_DECORATION_OFFSET;
+	QPoint polygon[9];
+	polygon[0] = QPoint(rect.left(), rect.top());
+	polygon[1] = QPoint(rect.right(), rect.top());
+	polygon[2] = QPoint(rect.right(), rect.top());
+	polygon[3] = QPoint(rect.right(), rect.bottom());
+	polygon[4] = QPoint(rect.right(), rect.bottom());
+	polygon[5] = QPoint(rect.left(), rect.bottom());
+	polygon[6] = QPoint(rect.left(), rect.bottom());
+	polygon[7] = QPoint(rect.left(), rect.top());
+	p->drawPolygon(polygon, 8);
+	
+	if(!withScrews) return;
+	
+	const static unsigned int screwRadius = 1;
+	const unsigned int screwOffset = edgeOffset + 1;
+	p->drawEllipse(QPoint(rect.left() + screwOffset, rect.top() + screwOffset), screwRadius, screwRadius);
+	p->drawEllipse(QPoint(rect.right() - screwOffset, rect.top() + screwOffset), screwRadius, screwRadius);
+	p->drawEllipse(QPoint(rect.right() - screwOffset, rect.bottom() - screwOffset), screwRadius, screwRadius);
+	p->drawEllipse(QPoint(rect.left() + screwOffset, rect.bottom() - screwOffset), screwRadius, screwRadius);
+}
+
 static void mechanical_draw_styled_button(const QRect& rect, const QStyleOption *opt, QPainter *p, bool withScrews = true)
 {
 	QColor top = mechanical_button_top_color();
@@ -326,6 +350,7 @@ void MechanicalStyle::drawComplexControl(ComplexControl cc, const QStyleOptionCo
 		
 		return;
 	}
+
 	QPlastiqueStyle::drawComplexControl(cc, opt, p, widget);
 }
 
@@ -498,6 +523,34 @@ void MechanicalStyle::drawControl(ControlElement ce, const QStyleOption *opt, QP
 		p->drawRect(rect);
 		mechanical_draw_styled_button(opt->rect, opt, p, false);
 		p->restore();
+		return;
+	}
+	
+	if(ce == QStyle::CE_TabBarTab) {
+		p->save();
+		QRect rect = opt->rect;
+		p->setPen(Qt::NoPen);
+		p->setBrush(Qt::white);
+		p->drawRect(rect);
+		
+		QColor top = mechanical_button_top_color();
+		QColor bottom = mechanical_button_bottom_color();
+
+		const bool selected = opt->state & QStyle::State_Selected;
+		if(selected) {
+			top = mechanical_button_pressed_top_color();
+			bottom = mechanical_button_pressed_bottom_color();
+		}
+
+		QLinearGradient gradient = QLinearGradient(rect.right(), rect.top(), rect.right(), rect.bottom());
+		gradient.setColorAt(0, top);
+		gradient.setColorAt(1, bottom);
+		p->setPen(Qt::black);
+		p->setBrush(gradient);
+		
+		mechanical_draw_rectangle(rect.adjusted(0, 0, 0, selected ? 0 : -2), p, false);
+		p->restore();
+		QPlastiqueStyle::drawControl(QStyle::CE_TabBarTabLabel, opt, p, widget);
 		return;
 	}
 	

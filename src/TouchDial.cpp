@@ -126,6 +126,11 @@ void TouchDial::paintEvent(QPaintEvent *)
 	}
 }
 
+void TouchDial::mousePressEvent(QMouseEvent *event)
+{
+	mouseMoveEvent(event);
+}
+
 void TouchDial::mouseMoveEvent(QMouseEvent *event)
 {
 	if(m_readOnly) return;

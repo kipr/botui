@@ -4,8 +4,7 @@
 #include <QDebug>
 #include "CameraWidget.h"
 #include "ServosWidget.h"
-#include "MotorsWidget.h"
-#include "PidWidget.h"
+#include "CombinedMotorWidget.h"
 #include "PidTunerWidget.h"
 #include "SensorsWidget.h"
 #include "NotYetImplementedDialog.h"
@@ -19,8 +18,8 @@ MotorsSensorsWidget::MotorsSensorsWidget(Device *device, QWidget *parent)
 	
 	connect(ui->servos, SIGNAL(clicked()), SLOT(servos()));
 	connect(ui->motors, SIGNAL(clicked()), SLOT(motors()));
-	connect(ui->pid, SIGNAL(clicked()), SLOT(pid()));
-	connect(ui->sensors, SIGNAL(clicked()), SLOT(sensors()));
+	connect(ui->sensorGraph, SIGNAL(clicked()), SLOT(sensorGraph()));
+	connect(ui->sensorList, SIGNAL(clicked()), SLOT(sensorList()));
 	connect(ui->camera, SIGNAL(clicked()), SLOT(camera()));
 	connect(ui->pidTuner, SIGNAL(clicked()), SLOT(pidTuner()));
 }
@@ -37,17 +36,16 @@ void MotorsSensorsWidget::servos()
 
 void MotorsSensorsWidget::motors()
 {
-	RootController::ref().presentWidget(new MotorsWidget(device()));
+	RootController::ref().presentWidget(new CombinedMotorWidget(device()));
 }
 
-void MotorsSensorsWidget::pid()
-{
-	RootController::ref().presentWidget(new PidWidget(device()));
-}
-
-void MotorsSensorsWidget::sensors()
+void MotorsSensorsWidget::sensorGraph()
 {
 	RootController::ref().presentWidget(new SensorsWidget(device()));
+}
+
+void MotorsSensorsWidget::sensorList()
+{
 }
 
 void MotorsSensorsWidget::camera()

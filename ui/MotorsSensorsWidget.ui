@@ -28,6 +28,9 @@
    </property>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,1">
+     <property name="spacing">
+      <number>12</number>
+     </property>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
@@ -46,22 +49,11 @@
        <item>
         <widget class="QPushButton" name="motors">
          <property name="text">
-          <string>Motor PWM</string>
+          <string>Motors</string>
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
            <normaloff>:/icons/car.png</normaloff>:/icons/car.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pid">
-         <property name="text">
-          <string>Motor Control</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/sum.png</normaloff>:/icons/sum.png</iconset>
          </property>
         </widget>
        </item>
@@ -73,6 +65,23 @@
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
            <normaloff>:/icons/chart_curve.png</normaloff>:/icons/chart_curve.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="servos">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Servos</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../rc/icons.qrc">
+           <normaloff>:/icons/lightning.png</normaloff>:/icons/lightning.png</iconset>
          </property>
         </widget>
        </item>
@@ -107,9 +116,9 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="sensors">
+        <widget class="QPushButton" name="sensorGraph">
          <property name="text">
-          <string>Sensors</string>
+          <string>Sensor Graph</string>
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
@@ -118,19 +127,13 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="servos">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
+        <widget class="QPushButton" name="sensorList">
          <property name="text">
-          <string>Servos</string>
+          <string>Sensor List</string>
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/lightning.png</normaloff>:/icons/lightning.png</iconset>
+           <normaloff>:/icons/text_list_bullets.png</normaloff>:/icons/text_list_bullets.png</iconset>
          </property>
         </widget>
        </item>
