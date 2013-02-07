@@ -19,8 +19,6 @@ private slots:
 	void pwmChanged(double pwm);
 	void velChanged(double vel);
 	
-	void tabChanged(int i);
-	
 	void stop();
 	void go();
 	
@@ -28,6 +26,9 @@ private slots:
 	void backward();
 
 	void update();
+	void tabChanged(int i);
+	
+	void clearPosition();
 
 private:
 	Ui::CombinedMotorWidget *ui;
