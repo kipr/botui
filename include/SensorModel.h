@@ -10,6 +10,9 @@ public:
 	enum SensorType {
 		Analog,
 		Digital,
+		AccelX,
+		AccelY,
+		AccelZ,
 		Other
 	};
 	
@@ -20,6 +23,11 @@ public:
 
 public slots:
 	void update();
+	
+private:
+	void populate();
+	void populateAnalog(const unsigned char port);
+	void populateDigital(const unsigned char port);
 };
 
 #endif

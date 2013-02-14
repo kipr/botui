@@ -7,6 +7,7 @@
 #include "CombinedMotorWidget.h"
 #include "PidTunerWidget.h"
 #include "SensorsWidget.h"
+#include "SensorListWidget.h"
 #include "NotYetImplementedDialog.h"
 
 MotorsSensorsWidget::MotorsSensorsWidget(Device *device, QWidget *parent)
@@ -46,6 +47,7 @@ void MotorsSensorsWidget::sensorGraph()
 
 void MotorsSensorsWidget::sensorList()
 {
+	RootController::ref().presentWidget(new SensorListWidget(device()));
 }
 
 void MotorsSensorsWidget::camera()
