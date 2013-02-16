@@ -2,6 +2,7 @@
 
 #include <kovan/analog.hpp>
 #include <kovan/digital.hpp>
+#include <kovan/sensor_logic.hpp>
 #include <kovan/general.h>
 #include <math.h>
 
@@ -157,5 +158,5 @@ void SensorModel::populateDigital(const unsigned char port)
 {
 	appendRow(QList<QStandardItem *>()
 		<< new SensorNameItem(SensorModel::Digital, port)
-		<< new SensorValueItem<bool>(new ::Digital(port), true));
+		<< new SensorValueItem<bool>(new SensorLogic::Not(new ::Digital(port), true), true));
 }
