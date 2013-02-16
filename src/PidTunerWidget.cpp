@@ -36,8 +36,8 @@ PidTunerWidget::PidTunerWidget(Device *device, QWidget *parent)
 	m_setpoint = ui->plot->addPlot(QColor(0, 0, 0));
 
 
-	ui->p->setText("0.5");
-	ui->i->setText("0.5");
+	ui->p->setText("0.4");
+	ui->i->setText("0.4");
 	ui->d->setText("0.05");
 
 
