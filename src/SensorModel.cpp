@@ -169,9 +169,9 @@ void SensorModel::populateAccel()
 		<< new SensorNameItem(SensorModel::AccelX)
 		<< new SensorValueItem<short>(new ::AccelX(), true));
 	appendRow(QList<QStandardItem *>()
-		<< new SensorNameItem(SensorModel::AccelX)
+		<< new SensorNameItem(SensorModel::AccelY)
 		<< new SensorValueItem<short>(new ::AccelY(), true));
 	appendRow(QList<QStandardItem *>()
-		<< new SensorNameItem(SensorModel::AccelX)
+		<< new SensorNameItem(SensorModel::AccelZ)
 		<< new SensorValueItem<short>(new ::AccelZ(), true));
 }
