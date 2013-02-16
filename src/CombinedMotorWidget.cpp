@@ -123,8 +123,8 @@ void CombinedMotorWidget::update()
 #endif
 	int port = ui->motors->currentIndex();
 	ui->position->setText(QString::number(get_motor_position_counter(port)));
-	ui->positionStop->setEnabled(get_motor_done(port) ? true : false);
-	ui->go->setEnabled(get_motor_done(port) ? false : true);
+	ui->positionStop->setEnabled(get_motor_done(port) ? false : true);
+	ui->go->setEnabled(get_motor_done(port) ? true : false);
 }
 
 void CombinedMotorWidget::clearPosition()
@@ -135,4 +135,6 @@ void CombinedMotorWidget::clearPosition()
 void CombinedMotorWidget::stop()
 {
 	off(ui->motors->currentIndex());
+	ui->velocity->setValue(0);
+	ui->pwm->setValue(0);
 }
