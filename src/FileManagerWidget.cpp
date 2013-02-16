@@ -62,7 +62,9 @@ void FileManagerWidget::up()
 {
 	QModelIndexList indexes = ui->files->selectionModel()->selection().indexes();
 	if(indexes.size() != 1) return;
-	ui->files->setRootIndex(m_fs->parent(ui->files->rootIndex()));
+	const QModelIndex newIndex = m_fs->parent(ui->files->rootIndex());
+	if(!m_fs->filePath(newIndex).startsWith("/kovan")) return;
+	ui->files->setRootIndex(newIndex);
 	updateOptions();
 }
 
