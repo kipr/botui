@@ -28,6 +28,7 @@ private:
 	void populate();
 	void populateAnalog(const unsigned char port);
 	void populateDigital(const unsigned char port);
+	void populateAccel();
 };
 
 #endif

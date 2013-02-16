@@ -2,6 +2,7 @@
 
 #include <kovan/analog.hpp>
 #include <kovan/digital.hpp>
+#include <kovan/accel.hpp>
 #include <kovan/sensor_logic.hpp>
 #include <kovan/general.h>
 #include <math.h>
@@ -145,6 +146,7 @@ void SensorModel::populate()
 	unsigned char i = 0;
 	for(; i < 8; ++i) populateAnalog(i);
 	for(; i < 16; ++i) populateDigital(i);
+	populateAccel();
 }
 
 void SensorModel::populateAnalog(const unsigned char port)
@@ -159,4 +161,17 @@ void SensorModel::populateDigital(const unsigned char port)
 	appendRow(QList<QStandardItem *>()
 		<< new SensorNameItem(SensorModel::Digital, port)
 		<< new SensorValueItem<bool>(new SensorLogic::Not(new ::Digital(port), true), true));
+}
+
+void SensorModel::populateAccel()
+{
+	appendRow(QList<QStandardItem *>()
+		<< new SensorNameItem(SensorModel::AccelX)
+		<< new SensorValueItem<short>(new ::AccelX(), true));
+	appendRow(QList<QStandardItem *>()
+		<< new SensorNameItem(SensorModel::AccelX)
+		<< new SensorValueItem<short>(new ::AccelY(), true));
+	appendRow(QList<QStandardItem *>()
+		<< new SensorNameItem(SensorModel::AccelX)
+		<< new SensorValueItem<short>(new ::AccelZ(), true));
 }
