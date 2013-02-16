@@ -21,7 +21,7 @@ CombinedMotorWidget::CombinedMotorWidget(Device *device, QWidget *parent)
 	performStandardSetup(tr("Motors"), false);
 	
 	QAction *clearPosition = menuBar()->addAction(tr("Clear Position"));
-	clearPosition->setEnabled(false);
+	connect(clearPosition, SIGNAL(activated()), SLOT(clearPosition()));
 	
 	ui->pwm->setMinimumValue(-100.0);
 	ui->pwm->setMaximumValue(100.0);
