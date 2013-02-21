@@ -31,7 +31,7 @@
 
 #include <QDebug>
 
-#define NOT_A_KOVAN
+// #define NOT_A_KOVAN
 
 namespace Kovan
 {
