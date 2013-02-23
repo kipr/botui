@@ -12,6 +12,7 @@
 #include "GuiSettingsWidget.h"
 #include "TestWizard.h"
 #include "KovanSerialBridge.h"
+#include "CursorManager.h"
 
 #include <QApplication>
 #include <QDir>
@@ -34,12 +35,8 @@ int main(int argc, char* argv[])
 	srand(time(NULL));
 	
 	Kovan::Device device;
-	if(device.isTouchscreen()) {
-		app.setOverrideCursor(QCursor(Qt::BlankCursor));
-	}
-	
+	CursorManager::ref().setDevice(&device);
 	KovanSerialBridge::ref().init(&device);
-	
 	GuiSettingsWidget::updateStyle(&device);
 	
 	NetworkManager::ref();
