@@ -15,6 +15,7 @@ CursorManager::CursorManager()
 	m_watcher->addPath("/dev/input/mouse1");
 	connect(m_watcher, SIGNAL(fileChanged(QString)),
 		SLOT(fileChanged(QString)));
+	update();
 }
 
 void CursorManager::forceCursorVisible(bool forceVisible)
@@ -44,7 +45,10 @@ void CursorManager::fileChanged(const QString &path)
 
 void CursorManager::update()
 {
-	if(m_device && !m_device->isTouchscreen()) return;
+	if(m_device && !m_device->isTouchscreen()) {
+		qApp->setOverrideCursor(QCursor());
+		return;
+	}
 	if(m_forceVisible || m_visible) qApp->setOverrideCursor(QCursor(Qt::BlankCursor));
 	else qApp->setOverrideCursor(QCursor());
 }
