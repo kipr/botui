@@ -37,7 +37,7 @@ private:
 
 
 	double getFeedbackValue();
-
+	void updatePids();
 };
 
 

@@ -22,6 +22,9 @@ PidTunerWidget::PidTunerWidget(Device *device, QWidget *parent)
 	connect(ui->i, SIGNAL(textChanged(QString)), SLOT(coeffChanged()));
 	connect(ui->d, SIGNAL(textChanged(QString)), SLOT(coeffChanged()));
 	connect(ui->motor, SIGNAL(currentIndexChanged(int)), SLOT(motorChanged()));
+	//void get_pid_gains(int motor, short *p, short *i, short *d, short *pd, short *id, short *dd)
+
+
 
 	NumpadDialog *pProvider = new NumpadDialog(tr("P Value"), NumpadDialog::Decimal, -99.0, 99.0, this);
 	NumpadDialog *iProvider = new NumpadDialog(tr("I Value"), NumpadDialog::Decimal, -99.0, 99.0, this);
@@ -35,11 +38,7 @@ PidTunerWidget::PidTunerWidget(Device *device, QWidget *parent)
 	m_feedback = ui->plot->addPlot(QColor(0, 0, 200));
 	m_setpoint = ui->plot->addPlot(QColor(0, 0, 0));
 
-
-	ui->p->setText("0.4");
-	ui->i->setText("0.4");
-	ui->d->setText("0.05");
-
+	updatePids();
 
 	QTimer *updateTimer = new QTimer(this);
 	connect(updateTimer, SIGNAL(timeout()), SLOT(update()));
@@ -122,5 +121,24 @@ void PidTunerWidget::coeffChanged()
 
 void PidTunerWidget::motorChanged()
 {
-	// TODO clear prev position and stuff
+	updatePids();
+}
+
+
+void PidTunerWidget::updatePids()
+{
+	short p,i,d,pd,id,dd = 0;
+
+	get_pid_gains(ui->motor->currentIndex(), &p, &i, &d, &pd, &id, &dd);
+
+	char buff[80];
+
+	sprintf(buff, "%f\n", ((double)p/(double)pd));
+	ui->p->setText(buff);
+
+	sprintf(buff, "%f\n", ((double)i/(double)id));
+	ui->i->setText(buff);
+
+	sprintf(buff, "%f\n", ((double)d/(double)dd));
+	ui->d->setText(buff);
 }
