@@ -80,7 +80,7 @@ void FileManagerWidget::open()
 	}
 	
 	// Use FileActions registery to execute file
-	const QString ext = QFileInfo(m_fs->fileName(indexes[0])).absoluteFilePath();
+	const QString ext = QFileInfo(m_fs->filePath(indexes[0])).absoluteFilePath();
 	FileAction *action = FileActions::ref().action(ext);
 	if(!action) {
 		qWarning() << "No FileAction found for" << ext;
@@ -144,7 +144,7 @@ void FileManagerWidget::selectionChanged(const QItemSelection &selected)
 	QModelIndexList indexes = selected.indexes();
 	if(indexes.size() != 1) return;
 	QModelIndex index = indexes[0];
-	const QString ext = QFileInfo(m_fs->fileName(index)).absoluteFilePath();
+	const QString ext = QFileInfo(m_fs->filePath(index)).absoluteFilePath();
 	FileAction *action = FileActions::ref().action(ext);
 	ui->open->setEnabled(m_fs->isDir(index) || action);
 	if(action) ui->open->setText(action->name());

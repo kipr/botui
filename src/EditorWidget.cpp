@@ -46,6 +46,7 @@ void EditorWidget::setArchive(const Kiss::KarPtr &archive)
 	if(m_archive.isNull()) return;
 	foreach(const QString &file, m_archive->files()) m_lookup << file;
 	ui->files->addItems(m_lookup);
+	ui->text->setPlainText(m_archive->data(m_lookup[0]));
 }
 
 const Kiss::KarPtr &EditorWidget::archive() const

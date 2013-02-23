@@ -3,6 +3,7 @@
 #include "EditorWidget.h"
 
 #include <kar.hpp>
+#include <QDebug>
 
 FileActionEditKar::FileActionEditKar()
 	: FileAction("Edit")
@@ -12,6 +13,7 @@ FileActionEditKar::FileActionEditKar()
 
 bool FileActionEditKar::canHandle(const QString &path) const
 {
+	qDebug() << path << Kiss::Kar::isValid(path);
 	return !Kiss::Kar::load(path).isNull();
 }
 

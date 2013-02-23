@@ -41,6 +41,12 @@
        <family>Courier New</family>
       </font>
      </property>
+     <property name="lineWrapMode">
+      <enum>QTextEdit::NoWrap</enum>
+     </property>
+     <property name="tabStopWidth">
+      <number>20</number>
+     </property>
     </widget>
    </item>
   </layout>
