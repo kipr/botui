@@ -1,6 +1,7 @@
 #include "FileActions.h"
 
 #include <QFileInfo>
+#include <kar.hpp>
 #include <QDebug>
 
 FileAction::FileAction(const QString &name)
@@ -25,6 +26,9 @@ FileActionExtension::FileActionExtension(const QString &name, const QStringList 
 
 bool FileActionExtension::canHandle(const QString &path) const
 {
+	// Kars can have any extension, so automatically discard kar files.
+	if(Kiss::Kar::isValid(path)) return false;
+	
 	qWarning() << m_extensions << "contains" << QFileInfo(path).suffix() << "?";
 	return m_extensions.contains(QFileInfo(path).suffix());
 }
