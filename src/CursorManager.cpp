@@ -12,9 +12,9 @@ CursorManager::CursorManager()
 	m_watcher(new QFileSystemWatcher(this)),
 	m_device(0)
 {
-	m_watcher->addPath("/dev/input/mouse1");
-	connect(m_watcher, SIGNAL(fileChanged(QString)),
-		SLOT(fileChanged(QString)));
+	m_watcher->addPath("/dev/input");
+	connect(m_watcher, SIGNAL(directoryChanged(QString)),
+		SLOT(dirChanged(QString)));
 	update();
 }
 
@@ -35,10 +35,10 @@ void CursorManager::setDevice(Device *device)
 	update();
 }
 
-void CursorManager::fileChanged(const QString &path)
+void CursorManager::dirChanged(const QString &path)
 {
-	qDebug() << "File changed!!!" << path;
-	m_visible = QFileInfo(path).exists();
+	qDebug() << QString("%1/mouse1").arg(path);
+	m_visible = QFileInfo(QString("%1/mouse1").arg(path)).exists();
 	qDebug() << m_visible;
 	update();
 }

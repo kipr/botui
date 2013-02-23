@@ -20,7 +20,7 @@ public:
 	void setDevice(Device *device);
 	
 private slots:
-	void fileChanged(const QString &path);
+	void dirChanged(const QString &path);
 	
 private:
 	void update();
