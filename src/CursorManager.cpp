@@ -37,7 +37,6 @@ void CursorManager::setDevice(Device *device)
 
 void CursorManager::dirChanged(const QString &path)
 {
-	qDebug() << QString("%1/mouse1").arg(path);
 	m_visible = QFileInfo(QString("%1/mouse1").arg(path)).exists();
 	qDebug() << m_visible;
 	update();
@@ -49,6 +48,6 @@ void CursorManager::update()
 		qApp->setOverrideCursor(QCursor());
 		return;
 	}
-	if(m_forceVisible || m_visible) qApp->setOverrideCursor(QCursor(Qt::BlankCursor));
-	else qApp->setOverrideCursor(QCursor());
+	if(m_forceVisible || m_visible) qApp->setOverrideCursor(QCursor());
+	else qApp->setOverrideCursor(QCursor(Qt::BlankCursor));
 }
