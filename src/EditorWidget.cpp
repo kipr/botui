@@ -19,7 +19,6 @@ EditorWidget::EditorWidget(Device *device, QWidget *parent)
 	layout()->setMenuBar(m_menuBar);
 	QAction *saveAndExit = m_menuBar->addAction(tr("Save and Exit"));
 	connect(saveAndExit, SIGNAL(activated()), SLOT(saveAndExit()));
-	qobject_cast<QApplication *>(QApplication::instance())->setOverrideCursor(QCursor());
 }
 
 EditorWidget::~EditorWidget()
@@ -69,8 +68,5 @@ void EditorWidget::saveAndExit()
 {
 	// TODO: Error checking?
 	m_archive->save(m_savePath);
-	if(m_device->isTouchscreen()) {
-		qobject_cast<QApplication *>(QApplication::instance())->setOverrideCursor(QCursor(Qt::BlankCursor));
-	}
 	RootController::ref().dismissWidget();
 }
