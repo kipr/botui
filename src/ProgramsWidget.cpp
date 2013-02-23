@@ -3,6 +3,7 @@
 #include "MenuBar.h"
 #include "RootController.h"
 #include "StatusBar.h"
+#include "EditorWidget.h"
 #include "Device.h"
 #include "ArchivesManager.h"
 #include "CompileProvider.h"
@@ -44,6 +45,7 @@ ProgramsWidget::ProgramsWidget(Device *device, QWidget *parent)
 	ui->programs->setItemDelegate(new ItemDelegate(this));
 	ui->programs->setModel(m_model);
 	connect(ui->run, SIGNAL(clicked()), SLOT(run()));
+	connect(ui->edit, SIGNAL(clicked()), SLOT(edit()));
 	connect(ui->remove, SIGNAL(clicked()), SLOT(remove()));
 	connect(ui->args, SIGNAL(clicked()), SLOT(args()));
 	
@@ -90,6 +92,21 @@ void ProgramsWidget::run()
 	} else {
 		RootController::ref().presentWidget(programWidget);
 	}
+}
+
+void ProgramsWidget::edit()
+{
+	QModelIndexList currents = ui->programs->selectionModel()->selectedIndexes();
+	if(currents.size() != 1) return;
+	
+	const QString name = m_model->name(currents[0]);
+	Kiss::KarPtr archive = device()->archivesManager()->archive(name);
+	if(archive.isNull()) return;
+	
+	EditorWidget *editor = new EditorWidget(device());
+	editor->setArchive(archive);
+	editor->setSavePath(device()->archivesManager()->archivePath(name));
+	RootController::ref().presentWidget(editor);
 }
 
 void ProgramsWidget::args()

@@ -12,6 +12,7 @@ public:
 	
 	virtual QStringList archives() const = 0;
 	virtual Kiss::KarPtr archive(const QString &name) const = 0;
+	virtual QString archivePath(const QString &name) const = 0;
 	virtual QString binaryPath(const QString &name) const = 0;
 	virtual bool hasBinary(const QString &name) const = 0;
 	virtual bool set(const QString &name, const Kiss::KarPtr &archive) = 0;

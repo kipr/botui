@@ -22,6 +22,7 @@ public:
 	
 public slots:
 	void run();
+	void edit();
 	void args();
 	void remove();
 	

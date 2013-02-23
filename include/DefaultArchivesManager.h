@@ -18,10 +18,9 @@ public:
 	virtual bool hasBinary(const QString &name) const;
 	virtual bool set(const QString &name, const Kiss::KarPtr &archive);
 	virtual bool remove(const QString &name);
-	
-private:
 	QString archivePath(const QString &name) const;
 	
+private:	
 	QString m_archivesPath;
 	QString m_binariesPath;
 	

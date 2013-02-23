@@ -48,6 +48,17 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="edit">
+         <property name="text">
+          <string>Edit</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../rc/icons.qrc">
+           <normaloff>:/icons/cog_edit.png</normaloff>:/icons/cog_edit.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="args">
          <property name="text">
           <string>Args</string>
