@@ -67,6 +67,7 @@ void EditorWidget::fileChanged(int i)
 void EditorWidget::saveAndExit()
 {
 	// TODO: Error checking?
+	fileChanged(m_currentIndex); // Save current file
 	m_archive->save(m_savePath);
 	RootController::ref().dismissWidget();
 }
