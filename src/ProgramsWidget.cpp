@@ -150,7 +150,7 @@ void ProgramsWidget::compileFinished(const Compiler::OutputList &output, Concurr
 	
 	// This is more so something will be in the log.
 	// It's disconcerting when it's entirely empty.
-	log->appendText("Compile finished.");
+	log->appendText(tr("Compile finished."));
 	
 	log->setStatus(Compiler::Output::isSuccess(output) ? tr("Success!") : tr("Failure."));
 	log->setDismissable(true);
