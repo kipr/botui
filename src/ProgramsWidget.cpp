@@ -161,6 +161,7 @@ void ProgramsWidget::update()
 	QModelIndexList currents = ui->programs->selectionModel()->selectedIndexes();
 	const bool good = currents.size() == 1;
 	ui->run->setEnabled(good);
+	ui->edit->setEnabled(good);
 	ui->remove->setEnabled(good);
 	ui->args->setEnabled(good);
 }
