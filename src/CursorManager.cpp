@@ -38,7 +38,6 @@ void CursorManager::setDevice(Device *device)
 void CursorManager::dirChanged(const QString &path)
 {
 	m_visible = QFileInfo(QString("%1/mouse1").arg(path)).exists();
-	qDebug() << m_visible;
 	update();
 }
 
