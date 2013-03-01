@@ -146,7 +146,7 @@ Kovan::Device::~Device()
 
 QString Kovan::Device::name() const
 {
-	return "Link";
+	return tr("Link");
 }
 
 QString Kovan::Device::version() const
