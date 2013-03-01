@@ -66,19 +66,19 @@ Compiler::OutputList KissCompileProvider::compile(const QString &name, const Kis
 	
 	if(terminalFiles.isEmpty()) {
 		ret << OutputList() << Output(name, 1,
-			QByteArray(), "error: No terminals detected from compilation.");
+			QByteArray(), "error: I couldn't figure out how to compile your project.\n");
 		return ret;
 	}
 	
 	if(terminalFiles.size() > 1) {
 		qWarning() << "Multiple Terminals:" << terminalFiles;
-		ret << Output(name, 1, QByteArray(), "error: Terminal ambiguity in compilation. ");
+		ret << Output(name, 1, QByteArray(), "error: Terminal ambiguity in compilation.\n");
 	}
 	
 	if(!QFile::copy(terminalFiles[0], result)) {
 		ret << OutputList() << Output(name, 1, QByteArray(),
 			("error: Failed to copy \"" + terminalFiles[0]
-				+ "\" to \"" + result + "\"").toLatin1());
+				+ "\" to \"" + result + "\"\n").toLatin1());
 	}
 	
 	return ret;
