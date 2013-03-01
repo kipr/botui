@@ -23,6 +23,7 @@ public:
 public slots:
 	void run();
 	void edit();
+	void add();
 	void args();
 	void remove();
 	

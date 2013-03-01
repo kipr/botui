@@ -83,6 +83,17 @@
         </spacer>
        </item>
        <item>
+        <widget class="QPushButton" name="add">
+         <property name="text">
+          <string>New</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../rc/icons.qrc">
+           <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="remove">
          <property name="text">
           <string>Delete</string>

@@ -1,6 +1,7 @@
 #include "ProgramsWidget.h"
 #include "ui_ProgramsWidget.h"
 #include "MenuBar.h"
+#include "AreYouSureDialog.h"
 #include "RootController.h"
 #include "StatusBar.h"
 #include "EditorWidget.h"
@@ -9,6 +10,7 @@
 #include "CompileProvider.h"
 #include "ArchivesModel.h"
 #include "ProgramWidget.h"
+#include "KeyboardDialog.h"
 #include "Program.h"
 #include "LogDialog.h"
 #include "ConcurrentCompile.h"
@@ -46,6 +48,7 @@ ProgramsWidget::ProgramsWidget(Device *device, QWidget *parent)
 	ui->programs->setModel(m_model);
 	connect(ui->run, SIGNAL(clicked()), SLOT(run()));
 	connect(ui->edit, SIGNAL(clicked()), SLOT(edit()));
+	connect(ui->add, SIGNAL(clicked()), SLOT(add()));
 	connect(ui->remove, SIGNAL(clicked()), SLOT(remove()));
 	connect(ui->args, SIGNAL(clicked()), SLOT(args()));
 	
@@ -109,6 +112,31 @@ void ProgramsWidget::edit()
 	RootController::ref().presentWidget(editor);
 }
 
+void ProgramsWidget::add()
+{
+	KeyboardDialog keyboard(tr("Program Name"));
+	if(RootController::ref().presentDialog(&keyboard) != QDialog::Accepted) return;
+	const QString name = keyboard.input();
+	if(name.isEmpty()) return;
+	
+	if(!device()->archivesManager()->archive(name).isNull()) {
+		AreYouSureDialog dialog;
+		dialog.setDescription(tr("You're about to overwrite the program \"%1\". Continue?\n").arg(name));
+		if(RootController::ref().presentDialog(&dialog) != QDialog::Accepted) return;
+	}
+	
+	Kiss::KarPtr archive = Kiss::Kar::create();
+	if(!device()->archivesManager()->set(name, archive)) {
+		qWarning() << "Failed to create new archive with the name" << name;
+		return;
+	}
+	
+	EditorWidget *editor = new EditorWidget(device());
+	editor->setArchive(archive);
+	editor->setSavePath(device()->archivesManager()->archivePath(name));
+	RootController::ref().presentWidget(editor);
+}
+
 void ProgramsWidget::args()
 {
 	QModelIndexList currents = ui->programs->selectionModel()->selectedIndexes();
@@ -122,6 +150,7 @@ void ProgramsWidget::remove()
 	QModelIndexList currents = ui->programs->selectionModel()->selectedIndexes();
 	if(currents.size() != 1) return;
 	device()->archivesManager()->remove(m_model->name(currents[0]));
+	update();
 }
 
 void ProgramsWidget::compileStarted(const QString &name, ConcurrentCompile *compiler)
