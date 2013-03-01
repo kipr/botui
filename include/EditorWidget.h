@@ -28,6 +28,8 @@ public:
 private slots:
 	void fileChanged(int i);
 	void saveAndExit();
+	void addFile();
+	void removeFile();
 	
 private:
 	Device *m_device;
