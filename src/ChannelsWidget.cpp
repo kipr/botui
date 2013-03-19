@@ -6,6 +6,7 @@
 #include "RootController.h"
 #include "ChannelConfigWidget.h"
 #include "ChannelConfigWidgetFactory.h"
+#include "ChannelSettingsWidget.h"
 #include "CreateChannelDialog.h"
 
 #include <QFileSystemModel>
@@ -62,7 +63,8 @@ ChannelsWidget::ChannelsWidget(Device *device, QWidget *parent)
 	connect(ui->remove, SIGNAL(clicked()), SLOT(remove()));
 	connect(ui->up, SIGNAL(clicked()), SLOT(up()));
 	connect(ui->down, SIGNAL(clicked()), SLOT(down()));
-	connect(ui->edit, SIGNAL(clicked()), SLOT(edit()));
+	connect(ui->configure, SIGNAL(clicked()), SLOT(configure()));
+	connect(ui->options, SIGNAL(clicked()), SLOT(options()));
 	connect(ui->channels->selectionModel(),
 		SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
 		SLOT(updateOptions()));
@@ -90,7 +92,7 @@ const QString &ChannelsWidget::file() const
 	return m_path;
 }
 
-void ChannelsWidget::edit()
+void ChannelsWidget::configure()
 {
 	const QModelIndexList &indexes = ui->channels->selectionModel()
 		->selection().indexes();
@@ -98,6 +100,18 @@ void ChannelsWidget::edit()
 	ChannelConfigWidget *widget = ChannelConfigWidgetFactory::create(
 		indexes[0], m_model->channelType(indexes[0]));
 	if(!widget) return;
+	widget->setConfig(m_model->channelConfig(indexes[0]));
+	m_model->connect(widget, SIGNAL(configChanged(QModelIndex, Config)),
+		SLOT(setChannelConfig(QModelIndex, Config)));
+	RootController::ref().presentWidget(widget);
+}
+
+void ChannelsWidget::options() {
+	const QModelIndexList &indexes = ui->channels->selectionModel()
+		->selection().indexes();
+	if(indexes.size() != 1) return;
+	ChannelSettingsWidget *widget = new ChannelSettingsWidget(device());
+	widget->setIndex(indexes[0]);
 	widget->setConfig(m_model->channelConfig(indexes[0]));
 	m_model->connect(widget, SIGNAL(configChanged(QModelIndex, Config)),
 		SLOT(setChannelConfig(QModelIndex, Config)));
@@ -157,7 +171,7 @@ void ChannelsWidget::updateOptions()
 	ui->remove->setEnabled(sel);
 	ui->up->setEnabled(sel && indexes[0].row() > 0);
 	ui->down->setEnabled(sel && indexes[0].row() + 1 < m_model->rowCount());
-	ui->edit->setEnabled(sel && ChannelConfigWidgetFactory::hasConfig(
+	ui->configure->setEnabled(sel && ChannelConfigWidgetFactory::hasConfig(
 		m_model->channelType(indexes[0])));
 }
 

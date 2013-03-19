@@ -41,9 +41,20 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QPushButton" name="edit">
+        <widget class="QPushButton" name="configure">
          <property name="text">
-          <string>Edit</string>
+          <string>Configure</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../rc/icons.qrc">
+           <normaloff>:/icons/color_wheel.png</normaloff>:/icons/color_wheel.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="options">
+         <property name="text">
+          <string>Options</string>
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">

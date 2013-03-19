@@ -23,7 +23,8 @@ public:
 	const QString &file() const;
 	
 private slots:
-	void edit();
+	void configure();
+	void options();
 	void up();
 	void down();
 	void add();
