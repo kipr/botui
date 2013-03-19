@@ -64,5 +64,7 @@ ELSEIF(WIN32)
 	ADD_EXECUTABLE(botui WIN32 ${botui_SRCS_CXX})
 ENDIF()
 
+add_definitions(-O3)
+
 SET(EXECUTABLE_OUTPUT_PATH ${botui_SOURCE_DIR}/deploy)
 TARGET_LINK_LIBRARIES(botui ${QT_LIBRARIES} pcompiler kar z opencv_core opencv_highgui opencv_imgproc kovan)
