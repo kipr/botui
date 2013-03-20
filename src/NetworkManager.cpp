@@ -325,6 +325,8 @@ Network NetworkManager::networkFromConnection(const Connection &connection) cons
 	Network network;
 	network.setSsid(connection["802-11-wireless"]["ssid"].toString());
 	network.setMode(modeMap[connection["802-11-wireless"]["mode"].toString()]);
+	qDebug() << "Connection" << connection["802-11-wireless"]["ssid"].toString()
+		<< connection["802-11-wireless-security"]["security"].toString();
 	network.setSecurity(securityMap[connection["802-11-wireless-security"]["security"].toString()]);
 	// Technically, password only applies to WEP connections. We always store both password
 	// and psk, however, so it is a somewhat safe assumption to only try the password
