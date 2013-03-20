@@ -2,10 +2,14 @@
 #include "ui_CameraWidget.h"
 #include "Device.h"
 #include "ChannelConfigurationsModel.h"
+#include "CameraInputSelectorWidget.h"
+#include "RootController.h"
 #include "CameraInputManager.h"
+#include "MenuBar.h"
 #include <QDebug>
 
 #include <kovan/camera.hpp>
+#include <opencv2/highgui/highgui.hpp>
 
 CameraWidget::CameraWidget(Device *device, QWidget *parent)
 	: StandardWidget(device, parent),
@@ -15,24 +19,22 @@ CameraWidget::CameraWidget(Device *device, QWidget *parent)
 {
 	ui->setupUi(this);
 	performStandardSetup(tr("Camera"), false);
+	QAction *selectSource = menuBar()->addAction(tr("Source..."));
+	connect(selectSource, SIGNAL(activated()), SLOT(selectSource()));
 	
 	ui->config->setModel(m_model);
-	qDebug() << m_model->rootPath();
 	ui->config->setRootModelIndex(m_model->index(m_model->rootPath()));
 	
 	ui->config->setCurrentIndex(m_model->defaultConfiguration().row());
 	
 	connect(ui->config, SIGNAL(currentIndexChanged(int)), SLOT(currentIndexChanged(int)));
 	
-	CameraInputManager::ref().setInputProvider(new Camera::UsbInputProvider);
-	connect(&CameraInputManager::ref(), SIGNAL(frameAvailable(cv::Mat)), SLOT(updateImage()));
 	m_device->open();
-	updateImage();
+	connect(&CameraInputManager::ref(), SIGNAL(frameAvailable(cv::Mat)), SLOT(updateImage()));
 }
 
 CameraWidget::~CameraWidget()
 {
-	qWarning() << "Destroyed!";
 	m_device->close();
 	delete ui;
 	delete m_device;
@@ -40,16 +42,17 @@ CameraWidget::~CameraWidget()
 
 void CameraWidget::updateImage()
 {
+	if(!isVisible()) return;
 	if(!m_device->update()) {
 		qWarning() << "camera update failed";
-		ui->camera->setInvalid(true);
 		return;
-	} else ui->camera->setInvalid(false);
+	}
 	
+	cv::Mat image = m_device->rawImage();
 	int h = 0;
 	const static int hStep = 137; // Golden angle
 	Camera::ChannelPtrVector::const_iterator it = m_device->channels().begin();
-	cv::Mat image = m_device->rawImage();
+	// cv::imshow("Device Image", image);
 	for(; it != m_device->channels().end(); ++it, h += hStep) {
 		const QColor rectColor = QColor::fromHsv(h % 360, 255, 255);
 		const Camera::ObjectVector *objs = (*it)->objects();
@@ -62,7 +65,6 @@ void CameraWidget::updateImage()
 		}
 	}
 	
-	if(image.empty()) qWarning() << "EMPTY!";
 	ui->camera->updateImage(image);
 }
 
@@ -73,4 +75,9 @@ void CameraWidget::currentIndexChanged(const int &index)
 	Config *conf = Config::load(path.toStdString());
 	m_device->setConfig(conf ? *conf : Config());
 	delete conf;
+}
+
+void CameraWidget::selectSource()
+{
+	RootController::ref().presentWidget(new CameraInputSelectorWidget(device()));
 }

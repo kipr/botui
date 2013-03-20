@@ -16,6 +16,7 @@ public:
 	void setInvalid(bool invalid);
 	const bool& invalid() const;
 	
+public slots:
 	void updateImage(cv::Mat image);
 	
 signals:
@@ -31,6 +32,7 @@ private:
 	
 	bool m_invalid;
 	cv::Mat m_image;
+	unsigned char *m_data;
 	QImage m_resizedImage;
 };
 

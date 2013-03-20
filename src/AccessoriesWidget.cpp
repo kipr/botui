@@ -19,7 +19,7 @@ AccessoriesWidget::~AccessoriesWidget()
 
 void AccessoriesWidget::create()
 {
-	RootController::ref().presentWidget(new CreateWidget());
+	RootController::ref().presentWidget(new CreateWidget(device()));
 }
 
 void AccessoriesWidget::ardrone()

@@ -5,9 +5,9 @@
 
 class CreateWidget : public StandardWidget
 {
-	Q_OBJECT
+Q_OBJECT
 public:
-	CreateWidget();
+ 	CreateWidget(Device *device, QWidget *parent = 0);
 	~CreateWidget();
 	
 private slots:

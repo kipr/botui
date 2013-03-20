@@ -1,18 +1,25 @@
 #ifndef _CAMERAINPUTSELECTORWIDGET_H_
 #define _CAMERAINPUTSELECTORWIDGET_H_
 
-#include "StandardWidge.h"
+#include "StandardWidget.h"
 
-class CameraInputSelectorWidget
+namespace Ui
 {
+	class CameraInputSelectorWidget;
+}
+
+class CameraInputSelectorWidget : public StandardWidget
+{
+Q_OBJECT
 public:
 	CameraInputSelectorWidget(Device *device, QWidget *parent = 0);
 	~CameraInputSelectorWidget();
 	
-	
-	
 private slots:
+	void sourceIndexChanged(const int index);
 	
+private:
+	Ui::CameraInputSelectorWidget *ui;
 };
 
 #endif

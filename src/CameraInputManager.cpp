@@ -1,31 +1,46 @@
 #include "CameraInputManager.h"
+#include "ConnectionedARDroneInputProvider.h"
 #include <QDebug>
 
 CameraInputManager::CameraInputManager()
-	: m_timer(new QTimer(this)),
+	: m_inputProvider(new Camera::UsbInputProvider()),
+	m_source(CameraInputManager::UsbCamera),
+	m_timer(new QTimer(this)),
 	m_frameRate(1),
-	m_refs(0)
+	m_refs(0),
+	m_reentryBarrier(false)
 {
 	m_image = cv::Mat();
 	connect(m_timer, SIGNAL(timeout()), SLOT(updateCamera()));
 }
 
-void CameraInputManager::setInputProvider(Camera::InputProvider *inputProvider)
+void CameraInputManager::setSource(const CameraInputManager::Source source)
 {
-	if(m_inputProvider) m_inputProvider->close();
-	delete m_inputProvider;
-	m_inputProvider = inputProvider;
+	m_source = source;
+	
+	Camera::InputProvider *inputProvider = 0;
+	switch(m_source) {
+	case CameraInputManager::UsbCamera:
+		inputProvider = new Camera::UsbInputProvider;
+		break;
+	case CameraInputManager::ARDroneFront:
+		inputProvider = new Camera::ConnectionedARDroneInputProvider;
+		break;
+	default: break;
+	}
+	
+	setInputProvider(inputProvider);
 }
 
-Camera::InputProvider *CameraInputManager::inputProvider() const
+CameraInputManager::Source CameraInputManager::source() const
 {
-	return m_inputProvider;
+	return m_source;
 }
 	
 void CameraInputManager::setFrameRate(int frameRate)
 {
 	m_frameRate = frameRate;
-	m_timer->start(1000/frameRate);
+	m_timer->start(1000.0 / m_frameRate);
 }
 
 int CameraInputManager::frameRate() const
@@ -82,26 +97,52 @@ cv::Mat CameraInputManager::image() const
 
 void CameraInputManager::updateCamera()
 {
-	if(!m_refs) return;
+	if(m_reentryBarrier) return;
+	m_reentryBarrier = true;
+	
+	if(!m_refs || !m_inputProvider) {
+		setFrameRate(1);
+		m_reentryBarrier = false;
+		return;
+	}
 	if(!m_inputProvider->isOpen()) {
 		if(!m_inputProvider->open(0)) {
+			qDebug() << "Failed to open input provider... for now.";
 			setFrameRate(1);
+			m_reentryBarrier = false;
 			return;
 		}
-		//m_inputProvider->setWidth(320);
-		//m_inputProvider->setHeight(240);
+		// m_inputProvider->setWidth(320);
+		// m_inputProvider->setHeight(240);
 		setFrameRate(20);
 	}
 	
 	if(!m_inputProvider->next(m_image)) {
 		qWarning() << "Camera update failed";
-		//ui->camera->setInvalid(true);
+		// ui->camera->setInvalid(true);
 		m_inputProvider->close();
 		setFrameRate(1);
 		m_image = cv::Mat();
 	}
 	
 	emit frameAvailable(m_image);
+	m_reentryBarrier = false;
+}
+
+void CameraInputManager::setInputProvider(Camera::InputProvider *inputProvider)
+{
+	const bool wasOpened = m_inputProvider ? m_inputProvider->isOpen() : false;
+	if(m_inputProvider) m_inputProvider->close();
+	delete m_inputProvider;
+	
+	m_inputProvider = inputProvider;
+	
+	if(m_inputProvider && wasOpened) m_inputProvider->open(0);
+}
+
+Camera::InputProvider *CameraInputManager::inputProvider() const
+{
+	return m_inputProvider;
 }
 
 CameraInputAdapter::CameraInputAdapter(CameraInputManager *manager)

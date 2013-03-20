@@ -3,10 +3,12 @@
 #include <QPainter>
 #include <QDebug>
 #include <QMouseEvent>
+#include <opencv2/highgui/highgui.hpp>
 
 CvWidget::CvWidget(QWidget *parent)
 	: QWidget(parent),
-	m_invalid(true)
+	m_invalid(true),
+	m_data(0)
 {
 }
 
@@ -27,9 +29,12 @@ const bool& CvWidget::invalid() const
 
 void CvWidget::updateImage(cv::Mat image)
 {
-	if(m_invalid || image.empty()) return;
+	m_invalid = image.empty();
+	if(m_invalid) {
+		update();
+		return;
+	}
 	cv::cvtColor(image, m_image, CV_BGR2RGB);
-	
 	scaleImage();
 	update();
 }
@@ -42,12 +47,12 @@ void CvWidget::resizeEvent(QResizeEvent *event)
 
 void CvWidget::paintEvent(QPaintEvent *event)
 {
-	if(m_image.empty()) return;
 	QPainter painter(this);
+	
 	if(m_invalid) {
 		painter.fillRect(0, 0, width() - 1, height() - 1, Qt::transparent);
 		painter.drawText(QRect(0, 0, width(), height()),
-			tr("No Camera"),
+			tr("Failed to fetch image"),
 			QTextOption(Qt::AlignAbsolute | Qt::AlignHCenter | Qt::AlignVCenter));
 		return;
 	}
@@ -66,8 +71,14 @@ void CvWidget::mousePressEvent(QMouseEvent *event)
 
 void CvWidget::scaleImage()
 {
-	if(m_image.empty()) return;
+	if(m_image.empty()) {
+		qDebug() << "Can't scale an empty image";
+		return;
+	}
 	cv::Mat resized;
 	cv::resize(m_image, resized, cv::Size(width(), height()));
-	m_resizedImage = QImage(resized.data, resized.cols, resized.rows, resized.step, QImage::Format_RGB888);
+	delete m_data;
+	m_data = new unsigned char[resized.rows * resized.cols * resized.elemSize()];
+	memcpy(m_data, resized.ptr(), resized.rows * resized.cols * resized.elemSize());
+	m_resizedImage = QImage(m_data, resized.cols, resized.rows, resized.step, QImage::Format_RGB888);
 }

@@ -9,12 +9,18 @@
 class CameraInputManager : public QObject, public Singleton<CameraInputManager>
 {
 Q_OBJECT
-	
 public:
+	enum Source {
+		Nil = 0,
+		UsbCamera,
+		ARDroneFront,
+		ARDroneBottom
+	};
+	
 	CameraInputManager();
 	
-	void setInputProvider(Camera::InputProvider *inputProvider);
-	Camera::InputProvider *inputProvider() const;
+	void setSource(const Source source);
+	Source source() const;
 	
 	void setFrameRate(int frameRate);
 	int frameRate() const;
@@ -36,11 +42,16 @@ public slots:
 	void updateCamera();
 	
 private:
+	void setInputProvider(Camera::InputProvider *const inputProvider);
+	Camera::InputProvider *inputProvider() const;
+	
 	Camera::InputProvider *m_inputProvider;
+	Source m_source;
 	QTimer *m_timer;
 	cv::Mat m_image;
 	int m_frameRate;
 	int m_refs;
+	bool m_reentryBarrier;
 };
 
 class CameraInputAdapter : public Camera::InputProvider
