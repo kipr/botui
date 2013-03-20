@@ -16,7 +16,7 @@ HsvChannelConfigWidget::HsvChannelConfigWidget(const QModelIndex &index, QWidget
 	: ChannelConfigWidget(index, parent),
 	ui(new Ui::HsvChannelConfigWidget),
 	m_numpad(new NumpadDialog("Enter Value")),
-	m_camera(new Camera::Device()),
+	m_camera(new Camera::Device(new Camera::UsbInputProvider)),
 	m_updateTimer(new QTimer(this))
 {
 	ui->setupUi(this);

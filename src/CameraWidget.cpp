@@ -14,7 +14,7 @@
 CameraWidget::CameraWidget(Device *device, QWidget *parent)
 	: StandardWidget(device, parent),
 	ui(new Ui::CameraWidget),
-	m_device(new Camera::Device),
+	m_device(new Camera::Device(new Camera::UsbInputProvider)),
 	m_timer(new QTimer(this)),
 	m_model(new ChannelConfigurationsModel(this))
 {
