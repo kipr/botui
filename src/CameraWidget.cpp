@@ -32,6 +32,7 @@ CameraWidget::CameraWidget(Device *device, QWidget *parent)
 
 CameraWidget::~CameraWidget()
 {
+	qWarning() << "Destroyed!";
 	m_device->close();
 	delete ui;
 	delete m_device;

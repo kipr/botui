@@ -12,6 +12,7 @@ CameraInputManager::CameraInputManager()
 
 void CameraInputManager::setInputProvider(Camera::InputProvider *inputProvider)
 {
+	if(m_inputProvider) m_inputProvider->close();
 	delete m_inputProvider;
 	m_inputProvider = inputProvider;
 }
@@ -52,14 +53,19 @@ bool CameraInputManager::retain()
 
 bool CameraInputManager::release()
 {
+	qWarning() << "Releasing!";
 	--m_refs;
 	if(m_refs < 0) {
 		qWarning() << "Release called when reference count was 0!";
 		m_refs = 0;
 		return false;
 	}
-	if(m_refs == 0)
-		return m_inputProvider->close();
+	if(m_refs == 0) {
+		qWarning() << "Closing!";
+		bool success = m_inputProvider->close();
+		qWarning() << success;
+		return success;
+	}
 		
 	return true;
 }
@@ -76,7 +82,8 @@ cv::Mat CameraInputManager::image() const
 
 void CameraInputManager::updateCamera()
 {
-	if(m_refs > 0 && !m_inputProvider->isOpen()) {
+	if(!m_refs) return;
+	if(!m_inputProvider->isOpen()) {
 		if(!m_inputProvider->open(0)) {
 			setFrameRate(1);
 			return;
@@ -131,7 +138,6 @@ void CameraInputAdapter::setHeight(const unsigned height)
 
 bool CameraInputAdapter::next(cv::Mat &image)
 {
-	if(!m_manager->isOpen()) return false;
 	image = m_manager->image();
 	return true;
 }
