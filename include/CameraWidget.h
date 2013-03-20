@@ -23,16 +23,12 @@ public:
 	~CameraWidget();
 	
 public slots:
-	void updateCamera();
+	void updateImage();
 	void currentIndexChanged(const int &index);
 	
 private:
-	void setUpdateFast();
-	void setUpdateSlow();
-	
 	Ui::CameraWidget *ui;
 	Camera::Device *m_device;
-	QTimer *m_timer;
 	ChannelConfigurationsModel *m_model;
 };
 

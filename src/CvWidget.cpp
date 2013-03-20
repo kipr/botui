@@ -27,7 +27,7 @@ const bool& CvWidget::invalid() const
 
 void CvWidget::updateImage(cv::Mat image)
 {
-	if(m_invalid) return;
+	if(m_invalid || image.empty()) return;
 	cv::cvtColor(image, m_image, CV_BGR2RGB);
 	
 	scaleImage();
@@ -42,6 +42,7 @@ void CvWidget::resizeEvent(QResizeEvent *event)
 
 void CvWidget::paintEvent(QPaintEvent *event)
 {
+	if(m_image.empty()) return;
 	QPainter painter(this);
 	if(m_invalid) {
 		painter.fillRect(0, 0, width() - 1, height() - 1, Qt::transparent);
@@ -65,6 +66,7 @@ void CvWidget::mousePressEvent(QMouseEvent *event)
 
 void CvWidget::scaleImage()
 {
+	if(m_image.empty()) return;
 	cv::Mat resized;
 	cv::resize(m_image, resized, cv::Size(width(), height()));
 	m_resizedImage = QImage(resized.data, resized.cols, resized.rows, resized.step, QImage::Format_RGB888);

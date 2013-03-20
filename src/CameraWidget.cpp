@@ -1,21 +1,16 @@
 #include "CameraWidget.h"
 #include "ui_CameraWidget.h"
-#include "MenuBar.h"
-#include "RootController.h"
-#include "StatusBar.h"
 #include "Device.h"
 #include "ChannelConfigurationsModel.h"
+#include "CameraInputManager.h"
 #include <QDebug>
-#include <QTimer>
-#include <QCoreApplication>
 
 #include <kovan/camera.hpp>
 
 CameraWidget::CameraWidget(Device *device, QWidget *parent)
 	: StandardWidget(device, parent),
 	ui(new Ui::CameraWidget),
-	m_device(new Camera::Device),
-	m_timer(new QTimer(this)),
+	m_device(new Camera::Device(new CameraInputAdapter(&CameraInputManager::ref()))),
 	m_model(new ChannelConfigurationsModel(this))
 {
 	ui->setupUi(this);
@@ -29,8 +24,10 @@ CameraWidget::CameraWidget(Device *device, QWidget *parent)
 	
 	connect(ui->config, SIGNAL(currentIndexChanged(int)), SLOT(currentIndexChanged(int)));
 	
-	connect(m_timer, SIGNAL(timeout()), SLOT(updateCamera()));
-	updateCamera();
+	CameraInputManager::ref().setInputProvider(new Camera::UsbInputProvider);
+	connect(&CameraInputManager::ref(), SIGNAL(frameAvailable(cv::Mat)), SLOT(updateImage()));
+	m_device->open();
+	updateImage();
 }
 
 CameraWidget::~CameraWidget()
@@ -40,25 +37,13 @@ CameraWidget::~CameraWidget()
 	delete m_device;
 }
 
-void CameraWidget::updateCamera()
+void CameraWidget::updateImage()
 {
-	if(!m_device->isOpen()) {
-		if(!m_device->open()) {
-			setUpdateSlow();
-			return;
-		}
-		m_device->setWidth(320);
-		m_device->setHeight(240);
-		ui->camera->setInvalid(false);
-		setUpdateFast();
-	}
 	if(!m_device->update()) {
 		qWarning() << "camera update failed";
 		ui->camera->setInvalid(true);
-		m_device->close();
-		setUpdateSlow();
 		return;
-	}
+	} else ui->camera->setInvalid(false);
 	
 	int h = 0;
 	const static int hStep = 137; // Golden angle
@@ -76,6 +61,7 @@ void CameraWidget::updateCamera()
 		}
 	}
 	
+	if(image.empty()) qWarning() << "EMPTY!";
 	ui->camera->updateImage(image);
 }
 
@@ -86,14 +72,4 @@ void CameraWidget::currentIndexChanged(const int &index)
 	Config *conf = Config::load(path.toStdString());
 	m_device->setConfig(conf ? *conf : Config());
 	delete conf;
-}
-
-void CameraWidget::setUpdateFast()
-{
-	m_timer->start(75); // 10 FPS
-}
-
-void CameraWidget::setUpdateSlow()
-{
-	m_timer->start(1000);
 }
