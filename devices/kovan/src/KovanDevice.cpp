@@ -31,7 +31,9 @@
 
 #include <QDebug>
 
-// #define NOT_A_KOVAN
+#ifdef Q_OS_MAC
+#define NOT_A_KOVAN
+#endif
 
 namespace Kovan
 {
