@@ -1,13 +1,9 @@
 #include "CameraWidget.h"
 #include "ui_CameraWidget.h"
-#include "MenuBar.h"
-#include "RootController.h"
-#include "StatusBar.h"
 #include "Device.h"
 #include "ChannelConfigurationsModel.h"
 #include <QDebug>
 #include <QTimer>
-#include <QCoreApplication>
 
 #include <kovan/camera.hpp>
 
