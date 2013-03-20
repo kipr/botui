@@ -3,21 +3,20 @@
 
 #include "NumpadDialog.h"
 #include "RootController.h"
+#include "CameraInputManager.h"
 
 #include <kovan/camera.hpp>
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
-#include <QTimer>
 #include <QDebug>
 
 HsvChannelConfigWidget::HsvChannelConfigWidget(const QModelIndex &index, QWidget *parent)
 	: ChannelConfigWidget(index, parent),
 	ui(new Ui::HsvChannelConfigWidget),
 	m_numpad(new NumpadDialog("Enter Value")),
-	m_camera(new Camera::Device(new Camera::UsbInputProvider)),
-	m_updateTimer(new QTimer(this))
+	m_camera(new Camera::Device(new CameraInputAdapter(&CameraInputManager::ref())))
 {
 	ui->setupUi(this);
 	
@@ -33,7 +32,6 @@ HsvChannelConfigWidget::HsvChannelConfigWidget(const QModelIndex &index, QWidget
 	
 	connect(ui->manualButton, SIGNAL(clicked()), SLOT(manual()));
 	connect(ui->visualButton, SIGNAL(clicked()), SLOT(visual()));
-	connect(m_updateTimer, SIGNAL(timeout()), SLOT(update()));
 	
 	connect(ui->th, SIGNAL(textChanged(QString)), SLOT(manualEntry(QString)));
 	connect(ui->ts, SIGNAL(textChanged(QString)), SLOT(manualEntry(QString)));
@@ -49,19 +47,22 @@ HsvChannelConfigWidget::HsvChannelConfigWidget(const QModelIndex &index, QWidget
 	
 	connect(ui->done, SIGNAL(clicked()), SLOT(done()));
 	
-	update();
-	
 	ui->th->setInputProvider(m_numpad);
 	ui->ts->setInputProvider(m_numpad);
 	ui->tv->setInputProvider(m_numpad);
 	ui->bh->setInputProvider(m_numpad);
 	ui->bs->setInputProvider(m_numpad);
 	ui->bv->setInputProvider(m_numpad);
+	
+	m_camera->open();
+	
+	connect(&CameraInputManager::ref(), SIGNAL(frameAvailable(cv::Mat)), SLOT(update()));
 }
 
 HsvChannelConfigWidget::~HsvChannelConfigWidget()
 {
 	m_camera->close();
+	
 	delete m_camera;
 	delete ui;
 	delete m_numpad;
@@ -119,22 +120,9 @@ void HsvChannelConfigWidget::refresh()
 
 void HsvChannelConfigWidget::update()
 {
-	if(!m_camera->isOpen()) {
-		if(!m_camera->open(0)) {
-			setSlowUpdate();
-			return;
-		}
-		m_camera->setWidth(160);
-		m_camera->setHeight(120);
-		setFastUpdate();
-		ui->camera->setInvalid(false);
-	}
-	
 	if(!m_camera->update()) {
 		qWarning() << "Lost camera";
 		ui->camera->setInvalid(true);
-		m_camera->close();
-		setSlowUpdate();
 		return;
 	}
 	
@@ -147,6 +135,9 @@ void HsvChannelConfigWidget::update()
 	
 	Camera::ObjectVector::const_iterator it = objs->begin();
 	cv::Mat image = m_camera->rawImage();
+	if(image.empty()) {
+		qDebug() << "Empty???";
+	}
 	for(; it != objs->end(); ++it) {
 		const Camera::Object &obj = *it;
 		cv::rectangle(image, cv::Rect(obj.boundingBox().x(), obj.boundingBox().y(),
@@ -262,16 +253,6 @@ void HsvChannelConfigWidget::imagePressed(const int &x, const int &y)
 void HsvChannelConfigWidget::done()
 {
 	RootController::ref().dismissWidget();
-}
-
-void HsvChannelConfigWidget::setSlowUpdate()
-{
-	m_updateTimer->start(1000);
-}
-
-void HsvChannelConfigWidget::setFastUpdate()
-{
-	m_updateTimer->start(50);
 }
 
 void HsvChannelConfigWidget::blockChildSignals(const bool &block)

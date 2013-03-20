@@ -14,8 +14,6 @@ namespace Camera
 }
 
 class NumpadDialog;
-class QTimer;
-
 
 class HsvChannelConfigWidget : public ChannelConfigWidget
 {
@@ -48,7 +46,6 @@ private:
 	Ui::HsvChannelConfigWidget *ui;
 	NumpadDialog *m_numpad;
 	Camera::Device *m_camera;
-	QTimer *m_updateTimer;
 };
 
 #endif
