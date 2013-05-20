@@ -106,6 +106,7 @@ void CameraInputManager::updateCamera()
 		return;
 	}
 	if(!m_inputProvider->isOpen()) {
+		qWarning() << "Input provider is not yet open.";
 		if(!m_inputProvider->open(0)) {
 			qDebug() << "Failed to open input provider... for now.";
 			setFrameRate(1);
@@ -125,7 +126,7 @@ void CameraInputManager::updateCamera()
 		m_image = cv::Mat();
 	}
 	
-	emit frameAvailable(m_image);
+	if(!m_image.empty()) emit frameAvailable(m_image);
 	m_reentryBarrier = false;
 }
 

@@ -3,6 +3,7 @@
 
 #include <QImage>
 #include <QWidget>
+#include <QMutex>
 #include <opencv2/opencv.hpp>
 
 class CvWidget : public QWidget
@@ -17,7 +18,7 @@ public:
 	const bool& invalid() const;
 	
 public slots:
-	void updateImage(cv::Mat image);
+	void updateImage(const cv::Mat &image);
 	
 signals:
 	void pressed(const int &x, const int &y);
@@ -34,6 +35,7 @@ private:
 	cv::Mat m_image;
 	unsigned char *m_data;
 	QImage m_resizedImage;
+	mutable QMutex m_mutex;
 };
 
 #endif

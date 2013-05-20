@@ -30,7 +30,8 @@ CameraWidget::CameraWidget(Device *device, QWidget *parent)
 	connect(ui->config, SIGNAL(currentIndexChanged(int)), SLOT(currentIndexChanged(int)));
 	
 	m_device->open();
-	connect(&CameraInputManager::ref(), SIGNAL(frameAvailable(cv::Mat)), SLOT(updateImage()));
+	connect(&CameraInputManager::ref(), SIGNAL(frameAvailable(cv::Mat)),
+		SLOT(updateImage()), Qt::QueuedConnection);
 }
 
 CameraWidget::~CameraWidget()

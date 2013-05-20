@@ -27,16 +27,20 @@ const bool& CvWidget::invalid() const
 	return m_invalid;
 }
 
-void CvWidget::updateImage(cv::Mat image)
+void CvWidget::updateImage(const cv::Mat &image)
 {
-	m_invalid = image.empty();
-	if(m_invalid) {
+	m_mutex.lock();
+	if((m_invalid = image.empty())) {
+		m_image = cv::Mat();
 		update();
+		m_mutex.unlock();
 		return;
 	}
+	
 	cv::cvtColor(image, m_image, CV_BGR2RGB);
 	scaleImage();
 	update();
+	m_mutex.unlock();
 }
 
 void CvWidget::resizeEvent(QResizeEvent *event)
@@ -49,7 +53,7 @@ void CvWidget::paintEvent(QPaintEvent *event)
 {
 	QPainter painter(this);
 	
-	if(m_invalid) {
+	if(m_invalid || m_image.empty()) {
 		painter.fillRect(0, 0, width() - 1, height() - 1, Qt::transparent);
 		painter.drawText(QRect(0, 0, width(), height()),
 			tr("Failed to fetch image"),
@@ -58,7 +62,8 @@ void CvWidget::paintEvent(QPaintEvent *event)
 	}
 	painter.drawImage(width() / 2 - m_resizedImage.width() / 2, height() / 2 - m_resizedImage.height() / 2, m_resizedImage,
 		0, 0, m_resizedImage.width(), m_resizedImage.height());
-	painter.drawRect(width() / 2 - m_resizedImage.width() / 2, height() / 2 - m_resizedImage.height() / 2, m_resizedImage.width() - 1, m_resizedImage.height() - 1);
+	painter.drawRect(width() / 2 - m_resizedImage.width() / 2, height() / 2 - m_resizedImage.height() / 2,
+		m_resizedImage.width() - 1, m_resizedImage.height() - 1);
 }
 
 void CvWidget::mousePressEvent(QMouseEvent *event)
@@ -71,10 +76,11 @@ void CvWidget::mousePressEvent(QMouseEvent *event)
 
 void CvWidget::scaleImage()
 {
-	if(m_image.empty()) {
+	if(m_invalid || m_image.empty()) {
 		qDebug() << "Can't scale an empty image";
 		return;
 	}
+	
 	cv::Mat resized;
 	cv::resize(m_image, resized, cv::Size(width(), height()));
 	delete m_data;
