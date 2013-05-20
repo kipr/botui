@@ -10,6 +10,7 @@ CameraInputManager::CameraInputManager()
 	m_refs(0),
 	m_reentryBarrier(false)
 {
+	qRegisterMetaType<cv::Mat>("cv::Mat");
 	m_image = cv::Mat();
 	connect(m_timer, SIGNAL(timeout()), SLOT(updateCamera()));
 }

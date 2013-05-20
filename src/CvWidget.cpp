@@ -30,7 +30,8 @@ const bool& CvWidget::invalid() const
 void CvWidget::updateImage(const cv::Mat &image)
 {
 	m_mutex.lock();
-	if((m_invalid = image.empty())) {
+	m_invalid = image.empty();
+	if(m_invalid) {
 		m_image = cv::Mat();
 		update();
 		m_mutex.unlock();
