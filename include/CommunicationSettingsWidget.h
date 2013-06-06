@@ -17,6 +17,8 @@ public:
 	
 private slots:
 	void deviceNameChanged(const QString &text);
+	void passwordedChanged(const int state);
+	void passwordChanged(const QString &text);
 	
 private:
 	Ui::CommunicationSettingsWidget *ui;

@@ -8,6 +8,16 @@
 
 #define BUTTON_DECORATION_OFFSET 4
 
+inline static QColor mechanical_menubar_disabled_top_color()
+{
+	return QColor(220, 220, 220);
+}
+
+inline static QColor mechanical_menubar_disabled_bottom_color()
+{
+	return QColor(200, 200, 200);
+}
+
 inline static QColor mechanical_menubar_bottom_color(const QColor &top)
 {
 	return QColor(top.red() - 30, top.green() - 30, top.blue() - 30);
@@ -41,6 +51,16 @@ inline static QColor mechanical_button_pressed_top_color()
 inline static QColor mechanical_button_pressed_bottom_color()
 {
 	return QColor(142, 142, 142);
+}
+
+inline static QColor mechanical_button_disabled_top_color()
+{
+	return QColor(240, 240, 240);
+}
+
+inline static QColor mechanical_button_disabled_bottom_color()
+{
+	return QColor(220, 220, 220);
 }
 
 inline static QColor mechanical_stop_button_top_color()
@@ -119,6 +139,11 @@ static void mechanical_draw_styled_button(const QRect& rect, const QStyleOption 
 	if(opt->state & QStyle::State_Sunken) {
 		top = mechanical_button_pressed_top_color();
 		bottom = mechanical_button_pressed_bottom_color();
+	}
+	
+	if(!(opt->state & QStyle::State_Enabled)) {
+		top = mechanical_button_disabled_top_color();
+		bottom = mechanical_button_disabled_bottom_color();
 	}
 	
 	QLinearGradient gradient = QLinearGradient(rect.right(), rect.top(), rect.right(), rect.bottom());
@@ -301,7 +326,7 @@ void MechanicalStyle::drawComplexControl(ComplexControl cc, const QStyleOptionCo
 		const QStyleOptionSlider *so = qstyleoption_cast<const QStyleOptionSlider *>(opt);
 		if(!so) return;
 		const QRect& rect = opt->rect;
-		qDebug() << "Slider rect:" << rect;
+		// qDebug() << "Slider rect:" << rect;
 		QLinearGradient gradient = QLinearGradient(rect.right(), rect.top(), rect.right(), rect.bottom());
 		gradient.setColorAt(0, m_userColor);
 		gradient.setColorAt(1, mechanical_menubar_bottom_color(m_userColor));
@@ -309,7 +334,7 @@ void MechanicalStyle::drawComplexControl(ComplexControl cc, const QStyleOptionCo
 		p->setBrush(QColor(0, 0, 0));
 		p->setPen(QPen(QColor(0, 0, 0, 0)));
 		mechanical_draw_styled_rectangle(rect.adjusted(rect.width() / 3, 0, -rect.width() / 3, 0), p, false);
-		qDebug() << "slider pos" << so->sliderPosition;
+		// qDebug() << "slider pos" << so->sliderPosition;
 		double pos = (so->sliderPosition - so->minimum) / (double)(so->maximum - so->minimum);
 		if(so->orientation == Qt::Vertical) {
 			static const QColor wood = QColor(173, 134, 106);

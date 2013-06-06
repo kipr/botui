@@ -111,7 +111,7 @@
        <item>
         <widget class="QPushButton" name="comm">
          <property name="text">
-          <string>Comm</string>
+          <string>Communic...</string>
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">

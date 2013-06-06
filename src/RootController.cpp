@@ -6,6 +6,9 @@
 #include <QDebug>
 #include <QDeclarativeEngine>
 #include <QDeclarativeContext>
+#include <QGraphicsOpacityEffect>
+#include <QPropertyAnimation>
+#include <QApplication>
 
 RootController::RootController()
 	: m_dismissable(true)
@@ -52,7 +55,24 @@ void RootController::dismissWidget()
 	QWidget *widget = m_stack.pop();
 	QWidget *next = m_stack.size() ? m_stack.top() : 0;
 	if(next) next->move(widget->pos());
+	
+	next->move(next->pos() + QPoint(-next->width(), 0));
 	present(next);
+	QPropertyAnimation *slideInAnimation = new QPropertyAnimation(next, "pos", widget);
+	QPropertyAnimation *slideOutAnimation = new QPropertyAnimation(widget, "pos", widget);
+	slideInAnimation->setDuration(250);
+	slideOutAnimation->setDuration(250);
+	slideInAnimation->setStartValue(next->pos());
+	slideOutAnimation->setStartValue(widget->pos());
+	slideInAnimation->setEndValue(next->pos() + QPoint(next->width(), 0));
+	slideOutAnimation->setEndValue(widget->pos() + QPoint(widget->width(), 0));
+	// slideInAnimation->setEasingCurve(QEasingCurve::OutQuad);
+	// slideOutAnimation->setEasingCurve(QEasingCurve::OutQuad);
+	slideInAnimation->start();
+	slideOutAnimation->start();
+	while(slideInAnimation->state() != QAbstractAnimation::Stopped
+		&& slideOutAnimation->state() != QAbstractAnimation::Stopped) QApplication::processEvents();
+	
 	widget->hide();
 	if(m_ownership.value(widget)) widget->deleteLater();
 	m_ownership.remove(widget);
@@ -88,6 +108,7 @@ void RootController::constrain(QWidget *widget)
 void RootController::present(QWidget *widget)
 {
 	if(!widget) return;
+	
 	widget->show();
 	widget->raise();
 }
