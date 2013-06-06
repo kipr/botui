@@ -162,7 +162,7 @@
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Lucida Grande'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Passwords must be between 3 and 10 characters in length. &lt;span style=&quot; font-weight:600;&quot;&gt;Passwords are stored as plain text on the system, but are never transmitted over a connection. &lt;/span&gt;Enabling password protection will encrypt all communication with KISS IDE.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;Passwords must be between 3 and 10 characters in length. &lt;/span&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Passwords are stored as plain text on the system, but are never transmitted over a connection. &lt;/span&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;Enabling password protection will encrypt all communication with KISS IDE.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
    </item>
