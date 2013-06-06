@@ -39,13 +39,12 @@ CommunicationSettingsWidget::CommunicationSettingsWidget(Device *device, QWidget
 		settings->beginGroup(KOVAN_SERIAL_GROUP);
 		password = QString::fromStdString(settings->stringValue(PASSWORD_KEY));
 		ui->passworded->setCheckState(password.isEmpty() ? Qt::Unchecked : Qt::Checked);
-		ui->password->setText(password);
 		settings->endGroup();
 	}
 	delete settings;
 	
 	passwordedChanged(ui->passworded->checkState());
-	passwordChanged(password);
+	ui->password->setText(password);
 }
 
 CommunicationSettingsWidget::~CommunicationSettingsWidget()
