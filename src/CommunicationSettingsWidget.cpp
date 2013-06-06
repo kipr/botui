@@ -32,11 +32,12 @@ CommunicationSettingsWidget::CommunicationSettingsWidget(Device *device, QWidget
 		SLOT(passwordChanged(QString)));
 	
 	Config *settings = Config::load(SETTINGS_FILE);
+	QString password = "";
 	if(settings) {
 		QString name = QString::fromStdString(settings->stringValue(DEVICE_NAME_KEY));
 		ui->deviceName->setText(name);
 		settings->beginGroup(KOVAN_SERIAL_GROUP);
-		const QString password = QString::fromStdString(settings->stringValue(PASSWORD_KEY));
+		password = QString::fromStdString(settings->stringValue(PASSWORD_KEY));
 		ui->passworded->setCheckState(password.isEmpty() ? Qt::Unchecked : Qt::Checked);
 		ui->password->setText(password);
 		settings->endGroup();
@@ -44,7 +45,7 @@ CommunicationSettingsWidget::CommunicationSettingsWidget(Device *device, QWidget
 	delete settings;
 	
 	passwordedChanged(ui->passworded->checkState());
-	passwordChanged(ui->password->text());
+	passwordChanged(password);
 }
 
 CommunicationSettingsWidget::~CommunicationSettingsWidget()
