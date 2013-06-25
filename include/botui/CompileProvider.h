@@ -7,8 +7,6 @@
 #include <kar.hpp>
 #include <pcompiler/output.hpp>
 
-class TinyArchive;
-
 class CompileProvider : public QObject
 {
 Q_OBJECT
