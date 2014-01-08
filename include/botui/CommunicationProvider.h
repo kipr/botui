@@ -2,7 +2,7 @@
 #define _COMMUNICATIONPROVIDER_H_
 
 #include <QObject>
-#include <kar.hpp>
+#include <kar/kar.hpp>
 
 class Device;
 
@@ -16,7 +16,7 @@ public:
 	void setDevice(Device *device);
 	Device *device() const;
 signals:
-	void programReceived(const Kiss::KarPtr& archive);
+	void programReceived(const kiss::KarPtr& archive);
 	
 private:
 	Device *m_device;

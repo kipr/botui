@@ -149,6 +149,17 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="depth">
+         <property name="text">
+          <string>Depth</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../rc/icons.qrc">
+           <normaloff>:/icons/coins.png</normaloff>:/icons/coins.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="verticalSpacer_3">
          <property name="orientation">
           <enum>Qt::Vertical</enum>

@@ -2,12 +2,12 @@
 
 #define ARGUMENTS_FILE ("arguments.__pass")
 
-void ProgramArguments::setArguments(const Kiss::KarPtr &archive, const QStringList &arguments)
+void ProgramArguments::setArguments(const kiss::KarPtr &archive, const QStringList &arguments)
 {
-	archive->setFile(ARGUMENTS_FILE, arguments.join("\n").toAscii());
+	archive->setFile(ARGUMENTS_FILE, arguments.join("\n").toUtf8());
 }
 
-QStringList ProgramArguments::arguments(const Kiss::KarPtr &archive)
+QStringList ProgramArguments::arguments(const kiss::KarPtr &archive)
 {
 	QByteArray data = archive->data(ARGUMENTS_FILE);
 	QString str(data);

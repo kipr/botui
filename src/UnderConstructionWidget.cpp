@@ -15,11 +15,11 @@ UnderConstructionWidget::UnderConstructionWidget(Device *device, QWidget *parent
 {
 	ui->setupUi(this);
 	QAction *homeAction = m_menuBar->addAction("Home");
-	connect(homeAction, SIGNAL(activated()), SLOT(home()));
+	connect(homeAction, SIGNAL(triggered()), SLOT(home()));
 	
 	if(RootController::ref().depth() > 2) {
 		QAction *backAction = m_menuBar->addAction("Back");
-		connect(backAction, SIGNAL(activated()), SLOT(back()));
+		connect(backAction, SIGNAL(triggered()), SLOT(back()));
 	}
 	
 	m_menuBar->setTitle("Under Construction");

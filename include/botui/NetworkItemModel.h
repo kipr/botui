@@ -1,3 +1,7 @@
+#include "Options.h"
+
+#ifdef NETWORK_ENABLED
+
 #ifndef _NETWORKITEMMODEL_H_
 #define _NETWORKITEMMODEL_H_
 
@@ -20,5 +24,7 @@ public slots:
 	void addNetwork(const Network &network);
 	void removeNetwork(const Network &network);
 };
+
+#endif
 
 #endif

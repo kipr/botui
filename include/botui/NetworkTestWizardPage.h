@@ -1,3 +1,7 @@
+#include "Options.h"
+
+#ifdef NETWORK_ENABLED
+
 #ifndef _NETWORKTESTWIZARDPAGE_H_
 #define _NETWORKTESTWIZARDPAGE_H_
 
@@ -23,5 +27,7 @@ private:
 	Ui::NetworkTestWizardPage *ui;
 	NetworkItemModel *m_model;
 };
+
+#endif
 
 #endif

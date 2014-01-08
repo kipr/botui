@@ -1,3 +1,7 @@
+#include "Options.h"
+
+#ifdef NETWORK_ENABLED
+
 #include "NetworkManager.h"
 
 #include "NMNetworkManager.h"
@@ -380,3 +384,5 @@ Network NetworkManager::createAccessPoint(const QDBusObjectPath &accessPoint) co
 	
 	return newNetwork;
 }
+
+#endif

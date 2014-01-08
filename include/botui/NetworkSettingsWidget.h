@@ -1,6 +1,10 @@
 #ifndef _NETWORKSETTINGSWIDGET_H_
 #define _NETWORKSETTINGSWIDGET_H_
 
+#include "Options.h"
+
+#ifdef NETWORK_ENABLED
+
 #include "StandardWidget.h"
 #include "NetworkManager.h"
 
@@ -27,5 +31,7 @@ private slots:
 private:
 	Ui::NetworkSettingsWidget *ui;
 };
+
+#endif
 
 #endif

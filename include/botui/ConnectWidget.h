@@ -1,3 +1,5 @@
+#ifdef QT_DBUS_LIB
+
 #ifndef _CONNECTWIDGET_H_
 #define _CONNECTWIDGET_H_
 
@@ -29,5 +31,7 @@ private:
 	Ui::ConnectWidget *ui;
 	NetworkItemModel *m_model;
 };
+
+#endif
 
 #endif

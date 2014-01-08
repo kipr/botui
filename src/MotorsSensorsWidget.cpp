@@ -6,6 +6,7 @@
 #include "ServosWidget.h"
 #include "CombinedMotorWidget.h"
 #include "PidTunerWidget.h"
+#include "DepthSensorWidget.h"
 #include "SensorsWidget.h"
 #include "SensorListWidget.h"
 #include "NotYetImplementedDialog.h"
@@ -23,6 +24,7 @@ MotorsSensorsWidget::MotorsSensorsWidget(Device *device, QWidget *parent)
 	connect(ui->sensorList, SIGNAL(clicked()), SLOT(sensorList()));
 	connect(ui->camera, SIGNAL(clicked()), SLOT(camera()));
 	connect(ui->pidTuner, SIGNAL(clicked()), SLOT(pidTuner()));
+	connect(ui->depth, SIGNAL(clicked()), SLOT(depth()));
 }
 
 MotorsSensorsWidget::~MotorsSensorsWidget()
@@ -58,4 +60,9 @@ void MotorsSensorsWidget::camera()
 void MotorsSensorsWidget::pidTuner()
 {
 	RootController::ref().presentWidget(new PidTunerWidget(device()));
+}
+
+void MotorsSensorsWidget::depth()
+{
+  RootController::ref().presentWidget(new DepthSensorWidget(device()));
 }

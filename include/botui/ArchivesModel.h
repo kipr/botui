@@ -2,7 +2,7 @@
 #define _ARCHIVESMODEL_H_
 
 #include <QStandardItemModel>
-#include <kar.hpp>
+#include <kar/kar.hpp>
 
 class Device;
 class ArchivesModel;

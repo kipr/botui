@@ -1,87 +1,103 @@
-PROJECT(botui)
+project(botui)
 
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6.0)
+option(qt5 "Use Qt5 instead of Qt4" OFF)
 
-FIND_PACKAGE(Qt4 REQUIRED)
+if(NOT qt5)
+  cmake_minimum_required(VERSION 2.6.0)
+else()
+  cmake_minimum_required(VERSION 2.8.11)
+endif()
 
-SET(INCLUDE ${botui_SOURCE_DIR}/include/botui)
-SET(RC ${botui_SOURCE_DIR}/rc)
-SET(SRC ${botui_SOURCE_DIR}/src)
-SET(UI ${botui_SOURCE_DIR}/ui)
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/deploy)
 
-SET(DEVICES ${botui_SOURCE_DIR}/devices)
-SET(KOVAN ${DEVICES}/kovan)
-SET(SIMULATOR ${DEVICES}/simulator)
+set(INCLUDE ${CMAKE_SOURCE_DIR}/include/botui)
+set(RC ${CMAKE_SOURCE_DIR}/rc)
+set(SRC ${CMAKE_SOURCE_DIR}/src)
+set(UI ${CMAKE_SOURCE_DIR}/ui)
 
-SET(DBUS ${CMAKE_SOURCE_DIR}/dbus)
+set(DEVICES ${CMAKE_SOURCE_DIR}/devices)
+set(KOVAN ${DEVICES}/kovan)
+set(SIMULATOR ${DEVICES}/simulator)
 
-INCLUDE_DIRECTORIES(
+set(DBUS ${CMAKE_SOURCE_DIR}/dbus)
+
+include_directories(
 	${CMAKE_SOURCE_DIR}
 	${CMAKE_SOURCE_DIR}/src
 	${DBUS}/include
-	${botui_SOURCE_DIR} 
-	${botui_BINARY_DIR}
+	${CMAKE_BINARY_DIR}
 	${KOVAN}/include
 	${SIMULATOR}/include
 	${INCLUDE}
 )
 
-SET(QT_USE_QTDECLARATIVE TRUE)
-SET(QT_USE_QTNETWORK TRUE)
-SET(QT_USE_QTDBUS TRUE)
+if(NOT qt5)
+  cmake_minimum_required(VERSION 2.6.0)
+  find_package(Qt4 REQUIRED)
+  set(QT_USE_QTDECLARATIVE TRUE)
+  set(QT_USE_QTNETWORK TRUE)
+  set(QT_USE_QTDBUS TRUE)
 
-INCLUDE(${QT_USE_FILE})
+  include(${QT_USE_FILE})
+else()
+  
+  find_package(Qt5Widgets REQUIRED)
+  find_package(Qt5Declarative REQUIRED)
+  # find_package(Qt5DBus REQUIRED)
+endif()
 
-FILE(GLOB INCLUDES ${INCLUDE}/*.h ${KOVAN}/include/*.h ${SIMULATOR}/include/*.h ${DBUS}/include/*.h)
-FILE(GLOB SOURCES ${SRC}/*.cpp ${KOVAN}/src/*.cpp ${SIMULATOR}/src/*.cpp ${DBUS}/src/*.cpp)
-FILE(GLOB UIS ${UI}/*)
+file(GLOB INCLUDES ${INCLUDE}/*.h ${KOVAN}/include/*.h ${SIMULATOR}/include/*.h)
+file(GLOB SOURCES ${SRC}/*.cpp ${KOVAN}/src/*.cpp ${SIMULATOR}/src/*.cpp)
+file(GLOB UIS ${UI}/*)
 
-SET(botui_SRCS_CXX ${SOURCES})
-SET(botui_UI ${UIS})
-SET(botui_MOC_SRCS ${INCLUDES})
+set(SRCS_CXX ${SOURCES})
+set(UI ${UIS})
+set(MOC_SRCS ${INCLUDES})
 
-SET(botui_QRC_FILES
+set(QRC_FILES
 	${RC}/icons.qrc
 	${RC}/construction.qrc
 	${RC}/qml.qrc
 	${RC}/fonts.qrc
 )
 
-QT4_WRAP_CPP(botui_SRCS_CXX ${botui_MOC_SRCS})
-QT4_WRAP_UI(botui_SRCS_CXX ${botui_UI})
-QT4_ADD_RESOURCES(botui_SRCS_CXX ${botui_QRC_FILES})
+if(NOT qt5)
+  file(GLOB DBUS_INCLUDES ${DBUS}/include/*.h)
+  file(GLOB DBUS_SOURCES ${DBUS}/src/*.cpp)
+  set(SOURCES ${INCLUDES} ${DBUS_INCLUDES})
+  set(SOURCES ${SOURCES} ${DBUS_SOURCES})
+  QT4_WRAP_CPP(SRCS_CXX ${MOC_SRCS} OPTIONS -DQT_VERSION=0x040000)
+  QT4_WRAP_UI(SRCS_CXX ${UI})
+  QT4_ADD_RESOURCES(SRCS_CXX ${QRC_FILES})
+else()
+  # set(CMAKE_AUTOMOC ON)
+  qt5_wrap_cpp(SRCS_CXX ${MOC_SRCS} OPTIONS -DQT_VERSION=0x050000 -UQT_DBUS_LIB)
+  qt5_wrap_ui(SRCS_CXX ${UI})
+  qt5_add_resources(SRCS_CXX ${QRC_FILES})
+endif()
 
 SET(CMAKE_CXX_FLAGS "-Wall")
 
 IF(APPLE)
-	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -arch x86_64 -g")
-	LINK_DIRECTORIES(/Library/Frameworks/)
+  add_definitions(-g)
+	link_directories(/Library/Frameworks/ /usr/local/lib)
+  include_directories(/usr/local/include)
 ELSEIF(WIN32)
-	SET(CMAKE_CXX_FLAGS "-Wl,--enable-auto-import")
+	set(CMAKE_CXX_FLAGS "-Wl,--enable-auto-import")
 ENDIF()
 
-IF(WIN32)
-	ADD_EXECUTABLE(botui WIN32 ${botui_SRCS_CXX})
-ELSE()
-	ADD_EXECUTABLE(botui ${botui_SRCS_CXX})
-ENDIF()
-
-add_library(libbotui SHARED ${botui_SRCS_CXX})
-set_target_properties(libbotui PROPERTIES OUTPUT_NAME "botui")
+if(WIN32)
+	add_executable(botui WIN32 ${SRCS_CXX})
+else()
+  add_executable(botui ${SRCS_CXX})
+endif()
 
 add_definitions(-O3)
 
-SET(EXECUTABLE_OUTPUT_PATH ${botui_SOURCE_DIR}/deploy)
-SET(LIBRARY_OUTPUT_PATH ${botui_SOURCE_DIR}/lib)
-TARGET_LINK_LIBRARIES(botui ${QT_LIBRARIES} pcompiler kar z opencv_core opencv_highgui opencv_imgproc kovan)
-TARGET_LINK_LIBRARIES(libbotui ${QT_LIBRARIES} pcompiler kar z opencv_core opencv_highgui opencv_imgproc kovan)
+target_link_libraries(botui pcompiler kar z opencv_core opencv_highgui opencv_imgproc kovan)
 
-IF(WIN32)
-install(FILES ${INCLUDES} DESTINATION ${CMAKE_SOURCE_DIR}/../prefix/include/botui)
-INSTALL(TARGETS libbotui
-	ARCHIVE DESTINATION ${CMAKE_SOURCE_DIR}/../prefix/lib
-	RUNTIME DESTINATION ${CMAKE_SOURCE_DIR}/../prefix/lib)
-ELSE(WIN32)
-install(FILES ${INCLUDES} DESTINATION include/botui)
-install(TARGETS libbotui DESTINATION lib)
-ENDIF(WIN32)
+if(NOT qt5)
+  target_link_libraries(botui ${QT_LIBRARIES})
+else()
+  qt5_use_modules(botui Widgets Declarative)
+endif()

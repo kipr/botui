@@ -2,7 +2,7 @@
 #define _EDITORWIDGET_H_
 
 #include <QWidget>
-#include <kar.hpp>
+#include <kar/kar.hpp>
 
 class Device;
 class MenuBar;
@@ -22,8 +22,8 @@ public:
 	void setSavePath(const QString &savePath);
 	const QString &savePath() const;
 	
-	void setArchive(const Kiss::KarPtr &archive);
-	const Kiss::KarPtr &archive() const;
+	void setArchive(const kiss::KarPtr &archive);
+	const kiss::KarPtr &archive() const;
 	
 private slots:
 	void fileChanged(int i);
@@ -38,7 +38,7 @@ private:
 	MenuBar *m_menuBar;
 	
 	QString m_savePath;
-	Kiss::KarPtr m_archive;
+	kiss::KarPtr m_archive;
 	
 	QList<QString> m_lookup;
 	

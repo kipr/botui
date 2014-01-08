@@ -1,3 +1,5 @@
+#ifdef QT_DBUS_LIB
+
 #include "ConnectWidget.h"
 #include "ui_ConnectWidget.h"
 #include "MenuBar.h"
@@ -64,3 +66,5 @@ void ConnectWidget::selectionChanged(const QItemSelection &selection)
 {
 	ui->connect->setEnabled(selection.indexes().size());
 }
+
+#endif

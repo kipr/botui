@@ -26,8 +26,8 @@ FileManagerWidget::FileManagerWidget(Device *device, QWidget *parent)
 	m_menuBar->setTitle(tr("File Manager"));
 	layout()->setMenuBar(m_menuBar);
 	QAction *ex = new QAction(tr("Exit"), this);
-	connect(m_up, SIGNAL(activated()), SLOT(up()));
-	connect(ex, SIGNAL(activated()), SLOT(exit()));
+	connect(m_up, SIGNAL(triggered()), SLOT(up()));
+	connect(ex, SIGNAL(triggered()), SLOT(exit()));
 	m_menuBar->addAction(ex);
 	m_menuBar->addAction(m_up);
 	

@@ -144,7 +144,7 @@ void TouchDial::mouseMoveEvent(QMouseEvent *event)
 	const int xoff = (w - d) / 2;
 	const int yoff = (h - d) / 2;
 	
-	QPointF posF = event->posF();
+	QPoint posF = event->pos();
 	double x = (posF.x() - xoff - r);
 	double y = (posF.y() - yoff - r);
 	

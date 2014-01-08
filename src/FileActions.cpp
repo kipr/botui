@@ -1,7 +1,7 @@
 #include "FileActions.h"
 
 #include <QFileInfo>
-#include <kar.hpp>
+#include <kar/kar.hpp>
 #include <QDebug>
 
 FileAction::FileAction(const QString &name)
@@ -27,7 +27,7 @@ FileActionExtension::FileActionExtension(const QString &name, const QStringList 
 bool FileActionExtension::canHandle(const QString &path) const
 {
 	// Kars can have any extension, so automatically discard kar files.
-	if(Kiss::Kar::isValid(path)) return false;
+	if(kiss::Kar::isValid(path)) return false;
 	
 	qWarning() << m_extensions << "contains" << QFileInfo(path).suffix() << "?";
 	return m_extensions.contains(QFileInfo(path).suffix());
@@ -49,7 +49,6 @@ void FileActions::addAction(FileAction *action)
 
 FileAction *FileActions::action(const QString &path) const
 {
-	qWarning() << path;
 	// Yes, we're doing a linear search.
 	// In the future, it would be nice
 	// to have a QMap or something.

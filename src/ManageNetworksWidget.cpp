@@ -1,3 +1,7 @@
+#include "Options.h"
+
+#ifdef NETWORK_ENABLED
+
 #include "ManageNetworksWidget.h"
 
 #include "ui_ManageNetworks.h"
@@ -44,3 +48,5 @@ void ManageNetworksWidget::forget()
 	
 	NetworkManager::ref().forgetNetwork(m_model->indexToNetwork(selection.indexes()[0]));
 }
+
+#endif

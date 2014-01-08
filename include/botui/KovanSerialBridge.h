@@ -1,3 +1,5 @@
+#ifdef QT_DBUS_LIB
+
 #ifndef _KOVANSERIALBRIDGE_H_
 #define _KOVANSERIALBRIDGE_H_
 
@@ -21,5 +23,7 @@ private slots:
 private:
 	Device *m_device;
 };
+
+#endif
 
 #endif

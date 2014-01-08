@@ -1,3 +1,7 @@
+#include "Options.h"
+
+#ifdef NETWORK_ENABLED
+
 #include "OtherNetworkWidget.h"
 #include "ui_OtherNetworkWidget.h"
 #include "MenuBar.h"
@@ -73,3 +77,5 @@ void OtherNetworkWidget::securityChanged(int index)
 {
 	ui->password->setEnabled(index); // None == 0
 }
+
+#endif

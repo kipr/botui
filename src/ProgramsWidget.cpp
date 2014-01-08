@@ -103,7 +103,7 @@ void ProgramsWidget::edit()
 	if(currents.size() != 1) return;
 	
 	const QString name = m_model->name(currents[0]);
-	Kiss::KarPtr archive = device()->archivesManager()->archive(name);
+	kiss::KarPtr archive = device()->archivesManager()->archive(name);
 	if(archive.isNull()) return;
 	
 	EditorWidget *editor = new EditorWidget(device());
@@ -125,7 +125,7 @@ void ProgramsWidget::add()
 		if(RootController::ref().presentDialog(&dialog) != QDialog::Accepted) return;
 	}
 	
-	Kiss::KarPtr archive = Kiss::Kar::create();
+	kiss::KarPtr archive = kiss::Kar::create();
 	if(!device()->archivesManager()->set(name, archive)) {
 		qWarning() << "Failed to create new archive with the name" << name;
 		return;

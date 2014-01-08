@@ -7,6 +7,7 @@
 #include <sys/ioctl.h>
 #include <sys/select.h>
 #include <errno.h>
+#include <unistd.h>
 #else
 #include <windows.h>
 #endif

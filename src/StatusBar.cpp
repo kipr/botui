@@ -16,5 +16,8 @@ void StatusBar::loadDefaultWidgets(Device *device)
 {
 	if(device->batteryLevelProvider())
 		addPermanentWidget(new BatteryWidget(device->batteryLevelProvider(), this));
+
+#ifdef NETWORK_ENABLED
 	addPermanentWidget(new NetworkStatusWidget(this));
+#endif
 }

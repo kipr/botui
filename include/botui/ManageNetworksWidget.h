@@ -1,3 +1,7 @@
+#include "Options.h"
+
+#ifdef NETWORK_ENABLED
+
 #ifndef _MANAGENETWORKS_H_
 #define _MANAGENETWORKS_H_
 
@@ -25,5 +29,7 @@ private:
 	Device *m_device;
 	NetworkItemModel *m_model;
 };
+
+#endif
 
 #endif

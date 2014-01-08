@@ -3,7 +3,7 @@
 #include "Device.h"
 #include "CompileProvider.h"
 
-ConcurrentCompile::ConcurrentCompile(const QString &name, const Kiss::KarPtr &archive, Device *device)
+ConcurrentCompile::ConcurrentCompile(const QString &name, const kiss::KarPtr &archive, Device *device)
 	: m_name(name),
 	m_archive(archive),
 	m_device(device)

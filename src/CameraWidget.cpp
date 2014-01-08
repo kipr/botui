@@ -20,7 +20,7 @@ CameraWidget::CameraWidget(Device *device, QWidget *parent)
 	ui->setupUi(this);
 	performStandardSetup(tr("Camera"), false);
 	QAction *selectSource = menuBar()->addAction(tr("Source..."));
-	connect(selectSource, SIGNAL(activated()), SLOT(selectSource()));
+	connect(selectSource, SIGNAL(triggered()), SLOT(selectSource()));
 	
 	ui->config->setModel(m_model);
 	ui->config->setRootModelIndex(m_model->index(m_model->rootPath()));

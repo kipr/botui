@@ -5,6 +5,7 @@
 #include "StatusBar.h"
 #include "Device.h"
 #include "Calibrate.h"
+#include "Options.h"
 #include "NotYetImplementedDialog.h"
 
 #include "NetworkSettingsWidget.h"
@@ -21,7 +22,11 @@ SettingsWidget::SettingsWidget(Device *device, QWidget *parent)
 	ui->setupUi(this);
 	performStandardSetup(tr("Settings"));
 	
-	// ui->networkSettings->setEnabled(m_device->networkingProvider());
+  #ifdef NETWORK_ENABLED
+  ui->network->setEnabled(true);
+  #else
+  ui->network->setEnabled(false);
+  #endif
 	
 	connect(ui->network, SIGNAL(clicked()), SLOT(network()));
 	connect(ui->comm, SIGNAL(clicked()), SLOT(comm()));
@@ -37,7 +42,9 @@ SettingsWidget::~SettingsWidget()
 
 void SettingsWidget::network()
 {
-	RootController::ref().presentWidget(new NetworkSettingsWidget(device()));
+#ifdef NETWORK_ENABLED
+  RootController::ref().presentWidget(new NetworkSettingsWidget(device()));
+#endif
 }
 
 void SettingsWidget::comm()

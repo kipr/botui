@@ -13,7 +13,7 @@ class KissCompileProvider : public CompileProvider
 {
 public:
 	KissCompileProvider(Device *device, QObject *parent = 0);
-	Compiler::OutputList compile(const QString &name, const Kiss::KarPtr &archive);
+	Compiler::OutputList compile(const QString &name, const kiss::KarPtr &archive);
 	
 private:
 	QString tempPath() const;

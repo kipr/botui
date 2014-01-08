@@ -1,3 +1,7 @@
+#include "Options.h"
+
+#ifdef NETWORK_ENABLED
+
 #include "NetworkSettingsWidget.h"
 #include "ui_NetworkSettingsWidget.h"
 #include "MenuBar.h"
@@ -68,3 +72,5 @@ void NetworkSettingsWidget::stateChanged(const NetworkManager::State &newState, 
 	qDebug() << "State Changed to" << newState;
 	QTimer::singleShot(300, this, SLOT(updateInformation()));
 }
+
+#endif

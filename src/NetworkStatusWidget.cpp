@@ -1,3 +1,7 @@
+#include "Options.h"
+
+#ifdef NETWORK_ENABLED
+
 #include "NetworkStatusWidget.h"
 
 #include "NetworkManager.h"
@@ -78,3 +82,5 @@ void NetworkStatusWidget::constrain()
 	setMinimumSize(24, 20);
 	setMaximumSize(24, 20);
 }
+
+#endif

@@ -1,15 +1,27 @@
 #ifndef _MECHANICALSTYLE_H_
 #define _MECHANICALSTYLE_H_
 
-#include <QPlastiqueStyle>
+#include <QtGlobal>
 
+#if QT_VERSION >= 0x050000
+#include <QProxyStyle>
+#else
+#include <QPlastiqueStyle>
+#endif
+
+#if QT_VERSION >= 0x050000
+class MechanicalStyle : public QProxyStyle
+#else
 class MechanicalStyle : public QPlastiqueStyle
+#endif
 {
 Q_OBJECT
 public:
 	enum CustomControlElement {
 		CE_StopButton = CE_CustomBase + 1
 	};
+  
+  MechanicalStyle();
 	
 	void setUserColor(const QColor &userColor);
 	const QColor &userColor() const;

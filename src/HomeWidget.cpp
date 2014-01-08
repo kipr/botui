@@ -30,10 +30,10 @@ HomeWidget::HomeWidget(Device *device, QWidget *parent)
 	connect(ui->motorsSensors, SIGNAL(clicked()), SLOT(motorsSensors()));
 	connect(ui->settings, SIGNAL(clicked()), SLOT(settings()));
 	
-	QAction *lock = menuBar()->addAction(UiStandards::lockString());
-	connect(lock, SIGNAL(activated()), SLOT(lock()));
+	// QAction *lock = menuBar()->addAction(UiStandards::lockString());
+	// connect(lock, SIGNAL(triggered()), SLOT(lock()));
 	QAction *about = menuBar()->addAction(tr("About"));
-	connect(about, SIGNAL(activated()), SLOT(about()));
+	connect(about, SIGNAL(triggered()), SLOT(about()));
 	
 	ui->programs->setEnabled(device->archivesManager());
 }

@@ -20,13 +20,13 @@ EditorWidget::EditorWidget(Device *device, QWidget *parent)
 	ui->setupUi(this);
 	layout()->setMenuBar(m_menuBar);
 	QAction *saveAndExit = m_menuBar->addAction(tr("Save"));
-	connect(saveAndExit, SIGNAL(activated()), SLOT(saveAndExit()));
+	connect(saveAndExit, SIGNAL(triggered()), SLOT(saveAndExit()));
 	
 	QAction *addFile = m_menuBar->addAction(tr("Add File"));
-	connect(addFile, SIGNAL(activated()), SLOT(addFile()));
+	connect(addFile, SIGNAL(triggered()), SLOT(addFile()));
 	
 	QAction *removeFile = m_menuBar->addAction(tr("Delete File"));
-	connect(removeFile, SIGNAL(activated()), SLOT(removeFile()));
+	connect(removeFile, SIGNAL(triggered()), SLOT(removeFile()));
 	
 	connect(ui->files, SIGNAL(currentIndexChanged(int)), SLOT(fileChanged(int)));
 }
@@ -46,7 +46,7 @@ const QString &EditorWidget::savePath() const
 	return m_savePath;
 }
 
-void EditorWidget::setArchive(const Kiss::KarPtr &archive)
+void EditorWidget::setArchive(const kiss::KarPtr &archive)
 {
 	m_lookup.clear();
 	ui->files->clear();
@@ -62,7 +62,7 @@ void EditorWidget::setArchive(const Kiss::KarPtr &archive)
 	ui->text->setPlainText(m_archive->data(m_lookup[0]));
 }
 
-const Kiss::KarPtr &EditorWidget::archive() const
+const kiss::KarPtr &EditorWidget::archive() const
 {
 	return m_archive;
 }

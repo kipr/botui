@@ -47,7 +47,7 @@ ProgramArgsWidget::~ProgramArgsWidget()
 		args << ui->args->item(i)->text();
 	}
 	
-	Kiss::KarPtr archive = device()->archivesManager()->archive(m_name);
+	kiss::KarPtr archive = device()->archivesManager()->archive(m_name);
 	ProgramArguments::setArguments(archive, args);
 	device()->archivesManager()->set(m_name, archive);
 	

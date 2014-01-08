@@ -1,3 +1,7 @@
+#include "Options.h"
+
+#ifdef NETWORK_ENABLED
+
 #ifndef _NETWORKSTATUSWIDGET_H_
 #define _NETWORKSTATUSWIDGET_H_
 
@@ -20,5 +24,7 @@ private slots:
 private:
 	void constrain();
 };
+
+#endif
 
 #endif

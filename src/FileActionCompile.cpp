@@ -12,7 +12,7 @@
 #include "CompileProvider.h"
 #include "CompileHelpers.h"
 
-#include <kar.hpp>
+#include <kar/kar.hpp>
 #include <QFileInfo>
 #include <QThreadPool>
 
@@ -39,7 +39,7 @@ bool FileActionCompile::act(const QString &path, Device *device) const
 	
 	// Create a program archive containing the input file
 	
-	Kiss::KarPtr archive = Kiss::Kar::create();
+	kiss::KarPtr archive = kiss::Kar::create();
 	QFile inputFile(path);
 	if(!inputFile.open(QIODevice::ReadOnly)) {
 		qWarning() << "QFile::open failed on" << path;

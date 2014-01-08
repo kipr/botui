@@ -36,10 +36,11 @@ int main(int argc, char* argv[])
 	
 	Kovan::Device device;
 	CursorManager::ref().setDevice(&device);
-	KovanSerialBridge::ref().init(&device);
+#ifdef QT_DBUS_LIB
+  KovanSerialBridge::ref().init(&device);
+  NetworkManager::ref();
+#endif
 	GuiSettingsWidget::updateStyle(&device);
-	
-	NetworkManager::ref();
 	RootController::ref().presentWidget(new HomeWidget(&device));
 	
 	

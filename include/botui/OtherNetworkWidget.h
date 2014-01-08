@@ -1,3 +1,7 @@
+#include "Options.h"
+
+#ifdef NETWORK_ENABLED
+
 #ifndef _OTHERNETWORKWIDGET_H_
 #define _OTHERNETWORKWIDGET_H_
 
@@ -30,5 +34,7 @@ private:
 	KeyboardDialog *m_ssid;
 	KeyboardDialog *m_password;
 };
+
+#endif
 
 #endif

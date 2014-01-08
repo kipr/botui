@@ -1,6 +1,10 @@
 #ifndef _NETWORKMANAGER_H_
 #define _NETWORKMANAGER_H_
 
+#include "Options.h"
+
+#ifdef NETWORK_ENABLED
+
 #include "Singleton.h"
 #include "Network.h"
 #include "NetworkManagerConnection.h"
@@ -81,5 +85,7 @@ private:
 	NMDevice *m_device;
 	NMDeviceWifi *m_wifi;
 };
+
+#endif
 
 #endif

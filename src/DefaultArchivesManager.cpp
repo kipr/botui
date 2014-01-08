@@ -23,9 +23,9 @@ QStringList DefaultArchivesManager::archives() const
 	return QDir(m_archivesPath).entryList(QDir::NoDot | QDir::NoDotDot | QDir::Files);
 }
 
-Kiss::KarPtr DefaultArchivesManager::archive(const QString &name) const
+kiss::KarPtr DefaultArchivesManager::archive(const QString &name) const
 {
-	return Kiss::Kar::load(archivePath(name));
+	return kiss::Kar::load(archivePath(name));
 }
 
 QString DefaultArchivesManager::binaryPath(const QString &name) const
@@ -40,7 +40,7 @@ bool DefaultArchivesManager::hasBinary(const QString &name) const
 		< QFileInfo(binPath).lastModified();
 }
 
-bool DefaultArchivesManager::set(const QString &name, const Kiss::KarPtr &archive)
+bool DefaultArchivesManager::set(const QString &name, const kiss::KarPtr &archive)
 {
 	remove(name);
 	bool ret = archive->save(archivePath(name));

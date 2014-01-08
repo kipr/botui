@@ -9,14 +9,13 @@ class DefaultArchivesManager : public ArchivesManager
 {
 Q_OBJECT
 public:
-	DefaultArchivesManager(const QString &archivesPath, const QString &binariesPath,
-		QObject *parent);
+	DefaultArchivesManager(const QString &archivesPath, const QString &binariesPath, QObject *parent);
 	
 	virtual QStringList archives() const;
-	virtual Kiss::KarPtr archive(const QString &name) const;
+	virtual kiss::KarPtr archive(const QString &name) const;
 	virtual QString binaryPath(const QString &name) const;
 	virtual bool hasBinary(const QString &name) const;
-	virtual bool set(const QString &name, const Kiss::KarPtr &archive);
+	virtual bool set(const QString &name, const kiss::KarPtr &archive);
 	virtual bool remove(const QString &name);
 	QString archivePath(const QString &name) const;
 	

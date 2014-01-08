@@ -1,3 +1,7 @@
+#include "Options.h"
+
+#ifdef NETWORK_ENABLED
+
 #include "NetworkItemModel.h"
 #include "NetworkManager.h"
 
@@ -59,3 +63,5 @@ void NetworkItemModel::removeNetwork(const Network &network)
 		if(network == networkItem->network()) qDeleteAll(takeRow(i));
 	}
 }
+
+#endif

@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QString>
 
-#include <kar.hpp>
+#include <kar/kar.hpp>
 #include <pcompiler/output.hpp>
 
 class CompileProvider : public QObject
@@ -16,7 +16,7 @@ public:
 	
 	void setBinariesPath(const QString &binariesPath);
 	const QString &binariesPath() const;
-	virtual Compiler::OutputList compile(const QString &name, const Kiss::KarPtr &program) = 0;
+	virtual Compiler::OutputList compile(const QString &name, const kiss::KarPtr &program) = 0;
 	
 	
 signals:

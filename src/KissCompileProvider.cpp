@@ -24,7 +24,7 @@ KissCompileProvider::KissCompileProvider(Device *device, QObject *parent)
 {
 }
 
-Compiler::OutputList KissCompileProvider::compile(const QString &name, const Kiss::KarPtr &program)
+Compiler::OutputList KissCompileProvider::compile(const QString &name, const kiss::KarPtr &program)
 {
 	if(program.isNull()) {
 		return OutputList() << Output(name, 1,
@@ -48,38 +48,7 @@ Compiler::OutputList KissCompileProvider::compile(const QString &name, const Kis
 	Engine engine(Compilers::instance()->compilers());
 	OutputList ret = engine.compile(input, opts);
 	
-	QStringList terminalFiles;
-	bool success = true;
-	foreach(const Output& out, ret) {
-		QTextStream stream(stdout);
-		out.dump(stream);
-		if(out.isTerminal() && out.generatedFiles().size() == 1) {
-			terminalFiles << out.generatedFiles()[0];
-		}
-		success &= out.isSuccess();
-	}
 	
-	QString result = QDir(binariesPath()).filePath(name);
-	QFile::remove(result);
-	
-	if(!success) return ret;
-	
-	if(terminalFiles.isEmpty()) {
-		ret << OutputList() << Output(name, 1,
-			QByteArray(), "error: I couldn't figure out how to compile your project.\n");
-		return ret;
-	}
-	
-	if(terminalFiles.size() > 1) {
-		qWarning() << "Multiple Terminals:" << terminalFiles;
-		ret << Output(name, 1, QByteArray(), "error: Terminal ambiguity in compilation.\n");
-	}
-	
-	if(!QFile::copy(terminalFiles[0], result)) {
-		ret << OutputList() << Output(name, 1, QByteArray(),
-			("error: Failed to copy \"" + terminalFiles[0]
-				+ "\" to \"" + result + "\"\n").toLatin1());
-	}
 	
 	return ret;
 }

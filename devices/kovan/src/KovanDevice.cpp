@@ -12,7 +12,7 @@
 #include "RootController.h"
 #include "KeyboardDialog.h"
 
-#include <kar.hpp>
+#include <kar/kar.hpp>
 
 #include <QStandardItemModel>
 #include <QFileSystemModel>
@@ -153,7 +153,7 @@ QString Kovan::Device::name() const
 
 QString Kovan::Device::version() const
 {
-	return "1.9.8";
+	return "2.0.0";
 }
 
 bool Kovan::Device::isTouchscreen() const

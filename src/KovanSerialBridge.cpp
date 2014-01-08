@@ -1,3 +1,5 @@
+#ifdef QT_DBUS_LIB
+
 #include "KovanSerialBridge.h"
 
 #include "Serial.h"
@@ -26,3 +28,5 @@ void KovanSerialBridge::run(const QString &path)
 	if(!Program::instance()->start(path)) delete programWidget;
 	else RootController::ref().presentWidget(programWidget);
 }
+
+#endif

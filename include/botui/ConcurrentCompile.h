@@ -5,7 +5,7 @@
 #include <QString>
 #include <QRunnable>
 
-#include <kar.hpp>
+#include <kar/kar.hpp>
 #include <pcompiler/output.hpp>
 
 class Device;
@@ -14,7 +14,7 @@ class ConcurrentCompile : public QObject, public QRunnable
 {
 Q_OBJECT
 public:
-	ConcurrentCompile(const QString &name, const Kiss::KarPtr &archive, Device *device);
+	ConcurrentCompile(const QString &name, const kiss::KarPtr &archive, Device *device);
 	
 	virtual void run();
 	
@@ -34,7 +34,7 @@ signals:
 
 private:
 	QString m_name;
-	Kiss::KarPtr m_archive;
+	kiss::KarPtr m_archive;
 	Device *m_device;
 	void *m_userData;
 	Compiler::OutputList m_output;

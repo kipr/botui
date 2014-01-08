@@ -22,5 +22,7 @@ TestWizard::TestWizard(Device *device, QWidget *parent)
 	addPage(new ServoTestWizardPage(this));
 	addPage(new SensorTestWizardPage(this));
 	addPage(new CreateTestWizardPage(this));
+#ifdef NETWORK_ENABLED
 	addPage(new NetworkTestWizardPage(this));
+#endif
 }

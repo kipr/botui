@@ -1,3 +1,7 @@
+#include "Options.h"
+
+#ifdef NETWORK_ENABLED
+
 #include "NetworkTestWizardPage.h"
 #include "ui_NetworkTestWizardPage.h"
 
@@ -27,3 +31,5 @@ void NetworkTestWizardPage::cleanupPage()
 {
 	
 }
+
+#endif

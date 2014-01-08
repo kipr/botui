@@ -6,6 +6,13 @@
 #include <QApplication>
 #include <QDebug>
 
+#if QT_VERSION >= 0x050000
+#define PARENT_STYLE_CLASS QProxyStyle
+#include <QStyleFactory>
+#else
+#define PARENT_STYLE_CLASS QPlastiqueStyle
+#endif
+
 #define BUTTON_DECORATION_OFFSET 4
 
 inline static QColor mechanical_menubar_disabled_top_color()
@@ -154,6 +161,13 @@ static void mechanical_draw_styled_button(const QRect& rect, const QStyleOption 
 	mechanical_draw_styled_rectangle(rect, p, withScrews);
 }
 
+MechanicalStyle::MechanicalStyle()
+{
+#if QT_VERSION >= 0x050000
+  setBaseStyle(QStyleFactory::create("fusion"));
+#endif
+}
+
 void MechanicalStyle::setUserColor(const QColor &userColor)
 {
 	m_userColor = userColor;
@@ -166,7 +180,7 @@ const QColor &MechanicalStyle::userColor() const
 
 QRect MechanicalStyle::subControlRect(ComplexControl cc, const QStyleOptionComplex *opt, SubControl sc, const QWidget *widget) const
 {
-	QRect ret = QPlastiqueStyle::subControlRect(cc, opt, sc, widget);
+	QRect ret = PARENT_STYLE_CLASS ::subControlRect(cc, opt, sc, widget);
 	if(cc == CC_ScrollBar) {
 		const QStyleOptionSlider *scrollbar = qstyleoption_cast<const QStyleOptionSlider *>(opt);
 		if(!scrollbar) return ret;
@@ -376,7 +390,7 @@ void MechanicalStyle::drawComplexControl(ComplexControl cc, const QStyleOptionCo
 		return;
 	}
 
-	QPlastiqueStyle::drawComplexControl(cc, opt, p, widget);
+	PARENT_STYLE_CLASS ::drawComplexControl(cc, opt, p, widget);
 }
 
 void MechanicalStyle::drawControl(ControlElement ce, const QStyleOption *opt, QPainter *p, const QWidget *widget) const
@@ -575,13 +589,14 @@ void MechanicalStyle::drawControl(ControlElement ce, const QStyleOption *opt, QP
 		
 		mechanical_draw_rectangle(rect.adjusted(0, 0, 0, selected ? 0 : -2), p, false);
 		p->restore();
-		QPlastiqueStyle::drawControl(QStyle::CE_TabBarTabLabel, opt, p, widget);
+    
+		PARENT_STYLE_CLASS ::drawControl(QStyle::CE_TabBarTabLabel, opt, p, widget);
 		return;
 	}
 	
 	if(ce == CE_FocusFrame) return; // No focus
 	
-	QPlastiqueStyle::drawControl(ce, opt, p, widget);
+	PARENT_STYLE_CLASS ::drawControl(ce, opt, p, widget);
 }
 
 void MechanicalStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, QPainter *p, const QWidget *w) const
@@ -590,7 +605,7 @@ void MechanicalStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt
 	if(pe == PE_FrameFocusRect) return;
 	if(pe == PE_FrameStatusBar) return;
 	
-	QPlastiqueStyle::drawPrimitive(pe, opt, p, w);
+	PARENT_STYLE_CLASS ::drawPrimitive(pe, opt, p, w);
 }
 
 int MechanicalStyle::pixelMetric(PixelMetric pm, const QStyleOption *opt, const QWidget *widget) const
@@ -605,28 +620,28 @@ int MechanicalStyle::pixelMetric(PixelMetric pm, const QStyleOption *opt, const 
 		return 27;
 	}
 	if(pm == PM_ScrollBarSliderMin) return 50;
-	return QPlastiqueStyle::pixelMetric(pm, opt, widget);
+	return PARENT_STYLE_CLASS ::pixelMetric(pm, opt, widget);
 }
 
 void MechanicalStyle::polish(QApplication *app)
 {
-	QPlastiqueStyle::polish(app);
+	PARENT_STYLE_CLASS ::polish(app);
 }
 
 void MechanicalStyle::polish(QWidget *widget)
 {
-	QPlastiqueStyle::polish(widget);
+	PARENT_STYLE_CLASS ::polish(widget);
 }
 
 void MechanicalStyle::polish(QPalette& pal)
 {
-	QPlastiqueStyle::polish(pal);
+	PARENT_STYLE_CLASS ::polish(pal);
 	pal.setBrush(QPalette::Button, Qt::black);
 }
 
 QSize MechanicalStyle::sizeFromContents(ContentsType ct, const QStyleOption *opt, const QSize & csz, const QWidget *widget) const
 {
-	QSize size = QPlastiqueStyle::sizeFromContents(ct, opt, csz, widget);
+	QSize size = PARENT_STYLE_CLASS ::sizeFromContents(ct, opt, csz, widget);
 	if(ct == CT_MenuBarItem) {
 		return QSize(size.width() + BUTTON_DECORATION_OFFSET * 2, size.height() < 21 ? 21 : size.height()); // Hack for X11
 	}
@@ -649,28 +664,28 @@ QSize MechanicalStyle::sizeFromContents(ContentsType ct, const QStyleOption *opt
 
 QPixmap MechanicalStyle::standardPixmap(StandardPixmap standardPixmap, const QStyleOption *opt, const QWidget *widget) const
 {
-	return QPlastiqueStyle::standardPixmap(standardPixmap, opt, widget);
+	return PARENT_STYLE_CLASS ::standardPixmap(standardPixmap, opt, widget);
 }
 
 int MechanicalStyle::styleHint(StyleHint hint, const QStyleOption *opt, const QWidget *widget, QStyleHintReturn *returnData) const
 {
 	if(hint == SH_ItemView_ChangeHighlightOnFocus) return 0;
 	
-	return QPlastiqueStyle::styleHint(hint, opt, widget, returnData);
+	return PARENT_STYLE_CLASS ::styleHint(hint, opt, widget, returnData);
 }
 
 QRect MechanicalStyle::subElementRect(SubElement sr, const QStyleOption *opt, const QWidget *w) const
 {
-	return QPlastiqueStyle::subElementRect(sr, opt, w);
+	return PARENT_STYLE_CLASS ::subElementRect(sr, opt, w);
 }
 
 void MechanicalStyle::unpolish(QApplication *app)
 {
-	QPlastiqueStyle::unpolish(app);
+	PARENT_STYLE_CLASS ::unpolish(app);
 }
 
 void MechanicalStyle::unpolish(QWidget *widget)
 {
-	QPlastiqueStyle::unpolish(widget);
+	PARENT_STYLE_CLASS ::unpolish(widget);
 }
 

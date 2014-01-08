@@ -14,7 +14,7 @@ PairWidget::PairWidget(Device *device, QWidget *parent)
 {
 	ui->setupUi(this);
 	QAction *cancelAction = m_menuBar->addAction("Cancel");
-	connect(cancelAction, SIGNAL(activated()), SIGNAL(cancel()));
+	connect(cancelAction, SIGNAL(triggered()), SIGNAL(cancel()));
 	m_menuBar->setTitle("Incoming Connection");
 	layout()->setMenuBar(m_menuBar);
 }
