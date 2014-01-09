@@ -46,7 +46,7 @@ Compiler::OutputList KissCompileProvider::compile(const QString &name, const kis
 	
 	Input input = Input::fromList(extracted);
 	Options opts = Options::load("/etc/kovan/platform.hints");
-  opts["USER_ROOT"] = "/kovan";
+  opts.setVariable("USER_ROOT", "/kovan");
 	Engine engine(Compilers::instance()->compilers());
 	OutputList ret = engine.compile(input, opts);
 	
