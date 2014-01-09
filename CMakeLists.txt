@@ -50,9 +50,8 @@ file(GLOB INCLUDES ${INCLUDE}/*.h ${KOVAN}/include/*.h ${SIMULATOR}/include/*.h)
 file(GLOB SOURCES ${SRC}/*.cpp ${KOVAN}/src/*.cpp ${SIMULATOR}/src/*.cpp)
 file(GLOB UIS ${UI}/*)
 
-set(SRCS_CXX ${SOURCES})
+
 set(UI ${UIS})
-set(MOC_SRCS ${INCLUDES})
 
 set(QRC_FILES
 	${RC}/icons.qrc
@@ -64,13 +63,19 @@ set(QRC_FILES
 if(NOT qt5)
   file(GLOB DBUS_INCLUDES ${DBUS}/include/*.h)
   file(GLOB DBUS_SOURCES ${DBUS}/src/*.cpp)
-  set(SOURCES ${INCLUDES} ${DBUS_INCLUDES})
+  set(INCLUDES ${INCLUDES} ${DBUS_INCLUDES})
   set(SOURCES ${SOURCES} ${DBUS_SOURCES})
+  
+  set(MOC_SRCS ${INCLUDES})
+  set(SRCS_CXX ${SOURCES})
+  
   QT4_WRAP_CPP(SRCS_CXX ${MOC_SRCS} OPTIONS -DQT_VERSION=0x040000)
   QT4_WRAP_UI(SRCS_CXX ${UI})
   QT4_ADD_RESOURCES(SRCS_CXX ${QRC_FILES})
 else()
   # set(CMAKE_AUTOMOC ON)
+  set(MOC_SRCS ${INCLUDES})
+  set(SRCS_CXX ${SOURCES})
   qt5_wrap_cpp(SRCS_CXX ${MOC_SRCS} OPTIONS -DQT_VERSION=0x050000 -UQT_DBUS_LIB)
   qt5_wrap_ui(SRCS_CXX ${UI})
   qt5_add_resources(SRCS_CXX ${QRC_FILES})
