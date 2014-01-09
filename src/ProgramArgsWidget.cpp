@@ -3,7 +3,7 @@
 
 #include "RootController.h"
 #include "KeyboardDialog.h"
-#include "ArchivesManager.h"
+#include "SystemPrefix.h"
 #include "Device.h"
 #include "ProgramArguments.h"
 
@@ -30,7 +30,7 @@ ProgramArgsWidget::ProgramArgsWidget(const QString &name, Device *device, QWidge
 	
 	delete ui->args->takeItem(0);
 	
-	ui->args->addItems(ProgramArguments::arguments(device->archivesManager()->archive(m_name)));
+	ui->args->addItems(ProgramArguments::arguments(kiss::Kar::load(SystemPrefix::ref().rootManager()->archivesPath(m_name))));
 	
 	currentItemChanged(0);
 }
@@ -47,9 +47,10 @@ ProgramArgsWidget::~ProgramArgsWidget()
 		args << ui->args->item(i)->text();
 	}
 	
-	kiss::KarPtr archive = device()->archivesManager()->archive(m_name);
+  const QString path = SystemPrefix::ref().rootManager()->archivesPath(m_name);
+  kiss::KarPtr archive = kiss::Kar::load(path);
 	ProgramArguments::setArguments(archive, args);
-	device()->archivesManager()->set(m_name, archive);
+	archive->save(path);
 	
 	delete ui;
 }

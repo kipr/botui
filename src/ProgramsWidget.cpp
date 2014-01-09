@@ -6,7 +6,7 @@
 #include "StatusBar.h"
 #include "EditorWidget.h"
 #include "Device.h"
-#include "ArchivesManager.h"
+#include "SystemPrefix.h"
 #include "CompileProvider.h"
 #include "ArchivesModel.h"
 #include "ProgramWidget.h"
@@ -70,11 +70,12 @@ void ProgramsWidget::run()
 	
 	const QString name = m_model->name(currents[0]);
 	
-	if(!device()->archivesManager()->hasBinary(name)) {
+	if(!QFileInfo(SystemPrefix::ref().rootManager()->binPath(name)).exists()) {
 		qWarning() << "Could not find executable for" << name << ". Trying to compile.";
 		LogDialog logger;
-		ConcurrentCompile compiler(name, device()->archivesManager()->archive(name),
-			device());
+    const QString archivePath = SystemPrefix::ref().rootManager()->archivesPath(name);
+  	kiss::KarPtr archive = kiss::Kar::load(archivePath);
+		ConcurrentCompile compiler(name, archive, device());
 		compiler.setAutoDelete(false);
 		compiler.setUserData(&logger);
 		connect(&compiler, SIGNAL(compileStarted(QString, ConcurrentCompile *)),
@@ -88,9 +89,11 @@ void ProgramsWidget::run()
 		if(!Compiler::Output::isSuccess(compiler.output())) return;
 	}
 	
+  const QString archivePath = SystemPrefix::ref().rootManager()->archivesPath(name);
 	ProgramWidget *programWidget = new ProgramWidget(Program::instance(), device());
-	if(!Program::instance()->start(device()->archivesManager()->binaryPath(name),
-		ProgramArguments::arguments(device()->archivesManager()->archive(name)))) {
+  kiss::KarPtr archive = kiss::Kar::load(archivePath);
+	if(!Program::instance()->start(SystemPrefix::ref().rootManager()->binPath(name),
+      ProgramArguments::arguments(archive))) {
 		delete programWidget;
 	} else {
 		RootController::ref().presentWidget(programWidget);
@@ -102,13 +105,15 @@ void ProgramsWidget::edit()
 	QModelIndexList currents = ui->programs->selectionModel()->selectedIndexes();
 	if(currents.size() != 1) return;
 	
+  
 	const QString name = m_model->name(currents[0]);
-	kiss::KarPtr archive = device()->archivesManager()->archive(name);
+  const QString archivePath = SystemPrefix::ref().rootManager()->archivesPath(name);
+	kiss::KarPtr archive = kiss::Kar::load(archivePath);
 	if(archive.isNull()) return;
 	
 	EditorWidget *editor = new EditorWidget(device());
 	editor->setArchive(archive);
-	editor->setSavePath(device()->archivesManager()->archivePath(name));
+	editor->setSavePath(archivePath);
 	RootController::ref().presentWidget(editor);
 }
 
@@ -119,21 +124,22 @@ void ProgramsWidget::add()
 	const QString name = keyboard.input();
 	if(name.isEmpty()) return;
 	
-	if(!device()->archivesManager()->archive(name).isNull()) {
+  const QString archivePath = SystemPrefix::ref().rootManager()->archivesPath(name);
+	if(!kiss::Kar::load(archivePath).isNull()) {
 		AreYouSureDialog dialog;
 		dialog.setDescription(tr("You're about to overwrite the program \"%1\". Continue?\n").arg(name));
 		if(RootController::ref().presentDialog(&dialog) != QDialog::Accepted) return;
 	}
 	
 	kiss::KarPtr archive = kiss::Kar::create();
-	if(!device()->archivesManager()->set(name, archive)) {
+	if(!archive->save(archivePath)) {
 		qWarning() << "Failed to create new archive with the name" << name;
 		return;
 	}
 	
 	EditorWidget *editor = new EditorWidget(device());
 	editor->setArchive(archive);
-	editor->setSavePath(device()->archivesManager()->archivePath(name));
+	editor->setSavePath(archivePath);
 	RootController::ref().presentWidget(editor);
 }
 
@@ -149,7 +155,7 @@ void ProgramsWidget::remove()
 {
 	QModelIndexList currents = ui->programs->selectionModel()->selectedIndexes();
 	if(currents.size() != 1) return;
-	device()->archivesManager()->remove(m_model->name(currents[0]));
+	SystemPrefix::ref().rootManager()->uninstall(m_model->name(currents[0]));
 	update();
 }
 

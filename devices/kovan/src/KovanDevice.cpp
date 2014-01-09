@@ -2,7 +2,6 @@
 
 #include "BatteryLevelProvider.h"
 #include "CommunicationProvider.h"
-#include "DefaultArchivesManager.h"
 #include "SettingsProvider.h"
 #include "KissCompileProvider.h"
 #include "KovanButtonProvider.h"
@@ -124,8 +123,7 @@ void Kovan::SettingsProvider::sync()
 }
 
 Kovan::Device::Device()
-	: m_archivesManager(new DefaultArchivesManager("/kovan/archives", "/kovan/binaries", this)),
-	m_compileProvider(new KissCompileProvider(this)),
+	: m_compileProvider(new KissCompileProvider(this)),
 	m_batteryLevelProvider(new Kovan::BatteryLevelProvider()),
 	m_settingsProvider(new Kovan::SettingsProvider()),
 	m_buttonProvider(new Kovan::ButtonProvider(this))
@@ -139,7 +137,6 @@ Kovan::Device::Device()
 
 Kovan::Device::~Device()
 {
-	delete m_archivesManager;
 	delete m_compileProvider;
 	delete m_batteryLevelProvider;
 	delete m_settingsProvider;
@@ -153,7 +150,7 @@ QString Kovan::Device::name() const
 
 QString Kovan::Device::version() const
 {
-	return "1.9.9";
+	return "1.9.9-1";
 }
 
 bool Kovan::Device::isTouchscreen() const
@@ -163,11 +160,6 @@ bool Kovan::Device::isTouchscreen() const
 #else
 	return false;
 #endif
-}
-
-ArchivesManager *Kovan::Device::archivesManager() const
-{
-	return m_archivesManager;
 }
 
 CompileProvider *Kovan::Device::compileProvider() const

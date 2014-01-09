@@ -5,6 +5,7 @@
 #include "RootController.h"
 #include "CompilingWidget.h"
 #include "Device.h"
+#include "SystemPrefix.h"
 
 #include <QDir>
 #include <QFile>
@@ -48,9 +49,8 @@ Compiler::OutputList KissCompileProvider::compile(const QString &name, const kis
 	Engine engine(Compilers::instance()->compilers());
 	OutputList ret = engine.compile(input, opts);
 	
-	
-	
-	return ret;
+  ret << SystemPrefix::ref().rootManager()->install(ret, name);
+  return ret;
 }
 
 QString KissCompileProvider::tempPath() const

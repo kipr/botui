@@ -1,8 +1,9 @@
 #include "ArchivesModel.h"
 #include "Device.h"
-#include "ArchivesManager.h"
+#include "SystemPrefix.h"
 
 #include <QStandardItem>
+#include <QFileSystemWatcher>
 
 class ArchiveItem : public QStandardItem
 {
@@ -31,14 +32,11 @@ ArchivesModel::ArchivesModel(Device *device, QObject *parent)
 	: QStandardItemModel(parent),
 	m_device(device)
 {
-	if(!device->archivesManager()) return;
 	
-	connect(device->archivesManager(), SIGNAL(archiveChanged(QString)),
-		SLOT(archiveChanged(QString)));
-	connect(device->archivesManager(), SIGNAL(archiveRemoved(QString)),
-		SLOT(archiveRemoved(QString)));
-	connect(device->archivesManager(), SIGNAL(refresh()), SLOT(refresh()));
+  QFileSystemWatcher *watcher = new QFileSystemWatcher(this);
+  watcher->addPath(SystemPrefix::ref().rootManager()->archivesPath());
 	
+  connect(watcher, SIGNAL(directoryChanged(QString)), SLOT(refresh()));
 	refresh();
 }
 
@@ -48,35 +46,35 @@ ArchivesModel::~ArchivesModel()
 
 QString ArchivesModel::name(const QModelIndex &index) const
 {
-	ArchiveItem *archiveItem = ArchiveItem::cast(itemFromIndex(index));
-	return archiveItem ? archiveItem->name() : QString();
+  ArchiveItem *const archiveItem = ArchiveItem::cast(itemFromIndex(index));
+  return archiveItem ? archiveItem->name() : QString();
 }
 
 void ArchivesModel::archiveChanged(const QString &name)
 {
-	int i = 0;
-	for(; i < rowCount(); ++i) {
-		ArchiveItem *archiveItem = ArchiveItem::cast(item(i));
-		if(!archiveItem) continue;
-		if(archiveItem->name() == name) break;
-	}
-	if(i < rowCount()) insertRow(0, takeRow(i));
-	else insertRow(0, new ArchiveItem(name));
+  int i = 0;
+  for(; i < rowCount(); ++i) {
+    ArchiveItem *archiveItem = ArchiveItem::cast(item(i));
+    if(!archiveItem) continue;
+    if(archiveItem->name() == name) break;
+  }
+  if(i < rowCount()) insertRow(0, takeRow(i));
+  else insertRow(0, new ArchiveItem(name));
 }
 
 void ArchivesModel::archiveRemoved(const QString &name)
 {
-	for(int i = 0; i < rowCount(); ++i) {
-		ArchiveItem *archiveItem = ArchiveItem::cast(item(i));
-		if(!archiveItem) continue;
-		if(archiveItem->name() == name) qDeleteAll(takeRow(i));
-	}
+  for(int i = 0; i < rowCount(); ++i) {
+    ArchiveItem *archiveItem = ArchiveItem::cast(item(i));
+    if(!archiveItem) continue;
+    if(archiveItem->name() == name) qDeleteAll(takeRow(i));
+  }
 }
 
 void ArchivesModel::refresh()
 {
 	clear();
-	foreach(const QString &name, m_device->archivesManager()->archives()) {
+	foreach(const QString &name, SystemPrefix::ref().rootManager()->archives().entryList()) {
 		appendRow(new ArchiveItem(name));
 	}
 }

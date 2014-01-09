@@ -24,7 +24,6 @@ public:
 	virtual QString version() const = 0;
 	virtual bool isTouchscreen() const = 0;
 	
-	virtual ArchivesManager *archivesManager() const = 0;
 	virtual CompileProvider *compileProvider() const = 0;
 	virtual BatteryLevelProvider *batteryLevelProvider() const = 0;
 	virtual SettingsProvider *settingsProvider() const = 0;

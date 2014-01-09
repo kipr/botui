@@ -34,8 +34,6 @@ HomeWidget::HomeWidget(Device *device, QWidget *parent)
 	// connect(lock, SIGNAL(triggered()), SLOT(lock()));
 	QAction *about = menuBar()->addAction(tr("About"));
 	connect(about, SIGNAL(triggered()), SLOT(about()));
-	
-	ui->programs->setEnabled(device->archivesManager());
 }
 
 HomeWidget::~HomeWidget()

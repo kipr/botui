@@ -1,7 +1,7 @@
 #include "FileActionCompile.h"
 
 #include "Device.h"
-#include "ArchivesManager.h"
+#include "SystemPrefix.h"
 
 #include "LogDialog.h"
 #include "RootController.h"
@@ -32,10 +32,6 @@ bool FileActionCompile::act(const QString &path, Device *device) const
 		qWarning() << "We don't know how to compile a non-file";
 		return false;
 	}
-	if(!device->archivesManager()) {
-		qWarning() << "No archives manager";
-		return false;
-	}
 	
 	// Create a program archive containing the input file
 	
@@ -51,7 +47,12 @@ bool FileActionCompile::act(const QString &path, Device *device) const
 	// Add this program to the virtual filesystem
 	
 	const QString name = input.completeBaseName();
-	device->archivesManager()->set(name, archive);
+  
+  const QString archivePath = SystemPrefix::ref().rootManager()->archivesPath(name);
+  if(!archive->save(archivePath)) {
+		qWarning() << "Archive save failed on" << archivePath;
+		return false;
+  }
 	
 	// Compile the program
 	
@@ -70,7 +71,7 @@ bool FileActionCompile::act(const QString &path, Device *device) const
 	
 	if(!Compiler::Output::isSuccess(compiler.output())) {
 		// Clean up
-		device->archivesManager()->remove(name);
+		SystemPrefix::ref().rootManager()->uninstall(name);
 		return false;
 	}
 	
