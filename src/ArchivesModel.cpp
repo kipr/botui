@@ -74,7 +74,8 @@ void ArchivesModel::archiveRemoved(const QString &name)
 void ArchivesModel::refresh()
 {
 	clear();
-	foreach(const QString &name, SystemPrefix::ref().rootManager()->archives().entryList()) {
+	foreach(const QString &name, SystemPrefix::ref().rootManager()->archives()
+      .entryList(QDir::NoDot | QDir::NoDotDot)) {
 		appendRow(new ArchiveItem(name));
 	}
 }

@@ -19,7 +19,7 @@
 #include <QDebug>
 
 FileActionCompile::FileActionCompile()
-	: FileActionExtension("Compile", QStringList() << "c" << "cpp" << "cc" << "cxx")
+	: FileActionExtension("Compile", QStringList() << "kissproj")
 {
 	qRegisterMetaType<Compiler::OutputList>("Compiler::OutputList");
 }
@@ -34,20 +34,16 @@ bool FileActionCompile::act(const QString &path, Device *device) const
 	}
 	
 	// Create a program archive containing the input file
+	kiss::KarPtr archive = kiss::Kar::create(path);
+  foreach(QString file, archive->files()) {
+    if(!file.endsWith(".kissproj")) continue;
+    const QString old = file;
+    file.replace(".kissproj", ".ops");
+    archive->rename(old, file);
+  }
 	
-	kiss::KarPtr archive = kiss::Kar::create();
-	QFile inputFile(path);
-	if(!inputFile.open(QIODevice::ReadOnly)) {
-		qWarning() << "QFile::open failed on" << path;
-		return false;
-	}
-	archive->addFile(input.fileName(), inputFile.readAll());
-	inputFile.close();
-	
+  const QString name = input.fileName();
 	// Add this program to the virtual filesystem
-	
-	const QString name = input.completeBaseName();
-  
   const QString archivePath = SystemPrefix::ref().rootManager()->archivesPath(name);
   if(!archive->save(archivePath)) {
 		qWarning() << "Archive save failed on" << archivePath;
