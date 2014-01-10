@@ -19,8 +19,8 @@ ProgramWidget::ProgramWidget(Program *program, Device *device, QWidget *parent)
 {
 	ui->setupUi(this);
 	performStandardSetup(tr("Program"));
-	QAction *lock = menuBar()->addAction(UiStandards::lockString());
-	connect(lock, SIGNAL(triggered()), SLOT(lock()));
+	// QAction *lock = menuBar()->addAction(UiStandards::lockString());
+	// connect(lock, SIGNAL(triggered()), SLOT(lock()));
 	
 	ui->extra->setVisible(false);
 	
