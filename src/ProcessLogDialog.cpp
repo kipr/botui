@@ -14,6 +14,7 @@ bool ProcessLogDialog::start(const QString &path, const QStringList &args)
   _process->start(path, args);
   _process->setProcessChannelMode(QProcess::MergedChannels);
   connect(_process, SIGNAL(readyReadStandardOutput()), SLOT(readOutput()));
+  connect(_process, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(terminated()));
   if(!_process->waitForStarted()) {
     delete _process;
     setDismissable(true);
