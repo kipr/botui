@@ -12,7 +12,7 @@ DepthSensorWidget::DepthSensorWidget(Device *device, QWidget *const parent)
   , ui(new Ui::DepthSensorWidget)
 {
   ui->setupUi(this);
-  performStandardSetup(tr("Depth Sensor"));
+  performStandardSetup(tr("Depth Sensor"), false);
   
   QTimer *timer = new QTimer(this);
   connect(timer, SIGNAL(timeout()), SLOT(update()));
