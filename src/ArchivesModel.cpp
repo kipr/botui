@@ -75,7 +75,7 @@ void ArchivesModel::refresh()
 {
 	clear();
 	foreach(const QString &name, SystemPrefix::ref().rootManager()->archives()
-      .entryList(QDir::NoDot | QDir::NoDotDot)) {
+      .entryList(QDir::NoDot | QDir::NoDotDot | QDir::Files)) {
 		appendRow(new ArchiveItem(name));
 	}
 }
