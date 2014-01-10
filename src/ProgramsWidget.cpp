@@ -92,7 +92,7 @@ void ProgramsWidget::run()
   const QString archivePath = SystemPrefix::ref().rootManager()->archivesPath(name);
 	ProgramWidget *programWidget = new ProgramWidget(Program::instance(), device());
   kiss::KarPtr archive = kiss::Kar::load(archivePath);
-	if(!Program::instance()->start(SystemPrefix::ref().rootManager()->binPath(name),
+	if(!Program::instance()->start(SystemPrefix::ref().rootManager()->bin(name).filePath(name),
       ProgramArguments::arguments(archive))) {
 		delete programWidget;
 	} else {
