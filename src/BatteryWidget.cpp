@@ -5,7 +5,7 @@
 #include <QTimer>
 #include <QDebug>
 
-#define TEXT_SIZE 45
+#define TEXT_SIZE 35
 
 BatteryWidget::BatteryWidget(QWidget *parent)
 	: QWidget(parent), m_batteryLevelProvider(0)
@@ -89,7 +89,7 @@ void BatteryWidget::paintEvent(QPaintEvent *event)
 	QRectF textRect(adjustedWidth + connectorSize + offset, 0, textSize - offset, h);
 	QTextOption textOpt(Qt::AlignAbsolute | Qt::AlignHCenter | Qt::AlignVCenter);
 	if(m_batteryLevelProvider) {
-		painter.drawText(textRect, QString::number(percentage * 100, 'g', 3) + "\%", textOpt);
+		painter.drawText(textRect, QString::number((int)(percentage * 100.0f)) + "\%", textOpt);
 	} else painter.drawText(textRect, "N/A", textOpt);
 	
 	if(m_batteryLevelProvider && charging) {
