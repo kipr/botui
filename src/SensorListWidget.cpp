@@ -48,7 +48,7 @@ SensorListWidget::SensorListWidget(Device *device, QWidget *parent)
 	
 	performStandardSetup(tr("Sensor List"));
   _togglePullUp = menuBar()->addAction(tr("Toggle Pull-up"));
-  connect(_togglePullUp, SIGNAL(triggered()), SLOT());
+  connect(_togglePullUp, SIGNAL(triggered()), SLOT(togglePullUp()));
 	
 	ui->sensors->setModel(_model);
   ui->sensors->setItemDelegate(new SensorItemDelegate(_model, this));

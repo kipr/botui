@@ -16,7 +16,7 @@ DepthSensorWidget::DepthSensorWidget(Device *device, QWidget *const parent)
   
   QTimer *timer = new QTimer(this);
   connect(timer, SIGNAL(timeout()), SLOT(update()));
-  timer->start(33); // 30 Hz
+  timer->start(50); // 20 Hz
 }
 
 DepthSensorWidget::~DepthSensorWidget()
