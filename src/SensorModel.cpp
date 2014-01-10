@@ -133,15 +133,16 @@ SensorModel::~SensorModel()
 
 SensorModel::SensorType SensorModel::type(const QModelIndex &index) const
 {
-	QModelIndex nameIndex = index.sibling(0, 0);
-	SensorNameItem *item = SensorNameItem::cast(itemFromIndex(nameIndex));
+	QModelIndex nameIndex = index.sibling(index.row(), 0);
+	SensorNameItem *const item = SensorNameItem::cast(itemFromIndex(nameIndex));
 	return item ? item->sensorType() : SensorModel::Other;
 }
 
 void SensorModel::setPullUp(const QModelIndex &index, const bool pullup)
 {
   if(type(index) != SensorModel::Analog) return;
-  const SensorNameItem *const item = SensorNameItem::cast(itemFromIndex(index));
+  QModelIndex nameIndex = index.sibling(index.row(), 0);
+  const SensorNameItem *const item = SensorNameItem::cast(itemFromIndex(nameIndex));
   if(!item) return;
   ::Analog(item->port()).setPullup(pullup);
 }
@@ -149,7 +150,8 @@ void SensorModel::setPullUp(const QModelIndex &index, const bool pullup)
 bool SensorModel::pullUp(const QModelIndex &index) const
 {
   if(type(index) != SensorModel::Analog) return false;
-  const SensorNameItem *const item = SensorNameItem::cast(itemFromIndex(index));
+  QModelIndex nameIndex = index.sibling(index.row(), 0);
+  const SensorNameItem *const item = SensorNameItem::cast(itemFromIndex(nameIndex));
   return item ? ::Analog(item->port()).pullup() : false;
 }
 

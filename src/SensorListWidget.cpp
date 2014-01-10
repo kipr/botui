@@ -6,6 +6,7 @@
 
 #include <QItemDelegate>
 #include <QTimer>
+#include <QDebug>
 #include <QPainter>
 
 class SensorItemDelegate : public QItemDelegate
@@ -31,9 +32,9 @@ SensorItemDelegate::SensorItemDelegate(SensorModel *const model, QObject *const 
 void SensorItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
 	QItemDelegate::paint(painter, option, index);
-  if(index.column() != 0 || _model->type(index) != SensorModel::Analog) return;
+  if(index.column() != 1 || _model->type(index) != SensorModel::Analog) return;
   
-  const QPixmap pm = _model->pullUp(index.sibling(index.row(), 0)) ? _up : _down;
+  const QPixmap pm = _model->pullUp(index) ? _up : _down;
   const QPoint right = option.rect.topRight();
   painter->drawPixmap(right.x() - 24, right.y() + option.rect.height() / 2 - 8, 16, 16, pm);
 }
