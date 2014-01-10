@@ -37,9 +37,8 @@ void DepthImageView::setDepthImage(const DepthImage *const image)
   
   for(uint32_t i = 0; i < s; ++i) {
     const uint32_t v = _image->depthAt(i / w, i % w);
-    const double vf = qMin(1U, v >> 11);
-
-    const QColor c = QColor::fromRgbF(vf, vf, vf);
+    const uint32_t vf = qMin(359U, v >> 7);
+    const QColor c = QColor::fromHsv(vf, 250, 250);
     p.setPen(c);
     p.drawPoint(i % w, i / w);
   }
