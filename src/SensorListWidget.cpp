@@ -67,6 +67,8 @@ void SensorListWidget::togglePullUp()
 {
   const QModelIndex index = ui->sensors->selectionModel()->currentIndex();
   if(!index.isValid()) return;
+  
+  qDebug() << "Setting pullup to " << !_model->pullUp(index);
   _model->setPullUp(index, !_model->pullUp(index));
 }
 
