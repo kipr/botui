@@ -98,7 +98,7 @@ else()
   add_executable(botui ${SRCS_CXX})
 endif()
 
-add_definitions(-O3)
+add_definitions(-O3 -pg)
 
 target_link_libraries(botui pcompiler kar z opencv_core opencv_highgui opencv_imgproc kovan)
 
