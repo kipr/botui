@@ -20,14 +20,7 @@ private slots:
 	void startBeep();
 	void endBeep();
 private:
-	void printPrompt();
 	
-	int inputCharCount;
-	QTextCursor curCursorLoc;
-	QString cmdStr;
-	QStringList cmdHistory;
-	int histLocation;
-	QString tempCmd;
 	QIODevice *m_process;
 	
 	QPalette m_savedPalette;

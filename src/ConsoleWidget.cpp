@@ -10,12 +10,7 @@ ConsoleWidget::ConsoleWidget(QWidget *parent)
 	m_process(0),
 	m_savedPalette(palette())
 {
-	cmdStr = "";
-	curCursorLoc = this->textCursor();
-	inputCharCount = 0;
-	histLocation = -1;
-	tempCmd = "";
-	setProcess(0);
+  setProcess(0);
 }
 
 ConsoleWidget::~ConsoleWidget()
