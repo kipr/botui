@@ -2,6 +2,7 @@
 #define _DEPTHIMAGE_VIEW_H_
 
 #include <QWidget>
+#include <QImage>
 #include <QPixmap>
 
 namespace depth
@@ -27,6 +28,7 @@ protected:
   
 private:
   const depth::DepthImage *_image;
+  QImage _backingImage;
   QPixmap _backing;
   bool _pleaseWait;
 };
