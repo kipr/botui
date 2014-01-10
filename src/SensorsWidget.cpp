@@ -22,8 +22,9 @@ SensorsWidget::SensorsWidget(Device *device, QWidget *parent)
 {
 	ui->setupUi(this);
 	m_menuBar->addHomeAndBackButtons();
-	m_menuBar->setTitle("Sensors");
+	m_menuBar->setTitle(tr("Sensors"));
 	layout()->setMenuBar(m_menuBar);
+  
 	
 	m_plots[0] = ui->plot->addPlot(QColor(200, 0, 0));
 	m_plots[1] = ui->plot->addPlot(QColor(0, 0, 200));

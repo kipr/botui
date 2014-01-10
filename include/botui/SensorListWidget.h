@@ -8,15 +8,22 @@ namespace Ui
 	class SensorListWidget;
 }
 
+class SensorModel;
+
 class SensorListWidget : public StandardWidget
 {
 Q_OBJECT
 public:
 	SensorListWidget(Device *device, QWidget *parent = 0);
 	~SensorListWidget();
-	
+
+private slots:
+  void togglePullUp();
+
 private:
 	Ui::SensorListWidget *ui;
+  QAction *_togglePullUp;
+  SensorModel *_model;
 };
 
 #endif

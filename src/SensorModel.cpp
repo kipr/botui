@@ -12,6 +12,7 @@ class SensorNameItem : public QStandardItem
 public:
 	SensorNameItem(SensorModel::SensorType type, const int port = -1)
 		: m_type(type)
+    , m_port(port)
 		, m_typeName(typeName(type))
 		, m_optionName(optionName(type))
 	{
@@ -22,6 +23,11 @@ public:
 	{
 		return m_type;
 	}
+  
+  int port() const
+  {
+    return m_port;
+  }
 	
 	template<typename T>
 	static SensorNameItem *cast(T *t)
@@ -54,6 +60,7 @@ private:
 	}
 	
 	SensorModel::SensorType m_type;
+  int m_port;
 	QString m_typeName;
 	QString m_optionName;
 };
@@ -129,6 +136,21 @@ SensorModel::SensorType SensorModel::type(const QModelIndex &index) const
 	QModelIndex nameIndex = index.sibling(0, 0);
 	SensorNameItem *item = SensorNameItem::cast(itemFromIndex(nameIndex));
 	return item ? item->sensorType() : SensorModel::Other;
+}
+
+void SensorModel::setPullUp(const QModelIndex &index, const bool pullup)
+{
+  if(type(index) != SensorModel::Analog) return;
+  const SensorNameItem *const item = SensorNameItem::cast(itemFromIndex(index));
+  if(!item) return;
+  ::Analog(item->port()).setPullup(pullup);
+}
+
+bool SensorModel::pullUp(const QModelIndex &index) const
+{
+  if(type(index) != SensorModel::Analog) return false;
+  const SensorNameItem *const item = SensorNameItem::cast(itemFromIndex(index));
+  return item ? ::Analog(item->port()).pullup() : false;
 }
 
 void SensorModel::update()
