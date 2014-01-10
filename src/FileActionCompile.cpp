@@ -41,6 +41,14 @@ bool FileActionCompile::act(const QString &path, Device *device) const
     file.replace(".kissproj", ".ops");
     archive->rename(old, file);
   }
+  
+	QFile file(":/target.c");
+	if(!file.open(QIODevice::ReadOnly)) {
+		qWarning() << "Failed to inject target.c";
+	} else {
+		archive->setFile("__internal_target___.c", file.readAll());
+		file.close();
+	}
 	
   const QString name = input.fileName();
 	// Add this program to the virtual filesystem

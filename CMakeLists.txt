@@ -58,6 +58,7 @@ set(QRC_FILES
 	${RC}/construction.qrc
 	${RC}/qml.qrc
 	${RC}/fonts.qrc
+	${RC}/target.qrc
 )
 
 if(NOT qt5)
