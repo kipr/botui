@@ -1,5 +1,3 @@
-#ifdef QT_DBUS_LIB
-
 #ifndef _KOVANSERIALBRIDGE_H_
 #define _KOVANSERIALBRIDGE_H_
 
@@ -18,12 +16,11 @@ public:
 	void init(Device *device);
 	
 private slots:
+  void newConnection();
 	void run(const QString &path);
 	
 private:
 	Device *m_device;
 };
-
-#endif
 
 #endif

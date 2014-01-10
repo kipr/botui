@@ -43,7 +43,7 @@ else()
   
   find_package(Qt5Widgets REQUIRED)
   find_package(Qt5Declarative REQUIRED)
-  # find_package(Qt5DBus REQUIRED)
+  find_package(Qt5Network REQUIRED)
 endif()
 
 file(GLOB INCLUDES ${INCLUDE}/*.h ${KOVAN}/include/*.h ${SIMULATOR}/include/*.h)
@@ -105,5 +105,5 @@ target_link_libraries(botui pcompiler kar z opencv_core opencv_highgui opencv_im
 if(NOT qt5)
   target_link_libraries(botui ${QT_LIBRARIES})
 else()
-  qt5_use_modules(botui Widgets Declarative)
+  qt5_use_modules(botui Widgets Declarative Network)
 endif()
