@@ -19,7 +19,7 @@
 #include <QDebug>
 
 FileActionCompile::FileActionCompile()
-	: FileActionExtension("Compile", QStringList() << "kissproj")
+	: FileActionExtension(QObject::tr("Compile"), QStringList() << "kissproj")
 {
 	qRegisterMetaType<Compiler::OutputList>("Compiler::OutputList");
 }

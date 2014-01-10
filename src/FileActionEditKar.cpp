@@ -6,7 +6,7 @@
 #include <QDebug>
 
 FileActionEditKar::FileActionEditKar()
-	: FileAction("Edit")
+	: FileAction(QObject::tr("Edit"))
 {
 	
 }
