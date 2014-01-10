@@ -16,6 +16,7 @@ DepthImageView::DepthImageView(QWidget *const parent)
     for(quint16 i = 0; i < 330; ++i) {
       s_lookupTable[i] = QColor::fromHsv(i, 255, 255).rgb();
     }
+    s_lookupTable[0] = 0;
     s_tableInited = true;
   }
 }
