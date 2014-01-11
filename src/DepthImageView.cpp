@@ -42,8 +42,9 @@ void DepthImageView::setDepthImage(const DepthImage *const image)
   }
   
   for(uint32_t i = 0; i < s; ++i) {
-    const uint32_t v = _image->depthAt(i / w, i % w);
-    const uint32_t vf = qMin(330U, (v * 330) >> 12);
+    // 500 is theoretical min value for Xtion, subtract for hsv offset
+    const int32_t v = (int32_t)_image->depthAt(i / w, i % w) - 500;
+    const int32_t vf = qMax(qMin(330, (v * 330) >> 12), 0);
     
     _backingImage.setPixel(i % w, i / w, s_lookupTable[vf]);
   }
