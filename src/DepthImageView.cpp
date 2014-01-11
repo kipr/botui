@@ -13,7 +13,7 @@ DepthImageView::DepthImageView(QWidget *const parent)
   , _pleaseWait(true)
 {
   if(!s_tableInited) {
-    for(quint16 i = 0; i < 350; ++i) {
+    for(quint16 i = 0; i < 330; ++i) {
       s_lookupTable[i] = QColor::fromHsv(i, 255, 255).rgb();
     }
     s_lookupTable[0] = 0;
@@ -43,7 +43,7 @@ void DepthImageView::setDepthImage(const DepthImage *const image)
   
   for(uint32_t i = 0; i < s; ++i) {
     const uint32_t v = _image->depthAt(i / w, i % w);
-    const uint32_t vf = qMin(349U, (v * 350) >> 12);
+    const uint32_t vf = qMin(330U, (v * 330) >> 12);
     
     _backingImage.setPixel(i % w, i / w, s_lookupTable[vf]);
   }

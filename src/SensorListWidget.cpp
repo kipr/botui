@@ -31,11 +31,12 @@ SensorItemDelegate::SensorItemDelegate(SensorModel *const model, QObject *const 
 
 void SensorItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-	QItemDelegate::paint(painter, option, index);
+  QItemDelegate::paint(painter, option, index);
   if(index.column() != 1 || _model->type(index) != SensorModel::Analog) return;
   
-  const QPixmap pm = _model->pullUp(index) ? _up : _down;
+  const QPixmap pm = _model->pullUp(index) ? _up : QPixmap();
   const QPoint right = option.rect.topRight();
+  if(pm.isNull()) return;
   painter->drawPixmap(right.x() - 24, right.y() + option.rect.height() / 2 - 8, 16, 16, pm);
 }
 
