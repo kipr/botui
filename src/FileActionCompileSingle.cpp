@@ -1,4 +1,4 @@
-#include "FileActionCompile.h"
+#include "FileActionCompileSingle.h"
 
 #include "Device.h"
 #include "SystemPrefix.h"
@@ -18,13 +18,13 @@
 
 #include <QDebug>
 
-FileActionCompile::FileActionCompile()
-	: FileActionExtension(QObject::tr("Compile"), QStringList() << "kissproj")
+FileActionCompileSingle::FileActionCompileSingle()
+	: FileActionExtension(QObject::tr("Compile"), QStringList() << "c" << "cc" << "cxx" << "cpp")
 {
 	qRegisterMetaType<Compiler::OutputList>("Compiler::OutputList");
 }
 
-bool FileActionCompile::act(const QString &path, Device *device) const
+bool FileActionCompileSingle::act(const QString &path, Device *device) const
 {
 	// Sanity check
 	QFileInfo input(path);
@@ -33,15 +33,19 @@ bool FileActionCompile::act(const QString &path, Device *device) const
 		return false;
 	}
 	
-	// Create a program archive containing the input file
-	kiss::KarPtr archive = kiss::Kar::create(input.path());
-  qDebug() << archive->files();
-  foreach(QString file, archive->files()) {
-    if(!file.endsWith(".kissproj")) continue;
-    const QString old = file;
-    file.replace(".kissproj", ".ops");
-    archive->rename(old, file);
+  QFile in(path);
+  if(!in.open(QIODevice::ReadOnly)) {
+    qWarning() << "Couldn't open" << path << "for reading";
+    return false;
   }
+  
+  
+  
+	// Create a program archive containing the input file
+	kiss::KarPtr archive = kiss::Kar::create();
+  archive->setFile(input.fileName(), in.readAll());
+  
+  in.close();
   
 	QFile file(":/target.c");
 	if(!file.open(QIODevice::ReadOnly)) {
@@ -89,7 +93,7 @@ bool FileActionCompile::act(const QString &path, Device *device) const
 	return true;
 }
 
-void FileActionCompile::compileStarted(const QString &name, ConcurrentCompile *compiler)
+void FileActionCompileSingle::compileStarted(const QString &name, ConcurrentCompile *compiler)
 {
 	if(!compiler) {
 		qWarning() << "sender is null";
@@ -100,7 +104,7 @@ void FileActionCompile::compileStarted(const QString &name, ConcurrentCompile *c
 	log->setStatus(tr("Compiling..."));
 }
 
-void FileActionCompile::compileFinished(const Compiler::OutputList &output, ConcurrentCompile *compiler)
+void FileActionCompileSingle::compileFinished(const Compiler::OutputList &output, ConcurrentCompile *compiler)
 {
 	if(!compiler) {
 		qWarning() << "sender is null";
@@ -121,4 +125,4 @@ void FileActionCompile::compileFinished(const Compiler::OutputList &output, Conc
 	log->setDismissable(true);
 }
 
-REGISTER_FILE_ACTION(FileActionCompile)
+REGISTER_FILE_ACTION(FileActionCompileSingle)

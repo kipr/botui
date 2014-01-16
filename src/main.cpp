@@ -19,9 +19,15 @@
 
 #include <QFontDatabase>
 #include <QDebug>
+#include <QSettings>
 
 int main(int argc, char* argv[])
 {
+  QSettings settings;
+  const QString localeString = settings.value("locale", "en").toString();
+  QLocale locale(localeString);
+  QLocale::setDefault(locale);
+  
 	QApplication::setStyle(new MechanicalStyle);
 	QApplication app(argc, argv);
 	

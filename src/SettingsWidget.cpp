@@ -12,6 +12,7 @@
 #include "CommunicationSettingsWidget.h"
 #include "ChannelConfigurationsWidget.h"
 #include "GuiSettingsWidget.h"
+#include "LanguageWidget.h"
 
 #include <QDebug>
 
@@ -33,6 +34,7 @@ SettingsWidget::SettingsWidget(Device *device, QWidget *parent)
 	connect(ui->channels, SIGNAL(clicked()), SLOT(channels()));
 	connect(ui->gui, SIGNAL(clicked()), SLOT(gui()));
 	connect(ui->calibrate, SIGNAL(clicked()), SLOT(calibrate()));
+	connect(ui->language, SIGNAL(clicked()), SLOT(language()));
 }
 
 SettingsWidget::~SettingsWidget()
@@ -65,4 +67,9 @@ void SettingsWidget::gui()
 void SettingsWidget::calibrate()
 {
 	Calibrate::calibrate();
+}
+
+void SettingsWidget::language()
+{
+  RootController::ref().presentWidget(new LanguageWidget(device()));
 }

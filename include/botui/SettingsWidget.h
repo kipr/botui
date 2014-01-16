@@ -22,6 +22,7 @@ public slots:
 	void gui();
 	
 	void calibrate();
+	void language();
 	
 private:
 	Ui::SettingsWidget *ui;
