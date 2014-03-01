@@ -14,7 +14,7 @@ bool Program::start(const QString& path, const QStringList &arguments)
 	if(path.isEmpty()) return false;
 	stop();
 	m_process = new QProcess(this);
-  QProcessEnvironment env = m_process->processEnvironment();
+  QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
   const QString libPath = env.value("LD_LIBRARY_PATH");
   env.insert("LD_LIBRARY_PATH", (libPath.isEmpty() ? "" : libPath + ":")
     + SystemPrefix::ref().rootManager()->libDirectoryPaths().join(":"));
