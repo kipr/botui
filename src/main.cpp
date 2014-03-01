@@ -18,7 +18,6 @@
 #include <QDir>
 
 #include <QFontDatabase>
-#include <QDebug>
 #include <QSettings>
 #include <QTranslator>
 
@@ -28,7 +27,8 @@ int main(int argc, char* argv[])
 	QApplication app(argc, argv);
   
   QTranslator translator;
-  if(translator.load("link_" + QSettings().value("locale", "en").toString(), "/etc/botui/locale/"))
+  const QString trFile = "link_" + QSettings().value("locale", "en").toString();
+  if(trFile != "en" && translator.load(trFile, "/etc/botui/locale/"))
     app.installTranslator(&translator);
 	
 	QDir::setCurrent(QApplication::applicationDirPath());
