@@ -20,16 +20,16 @@
 #include <QFontDatabase>
 #include <QDebug>
 #include <QSettings>
+#include <QTranslator>
 
 int main(int argc, char* argv[])
-{
-  QSettings settings;
-  const QString localeString = settings.value("locale", "en").toString();
-  QLocale locale(localeString);
-  QLocale::setDefault(locale);
-  
+{ 
 	QApplication::setStyle(new MechanicalStyle);
 	QApplication app(argc, argv);
+  
+  QTranslator translator;
+  if(translator.load("link_" + QSettings().value("locale", "en").toString(), "/etc/botui/locale/"))
+    app.installTranslator(&translator);
 	
 	QDir::setCurrent(QApplication::applicationDirPath());
 	qmlRegisterType<BusyIndicator>("ZapBsComponents", 1, 0, "BusyIndicator");
@@ -48,7 +48,6 @@ int main(int argc, char* argv[])
 #endif
 	GuiSettingsWidget::updateStyle(&device);
 	RootController::ref().presentWidget(new HomeWidget(&device));
-	
-	
+
 	return app.exec();
 }
