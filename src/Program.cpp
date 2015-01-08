@@ -50,7 +50,12 @@ void Program::stop()
 	
 	set_auto_publish(true);
 	halt();
-	set_auto_publish(false);
+  
+  // This is a hack. Make really sure it's halted.
+  QThread::msleep(200);
+  halt();
+  
+  set_auto_publish(false);
 }
 
 bool Program::isRunning()

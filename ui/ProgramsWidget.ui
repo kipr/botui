@@ -70,6 +70,17 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="transfer">
+         <property name="text">
+          <string>Transfer</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../rc/icons.qrc">
+           <normaloff>:/icons/drive_go.png</normaloff>:/icons/drive_go.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>

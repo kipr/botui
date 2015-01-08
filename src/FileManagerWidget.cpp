@@ -39,8 +39,6 @@ FileManagerWidget::FileManagerWidget(Device *device, QWidget *parent)
 	
 	connect(ui->open, SIGNAL(clicked()), SLOT(open()));
 	connect(ui->remove, SIGNAL(clicked()), SLOT(remove()));
-	connect(ui->copy, SIGNAL(clicked()), SLOT(copy()));
-	connect(ui->paste, SIGNAL(clicked()), SLOT(paste()));
 	connect(ui->home, SIGNAL(clicked()), SLOT(home()));
 	
 	connect(ui->files->selectionModel(),

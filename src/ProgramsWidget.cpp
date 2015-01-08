@@ -20,6 +20,7 @@
 
 #include <QItemDelegate>
 #include <QThreadPool>
+#include <QTimer>
 #include <QDebug>
 
 class ItemDelegate : public QItemDelegate
@@ -51,10 +52,15 @@ ProgramsWidget::ProgramsWidget(Device *device, QWidget *parent)
 	connect(ui->add, SIGNAL(clicked()), SLOT(add()));
 	connect(ui->remove, SIGNAL(clicked()), SLOT(remove()));
 	connect(ui->args, SIGNAL(clicked()), SLOT(args()));
+	connect(ui->transfer, SIGNAL(clicked()), SLOT(transfer()));
 	
 	connect(ui->programs->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
 		SLOT(update()));
 	
+  QTimer *timer = new QTimer(this);
+  timer->start(2500);
+  connect(timer, SIGNAL(timeout()), SLOT(update()));
+  
 	update();
 }
 
@@ -65,8 +71,12 @@ ProgramsWidget::~ProgramsWidget()
 
 void ProgramsWidget::run()
 {
+  if(Program::instance()->isRunning()) return;
+  
 	QModelIndexList currents = ui->programs->selectionModel()->selectedIndexes();
 	if(currents.size() != 1) return;
+  
+  ui->run->setEnabled(false);
 	
 	const QString name = m_model->name(currents[0]);
 	
@@ -86,9 +96,9 @@ void ProgramsWidget::run()
 			Qt::QueuedConnection);
 		QThreadPool::globalInstance()->start(&compiler);
 		RootController::ref().presentDialog(&logger);
-		if(!Compiler::Output::isSuccess(compiler.output())) return;
+		if(!Compiler::Output::isSuccess(compiler.output())) goto done;
 	}
-	
+  
   const QString archivePath = SystemPrefix::ref().rootManager()->archivesPath(name);
 	ProgramWidget *programWidget = new ProgramWidget(Program::instance(), device());
   kiss::KarPtr archive = kiss::Kar::load(archivePath);
@@ -98,6 +108,9 @@ void ProgramsWidget::run()
 	} else {
 		RootController::ref().presentWidget(programWidget);
 	}
+  
+done:
+  ui->run->setEnabled(true);
 }
 
 void ProgramsWidget::edit()
@@ -158,6 +171,17 @@ void ProgramsWidget::remove()
 	SystemPrefix::ref().rootManager()->uninstall(m_model->name(currents[0]));
 	update();
 }
+ 
+void ProgramsWidget::transfer()
+{
+	QModelIndexList currents = ui->programs->selectionModel()->selectedIndexes();
+	if(currents.size() != 1) return;
+  const QString name = m_model->name(currents[0]);
+	const kiss::KarPtr archive = kiss::Kar::load(SystemPrefix::ref().rootManager()->archivesPath(name));
+  const QDir flashDrive("/kovan/media/sda1/transfers/" + name);
+  flashDrive.mkpath("");
+  archive->extract(flashDrive.path());
+}
 
 void ProgramsWidget::compileStarted(const QString &name, ConcurrentCompile *compiler)
 {
@@ -195,8 +219,10 @@ void ProgramsWidget::update()
 {
 	QModelIndexList currents = ui->programs->selectionModel()->selectedIndexes();
 	const bool good = currents.size() == 1;
-	ui->run->setEnabled(good);
+	ui->run->setEnabled(good && !Program::instance()->isRunning());
 	ui->edit->setEnabled(good);
 	ui->remove->setEnabled(good);
 	ui->args->setEnabled(good);
+  const QDir flashDrive("/kovan/media/sda1");
+	ui->transfer->setEnabled(good && flashDrive.exists());
 }
