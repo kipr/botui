@@ -53,7 +53,6 @@ void Program::stop()
 	halt();
   
   // This is a hack. Make really sure it's halted.
-  QThread::msleep(200);
   halt();
   
   set_auto_publish(false);
