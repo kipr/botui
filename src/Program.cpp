@@ -3,6 +3,7 @@
 #include <kovan/general.h>
 
 #include <QDebug>
+#include <QThread>
 
 Program::~Program()
 {

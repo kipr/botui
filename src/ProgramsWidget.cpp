@@ -96,7 +96,10 @@ void ProgramsWidget::run()
 			Qt::QueuedConnection);
 		QThreadPool::globalInstance()->start(&compiler);
 		RootController::ref().presentDialog(&logger);
-		if(!Compiler::Output::isSuccess(compiler.output())) goto done;
+		if(!Compiler::Output::isSuccess(compiler.output())) {
+      ui->run->setEnabled(true);
+      return;
+    }
 	}
   
   const QString archivePath = SystemPrefix::ref().rootManager()->archivesPath(name);
@@ -109,7 +112,6 @@ void ProgramsWidget::run()
 		RootController::ref().presentWidget(programWidget);
 	}
   
-done:
   ui->run->setEnabled(true);
 }
 
