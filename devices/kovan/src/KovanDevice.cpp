@@ -150,7 +150,7 @@ QString Kovan::Device::name() const
 
 QString Kovan::Device::version() const
 {
-	return "2.0.5";
+	return "2.0.6";
 }
 
 bool Kovan::Device::isTouchscreen() const

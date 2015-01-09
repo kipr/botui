@@ -181,7 +181,7 @@ void ProgramsWidget::transfer()
   const QString name = m_model->name(currents[0]);
 	const kiss::KarPtr archive = kiss::Kar::load(SystemPrefix::ref().rootManager()->archivesPath(name));
   const QDir flashDrive("/kovan/media/sda1/transfers/" + name);
-  flashDrive.mkpath("");
+  QDir().mkpath(flashDrive.path());
   archive->extract(flashDrive.path());
 }
 
