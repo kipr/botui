@@ -36,7 +36,7 @@ void LanguageWidget::currentIndexChanged(int index)
   LocaleModel *const model = qobject_cast<LocaleModel *>(ui->languages->model());
   const QLocale locale = model->locale(ui->languages->model()->index(index, 0));
   QSettings settings;
-  settings.setValue("locale", locale.bcp47N ame());
+  settings.setValue("locale", locale.bcp47Name());
   settings.sync();
   sync();
 }
