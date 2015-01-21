@@ -4,7 +4,7 @@
 #include "LocaleModel.h"
 
 #include <QSettings>
-#include <stdio.h>
+#include <unistd.h>
 
 LanguageWidget::LanguageWidget(Device *device, QWidget *const parent)
   : StandardWidget(device, parent)
@@ -38,5 +38,5 @@ void LanguageWidget::currentIndexChanged(int index)
   QSettings settings;
   settings.setValue("locale", locale.bcp47N ame());
   settings.sync();
-  fsync();
+  sync();
 }
