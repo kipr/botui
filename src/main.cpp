@@ -24,6 +24,9 @@
 int main(int argc, char* argv[])
 { 
 	QApplication::setStyle(new MechanicalStyle);
+  QApplication::setOrganizationName("KIPR");
+  QApplication::setApplicationName("botui");
+  
 	QApplication app(argc, argv);
   
   QTranslator translator;
