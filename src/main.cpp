@@ -30,7 +30,7 @@ int main(int argc, char* argv[])
 	QApplication app(argc, argv);
   
   QTranslator translator;
-  const QString trFile = "link_" + QSettings().value("locale", "en").toString();
+  const QString trFile = "link_" + QSettings().value("locale", "en").toString().left(2);
   if(trFile != "en" && translator.load(trFile, "/etc/botui/locale/"))
     app.installTranslator(&translator);
 	
