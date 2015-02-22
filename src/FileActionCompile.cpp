@@ -43,13 +43,22 @@ bool FileActionCompile::act(const QString &path, Device *device) const
     archive->rename(old, file);
   }
   
-	QFile file(":/target.c");
-	if(!file.open(QIODevice::ReadOnly)) {
-		qWarning() << "Failed to inject target.c";
-	} else {
-		archive->setFile("__internal_target___.c", file.readAll());
-		file.close();
-	}
+  const QStringList cExts = QStringList() << "c" << "cpp" << "cxx" << "cc";
+  bool isCProj = false;
+  Q_FOREACH(const QString &file, archive->files()) {
+    QFileInfo info(file);
+    isCProj |= (bool)cExts.contains(info.completeSuffix(), Qt::CaseInsensitive);
+  }
+  
+  if(isCProj) {
+    QFile file(":/target.c");
+    if(!file.open(QIODevice::ReadOnly)) {
+      qWarning() << "Failed to inject target.c";
+    } else {
+      archive->setFile("__internal_target___.c", file.readAll());
+      file.close();
+    }
+  }
 	
   const QString name = input.baseName();
 	// Add this program to the virtual filesystem
