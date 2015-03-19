@@ -32,6 +32,8 @@ private slots:
 	void removeFile();
 	
 private:
+  bool removeDir(const QString &path) const;
+  
 	Device *m_device;
 	
 	Ui::EditorWidget *ui;

@@ -105,12 +105,29 @@ void ProgramsWidget::run()
   const QString archivePath = SystemPrefix::ref().rootManager()->archivesPath(name);
 	ProgramWidget *programWidget = new ProgramWidget(Program::instance(), device());
   kiss::KarPtr archive = kiss::Kar::load(archivePath);
-	if(!Program::instance()->start(SystemPrefix::ref().rootManager()->bin(name).filePath(name),
-      ProgramArguments::arguments(archive))) {
-		delete programWidget;
-	} else {
-		RootController::ref().presentWidget(programWidget);
-	}
+  bool success = true;
+	if(!(success = Program::instance()->start(SystemPrefix::ref().rootManager()->bin(name).filePath(name),
+      ProgramArguments::arguments(archive)))) {
+		qWarning() << "Failed to start program" << name << ". Trying to compile.";
+		LogDialog logger;
+		ConcurrentCompile compiler(name, archive, device());
+		compiler.setAutoDelete(false);
+		compiler.setUserData(&logger);
+		connect(&compiler, SIGNAL(compileStarted(QString, ConcurrentCompile *)),
+			SLOT(compileStarted(QString, ConcurrentCompile *)),
+			Qt::QueuedConnection);
+		connect(&compiler, SIGNAL(compileFinished(Compiler::OutputList, ConcurrentCompile *)),
+			SLOT(compileFinished(Compiler::OutputList, ConcurrentCompile *)),
+			Qt::QueuedConnection);
+		QThreadPool::globalInstance()->start(&compiler);
+		RootController::ref().presentDialog(&logger);
+		success = Compiler::Output::isSuccess(compiler.output());
+    if(success) success = Program::instance()->start(SystemPrefix::ref().rootManager()->bin(name).filePath(name),
+      ProgramArguments::arguments(archive));
+	} 
+  
+  if(success) RootController::ref().presentWidget(programWidget);
+  else delete programWidget;
   
   ui->run->setEnabled(true);
 }

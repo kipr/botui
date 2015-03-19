@@ -7,6 +7,7 @@
 #include "Device.h"
 #include "KeyboardDialog.h"
 #include "AreYouSureDialog.h"
+#include "SystemPrefix.h"
 
 #include <QApplication>
 
@@ -82,12 +83,31 @@ void EditorWidget::fileChanged(int i)
 	m_currentIndex = i;
 }
 
+bool EditorWidget::removeDir(const QString &path) const
+{
+	bool success = true;
+	QDir directory(path);
+
+	QFileInfoList files = directory.entryInfoList(QDir::Files | QDir::NoDotAndDotDot);
+	foreach(const QFileInfo &file, files) success &= directory.remove(file.fileName());
+
+	QFileInfoList dirs = directory.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot);
+	foreach(const QFileInfo &dir, dirs) success &= removeDir(dir.absoluteFilePath());
+
+	success &= directory.rmdir(directory.absolutePath());
+
+	return success;
+}
+
 void EditorWidget::saveAndExit()
 {
 	// TODO: Error checking?
 	fileChanged(m_currentIndex); // Save current file
 	m_archive->save(m_savePath);
 	RootController::ref().dismissWidget();
+  const QString name = QFileInfo(m_savePath).fileName();
+  const QString binPath = SystemPrefix::ref().rootManager()->binPath(name);
+  removeDir(binPath);
 }
 
 void EditorWidget::addFile()
