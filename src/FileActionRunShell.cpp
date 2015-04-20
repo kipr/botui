@@ -10,7 +10,7 @@ FileActionRunShell::FileActionRunShell()
 	
 }
 
-bool FileActionInstallPkg::act(const QString &path, Device *device) const
+bool FileActionRunShell::act(const QString &path, Device *device) const
 {
   ProcessLogDialog dialog;
   if(!dialog.start("/bin/sh", QStringList() << path)) return false;
