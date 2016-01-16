@@ -241,7 +241,7 @@ QString NetworkManager::ipAddress() const
 	if(!ioctl(fd, SIOCGIFADDR, &ifr)) {
 		ret = QString(inet_ntoa(((sockaddr_in *)&ifr.ifr_addr)->sin_addr));
 	}
-	close(fd);
+	//FIXME: close(fd);
 	return ret;
 }
 
