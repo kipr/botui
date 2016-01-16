@@ -1,10 +1,20 @@
 #include "SensorModel.h"
 
+#ifdef WALLABY
+#include <wallaby/analog.hpp>
+#include <wallaby/digital.hpp>
+#include <wallaby/accel.hpp>
+#include <wallaby/sensor_logic.hpp>
+#include <wallaby/general.h>
+#else
 #include <kovan/analog.hpp>
 #include <kovan/digital.hpp>
 #include <kovan/accel.hpp>
 #include <kovan/sensor_logic.hpp>
 #include <kovan/general.h>
+#endif
+
+
 #include <math.h>
 
 class SensorNameItem : public QStandardItem

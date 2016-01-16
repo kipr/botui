@@ -3,7 +3,11 @@
 #include <QDir>
 #include <QFileIconProvider>
 
+#ifdef WALLABY
+#include <wallaby/camera.hpp>
+#else
 #include <kovan/camera.hpp>
+#endif
 
 class FileIconProvider : public QFileIconProvider
 {

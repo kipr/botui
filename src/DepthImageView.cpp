@@ -1,7 +1,12 @@
 #include "DepthImageView.h"
 #include <QPainter>
 #include <QDebug>
+
+#ifdef WALLABY
+#include <wallaby/depth_image.hpp>
+#else
 #include <kovan/depth_image.hpp>
+#endif
 
 using namespace depth;
 

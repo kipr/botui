@@ -1,6 +1,11 @@
 #include "ServoTestWizardPage.h"
 
-#include <kovan/kovan.h>
+#ifdef WALLABY
+#include "wallaby/wallaby.h"
+#else
+#include "kovan/kovan.h"
+#endif
+
 #include <QTimer>
 
 #include <cmath>

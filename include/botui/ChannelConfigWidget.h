@@ -2,7 +2,13 @@
 #define _CHANNELCONFIGWIDGET_H_
 
 #include <QWidget>
+
+#ifdef WALLABY
+#include <wallaby/config.hpp>
+#else
 #include <kovan/config.hpp>
+#endif
+
 
 #include <QModelIndex>
 

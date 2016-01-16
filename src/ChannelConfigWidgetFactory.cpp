@@ -3,7 +3,11 @@
 #include "ChannelConfigWidget.h"
 #include "HsvChannelConfigWidget.h"
 
+#ifdef WALLABY
+#include <wallaby/camera.hpp>
+#else
 #include <kovan/camera.hpp>
+#endif
 
 ChannelConfigWidgetFactory::~ChannelConfigWidgetFactory()
 {

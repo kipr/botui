@@ -15,7 +15,11 @@
 #include <QPainter>
 #include <QDebug>
 
+#ifdef WALLABY
+#include <wallaby/camera.hpp>
+#else
 #include <kovan/camera.hpp>
+#endif
 
 class ChannelItemDelegate : public QItemDelegate
 {

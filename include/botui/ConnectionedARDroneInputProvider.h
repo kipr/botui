@@ -1,7 +1,11 @@
 #ifndef _CONNECTIONEDARDRONEINPUTPROVIDER_H_
 #define _CONNECTIONEDARDRONEINPUTPROVIDER_H_
 
+#ifdef WALLABY
+#include <wallaby/ardrone.hpp>
+#else
 #include <kovan/ardrone.hpp>
+#endif
 
 namespace Camera
 {

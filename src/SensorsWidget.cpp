@@ -9,7 +9,11 @@
 #include "Device.h"
 #include <QTimer>
 
-#include <kovan/kovan.h>
+#ifdef WALLABY
+#include "wallaby/wallaby.h"
+#else
+#include "kovan/kovan.h"
+#endif
 
 #include <QDebug>
 

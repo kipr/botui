@@ -5,7 +5,12 @@
 #include <QDebug>
 
 #include <math.h>
+
+#ifdef WALLABY
+#include <wallaby/wallaby.h>
+#else
 #include <kovan/kovan.h>
+#endif
 
 #include "NumpadDialog.h"
 #include "MenuBar.h"

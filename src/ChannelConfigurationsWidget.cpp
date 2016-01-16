@@ -14,8 +14,13 @@
 #include <QDir>
 #include <QDebug>
 
+#ifdef WALLABY
+#include <wallaby/camera.hpp>
+#include <wallaby/config.hpp>
+#else
 #include <kovan/camera.hpp>
 #include <kovan/config.hpp>
+#endif
 
 class ConfigItemDelegate : public QItemDelegate
 {

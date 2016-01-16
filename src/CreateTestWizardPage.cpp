@@ -2,7 +2,11 @@
 
 #include "ui_CreateTestWizardPage.h"
 
+#ifdef WALLABY
 #include <kovan/create.hpp>
+#else
+#include <kovan/create.hpp>
+#endif
 
 #include <QTimer>
 

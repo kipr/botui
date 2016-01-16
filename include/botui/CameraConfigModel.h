@@ -3,8 +3,14 @@
 
 #include <QObject>
 #include <QStandardItemModel>
+
+#ifdef WALLABY
+#include <wallaby/config.hpp>
+#include <wallaby/camera.hpp>
+#else
 #include <kovan/config.hpp>
 #include <kovan/camera.hpp>
+#endif
 
 class CameraConfigModel : public QStandardItemModel
 {
