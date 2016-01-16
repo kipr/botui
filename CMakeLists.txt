@@ -5,7 +5,7 @@ option(wallaby "Use the Wallaby controller" OFF)
 
 if (wallaby)
     add_definitions(-DWALLABY)
-endif
+endif()
 
 if(NOT qt5)
   cmake_minimum_required(VERSION 2.6.0)
