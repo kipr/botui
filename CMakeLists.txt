@@ -1,6 +1,11 @@
 project(botui)
 
 option(qt5 "Use Qt5 instead of Qt4" OFF)
+option(wallaby "Use the Wallaby controller" OFF)
+
+if (wallaby)
+    add_definitions(-DWALLABY)
+endif
 
 if(NOT qt5)
   cmake_minimum_required(VERSION 2.6.0)
