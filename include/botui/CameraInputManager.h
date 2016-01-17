@@ -1,6 +1,6 @@
 #ifndef _CAMERAINPUTMANAGER_H_
 #define _CAMERAINPUTMANAGER_H_
-
+/* FIXME
 #include <QObject>
 #include <QTimer>
 #include "Singleton.h"
@@ -75,5 +75,5 @@ public:
 private:
 	CameraInputManager *m_manager;
 };
-
+*/
 #endif

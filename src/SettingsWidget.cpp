@@ -56,7 +56,7 @@ void SettingsWidget::comm()
 
 void SettingsWidget::channels()
 {
-	RootController::ref().presentWidget(new ChannelConfigurationsWidget(device()));
+	// FIXME RootController::ref().presentWidget(new ChannelConfigurationsWidget(device()));
 }
 
 void SettingsWidget::gui()

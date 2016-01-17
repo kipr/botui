@@ -134,9 +134,14 @@ void PidTunerWidget::motorChanged()
 
 void PidTunerWidget::updatePids()
 {
-	short p,i,d,pd,id,dd = 0;
+	short p = 0;
+	short i = 0;
+	short d = 0;
+	short pd = 0;
+	short id = 0;
+	short dd = 0;
 
-	get_pid_gains(ui->motor->currentIndex(), &p, &i, &d, &pd, &id, &dd);
+	//FIXME: not sure why this isn't found during linking: get_pid_gains(ui->motor->currentIndex(), &p, &i, &d, &pd, &id, &dd);
 
 	char buff[80];
 

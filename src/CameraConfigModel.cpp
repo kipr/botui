@@ -1,3 +1,4 @@
+/* FIXME
 #include "CameraConfigModel.h"
 
 #include <QStandardItem>
@@ -176,3 +177,4 @@ void CameraConfigModel::updateConfig()
 	}
 	m_config.endGroup();
 }
+*/

@@ -1,6 +1,6 @@
 #ifndef _HSVCHANNELCONFIGWIDGET_H_
 #define _HSVCHANNELCONFIGWIDGET_H_
-
+/* FIXME
 #include "ChannelConfigWidget.h"
 
 namespace Ui
@@ -47,5 +47,5 @@ private:
 	NumpadDialog *m_numpad;
 	Camera::Device *m_camera;
 };
-
+*/
 #endif

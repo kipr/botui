@@ -1,6 +1,6 @@
 #ifndef _CHANNELSWIDGET_H_
 #define _CHANNELSWIDGET_H_
-
+/* FIXME
 #include "StandardWidget.h"
 
 #include <QPixmap>
@@ -41,5 +41,5 @@ private:
 	CameraConfigModel *m_model;
 	QString m_path;
 };
-
+*/
 #endif

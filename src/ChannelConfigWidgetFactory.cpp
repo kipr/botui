@@ -1,3 +1,4 @@
+/* FIXME
 #include "ChannelConfigWidgetFactory.h"
 
 #include "ChannelConfigWidget.h"
@@ -29,3 +30,4 @@ ChannelConfigWidget *ChannelConfigWidgetFactory::create(const QModelIndex &index
 ChannelConfigWidgetFactory::ChannelConfigWidgetFactory()
 {
 }
+*/

@@ -1,3 +1,4 @@
+/* FIXME
 #include "HsvChannelConfigWidget.h"
 #include "ui_HsvChannelConfigWidget.h"
 
@@ -269,3 +270,4 @@ void HsvChannelConfigWidget::blockChildSignals(const bool &block)
 	ui->bv->blockSignals(block);
 	ui->visual->blockSignals(block);
 }
+*/

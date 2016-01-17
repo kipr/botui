@@ -1,6 +1,6 @@
 #ifndef _CREATECHANNELDIALOG_H_
 #define _CREATECHANNELDIALOG_H_
-
+/* FIXME
 #include <QDialog>
 
 namespace Ui
@@ -19,5 +19,5 @@ public:
 private:
 	Ui::CreateChannelDialog *ui;
 };
-
+*/
 #endif

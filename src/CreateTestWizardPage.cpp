@@ -3,7 +3,7 @@
 #include "ui_CreateTestWizardPage.h"
 
 #ifdef WALLABY
-#include <kovan/create.hpp>
+#include <wallaby/create.hpp>
 #else
 #include <kovan/create.hpp>
 #endif

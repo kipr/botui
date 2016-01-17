@@ -22,7 +22,11 @@
 #include <QDataStream>
 #include <QFileInfo>
 
+#ifdef WALLABY
+#include <wallaby/wallaby.hpp>
+#else
 #include <kovan/kovan.hpp>
+#endif
 
 #ifdef ENABLE_DBUS_SUPPORT
 #include <QDBusConnection>

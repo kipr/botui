@@ -1,6 +1,6 @@
 #ifndef _CONNECTIONEDARDRONEINPUTPROVIDER_H_
 #define _CONNECTIONEDARDRONEINPUTPROVIDER_H_
-
+/* FIXME
 #ifdef WALLABY
 #include <wallaby/ardrone.hpp>
 #else
@@ -19,5 +19,5 @@ namespace Camera
 		bool m_open;
 	};
 }
-
+*/
 #endif

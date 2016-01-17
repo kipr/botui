@@ -1,6 +1,6 @@
 #ifndef _CAMERACONFIGMODEL_H_
 #define _CAMERACONFIGMODEL_H_
-
+/* FIXME
 #include <QObject>
 #include <QStandardItemModel>
 
@@ -39,5 +39,5 @@ private:
 	Config m_config;
 	QString m_blank;
 };
-
+*/
 #endif

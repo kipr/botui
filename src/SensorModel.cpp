@@ -1,3 +1,4 @@
+/* FIXME
 #include "SensorModel.h"
 
 #ifdef WALLABY
@@ -185,27 +186,34 @@ void SensorModel::populate()
 
 void SensorModel::populateAnalog(const unsigned char port)
 {
-	appendRow(QList<QStandardItem *>()
-		<< new SensorNameItem(SensorModel::Analog, port)
-		<< new SensorValueItem<unsigned short>(new ::Analog(port), true));
+// FIXME
+//	appendRow(QList<QStandardItem *>()
+//		<< new SensorNameItem(SensorModel::Analog, port)
+//		<< new SensorValueItem<unsigned short>(new ::Analog(port), true));
+
 }
 
 void SensorModel::populateDigital(const unsigned char port)
 {
-	appendRow(QList<QStandardItem *>()
-		<< new SensorNameItem(SensorModel::Digital, port)
-		<< new SensorValueItem<bool>(new SensorLogic::Not(new ::Digital(port), true), true));
+	//FIXME
+	//appendRow(QList<QStandardItem *>()
+	//	<< new SensorNameItem(SensorModel::Digital, port)
+	//	<< new SensorValueItem<bool>(new SensorLogic::Not(new ::Digital(port), true), true));
+	//
 }
 
 void SensorModel::populateAccel()
 {
-	appendRow(QList<QStandardItem *>()
-		<< new SensorNameItem(SensorModel::AccelX)
+	// FIXME
+	//appendRow(QList<QStandardItem *>()
+	//  << new SensorNameItem(SensorModel::AccelX)
 		<< new SensorValueItem<short>(new ::AccelX(), true));
-	appendRow(QList<QStandardItem *>()
-		<< new SensorNameItem(SensorModel::AccelY)
-		<< new SensorValueItem<short>(new ::AccelY(), true));
-	appendRow(QList<QStandardItem *>()
-		<< new SensorNameItem(SensorModel::AccelZ)
-		<< new SensorValueItem<short>(new ::AccelZ(), true));
+	//appendRow(QList<QStandardItem *>()
+	//	<< new SensorNameItem(SensorModel::AccelY)
+	//	<< new SensorValueItem<short>(new ::AccelY(), true));
+	//appendRow(QList<QStandardItem *>()
+	//	<< new SensorNameItem(SensorModel::AccelZ)
+	//	<< new SensorValueItem<short>(new ::AccelZ(), true));
+	//
 }
+*/

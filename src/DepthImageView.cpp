@@ -1,3 +1,4 @@
+/* FIXME
 #include "DepthImageView.h"
 #include <QPainter>
 #include <QDebug>
@@ -92,3 +93,4 @@ void DepthImageView::paintEvent(QPaintEvent *event)
   
   p.drawPixmap(0, 0, width(), height(), _backing);
 }
+*/

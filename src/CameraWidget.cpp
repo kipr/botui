@@ -1,3 +1,4 @@
+/* FIXME
 #include "CameraWidget.h"
 #include "ui_CameraWidget.h"
 #include "Device.h"
@@ -86,3 +87,4 @@ void CameraWidget::selectSource()
 {
 	RootController::ref().presentWidget(new CameraInputSelectorWidget(device()));
 }
+*/

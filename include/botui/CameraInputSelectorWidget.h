@@ -1,6 +1,6 @@
 #ifndef _CAMERAINPUTSELECTORWIDGET_H_
 #define _CAMERAINPUTSELECTORWIDGET_H_
-
+/* FIXME
 #include "StandardWidget.h"
 
 namespace Ui
@@ -21,5 +21,5 @@ private slots:
 private:
 	Ui::CameraInputSelectorWidget *ui;
 };
-
+*/
 #endif

@@ -1,6 +1,6 @@
 #ifndef _CAMERAWIDGET_H_
 #define _CAMERAWIDGET_H_
-
+/* FIXME
 #include "StandardWidget.h"
 
 namespace Ui
@@ -33,5 +33,5 @@ private:
 	ChannelConfigurationsModel *m_model;
 	bool m_reentryBarrier;
 };
-
+*/
 #endif

@@ -1,3 +1,4 @@
+/*
 #include "DepthSensorWidget.h"
 #include "ui_DepthSensorWidget.h"
 
@@ -49,3 +50,4 @@ void DepthSensorWidget::update()
   
   ui->view->setDepthImage(driver.depthImage());
 }
+*/

@@ -1,3 +1,4 @@
+/* FIXME
 #include "MotorsSensorsWidget.h"
 #include "ui_MotorsSensorsWidget.h"
 #include "RootController.h"
@@ -66,3 +67,4 @@ void MotorsSensorsWidget::depth()
 {
   RootController::ref().presentWidget(new DepthSensorWidget(device()));
 }
+*/
