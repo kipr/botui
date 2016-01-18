@@ -67,7 +67,12 @@ const float Kovan::BatteryLevelProvider::batteryLevel() const
 	publish();
 #endif
 	float batteryLevel = Battery::powerLevel();
-
+#ifdef WALLABY
+	float perc = (batteryLevel - 5.5f) / 1.5f;
+	if (perc > 1.0f) perc = 1.0f;
+	if (perc < 0.0f) perc = 0.0f;
+	return perc;
+#else
 	float batteryLevelMin;
 	float batteryLevelMax;
 
@@ -82,6 +87,7 @@ const float Kovan::BatteryLevelProvider::batteryLevel() const
 	}
 
 	return (batteryLevel - batteryLevelMin) / (batteryLevelMax - batteryLevelMin);
+#endif
 }
 
 
