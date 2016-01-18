@@ -21,6 +21,7 @@
 #include <netinet/in.h>
 #include <net/if.h>
 #include <arpa/inet.h>
+#include <unistd.h>
 
 #include <QDBusConnection>
 #include <QUuid>
@@ -241,7 +242,7 @@ QString NetworkManager::ipAddress() const
 	if(!ioctl(fd, SIOCGIFADDR, &ifr)) {
 		ret = QString(inet_ntoa(((sockaddr_in *)&ifr.ifr_addr)->sin_addr));
 	}
-	//FIXME: close(fd);
+	close(fd);
 	return ret;
 }
 
