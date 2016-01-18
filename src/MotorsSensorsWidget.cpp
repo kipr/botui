@@ -1,4 +1,3 @@
-/* FIXME
 #include "MotorsSensorsWidget.h"
 #include "ui_MotorsSensorsWidget.h"
 #include "RootController.h"
@@ -55,7 +54,7 @@ void MotorsSensorsWidget::sensorList()
 
 void MotorsSensorsWidget::camera()
 {
-	RootController::ref().presentWidget(new CameraWidget(device()));
+	// FIXME: RootController::ref().presentWidget(new CameraWidget(device()));
 }
 
 void MotorsSensorsWidget::pidTuner()
@@ -65,6 +64,5 @@ void MotorsSensorsWidget::pidTuner()
 
 void MotorsSensorsWidget::depth()
 {
-  RootController::ref().presentWidget(new DepthSensorWidget(device()));
+  // FIXME: RootController::ref().presentWidget(new DepthSensorWidget(device()));
 }
-*/

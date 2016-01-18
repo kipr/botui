@@ -1,6 +1,6 @@
 #ifndef _MOTORSSENSORSWIDGET_H_
 #define _MOTORSSENSORSWIDGET_H_
-/* FIXME
+
 #include "StandardWidget.h"
 
 namespace Ui
@@ -27,5 +27,5 @@ private slots:
 private:
 	Ui::MotorsSensorsWidget *ui;
 };
-*/
+
 #endif

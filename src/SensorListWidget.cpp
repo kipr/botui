@@ -1,4 +1,3 @@
-/* FIXME
 #include "SensorListWidget.h"
 #include "ui_SensorListWidget.h"
 
@@ -73,5 +72,3 @@ void SensorListWidget::togglePullUp()
   qDebug() << "Setting pullup to " << !_model->pullUp(index);
   _model->setPullUp(index, !_model->pullUp(index));
 }
-
-*/

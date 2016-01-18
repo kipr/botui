@@ -1,6 +1,6 @@
 #ifndef _SENSORMODEL_H_
 #define _SENSORMODEL_H_
-/* FIXME
+
 #include <QStandardItemModel>
 
 class SensorModel : public QStandardItemModel
@@ -33,5 +33,5 @@ private:
 	void populateDigital(const unsigned char port);
 	void populateAccel();
 };
-*/
+
 #endif

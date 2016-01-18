@@ -55,7 +55,7 @@ void HomeWidget::fileManager()
 
 void HomeWidget::motorsSensors()
 {
-	// FIXME RootController::ref().presentWidget(new MotorsSensorsWidget(device()));
+	RootController::ref().presentWidget(new MotorsSensorsWidget(device()));
 }
 
 void HomeWidget::settings()

@@ -1,6 +1,6 @@
 #ifndef _SENSORLISTWIDGET_H_
 #define _SENSORLISTWIDGET_H_
-/* FIXME
+
 #include "StandardWidget.h"
 
 namespace Ui
@@ -25,5 +25,5 @@ private:
   QAction *_togglePullUp;
   SensorModel *_model;
 };
-*/
+
 #endif
