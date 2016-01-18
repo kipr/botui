@@ -1,7 +1,7 @@
 project(botui)
 
 option(qt5 "Use Qt5 instead of Qt4" OFF)
-option(wallaby "Use the Wallaby controller" OFF)
+option(wallaby "Use the Wallaby controller" ON)
 
 if (wallaby)
     add_definitions(-DWALLABY)
