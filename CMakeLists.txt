@@ -105,13 +105,7 @@ endif()
 
 add_definitions(-O3)
 
-target_link_libraries(botui pcompiler kar z opencv_core opencv_highgui opencv_imgproc)
-
-if(wallaby)
-    target_link_libraries(botui wallaby)
-else()
-    target_link_libraries(botui kovan)
-endif()
+target_link_libraries(botui wallaby pcompiler kar z opencv_core opencv_highgui opencv_imgproc)
 
 if(NOT qt5)
   target_link_libraries(botui ${QT_LIBRARIES})
