@@ -17,7 +17,12 @@ bool Calibrate::calibrate()
 	QProcess xcalib;
 	xcalib.setProcessChannelMode(QProcess::MergedChannels);
 	xcalib.setProcessEnvironment(QProcessEnvironment::systemEnvironment());
+
+#ifdef WALLABY
+	xcalib.start("/usr/bin/ts_calibrate");
+#else
 	xcalib.start("xinput_calibrator", QStringList() << "--output-type" << "xorg.conf.d");
+#endif
 	xcalib.waitForStarted(2000);
 	if(xcalib.state() != QProcess::Running) {
 		qWarning() << "Couldn't start calibrator";
@@ -26,7 +31,8 @@ bool Calibrate::calibrate()
 	
 	// Wait until calibrator exits
 	xcalib.waitForFinished(-1);
-	
+#ifdef WALLABY
+#else	
 	QByteArray output = xcalib.readAll();
 	
 	// The output has a line with the config file path on it.
@@ -51,6 +57,7 @@ bool Calibrate::calibrate()
 	}
 	file.write(output.mid(i + 1));
 	file.close();
+#endif
 	return true;
 }
 
