@@ -13,6 +13,7 @@
 #endif
 
 #include <QDebug>
+#include <math.h>
 
 ServosWidget::ServosWidget(Device *device, QWidget *parent)
 	: StandardWidget(device, parent),
@@ -55,11 +56,12 @@ ServosWidget::~ServosWidget()
 
 void ServosWidget::valueChanged(const double &value)
 {
-	ui->number->setText(QString::number((int)ui->dial->value()));
+	ui->number->setText(QString::number(round(ui->dial->value())));
+  
 	double safeValue = value;
 	if(safeValue < 50.0) safeValue = 50.0;
 	else if(safeValue > 1998.0) safeValue = 1998.0;
-	
+  
 	set_servo_position(ui->dial->label(), safeValue);
 	publish();
 }
