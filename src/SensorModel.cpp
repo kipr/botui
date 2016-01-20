@@ -61,11 +61,6 @@ private:
 	
 	static QString optionName(SensorModel::SensorType type)
 	{
-		switch(type) {
-		case SensorModel::Analog: return QObject::tr("Pullup");
-		default:
-			return QString();
-		}
 		return QString();
 	}
 	
@@ -146,23 +141,6 @@ SensorModel::SensorType SensorModel::type(const QModelIndex &index) const
 	QModelIndex nameIndex = index.sibling(index.row(), 0);
 	SensorNameItem *const item = SensorNameItem::cast(itemFromIndex(nameIndex));
 	return item ? item->sensorType() : SensorModel::Other;
-}
-
-void SensorModel::setPullUp(const QModelIndex &index, const bool pullup)
-{
-  if(type(index) != SensorModel::Analog) return;
-  QModelIndex nameIndex = index.sibling(index.row(), 0);
-  const SensorNameItem *const item = SensorNameItem::cast(itemFromIndex(nameIndex));
-  if(!item) return;
-  ::Analog(item->port()).setPullup(pullup);
-}
-
-bool SensorModel::pullUp(const QModelIndex &index) const
-{
-  if(type(index) != SensorModel::Analog) return false;
-  QModelIndex nameIndex = index.sibling(index.row(), 0);
-  const SensorNameItem *const item = SensorNameItem::cast(itemFromIndex(nameIndex));
-  return item ? ::Analog(item->port()).pullup() : false;
 }
 
 void SensorModel::update()

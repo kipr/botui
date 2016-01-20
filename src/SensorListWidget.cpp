@@ -32,12 +32,6 @@ SensorItemDelegate::SensorItemDelegate(SensorModel *const model, QObject *const 
 void SensorItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
   QItemDelegate::paint(painter, option, index);
-  if(index.column() != 1 || _model->type(index) != SensorModel::Analog) return;
-  
-  const QPixmap pm = _model->pullUp(index) ? _up : QPixmap();
-  const QPoint right = option.rect.topRight();
-  if(pm.isNull()) return;
-  painter->drawPixmap(right.x() - 24, right.y() + option.rect.height() / 2 - 8, 16, 16, pm);
 }
 
 SensorListWidget::SensorListWidget(Device *device, QWidget *parent)
@@ -48,8 +42,6 @@ SensorListWidget::SensorListWidget(Device *device, QWidget *parent)
 	ui->setupUi(this);
 	
 	performStandardSetup(tr("Sensor List"));
-  _togglePullUp = menuBar()->addAction(tr("Toggle Pull-up"));
-  connect(_togglePullUp, SIGNAL(triggered()), SLOT(togglePullUp()));
 	
 	ui->sensors->setModel(_model);
   ui->sensors->setItemDelegate(new SensorItemDelegate(_model, this));
@@ -62,13 +54,4 @@ SensorListWidget::SensorListWidget(Device *device, QWidget *parent)
 SensorListWidget::~SensorListWidget()
 {
 	delete ui;
-}
-
-void SensorListWidget::togglePullUp()
-{
-  const QModelIndex index = ui->sensors->selectionModel()->currentIndex();
-  if(!index.isValid()) return;
-  
-  qDebug() << "Setting pullup to " << !_model->pullUp(index);
-  _model->setPullUp(index, !_model->pullUp(index));
 }

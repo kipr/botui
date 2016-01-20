@@ -20,9 +20,6 @@ public:
 	~SensorModel();
 
 	SensorModel::SensorType type(const QModelIndex &index) const;
-  
-  void setPullUp(const QModelIndex &index, const bool pullup);
-  bool pullUp(const QModelIndex &index) const;
 
 public slots:
 	void update();
