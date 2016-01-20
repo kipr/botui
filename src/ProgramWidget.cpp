@@ -87,6 +87,7 @@ void ProgramWidget::finished(int exitCode, QProcess::ExitStatus exitStatus)
 {
 	ui->console->setProcess(0);
 	m_program->stop();
+  ui->console->insertPlainText("Program exited with code " + exitCode);
 }
 
 void ProgramWidget::buttonTextChanged(const ButtonProvider::ButtonId& id, const QString& text)
