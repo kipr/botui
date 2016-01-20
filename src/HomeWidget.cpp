@@ -75,7 +75,7 @@ void HomeWidget::about()
 void HomeWidget::shutDown()
 {
 #ifdef WALLABY
-  if(QMessageBox::question(this, "Shut Down?", "(message about moving the switch)\n\nAre you sure?", QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
+  if(QMessageBox::question(this, "Shut Down?", "After system halted, slide power switch off or disconnect battery.\n\nContinue?", QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
     return;
   
   const int ret = QProcess::execute("poweroff");
