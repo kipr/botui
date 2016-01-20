@@ -58,7 +58,7 @@ void SensorsWidget::update()
 double SensorsWidget::rawValue(const int &i) const
 {
 	double val = 0;
-	if(i < 8) val = analog10(i);
+	if(i < 8) val = analog(i);
 	else if(i < 12) val = get_motor_position_counter(i - 8);
 	else if(i == 12) val = accel_x();
 	else if(i == 13) val = accel_y();
