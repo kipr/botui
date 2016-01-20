@@ -4,6 +4,7 @@
 
 #include <QStandardItem>
 #include <QFileSystemWatcher>
+#include <QDebug>
 
 class ArchiveItem : public QStandardItem
 {
@@ -34,7 +35,9 @@ ArchivesModel::ArchivesModel(Device *device, QObject *parent)
 {
 	
   QFileSystemWatcher *watcher = new QFileSystemWatcher(this);
-  watcher->addPath(SystemPrefix::ref().rootManager()->archivesPath());
+  // TODO: hardcoded system path
+  watcher->addPath("/home/root/Documents/KISS/bin/");
+  //watcher->addPath(SystemPrefix::ref().rootManager()->archivesPath());
 	
   connect(watcher, SIGNAL(directoryChanged(QString)), SLOT(refresh()));
 	refresh();
@@ -74,8 +77,15 @@ void ArchivesModel::archiveRemoved(const QString &name)
 void ArchivesModel::refresh()
 {
 	clear();
-	foreach(const QString &name, SystemPrefix::ref().rootManager()->archives()
+  // TODO: hardcoded system path
+  const QDir binDir("/home/root/Documents/KISS/bin/");
+  foreach(const QString &name, binDir.entryList(QDir::NoDot | QDir::NoDotDot | QDir::Dirs)) {
+    qDebug() << "Found " << name;
+    if(!binDir.exists(name + "/botball_user_program")) continue;
+    appendRow(new ArchiveItem(name));
+  }
+	/*foreach(const QString &name, SystemPrefix::ref().rootManager()->archives()
       .entryList(QDir::NoDot | QDir::NoDotDot | QDir::Files)) {
 		appendRow(new ArchiveItem(name));
-	}
+	}*/
 }
