@@ -79,11 +79,8 @@ void ArchivesModel::refresh()
 	clear();
   // TODO: hardcoded system path
   const QDir binDir("/home/root/Documents/KISS/bin/");
-  foreach(const QString &name, binDir.entryList(QDir::NoDot | QDir::NoDotDot | QDir::Dirs)) {
-    qDebug() << "Found " << name;
-    if(!binDir.exists(name + "/botball_user_program")) continue;
+  foreach(const QString &name, binDir.entryList(QDir::NoDot | QDir::NoDotDot | QDir::Dirs))
     appendRow(new ArchiveItem(name));
-  }
 	/*foreach(const QString &name, SystemPrefix::ref().rootManager()->archives()
       .entryList(QDir::NoDot | QDir::NoDotDot | QDir::Files)) {
 		appendRow(new ArchiveItem(name));

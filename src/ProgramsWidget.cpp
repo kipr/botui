@@ -21,6 +21,7 @@
 #include <QItemDelegate>
 #include <QThreadPool>
 #include <QTimer>
+#include <QMessageBox>
 #include <QDebug>
 
 class ItemDelegate : public QItemDelegate
@@ -106,7 +107,7 @@ void ProgramsWidget::run()
   // Make sure binary exists for this project
   const QDir projDir("/home/root/Documents/KISS/bin/" + name);
   if(!projDir.exists("botball_user_program")) {
-    qWarning() << "No binary exists for project " << name;
+    QMessageBox::warning(this, tr("No Executable"), tr("No executable exists for the selected proejct."));
     return;
   }
   
