@@ -85,7 +85,7 @@ else()
   qt5_add_resources(SRCS_CXX ${QRC_FILES})
 endif()
 
-SET(CMAKE_CXX_FLAGS "-Wall")
+add_definitions(-Wall)
 
 IF(APPLE)
   add_definitions(-g)
