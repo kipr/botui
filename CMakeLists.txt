@@ -22,6 +22,7 @@ set(UI ${CMAKE_SOURCE_DIR}/ui)
 
 set(DEVICES ${CMAKE_SOURCE_DIR}/devices)
 set(KOVAN ${DEVICES}/kovan)
+set(WALLABY ${DEVICES}/wallaby)
 set(SIMULATOR ${DEVICES}/simulator)
 
 set(DBUS ${CMAKE_SOURCE_DIR}/dbus)
@@ -32,6 +33,7 @@ include_directories(
 	${DBUS}/include
 	${CMAKE_BINARY_DIR}
 	${KOVAN}/include
+  ${WALLABY}/include
 	${SIMULATOR}/include
 	${INCLUDE}
 )
@@ -51,8 +53,8 @@ else()
   find_package(Qt5Network REQUIRED)
 endif()
 
-file(GLOB INCLUDES ${INCLUDE}/*.h ${KOVAN}/include/*.h ${SIMULATOR}/include/*.h)
-file(GLOB SOURCES ${SRC}/*.cpp ${KOVAN}/src/*.cpp ${SIMULATOR}/src/*.cpp)
+file(GLOB INCLUDES ${INCLUDE}/*.h ${KOVAN}/include/*.h ${WALLABY}/include/*.h ${SIMULATOR}/include/*.h)
+file(GLOB SOURCES ${SRC}/*.cpp ${KOVAN}/src/*.cpp ${WALLABY}/src/*.cpp ${SIMULATOR}/src/*.cpp)
 file(GLOB UIS ${UI}/*)
 
 
