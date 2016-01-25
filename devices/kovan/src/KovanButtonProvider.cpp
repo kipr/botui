@@ -1,12 +1,7 @@
 #include "KovanButtonProvider.h"
 
-#ifdef WALLABY
-#include <wallaby/button.hpp>
-#include <wallaby/general.h>
-#else
 #include <kovan/button.hpp>
 #include <kovan/general.h>
-#endif
 
 #include <QDebug>
 
