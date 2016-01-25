@@ -115,3 +115,6 @@ if(NOT qt5)
 else()
   qt5_use_modules(botui Widgets Declarative Network)
 endif()
+
+
+install(TARGETS botui DESTINATION bin)
