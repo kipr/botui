@@ -3,14 +3,17 @@ project(botui)
 option(qt5 "Use Qt5 instead of Qt4" OFF)
 option(wallaby "Use the Wallaby controller" ON)
 
-if (wallaby)
-    add_definitions(-DWALLABY)
-endif()
-
 if(NOT qt5)
   cmake_minimum_required(VERSION 2.6.0)
 else()
   cmake_minimum_required(VERSION 2.8.11)
+endif()
+
+if (wallaby)
+  add_definitions(-DWALLABY)
+  set(DEVICE_DIR ${CMAKE_SOURCE_DIR}/devices/wallaby)
+else()
+  set(DEVICE_DIR ${CMAKE_SOURCE_DIR}/devices/kovan)
 endif()
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/deploy)
@@ -20,11 +23,6 @@ set(RC ${CMAKE_SOURCE_DIR}/rc)
 set(SRC ${CMAKE_SOURCE_DIR}/src)
 set(UI ${CMAKE_SOURCE_DIR}/ui)
 
-set(DEVICES ${CMAKE_SOURCE_DIR}/devices)
-set(KOVAN ${DEVICES}/kovan)
-set(WALLABY ${DEVICES}/wallaby)
-set(SIMULATOR ${DEVICES}/simulator)
-
 set(DBUS ${CMAKE_SOURCE_DIR}/dbus)
 
 include_directories(
@@ -32,9 +30,7 @@ include_directories(
 	${CMAKE_SOURCE_DIR}/src
 	${DBUS}/include
 	${CMAKE_BINARY_DIR}
-	${KOVAN}/include
-  ${WALLABY}/include
-	${SIMULATOR}/include
+  ${DEVICE_DIR}/include
 	${INCLUDE}
 )
 
@@ -53,8 +49,8 @@ else()
   find_package(Qt5Network REQUIRED)
 endif()
 
-file(GLOB INCLUDES ${INCLUDE}/*.h ${KOVAN}/include/*.h ${WALLABY}/include/*.h ${SIMULATOR}/include/*.h)
-file(GLOB SOURCES ${SRC}/*.cpp ${KOVAN}/src/*.cpp ${WALLABY}/src/*.cpp ${SIMULATOR}/src/*.cpp)
+file(GLOB INCLUDES ${INCLUDE}/*.h ${DEVICE_DIR}/include/*.h)
+file(GLOB SOURCES ${SRC}/*.cpp ${DEVICE_DIR}/src/*.cpp)
 file(GLOB UIS ${UI}/*)
 
 
@@ -107,7 +103,12 @@ endif()
 
 add_definitions(-O3)
 
-target_link_libraries(botui wallaby pcompiler kar z opencv_core opencv_highgui opencv_imgproc)
+target_link_libraries(botui pcompiler kar z opencv_core opencv_highgui opencv_imgproc)
+if(wallaby)
+  target_link_libraries(botui wallaby)
+else()
+  target_link_libraries(botui kovan)
+endif()
 
 if(NOT qt5)
   target_link_libraries(botui ${QT_LIBRARIES})
