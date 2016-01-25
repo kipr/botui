@@ -3,9 +3,7 @@
 #include "MechanicalStyle.h"
 #include "HomeWidget.h"
 #include "StatusBar.h"
-#include "KovanDevice.h"
-#include "SimulatorDevice.h"
-#include "SimulatorDevice.h"
+#include "WallabyDevice.h"
 #include "FirstRunWizard.h"
 #include "FactoryWidget.h"
 #include "NetworkManager.h"
@@ -43,7 +41,7 @@ int main(int argc, char* argv[])
 	
 	srand(time(NULL));
 	
-	Kovan::Device device;
+	Wallaby::Device device;
 	CursorManager::ref().setDevice(&device);
 #ifdef QT_DBUS_LIB
   KovanSerialBridge::ref().init(&device);
