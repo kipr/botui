@@ -201,6 +201,7 @@ void SensorModel::populateAccel()
 		<< new SensorValueItem<short>(new ::AccelZ(), true));
 }
 
+#ifdef WALLABY
 void SensorModel::populateGyro()
 {
 	appendRow(QList<QStandardItem *>()
@@ -226,3 +227,4 @@ void SensorModel::populateMagneto()
 		<< new SensorNameItem(SensorModel::MagnetoZ)
 		<< new SensorValueItem<short>(new ::MagnetoZ(), true));
 }
+#endif

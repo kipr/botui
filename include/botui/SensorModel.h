@@ -7,18 +7,21 @@ class SensorModel : public QStandardItemModel
 {
 Q_OBJECT
 public:
+
 	enum SensorType {
 		Analog,
 		Digital,
 		AccelX,
 		AccelY,
 		AccelZ,
+#ifdef WALLABY
 		GyroX,
 		GyroY,
 		GyroZ,
 		MagnetoX,
 		MagnetoY,
 		MagnetoZ,
+#endif
 		Other
 	};
 	
@@ -35,8 +38,10 @@ private:
 	void populateAnalog(const unsigned char port);
 	void populateDigital(const unsigned char port);
 	void populateAccel();
+#ifdef WALLABY
 	void populateGyro();
 	void populateMagneto();
+#endif
 };
 
 #endif
