@@ -190,9 +190,15 @@ void SensorModel::populateAnalog(const unsigned char port)
 
 void SensorModel::populateDigital(const unsigned char port)
 {
+#ifdef WALLABY
+	appendRow(QList<QStandardItem *>()
+		<< new SensorNameItem(SensorModel::Digital, port)
+		<< new SensorValueItem<bool>(new ::Digital(port), true));
+#else
 	appendRow(QList<QStandardItem *>()
 		<< new SensorNameItem(SensorModel::Digital, port)
 		<< new SensorValueItem<bool>(new SensorLogic::Not(new ::Digital(port), true), true));
+#endif
 }
 
 void SensorModel::populateAccel()
