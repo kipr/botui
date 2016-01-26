@@ -56,12 +56,14 @@ private:
 		case SensorModel::AccelX: return QObject::tr("Accelerometer X");
 		case SensorModel::AccelY: return QObject::tr("Accelerometer Y");
 		case SensorModel::AccelZ: return QObject::tr("Accelerometer Z");
+#ifdef WALLABY
 		case SensorModel::GyroX: return QObject::tr("Gyrometer X");
 		case SensorModel::GyroY: return QObject::tr("Gyrometer Y");
 		case SensorModel::GyroZ: return QObject::tr("Gyrometer Z");
 		case SensorModel::MagnetoX: return QObject::tr("Magnetometer X");
 		case SensorModel::MagnetoY: return QObject::tr("Magnetometer Y");
 		case SensorModel::MagnetoZ: return QObject::tr("Magnetometer Z");
+#endif
 		default: break;
 		}
 		return QObject::tr("Unknown Sensor");
