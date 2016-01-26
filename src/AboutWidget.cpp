@@ -10,7 +10,7 @@ AboutWidget::AboutWidget(Device *device, QWidget *parent)
 	ui(new Ui::AboutWidget)
 {
 	ui->setupUi(this);
-	ui->deviceName->setText(device->name() + " " + device->version());
+	ui->deviceName->setText(device->name() + " v" + device->version());
 	performStandardSetup(tr("About"));
 }
 
