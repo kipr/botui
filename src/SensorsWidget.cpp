@@ -59,17 +59,17 @@ double SensorsWidget::rawValue(const int &i) const
 {
 	double val = 0;
 #ifdef WALLABY
-	if(i < 8) val = analog(i);
-	else if(i < 12) val = get_motor_position_counter(i - 8);
-	else if(i == 12) val = accel_x();
-	else if(i == 13) val = accel_y();
-	else if(i == 14) val = accel_z();
-	else if(i == 15) val = gyro_x();
-	else if(i == 16) val = gyro_y();
-	else if(i == 17) val = gyro_z();
-	else if(i == 18) val = magneto_x();
-	else if(i == 19) val = magneto_y();
-	else if(i == 20) val = magneto_z();
+	if(i < 6) val = analog(i);
+	else if(i < 10) val = get_motor_position_counter(i - 6);
+	else if(i == 10) val = accel_x();
+	else if(i == 11) val = accel_y();
+	else if(i == 12) val = accel_z();
+	else if(i == 13) val = gyro_x();
+	else if(i == 14) val = gyro_y();
+	else if(i == 15) val = gyro_z();
+	else if(i == 16) val = magneto_x();
+	else if(i == 17) val = magneto_y();
+	else if(i == 18) val = magneto_z();
 #else
 	if(i < 8) val = analog(i);
 	else if(i < 12) val = get_motor_position_counter(i - 8);
