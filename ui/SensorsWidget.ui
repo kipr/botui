@@ -115,6 +115,36 @@
          <string>Accel Z</string>
         </property>
        </item>
+       <item>
+        <property name="text">
+         <string>Gyro X</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Gyro Y</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Gyro Z</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Magneto X</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Magneto Y</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Magneto Z</string>
+        </property>
+       </item>
       </widget>
      </item>
      <item>
@@ -195,6 +225,36 @@
        <item>
         <property name="text">
          <string>Accel Z</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Gyro X</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Gyro Y</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Gyro Z</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Magneto X</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Magneto Y</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Magneto Z</string>
         </property>
        </item>
       </widget>

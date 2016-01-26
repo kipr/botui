@@ -63,6 +63,12 @@ double SensorsWidget::rawValue(const int &i) const
 	else if(i == 12) val = accel_x();
 	else if(i == 13) val = accel_y();
 	else if(i == 14) val = accel_z();
+	else if(i == 15) val = gyro_x();
+	else if(i == 16) val = gyro_y();
+	else if(i == 17) val = gyro_z();
+	else if(i == 18) val = magneto_x();
+	else if(i == 19) val = magneto_y();
+	else if(i == 20) val = magneto_z();
 	return val;
 }
 

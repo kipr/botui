@@ -4,6 +4,8 @@
 #include <wallaby/analog.hpp>
 #include <wallaby/digital.hpp>
 #include <wallaby/accel.hpp>
+#include <wallaby/gyro.hpp>
+#include <wallaby/magneto.hpp>
 #include <wallaby/sensor_logic.hpp>
 #include <wallaby/general.h>
 #else
@@ -54,6 +56,12 @@ private:
 		case SensorModel::AccelX: return QObject::tr("Accelerometer X");
 		case SensorModel::AccelY: return QObject::tr("Accelerometer Y");
 		case SensorModel::AccelZ: return QObject::tr("Accelerometer Z");
+		case SensorModel::GyroX: return QObject::tr("Gyrometer X");
+		case SensorModel::GyroY: return QObject::tr("Gyrometer Y");
+		case SensorModel::GyroZ: return QObject::tr("Gyrometer Z");
+		case SensorModel::MagnetoX: return QObject::tr("Magnetometer X");
+		case SensorModel::MagnetoY: return QObject::tr("Magnetometer Y");
+		case SensorModel::MagnetoZ: return QObject::tr("Magnetometer Z");
 		default: break;
 		}
 		return QObject::tr("Unknown Sensor");
@@ -159,6 +167,10 @@ void SensorModel::populate()
 	for(; i < 8; ++i) populateAnalog(i);
 	for(; i < 16; ++i) populateDigital(i);
 	populateAccel();
+#ifdef WALLABY
+	populateGyro();
+	populateMagneto();
+#endif
 }
 
 void SensorModel::populateAnalog(const unsigned char port)
@@ -187,4 +199,30 @@ void SensorModel::populateAccel()
 	appendRow(QList<QStandardItem *>()
 		<< new SensorNameItem(SensorModel::AccelZ)
 		<< new SensorValueItem<short>(new ::AccelZ(), true));
+}
+
+void SensorModel::populateGyro()
+{
+	appendRow(QList<QStandardItem *>()
+		<< new SensorNameItem(SensorModel::GyroX)
+		<< new SensorValueItem<short>(new ::GyroX(), true));
+	appendRow(QList<QStandardItem *>()
+		<< new SensorNameItem(SensorModel::GyroY)
+		<< new SensorValueItem<short>(new ::GyroY(), true));
+	appendRow(QList<QStandardItem *>()
+		<< new SensorNameItem(SensorModel::GyroZ)
+		<< new SensorValueItem<short>(new ::GyroZ(), true));
+}
+
+void SensorModel::populateMagneto()
+{
+	appendRow(QList<QStandardItem *>()
+		<< new SensorNameItem(SensorModel::MagnetoX)
+		<< new SensorValueItem<short>(new ::MagnetoX(), true));
+	appendRow(QList<QStandardItem *>()
+		<< new SensorNameItem(SensorModel::MagnetoY)
+		<< new SensorValueItem<short>(new ::MagnetoY(), true));
+	appendRow(QList<QStandardItem *>()
+		<< new SensorNameItem(SensorModel::MagnetoZ)
+		<< new SensorValueItem<short>(new ::MagnetoZ(), true));
 }

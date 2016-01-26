@@ -13,6 +13,12 @@ public:
 		AccelX,
 		AccelY,
 		AccelZ,
+		GyroX,
+		GyroY,
+		GyroZ,
+		MagnetoX,
+		MagnetoY,
+		MagnetoZ,
 		Other
 	};
 	
@@ -29,6 +35,8 @@ private:
 	void populateAnalog(const unsigned char port);
 	void populateDigital(const unsigned char port);
 	void populateAccel();
+	void populateGyro();
+	void populateMagneto();
 };
 
 #endif
