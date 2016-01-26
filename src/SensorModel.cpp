@@ -166,8 +166,13 @@ void SensorModel::update()
 void SensorModel::populate()
 {
 	unsigned char i = 0;
+#ifdef WALLABY
+	for(; i < 6; ++i) populateAnalog(i);
+	for(; i < 10; ++i) populateDigital(i);
+#else
 	for(; i < 8; ++i) populateAnalog(i);
 	for(; i < 16; ++i) populateDigital(i);
+#endif
 	populateAccel();
 #ifdef WALLABY
 	populateGyro();
