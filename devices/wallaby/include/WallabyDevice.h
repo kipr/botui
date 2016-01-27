@@ -24,6 +24,8 @@ namespace Wallaby
     CompileProvider *m_compileProvider;
     BatteryLevelProvider *m_batteryLevelProvider;
     SettingsProvider *m_settingsProvider;
+    QString m_version;
+
   };
 }
 

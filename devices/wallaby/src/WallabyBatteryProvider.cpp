@@ -10,7 +10,7 @@ const float Wallaby::BatteryLevelProvider::batteryLevel() const
 #endif
 
   const float batteryLevel = Battery::powerLevel();
-  float perc = (batteryLevel - 5.5f) / 1.5f;
+  float perc = batteryLevel;
   if (perc > 1.0f) perc = 1.0f;
   if (perc < 0.0f) perc = 0.0f;
   return perc;
