@@ -50,6 +50,9 @@ CombinedMotorWidget::CombinedMotorWidget(Device *device, QWidget *parent)
 	
 	connect(ui->tabs, SIGNAL(currentChanged(int)), SLOT(stop()));
 	
+	// TODO: remove this once position mode works
+	ui->tabs->removeTab(2);
+
 	connect(ui->go, SIGNAL(clicked()), SLOT(go()));
 	
 	QTimer *timer = new QTimer(this);
