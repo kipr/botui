@@ -37,8 +37,8 @@ private:
 LocaleModel::LocaleModel(QObject *const parent)
   : QStandardItemModel(parent)
 {
-  QDir locales("/etc/botui/locale");
-  Q_FOREACH(const QFileInfo &localeFile, locales.entryInfoList(QDir::NoDot | QDir::NoDotDot | QDir::Files)) {
+  const QDir localeDir("/etc/botui/locale");
+  Q_FOREACH(const QFileInfo &localeFile, localeDir.entryInfoList(QDir::NoDot | QDir::NoDotDot | QDir::Files)) {
     const QString name = localeFile.baseName();
     const int underline = name.indexOf("_");
     if(!underline) continue;
