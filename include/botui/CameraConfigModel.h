@@ -1,10 +1,16 @@
 #ifndef _CAMERACONFIGMODEL_H_
 #define _CAMERACONFIGMODEL_H_
-
+/* FIXME
 #include <QObject>
 #include <QStandardItemModel>
+
+#ifdef WALLABY
+#include <wallaby/config.hpp>
+#include <wallaby/camera.hpp>
+#else
 #include <kovan/config.hpp>
 #include <kovan/camera.hpp>
+#endif
 
 class CameraConfigModel : public QStandardItemModel
 {
@@ -33,5 +39,5 @@ private:
 	Config m_config;
 	QString m_blank;
 };
-
+*/
 #endif

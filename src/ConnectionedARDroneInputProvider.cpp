@@ -1,3 +1,4 @@
+/* FIXME
 #include "ConnectionedARDroneInputProvider.h"
 
 using namespace Camera;
@@ -23,3 +24,4 @@ bool ConnectionedARDroneInputProvider::close()
 	m_open = false;
 	return ret;
 }
+*/

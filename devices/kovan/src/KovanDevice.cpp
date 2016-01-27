@@ -63,7 +63,6 @@ const float Kovan::BatteryLevelProvider::batteryLevel() const
 	publish();
 #endif
 	float batteryLevel = Battery::powerLevel();
-
 	float batteryLevelMin;
 	float batteryLevelMax;
 

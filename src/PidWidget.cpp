@@ -4,8 +4,13 @@
 #include "ArrayHelpers.h"
 #include "NumpadDialog.h"
 
-#include <kovan/general.h>
+#ifdef WALLABY
+#include <wallaby/motors.h>
+#include <wallaby/general.h>
+#else
 #include <kovan/motors.h>
+#include <kovan/general.h>
+#endif
 
 #include <QTimer>
 #include <QDebug>

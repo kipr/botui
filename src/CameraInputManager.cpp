@@ -1,4 +1,6 @@
+/* FIXME
 #include "CameraInputManager.h"
+
 #include "ConnectionedARDroneInputProvider.h"
 #include <QDebug>
 
@@ -189,3 +191,4 @@ bool CameraInputAdapter::close()
 {
 	return m_manager->release();
 }
+*/

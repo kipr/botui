@@ -4,8 +4,15 @@
 #include "NumpadDialog.h"
 #include <QDebug>
 
+
+#ifdef WALLABY
+#include <wallaby/motors.h>
+#include <wallaby/general.h>
+#else
 #include <kovan/motors.h>
 #include <kovan/general.h>
+#endif
+
 #include <cmath>
 
 #define MOTOR_SCALING (1500.0)
@@ -127,7 +134,12 @@ void PidTunerWidget::motorChanged()
 
 void PidTunerWidget::updatePids()
 {
-	short p,i,d,pd,id,dd = 0;
+	short p = 0;
+	short i = 0;
+	short d = 0;
+	short pd = 0;
+	short id = 0;
+	short dd = 0;
 
 	get_pid_gains(ui->motor->currentIndex(), &p, &i, &d, &pd, &id, &dd);
 

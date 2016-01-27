@@ -21,6 +21,7 @@
 #include <QItemDelegate>
 #include <QThreadPool>
 #include <QTimer>
+#include <QMessageBox>
 #include <QDebug>
 
 class ItemDelegate : public QItemDelegate
@@ -76,11 +77,12 @@ void ProgramsWidget::run()
 	QModelIndexList currents = ui->programs->selectionModel()->selectedIndexes();
 	if(currents.size() != 1) return;
   
-  ui->run->setEnabled(false);
+  //ui->run->setEnabled(false);
 	
 	const QString name = m_model->name(currents[0]);
 	
-	if(!QFileInfo(SystemPrefix::ref().rootManager()->binPath(name)).exists()) {
+  // TODO: removed attempt to compile
+	/*if(!QFileInfo(SystemPrefix::ref().rootManager()->binPath(name)).exists()) {
 		qWarning() << "Could not find executable for" << name << ". Trying to compile.";
 		LogDialog logger;
     const QString archivePath = SystemPrefix::ref().rootManager()->archivesPath(name);
@@ -100,9 +102,19 @@ void ProgramsWidget::run()
       ui->run->setEnabled(true);
       return;
     }
-	}
+	}*/
+  // TODO: hardcoded system path
+  // Make sure binary exists for this project
+  const QDir projDir("/home/root/Documents/KISS/bin/" + name);
+  if(!projDir.exists("botball_user_program")) {
+    QMessageBox::warning(this, tr("No Executable"), tr("No executable exists for the selected proejct."));
+    return;
+  }
   
-  const QString archivePath = SystemPrefix::ref().rootManager()->archivesPath(name);
+  ui->run->setEnabled(false);
+  
+  // TODO: removed attempt to compile
+  /*const QString archivePath = SystemPrefix::ref().rootManager()->archivesPath(name);
 	ProgramWidget *programWidget = new ProgramWidget(Program::instance(), device());
   kiss::KarPtr archive = kiss::Kar::load(archivePath);
   bool success = true;
@@ -124,7 +136,10 @@ void ProgramsWidget::run()
 		success = Compiler::Output::isSuccess(compiler.output());
     if(success) success = Program::instance()->start(SystemPrefix::ref().rootManager()->bin(name).filePath(name),
       ProgramArguments::arguments(archive));
-	} 
+	}*/
+  
+  ProgramWidget *programWidget = new ProgramWidget(Program::instance(), device());
+  const bool success = Program::instance()->start(projDir.filePath("botball_user_program"), QStringList());
   
   if(success) RootController::ref().presentWidget(programWidget);
   else delete programWidget;

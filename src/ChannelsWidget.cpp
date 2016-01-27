@@ -1,3 +1,4 @@
+/* FIXME
 #include "ChannelsWidget.h"
 
 #include "ui_ChannelsWidget.h"
@@ -15,7 +16,11 @@
 #include <QPainter>
 #include <QDebug>
 
+#ifdef WALLABY
+#include <wallaby/camera.hpp>
+#else
 #include <kovan/camera.hpp>
+#endif
 
 class ChannelItemDelegate : public QItemDelegate
 {
@@ -184,3 +189,4 @@ bool ChannelsWidget::save() const
 {
 	return m_model->config().save(m_path.toStdString());
 }
+*/

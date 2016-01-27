@@ -1,3 +1,4 @@
+/* FIXME
 #include "ChannelConfigurationsWidget.h"
 #include "ui_ChannelConfigurationsWidget.h"
 
@@ -14,8 +15,13 @@
 #include <QDir>
 #include <QDebug>
 
+#ifdef WALLABY
+#include <wallaby/camera.hpp>
+#include <wallaby/config.hpp>
+#else
 #include <kovan/camera.hpp>
 #include <kovan/config.hpp>
+#endif
 
 class ConfigItemDelegate : public QItemDelegate
 {
@@ -165,3 +171,4 @@ void ChannelConfigurationsWidget::currentChanged(const QModelIndex &index)
 	ui->remove->setEnabled(enable);
 	m_import->setEnabled(enable);
 }
+*/

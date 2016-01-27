@@ -1,6 +1,8 @@
 #include "KovanButtonProvider.h"
+
 #include <kovan/button.hpp>
 #include <kovan/general.h>
+
 #include <QDebug>
 
 Kovan::ButtonProvider::ButtonProvider(QObject *parent)

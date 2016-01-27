@@ -1,3 +1,4 @@
+/* FIXME
 #include "CameraInputSelectorWidget.h"
 #include "ui_CameraInputSelectorWidget.h"
 
@@ -30,3 +31,4 @@ void CameraInputSelectorWidget::sourceIndexChanged(const int index)
 	CameraInputManager::Source source = (CameraInputManager::Source)(index + 1);
 	CameraInputManager::ref().setSource(source);
 }
+*/

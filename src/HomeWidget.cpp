@@ -1,6 +1,8 @@
 #include "HomeWidget.h"
 
 #include <QApplication>
+#include <QMessageBox>
+#include <QProcess>
 
 #include "ui_HomeWidget.h"
 #include "MenuBar.h"
@@ -33,7 +35,9 @@ HomeWidget::HomeWidget(Device *device, QWidget *parent)
 	// QAction *lock = menuBar()->addAction(UiStandards::lockString());
 	// connect(lock, SIGNAL(triggered()), SLOT(lock()));
 	QAction *about = menuBar()->addAction(tr("About"));
+  QAction *shutDown = menuBar()->addAction(tr("Shut Down"));
 	connect(about, SIGNAL(triggered()), SLOT(about()));
+  connect(shutDown, SIGNAL(triggered()), SLOT(shutDown()));
 }
 
 HomeWidget::~HomeWidget()
@@ -66,6 +70,20 @@ void HomeWidget::settings()
 void HomeWidget::about()
 {
 	RootController::ref().presentWidget(new AboutWidget(device()));
+}
+
+void HomeWidget::shutDown()
+{
+#ifdef WALLABY
+  if(QMessageBox::question(this, "Shut Down?", "After system halted, slide power switch off or disconnect battery.\n\nContinue?", QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
+    return;
+  
+  const int ret = QProcess::execute("poweroff");
+  if(ret < 0)
+    QMessageBox::information(this, "Failed", "Shut down failed.");
+#else
+  QMessageBox::information(this, "Not Available", "Shut down is only available on the kovan.");
+#endif
 }
 
 void HomeWidget::lock()

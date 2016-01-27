@@ -1,5 +1,5 @@
 #include "ChannelConfigWidget.h"
-
+/* FIXME
 ChannelConfigWidget::ChannelConfigWidget(const QModelIndex &index, QWidget *parent)
 	: QWidget(parent),
 	m_index(index)
@@ -21,3 +21,4 @@ const Config &ChannelConfigWidget::config() const
 {
 	return m_config;
 }
+*/

@@ -1,7 +1,13 @@
+/* FIXME
 #include "DepthImageView.h"
 #include <QPainter>
 #include <QDebug>
+
+#ifdef WALLABY
+#include <wallaby/depth_image.hpp>
+#else
 #include <kovan/depth_image.hpp>
+#endif
 
 using namespace depth;
 
@@ -87,3 +93,4 @@ void DepthImageView::paintEvent(QPaintEvent *event)
   
   p.drawPixmap(0, 0, width(), height(), _backing);
 }
+*/

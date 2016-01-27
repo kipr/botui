@@ -1,10 +1,22 @@
 #include "SensorModel.h"
 
+#ifdef WALLABY
+#include <wallaby/analog.hpp>
+#include <wallaby/digital.hpp>
+#include <wallaby/accel.hpp>
+#include <wallaby/gyro.hpp>
+#include <wallaby/magneto.hpp>
+#include <wallaby/sensor_logic.hpp>
+#include <wallaby/general.h>
+#else
 #include <kovan/analog.hpp>
 #include <kovan/digital.hpp>
 #include <kovan/accel.hpp>
 #include <kovan/sensor_logic.hpp>
 #include <kovan/general.h>
+#endif
+
+
 #include <math.h>
 
 class SensorNameItem : public QStandardItem
@@ -44,6 +56,14 @@ private:
 		case SensorModel::AccelX: return QObject::tr("Accelerometer X");
 		case SensorModel::AccelY: return QObject::tr("Accelerometer Y");
 		case SensorModel::AccelZ: return QObject::tr("Accelerometer Z");
+#ifdef WALLABY
+		case SensorModel::GyroX: return QObject::tr("Gyrometer X");
+		case SensorModel::GyroY: return QObject::tr("Gyrometer Y");
+		case SensorModel::GyroZ: return QObject::tr("Gyrometer Z");
+		case SensorModel::MagnetoX: return QObject::tr("Magnetometer X");
+		case SensorModel::MagnetoY: return QObject::tr("Magnetometer Y");
+		case SensorModel::MagnetoZ: return QObject::tr("Magnetometer Z");
+#endif
 		default: break;
 		}
 		return QObject::tr("Unknown Sensor");
@@ -51,11 +71,6 @@ private:
 	
 	static QString optionName(SensorModel::SensorType type)
 	{
-		switch(type) {
-		case SensorModel::Analog: return QObject::tr("Pullup");
-		default:
-			return QString();
-		}
 		return QString();
 	}
 	
@@ -138,23 +153,6 @@ SensorModel::SensorType SensorModel::type(const QModelIndex &index) const
 	return item ? item->sensorType() : SensorModel::Other;
 }
 
-void SensorModel::setPullUp(const QModelIndex &index, const bool pullup)
-{
-  if(type(index) != SensorModel::Analog) return;
-  QModelIndex nameIndex = index.sibling(index.row(), 0);
-  const SensorNameItem *const item = SensorNameItem::cast(itemFromIndex(nameIndex));
-  if(!item) return;
-  ::Analog(item->port()).setPullup(pullup);
-}
-
-bool SensorModel::pullUp(const QModelIndex &index) const
-{
-  if(type(index) != SensorModel::Analog) return false;
-  QModelIndex nameIndex = index.sibling(index.row(), 0);
-  const SensorNameItem *const item = SensorNameItem::cast(itemFromIndex(nameIndex));
-  return item ? ::Analog(item->port()).pullup() : false;
-}
-
 void SensorModel::update()
 {
 	publish();
@@ -167,10 +165,18 @@ void SensorModel::update()
 
 void SensorModel::populate()
 {
-	unsigned char i = 0;
-	for(; i < 8; ++i) populateAnalog(i);
-	for(; i < 16; ++i) populateDigital(i);
+#ifdef WALLABY
+	for(unsigned int i = 0; i < 6; ++i) populateAnalog(i);
+	for(unsigned int i = 0; i < 10; ++i) populateDigital(i);
+#else
+	for(unsigned int i = 0; i < 8; ++i) populateAnalog(i);
+	for(unsigned int i = 0; i < 16; ++i) populateDigital(i);
+#endif
 	populateAccel();
+#ifdef WALLABY
+	populateGyro();
+	populateMagneto();
+#endif
 }
 
 void SensorModel::populateAnalog(const unsigned char port)
@@ -178,13 +184,20 @@ void SensorModel::populateAnalog(const unsigned char port)
 	appendRow(QList<QStandardItem *>()
 		<< new SensorNameItem(SensorModel::Analog, port)
 		<< new SensorValueItem<unsigned short>(new ::Analog(port), true));
+
 }
 
 void SensorModel::populateDigital(const unsigned char port)
 {
+#ifdef WALLABY
+	appendRow(QList<QStandardItem *>()
+		<< new SensorNameItem(SensorModel::Digital, port)
+		<< new SensorValueItem<bool>(new ::Digital(port), true));
+#else
 	appendRow(QList<QStandardItem *>()
 		<< new SensorNameItem(SensorModel::Digital, port)
 		<< new SensorValueItem<bool>(new SensorLogic::Not(new ::Digital(port), true), true));
+#endif
 }
 
 void SensorModel::populateAccel()
@@ -199,3 +212,31 @@ void SensorModel::populateAccel()
 		<< new SensorNameItem(SensorModel::AccelZ)
 		<< new SensorValueItem<short>(new ::AccelZ(), true));
 }
+
+#ifdef WALLABY
+void SensorModel::populateGyro()
+{
+	appendRow(QList<QStandardItem *>()
+		<< new SensorNameItem(SensorModel::GyroX)
+		<< new SensorValueItem<short>(new ::GyroX(), true));
+	appendRow(QList<QStandardItem *>()
+		<< new SensorNameItem(SensorModel::GyroY)
+		<< new SensorValueItem<short>(new ::GyroY(), true));
+	appendRow(QList<QStandardItem *>()
+		<< new SensorNameItem(SensorModel::GyroZ)
+		<< new SensorValueItem<short>(new ::GyroZ(), true));
+}
+
+void SensorModel::populateMagneto()
+{
+	appendRow(QList<QStandardItem *>()
+		<< new SensorNameItem(SensorModel::MagnetoX)
+		<< new SensorValueItem<short>(new ::MagnetoX(), true));
+	appendRow(QList<QStandardItem *>()
+		<< new SensorNameItem(SensorModel::MagnetoY)
+		<< new SensorValueItem<short>(new ::MagnetoY(), true));
+	appendRow(QList<QStandardItem *>()
+		<< new SensorNameItem(SensorModel::MagnetoZ)
+		<< new SensorValueItem<short>(new ::MagnetoZ(), true));
+}
+#endif

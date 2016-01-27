@@ -1,10 +1,15 @@
 #ifndef _CAMERAINPUTMANAGER_H_
 #define _CAMERAINPUTMANAGER_H_
-
+/* FIXME
 #include <QObject>
 #include <QTimer>
 #include "Singleton.h"
+
+#ifdef WALLABY
+#include <wallaby/camera.hpp>
+#else
 #include <kovan/camera.hpp>
+#endif
 
 class CameraInputManager : public QObject, public Singleton<CameraInputManager>
 {
@@ -70,5 +75,5 @@ public:
 private:
 	CameraInputManager *m_manager;
 };
-
+*/
 #endif

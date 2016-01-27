@@ -5,7 +5,11 @@
 #include "SystemUtils.h"
 #include "MenuBar.h"
 
+#ifdef WALLABY
+#include <wallaby/config.hpp>
+#else
 #include <kovan/config.hpp>
+#endif
 
 #include <QString>
 #include <QDebug>

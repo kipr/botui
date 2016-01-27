@@ -1,6 +1,6 @@
 #ifndef _CHANNELCONFIGURATIONSMODEL_H_
 #define _CHANNELCONFIGURATIONSMODEL_H_
-
+/* FIXME
 #include <QFileSystemModel>
 
 class ChannelConfigurationsModel : public QFileSystemModel
@@ -14,5 +14,5 @@ public:
 private:
         QFileIconProvider *m_iconProvider;
 };
-
+*/
 #endif

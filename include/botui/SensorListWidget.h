@@ -17,12 +17,8 @@ public:
 	SensorListWidget(Device *device, QWidget *parent = 0);
 	~SensorListWidget();
 
-private slots:
-  void togglePullUp();
-
 private:
 	Ui::SensorListWidget *ui;
-  QAction *_togglePullUp;
   SensorModel *_model;
 };
 

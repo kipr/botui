@@ -1,7 +1,11 @@
 #ifndef _CONNECTIONEDARDRONEINPUTPROVIDER_H_
 #define _CONNECTIONEDARDRONEINPUTPROVIDER_H_
-
+/* FIXME
+#ifdef WALLABY
+#include <wallaby/ardrone.hpp>
+#else
 #include <kovan/ardrone.hpp>
+#endif
 
 namespace Camera
 {
@@ -15,5 +19,5 @@ namespace Camera
 		bool m_open;
 	};
 }
-
+*/
 #endif

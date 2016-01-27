@@ -1,8 +1,14 @@
 #ifndef _CHANNELCONFIGWIDGET_H_
 #define _CHANNELCONFIGWIDGET_H_
-
+/* FIXME
 #include <QWidget>
+
+#ifdef WALLABY
+#include <wallaby/config.hpp>
+#else
 #include <kovan/config.hpp>
+#endif
+
 
 #include <QModelIndex>
 
@@ -26,5 +32,5 @@ private:
 	Config m_config;
 	QModelIndex m_index;
 };
-
+*/
 #endif

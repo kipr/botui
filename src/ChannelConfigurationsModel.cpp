@@ -1,9 +1,14 @@
+/*
 #include "ChannelConfigurationsModel.h"
 
 #include <QDir>
 #include <QFileIconProvider>
 
+#ifdef WALLABY
+#include <wallaby/camera.hpp>
+#else
 #include <kovan/camera.hpp>
+#endif
 
 class FileIconProvider : public QFileIconProvider
 {
@@ -44,3 +49,4 @@ QModelIndex ChannelConfigurationsModel::defaultConfiguration() const
 {
 	return index(QString::fromStdString(Camera::ConfigPath::defaultConfigPath()));
 }
+*/

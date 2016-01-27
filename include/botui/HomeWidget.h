@@ -21,6 +21,7 @@ public slots:
 	void motorsSensors();
 	void settings();
 	void about();
+  void shutDown();
 	void lock();
 	
 private:

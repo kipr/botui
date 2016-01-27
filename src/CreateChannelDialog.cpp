@@ -1,7 +1,12 @@
+/* FIXME
 #include "CreateChannelDialog.h"
 #include "ui_CreateChannelDialog.h"
 
+#ifdef WALLABY
+#include <wallaby/camera.hpp>
+#else
 #include <kovan/camera.hpp>
+#endif
 
 CreateChannelDialog::CreateChannelDialog(QWidget *parent)
 	: QDialog(parent),
@@ -23,3 +28,4 @@ QString CreateChannelDialog::type() const
 	}
 	return QString();
 }
+*/

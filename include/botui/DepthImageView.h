@@ -1,6 +1,6 @@
 #ifndef _DEPTHIMAGE_VIEW_H_
 #define _DEPTHIMAGE_VIEW_H_
-
+/* FIXME
 #include <QWidget>
 #include <QImage>
 #include <QPixmap>
@@ -32,5 +32,5 @@ private:
   QPixmap _backing;
   bool _pleaseWait;
 };
-
+*/
 #endif

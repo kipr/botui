@@ -1,3 +1,4 @@
+/* FIXME
 #include "CameraWidget.h"
 #include "ui_CameraWidget.h"
 #include "Device.h"
@@ -8,7 +9,11 @@
 #include "MenuBar.h"
 #include <QDebug>
 
+#ifdef WALLABY
+#include <wallaby/camera.hpp>
+#else
 #include <kovan/camera.hpp>
+#endif
 #include <opencv2/highgui/highgui.hpp>
 
 CameraWidget::CameraWidget(Device *device, QWidget *parent)
@@ -82,3 +87,4 @@ void CameraWidget::selectSource()
 {
 	RootController::ref().presentWidget(new CameraInputSelectorWidget(device()));
 }
+*/

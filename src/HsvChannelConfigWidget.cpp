@@ -1,3 +1,4 @@
+/* FIXME
 #include "HsvChannelConfigWidget.h"
 #include "ui_HsvChannelConfigWidget.h"
 
@@ -5,7 +6,11 @@
 #include "RootController.h"
 #include "CameraInputManager.h"
 
+#ifdef WALLABY
+#include <wallaby/camera.hpp>
+#else
 #include <kovan/camera.hpp>
+#endif
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -265,3 +270,4 @@ void HsvChannelConfigWidget::blockChildSignals(const bool &block)
 	ui->bv->blockSignals(block);
 	ui->visual->blockSignals(block);
 }
+*/

@@ -9,7 +9,11 @@
 #include "Device.h"
 #include <QTimer>
 
-#include <kovan/kovan.h>
+#ifdef WALLABY
+#include "wallaby/wallaby.h"
+#else
+#include "kovan/kovan.h"
+#endif
 
 #include <QDebug>
 
@@ -54,11 +58,25 @@ void SensorsWidget::update()
 double SensorsWidget::rawValue(const int &i) const
 {
 	double val = 0;
-	if(i < 8) val = analog10(i);
+#ifdef WALLABY
+	if(i < 6) val = analog(i);
+	else if(i < 10) val = get_motor_position_counter(i - 6);
+	else if(i == 10) val = accel_x();
+	else if(i == 11) val = accel_y();
+	else if(i == 12) val = accel_z();
+	else if(i == 13) val = gyro_x();
+	else if(i == 14) val = gyro_y();
+	else if(i == 15) val = gyro_z();
+	else if(i == 16) val = magneto_x();
+	else if(i == 17) val = magneto_y();
+	else if(i == 18) val = magneto_z();
+#else
+	if(i < 8) val = analog(i);
 	else if(i < 12) val = get_motor_position_counter(i - 8);
 	else if(i == 12) val = accel_x();
 	else if(i == 13) val = accel_y();
 	else if(i == 14) val = accel_z();
+#endif
 	return val;
 }
 
@@ -68,7 +86,11 @@ double SensorsWidget::value(const int &i) const
 	
 	if(i < 8) val = val / 512.0 - 1.0;
 	else if(i < 12) val = val / 32768.0;
+#ifdef WALLABY
+	else if(i < 19) val = val / 512.0;
+#else
 	else if(i < 15) val = val / 512.0;
+#endif
 	else val = 0.0;
 	
 	return val;
