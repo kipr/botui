@@ -60,6 +60,14 @@ ProgramWidget::ProgramWidget(Program *program, Device *device, QWidget *parent)
 	connect(ui->y, SIGNAL(released()), SLOT(yReleased()));
 	connect(ui->z, SIGNAL(released()), SLOT(zReleased()));
 	
+	// TODO: remove when these do something
+	ui->a->setVisible(false);
+	ui->b->setVisible(false);
+	ui->c->setVisible(false);
+	ui->x->setVisible(false);
+	ui->y->setVisible(false);
+	ui->z->setVisible(false);
+
 	connect(buttonProvider, SIGNAL(buttonTextChanged(ButtonProvider::ButtonId, QString)),
 		SLOT(buttonTextChanged(ButtonProvider::ButtonId, QString)));
 	connect(buttonProvider, SIGNAL(extraShownChanged(bool)), SLOT(extraShownChanged(bool)));
