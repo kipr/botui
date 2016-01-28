@@ -55,6 +55,13 @@ ProgramsWidget::ProgramsWidget(Device *device, QWidget *parent)
 	connect(ui->args, SIGNAL(clicked()), SLOT(args()));
 	connect(ui->transfer, SIGNAL(clicked()), SLOT(transfer()));
 	
+	// TODO: remove these once the buttons all work
+	ui->edit->setVisible(false);
+	ui->add->setVisible(false);
+	ui->remove->setVisible(false);
+	ui->args->setVisible(false);
+	ui->transfer->setVisible(false);
+
 	connect(ui->programs->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
 		SLOT(update()));
 	
