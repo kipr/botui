@@ -22,6 +22,7 @@ set(INCLUDE ${CMAKE_SOURCE_DIR}/include/botui)
 set(RC ${CMAKE_SOURCE_DIR}/rc)
 set(SRC ${CMAKE_SOURCE_DIR}/src)
 set(UI ${CMAKE_SOURCE_DIR}/ui)
+set(TS ${CMAKE_SOURCE_DIR}/ts)
 
 set(DBUS ${CMAKE_SOURCE_DIR}/dbus)
 
@@ -52,7 +53,7 @@ endif()
 file(GLOB INCLUDES ${INCLUDE}/*.h ${DEVICE_DIR}/include/*.h)
 file(GLOB SOURCES ${SRC}/*.cpp ${DEVICE_DIR}/src/*.cpp)
 file(GLOB UIS ${UI}/*)
-
+file(GLOB TS_FILES ${TS}/*.ts)
 
 set(UI ${UIS})
 
@@ -76,6 +77,7 @@ if(NOT qt5)
   QT4_WRAP_CPP(SRCS_CXX ${MOC_SRCS} OPTIONS -DQT_VERSION=0x040000)
   QT4_WRAP_UI(SRCS_CXX ${UI})
   QT4_ADD_RESOURCES(SRCS_CXX ${QRC_FILES})
+  QT4_ADD_TRANSLATION(QM_FILES ${TS_FILES})
 else()
   # set(CMAKE_AUTOMOC ON)
   set(MOC_SRCS ${INCLUDES})
@@ -83,6 +85,7 @@ else()
   qt5_wrap_cpp(SRCS_CXX ${MOC_SRCS} OPTIONS -DQT_VERSION=0x050000 -UQT_DBUS_LIB)
   qt5_wrap_ui(SRCS_CXX ${UI})
   qt5_add_resources(SRCS_CXX ${QRC_FILES})
+  qt5_add_translation(QM_FILES ${TS_FILES})
 endif()
 
 add_definitions(-Wall)
@@ -96,9 +99,9 @@ ELSEIF(WIN32)
 ENDIF()
 
 if(WIN32)
-	add_executable(botui WIN32 ${SRCS_CXX})
+	add_executable(botui WIN32 ${SRCS_CXX} ${QM_FILES})
 else()
-  add_executable(botui ${SRCS_CXX})
+  add_executable(botui ${SRCS_CXX} ${QM_FILES})
 endif()
 
 add_definitions(-O3)
@@ -118,3 +121,4 @@ endif()
 
 
 install(TARGETS botui DESTINATION bin)
+install(FILES ${QM_FILES} DESTINATION "/etc/botui/locale")

@@ -25,6 +25,11 @@ MotorsSensorsWidget::MotorsSensorsWidget(Device *device, QWidget *parent)
 	connect(ui->camera, SIGNAL(clicked()), SLOT(camera()));
 	connect(ui->pidTuner, SIGNAL(clicked()), SLOT(pidTuner()));
 	connect(ui->depth, SIGNAL(clicked()), SLOT(depth()));
+
+	// TODO: remove these once the widgets work on the Wallaby
+	ui->camera->setVisible(false);
+	ui->pidTuner->setVisible(false);
+	ui->depth->setVisible(false);
 }
 
 MotorsSensorsWidget::~MotorsSensorsWidget()
