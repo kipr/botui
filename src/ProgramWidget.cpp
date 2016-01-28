@@ -67,6 +67,8 @@ ProgramWidget::ProgramWidget(Program *program, Device *device, QWidget *parent)
 	ui->x->setVisible(false);
 	ui->y->setVisible(false);
 	ui->z->setVisible(false);
+	ui->normal->setVisible(false);
+	ui->extra->setVisible(false);
 
 	connect(buttonProvider, SIGNAL(buttonTextChanged(ButtonProvider::ButtonId, QString)),
 		SLOT(buttonTextChanged(ButtonProvider::ButtonId, QString)));
