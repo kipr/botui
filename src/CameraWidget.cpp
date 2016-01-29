@@ -61,7 +61,7 @@ void CameraWidget::updateImage()
   qWarning() << "camera updated";
   
   cv::Mat image = m_device->rawImage();
-  /*int h = 0;
+  int h = 0;
   const static int hStep = 137; // Golden angle
   Camera::ChannelPtrVector::const_iterator it = m_device->channels().begin();
   for(; it != m_device->channels().end(); ++it, h += hStep) {
@@ -74,7 +74,7 @@ void CameraWidget::updateImage()
         obj.boundingBox().width(), obj.boundingBox().height()),
         cv::Scalar(rectColor.red(), rectColor.blue(), rectColor.blue()), 2);
     }
-  }*/
+  }
   
   ui->camera->updateImage(image);
 }
