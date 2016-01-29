@@ -29,56 +29,48 @@ ProgramWidget::ProgramWidget(Program *program, Device *device, QWidget *parent)
 		SIGNAL(finished(int, QProcess::ExitStatus)),
 		SLOT(finished(int, QProcess::ExitStatus)));
 	
-	
+	ui->console->setProcess(m_program->process());
+  
 	ButtonProvider *buttonProvider = device->buttonProvider();
 	ui->normal->setEnabled(buttonProvider);
+  ui->normal->setVisible(buttonProvider);
 	ui->extra->setEnabled(buttonProvider);
-	ui->console->setProcess(m_program->process());
-	
-	if(!buttonProvider) return;
-	ui->extra->setVisible(buttonProvider->isExtraShown());
-	
-	ui->a->setText(buttonProvider->text(ButtonProvider::A));
-	ui->b->setText(buttonProvider->text(ButtonProvider::B));
-	ui->c->setText(buttonProvider->text(ButtonProvider::C));
-	
-	ui->x->setText(buttonProvider->text(ButtonProvider::X));
-	ui->y->setText(buttonProvider->text(ButtonProvider::Y));
-	ui->z->setText(buttonProvider->text(ButtonProvider::Z));
-	
-	connect(ui->a, SIGNAL(pressed()), SLOT(aPressed()));
-	connect(ui->b, SIGNAL(pressed()), SLOT(bPressed()));
-	connect(ui->c, SIGNAL(pressed()), SLOT(cPressed()));
-	connect(ui->x, SIGNAL(pressed()), SLOT(xPressed()));
-	connect(ui->y, SIGNAL(pressed()), SLOT(yPressed()));
-	connect(ui->z, SIGNAL(pressed()), SLOT(zPressed()));
-	
-	connect(ui->a, SIGNAL(released()), SLOT(aReleased()));
-	connect(ui->b, SIGNAL(released()), SLOT(bReleased()));
-	connect(ui->c, SIGNAL(released()), SLOT(cReleased()));
-	connect(ui->x, SIGNAL(released()), SLOT(xReleased()));
-	connect(ui->y, SIGNAL(released()), SLOT(yReleased()));
-	connect(ui->z, SIGNAL(released()), SLOT(zReleased()));
-	
-	// TODO: remove when these do something
-	ui->a->setVisible(false);
-	ui->b->setVisible(false);
-	ui->c->setVisible(false);
-	ui->x->setVisible(false);
-	ui->y->setVisible(false);
-	ui->z->setVisible(false);
-	ui->normal->setVisible(false);
-	ui->extra->setVisible(false);
+  ui->extra->setVisible(buttonProvider);
 
-	connect(buttonProvider, SIGNAL(buttonTextChanged(ButtonProvider::ButtonId, QString)),
-		SLOT(buttonTextChanged(ButtonProvider::ButtonId, QString)));
-	connect(buttonProvider, SIGNAL(extraShownChanged(bool)), SLOT(extraShownChanged(bool)));
+  if(buttonProvider) {
+  	ui->extra->setVisible(buttonProvider->isExtraShown());
 	
-	QTimer *timer = new QTimer(this);
-	timer->start(100);
-	buttonProvider->connect(timer, SIGNAL(timeout()), SLOT(refresh()));
+  	ui->a->setText(buttonProvider->text(ButtonProvider::A));
+  	ui->b->setText(buttonProvider->text(ButtonProvider::B));
+  	ui->c->setText(buttonProvider->text(ButtonProvider::C));
+  	ui->x->setText(buttonProvider->text(ButtonProvider::X));
+  	ui->y->setText(buttonProvider->text(ButtonProvider::Y));
+  	ui->z->setText(buttonProvider->text(ButtonProvider::Z));
 	
-	buttonProvider->reset();
+  	connect(ui->a, SIGNAL(pressed()), SLOT(aPressed()));
+  	connect(ui->b, SIGNAL(pressed()), SLOT(bPressed()));
+  	connect(ui->c, SIGNAL(pressed()), SLOT(cPressed()));
+  	connect(ui->x, SIGNAL(pressed()), SLOT(xPressed()));
+  	connect(ui->y, SIGNAL(pressed()), SLOT(yPressed()));
+  	connect(ui->z, SIGNAL(pressed()), SLOT(zPressed()));
+	
+  	connect(ui->a, SIGNAL(released()), SLOT(aReleased()));
+  	connect(ui->b, SIGNAL(released()), SLOT(bReleased()));
+  	connect(ui->c, SIGNAL(released()), SLOT(cReleased()));
+  	connect(ui->x, SIGNAL(released()), SLOT(xReleased()));
+  	connect(ui->y, SIGNAL(released()), SLOT(yReleased()));
+  	connect(ui->z, SIGNAL(released()), SLOT(zReleased()));
+
+  	connect(buttonProvider, SIGNAL(buttonTextChanged(ButtonProvider::ButtonId, QString)),
+  		SLOT(buttonTextChanged(ButtonProvider::ButtonId, QString)));
+  	connect(buttonProvider, SIGNAL(extraShownChanged(bool)), SLOT(extraShownChanged(bool)));
+	
+  	QTimer *timer = new QTimer(this);
+  	timer->start(100);
+  	buttonProvider->connect(timer, SIGNAL(timeout()), SLOT(refresh()));
+	
+  	buttonProvider->reset();
+  }
 }
 
 void ProgramWidget::lock()
