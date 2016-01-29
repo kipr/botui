@@ -84,14 +84,17 @@ double SensorsWidget::value(const int &i) const
 {
 	double val = rawValue(i);
 	
+#ifdef WALLABY
+	if(i < 6) val = val / 2048.0 - 1.0;
+	else if(i < 10) val = val / 32768.0;
+	else if(i < 19) val = val / 2046.0;
+	else val = 0.0;
+#else
 	if(i < 8) val = val / 512.0 - 1.0;
 	else if(i < 12) val = val / 32768.0;
-#ifdef WALLABY
-	else if(i < 19) val = val / 512.0;
-#else
 	else if(i < 15) val = val / 512.0;
-#endif
 	else val = 0.0;
-	
+#endif
+
 	return val;
 }

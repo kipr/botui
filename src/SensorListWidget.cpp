@@ -48,7 +48,7 @@ SensorListWidget::SensorListWidget(Device *device, QWidget *parent)
 	
   QTimer *timer = new QTimer(this);
   _model->connect(timer, SIGNAL(timeout()), SLOT(update()));
-  timer->start(50); // 20 FPS
+  timer->start(200); // 5 FPS
 }
 
 SensorListWidget::~SensorListWidget()
