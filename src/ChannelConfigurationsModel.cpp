@@ -1,4 +1,3 @@
-/*
 #include "ChannelConfigurationsModel.h"
 
 #include <QDir>
@@ -49,4 +48,3 @@ QModelIndex ChannelConfigurationsModel::defaultConfiguration() const
 {
 	return index(QString::fromStdString(Camera::ConfigPath::defaultConfigPath()));
 }
-*/

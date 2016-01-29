@@ -1,7 +1,9 @@
 #ifndef _CAMERAWIDGET_H_
 #define _CAMERAWIDGET_H_
-/* FIXME
+
 #include "StandardWidget.h"
+
+#include <QTimer>
 
 namespace Ui
 {
@@ -31,7 +33,7 @@ private:
 	Ui::CameraWidget *ui;
 	Camera::Device *m_device;
 	ChannelConfigurationsModel *m_model;
-	bool m_reentryBarrier;
+  QTimer *m_timer;
 };
-*/
+
 #endif
