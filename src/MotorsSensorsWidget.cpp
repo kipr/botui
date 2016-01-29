@@ -27,7 +27,6 @@ MotorsSensorsWidget::MotorsSensorsWidget(Device *device, QWidget *parent)
 	connect(ui->depth, SIGNAL(clicked()), SLOT(depth()));
 
 	// TODO: remove these once the widgets work on the Wallaby
-	ui->camera->setVisible(false);
 	ui->pidTuner->setVisible(false);
 	ui->depth->setVisible(false);
 }
@@ -59,7 +58,7 @@ void MotorsSensorsWidget::sensorList()
 
 void MotorsSensorsWidget::camera()
 {
-	// FIXME: RootController::ref().presentWidget(new CameraWidget(device()));
+	RootController::ref().presentWidget(new CameraWidget(device()));
 }
 
 void MotorsSensorsWidget::pidTuner()
