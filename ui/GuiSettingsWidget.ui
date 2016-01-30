@@ -18,11 +18,11 @@
     <number>6</number>
    </property>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1">
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>Menubar Color</string>
+        <string>Menubar color:</string>
        </property>
       </widget>
      </item>
