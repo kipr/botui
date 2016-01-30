@@ -25,8 +25,6 @@ CameraWidget::CameraWidget(Device *device, QWidget *parent)
 {
   ui->setupUi(this);
   performStandardSetup(tr("Camera"), false);
-  QAction *selectSource = menuBar()->addAction(tr("Source..."));
-  connect(selectSource, SIGNAL(triggered()), SLOT(selectSource()));
   
   ui->config->setModel(m_model);
   ui->config->setRootModelIndex(m_model->index(m_model->rootPath()));
@@ -86,11 +84,4 @@ void CameraWidget::currentIndexChanged(const int &index)
   Config *conf = Config::load(path.toStdString());
   m_device->setConfig(conf ? *conf : Config());
   delete conf;
-}
-
-void CameraWidget::selectSource()
-{
-  // TODO: implement source selection?
-  std::cout << "WARNING: source selection not implemented" << std::endl;
-  //RootController::ref().presentWidget(new CameraInputSelectorWidget(device()));
 }

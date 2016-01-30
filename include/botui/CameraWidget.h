@@ -27,7 +27,6 @@ public:
 public slots:
 	void updateImage();
 	void currentIndexChanged(const int &index);
-	void selectSource();
 	
 private:
 	Ui::CameraWidget *ui;
