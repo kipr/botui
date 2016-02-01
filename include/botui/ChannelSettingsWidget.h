@@ -1,6 +1,6 @@
 #ifndef _CHANNELSETTINGSWIDGET_H_
 #define _CHANNELSETTINGSWIDGET_H_
-/* FIXME
+
 #include "StandardWidget.h"
 
 #ifdef WALLABY
@@ -39,6 +39,6 @@ private:
 	Config m_config;
 	QModelIndex m_index;
 };
-*/
+
 
 #endif

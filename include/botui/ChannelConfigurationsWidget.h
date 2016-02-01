@@ -1,6 +1,6 @@
 #ifndef _CHANNELCONFIGURATIONSWIDGET_H_
 #define _CHANNELCONFIGURATIONSWIDGET_H_
-/* FIXME
+
 #include "StandardWidget.h"
 
 #include <QModelIndex>
@@ -37,5 +37,5 @@ private:
 	QAction *m_import;
 	QString m_defaultPath;
 };
-*/
+
 #endif

@@ -1,4 +1,3 @@
-/* FIXME
 #include "CreateChannelDialog.h"
 #include "ui_CreateChannelDialog.h"
 
@@ -28,4 +27,3 @@ QString CreateChannelDialog::type() const
 	}
 	return QString();
 }
-*/

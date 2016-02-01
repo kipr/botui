@@ -1,4 +1,3 @@
-/* FIXME
 #include "HsvChannelConfigWidget.h"
 #include "ui_HsvChannelConfigWidget.h"
 
@@ -21,7 +20,8 @@ HsvChannelConfigWidget::HsvChannelConfigWidget(const QModelIndex &index, QWidget
 	: ChannelConfigWidget(index, parent),
 	ui(new Ui::HsvChannelConfigWidget),
 	m_numpad(new NumpadDialog("Enter Value")),
-	m_camera(new Camera::Device(new CameraInputAdapter(&CameraInputManager::ref())))
+	m_camera(new Camera::Device()),
+  m_timer(new QTimer(this))
 {
 	ui->setupUi(this);
 	
@@ -60,8 +60,11 @@ HsvChannelConfigWidget::HsvChannelConfigWidget(const QModelIndex &index, QWidget
 	ui->bv->setInputProvider(m_numpad);
 	
 	m_camera->open();
+  // TODO: Smarter fps system
+  connect(m_timer, SIGNAL(timeout()), SLOT(update()));
+  m_timer->start(130);
 	
-	connect(&CameraInputManager::ref(), SIGNAL(frameAvailable(cv::Mat)), SLOT(update()));
+	//connect(&CameraInputManager::ref(), SIGNAL(frameAvailable(cv::Mat)), SLOT(update()));
 }
 
 HsvChannelConfigWidget::~HsvChannelConfigWidget()
@@ -270,4 +273,3 @@ void HsvChannelConfigWidget::blockChildSignals(const bool &block)
 	ui->bv->blockSignals(block);
 	ui->visual->blockSignals(block);
 }
-*/

@@ -1,6 +1,6 @@
 #ifndef _HSVCHANNELCONFIGWIDGET_H_
 #define _HSVCHANNELCONFIGWIDGET_H_
-/* FIXME
+
 #include "ChannelConfigWidget.h"
 
 namespace Ui
@@ -46,6 +46,7 @@ private:
 	Ui::HsvChannelConfigWidget *ui;
 	NumpadDialog *m_numpad;
 	Camera::Device *m_camera;
+  QTimer *m_timer;
 };
-*/
+
 #endif

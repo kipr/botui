@@ -1,6 +1,6 @@
 #ifndef _CHANNELCONFIGWIDGETFACTORY_H_
 #define _CHANNELCONFIGWIDGETFACTORY_H_
-/* FIXME
+
 #include <QString>
 #include <QModelIndex>
 
@@ -17,5 +17,5 @@ public:
 private:
 	ChannelConfigWidgetFactory();
 };
-*/
+
 #endif

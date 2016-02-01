@@ -1,4 +1,3 @@
-/* FIXME
 #include "ChannelsWidget.h"
 
 #include "ui_ChannelsWidget.h"
@@ -189,4 +188,3 @@ bool ChannelsWidget::save() const
 {
 	return m_model->config().save(m_path.toStdString());
 }
-*/

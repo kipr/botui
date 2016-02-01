@@ -1,4 +1,3 @@
-/*  FIXME
 #include "ChannelSettingsWidget.h"
 #include "ui_ChannelSettingsWidget.h"
 
@@ -39,4 +38,3 @@ const QModelIndex &ChannelSettingsWidget::index() const
 {
 	return m_index;
 }
-*/

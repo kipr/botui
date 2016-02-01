@@ -1,6 +1,6 @@
 #ifndef _CAMERAINPUTMANAGER_H_
 #define _CAMERAINPUTMANAGER_H_
-/* FIXME
+
 #include <QObject>
 #include <QTimer>
 #include "Singleton.h"
@@ -46,11 +46,8 @@ signals:
 public slots:
 	void updateCamera();
 	
-private:
-	void setInputProvider(Camera::InputProvider *const inputProvider);
-	Camera::InputProvider *inputProvider() const;
-	
-	Camera::InputProvider *m_inputProvider;
+private:	
+  Camera::Device *m_camDevice;
 	Source m_source;
 	QTimer *m_timer;
 	cv::Mat m_image;
@@ -59,7 +56,7 @@ private:
 	bool m_reentryBarrier;
 };
 
-class CameraInputAdapter : public Camera::InputProvider
+/*class CameraInputAdapter : public Camera::InputProvider
 {
 public:
 	CameraInputAdapter(CameraInputManager *manager);
@@ -74,6 +71,6 @@ public:
 	
 private:
 	CameraInputManager *m_manager;
-};
-*/
+};*/
+
 #endif

@@ -38,7 +38,7 @@ SettingsWidget::SettingsWidget(Device *device, QWidget *parent)
 
 	//TODO show buttons once the widgets are fixed
 	ui->network->setVisible(false);
-	ui->channels->setVisible(false);
+	//ui->channels->setVisible(false);
 	ui->comm->setVisible(false);
 	ui->keyboard->setVisible(false);
 	ui->mouse->setVisible(false);
@@ -64,7 +64,7 @@ void SettingsWidget::comm()
 
 void SettingsWidget::channels()
 {
-	// FIXME RootController::ref().presentWidget(new ChannelConfigurationsWidget(device()));
+	RootController::ref().presentWidget(new ChannelConfigurationsWidget(device()));
 }
 
 void SettingsWidget::gui()

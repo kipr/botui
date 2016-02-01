@@ -1,4 +1,3 @@
-/* FIXME
 #include "ChannelConfigurationsWidget.h"
 #include "ui_ChannelConfigurationsWidget.h"
 
@@ -171,4 +170,3 @@ void ChannelConfigurationsWidget::currentChanged(const QModelIndex &index)
 	ui->remove->setEnabled(enable);
 	m_import->setEnabled(enable);
 }
-*/
