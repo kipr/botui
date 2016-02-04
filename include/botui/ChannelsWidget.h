@@ -24,7 +24,7 @@ public:
 	
 private slots:
 	void configure();
-	void options();
+	//void options();
 	void up();
 	void down();
 	void add();

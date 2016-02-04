@@ -52,20 +52,6 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="options">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="text">
-          <string>Options</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/wrench.png</normaloff>:/icons/wrench.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QPushButton" name="up">
          <property name="text">
           <string>Up</string>

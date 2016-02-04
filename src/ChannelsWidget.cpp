@@ -68,7 +68,7 @@ ChannelsWidget::ChannelsWidget(Device *device, QWidget *parent)
 	connect(ui->up, SIGNAL(clicked()), SLOT(up()));
 	connect(ui->down, SIGNAL(clicked()), SLOT(down()));
 	connect(ui->configure, SIGNAL(clicked()), SLOT(configure()));
-	connect(ui->options, SIGNAL(clicked()), SLOT(options()));
+	//connect(ui->options, SIGNAL(clicked()), SLOT(options()));
 	connect(ui->channels->selectionModel(),
 		SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
 		SLOT(updateOptions()));
@@ -110,7 +110,7 @@ void ChannelsWidget::configure()
 	RootController::ref().presentWidget(widget);
 }
 
-void ChannelsWidget::options() {
+/*void ChannelsWidget::options() {
 	const QModelIndexList &indexes = ui->channels->selectionModel()
 		->selection().indexes();
 	if(indexes.size() != 1) return;
@@ -120,7 +120,7 @@ void ChannelsWidget::options() {
 	m_model->connect(widget, SIGNAL(configChanged(QModelIndex, Config)),
 		SLOT(setChannelConfig(QModelIndex, Config)));
 	RootController::ref().presentWidget(widget);
-}
+}*/
 
 void ChannelsWidget::up()
 {
