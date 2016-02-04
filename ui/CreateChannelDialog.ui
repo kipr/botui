@@ -70,11 +70,6 @@
          <string>HSV Blob Tracking</string>
         </property>
        </item>
-       <item>
-        <property name="text">
-         <string>QR Code Scanner</string>
-        </property>
-       </item>
       </widget>
      </item>
     </layout>
