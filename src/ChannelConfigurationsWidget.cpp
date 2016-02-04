@@ -60,7 +60,7 @@ ChannelConfigurationsWidget::ChannelConfigurationsWidget(Device *device, QWidget
 {
 	ui->setupUi(this);
 	performStandardSetup(tr("Channel Configurations"));
-	menuBar()->addAction(m_import);
+	//menuBar()->addAction(m_import);
 	
 	ui->configs->setModel(m_model);
 	ui->configs->setItemDelegate(new ConfigItemDelegate(this));
@@ -168,5 +168,5 @@ void ChannelConfigurationsWidget::currentChanged(const QModelIndex &index)
 	ui->rename->setEnabled(enable);
 	ui->default_->setEnabled(enable && !isDefaultPath(index));
 	ui->remove->setEnabled(enable);
-	m_import->setEnabled(enable);
+	//m_import->setEnabled(enable);
 }
