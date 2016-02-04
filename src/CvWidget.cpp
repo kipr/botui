@@ -60,7 +60,7 @@ void CvWidget::paintEvent(QPaintEvent *event)
 	if(m_invalid || m_image.empty()) {
 		painter.fillRect(0, 0, width() - 1, height() - 1, Qt::transparent);
 		painter.drawText(QRect(0, 0, width(), height()),
-			tr("Failed to fetch image"),
+			tr("No image available. Check camera connection."),
 			QTextOption(Qt::AlignAbsolute | Qt::AlignHCenter | Qt::AlignVCenter));
 		return;
 	}
