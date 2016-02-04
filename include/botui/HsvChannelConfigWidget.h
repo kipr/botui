@@ -22,7 +22,6 @@ public:
 	virtual void refresh();
 	
 private slots:
-	//void update();
 	void visual();
 	void manual();
 	
