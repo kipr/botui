@@ -110,36 +110,35 @@ p, li { white-space: pre-wrap; }
         <location filename="../ui/CameraInputSelectorWidget.ui" line="20"/>
         <location filename="../src/CameraInputSelectorWidget.cpp" line="11"/>
         <source>Camera Input Selector</source>
-        <translation>摄像头输入选择</translation>
+        <translation>摄像头输入选择器</translation>
     </message>
     <message>
         <location filename="../ui/CameraInputSelectorWidget.ui" line="34"/>
         <source>Source:</source>
-        <translation>源:</translation>
+        <translation>输入源:</translation>
     </message>
     <message>
         <location filename="../ui/CameraInputSelectorWidget.ui" line="42"/>
         <source>USB Camera</source>
-        <translation>
-USB摄像头</translation>
+        <translation>USB摄像头</translation>
     </message>
     <message>
         <location filename="../ui/CameraInputSelectorWidget.ui" line="47"/>
         <source>Parrot® AR.Drone™ Front Camera</source>
-        <translation>Parrot® AR.Drone™ Front Camera</translation>
+        <translation>Parrot® AR.Drone™ 前摄像头</translation>
     </message>
     <message>
         <location filename="../ui/CameraInputSelectorWidget.ui" line="52"/>
         <source>Parrot® AR.Drone™ Bottom Camera</source>
-        <translation>Parrot® AR.Drone™ Bottom Camera</translation>
+        <translation>Parrot® AR.Drone™ 底部摄像头</translation>
     </message>
     <message>
         <source>ParrotÂ® AR.Droneâ¢ Front Camera</source>
-        <translation>ParrotÂ® AR.Droneâ¢ Front Camera</translation>
+        <translation>ParrotÂ® AR.Droneâ¢ 前摄像头</translation>
     </message>
     <message>
         <source>ParrotÂ® AR.Droneâ¢ Bottom Camera</source>
-        <translation>ParrotÂ® AR.Droneâ¢ Bottom Camera</translation>
+        <translation>ParrotÂ® AR.Droneâ¢ 底部摄像头</translation>
     </message>
 </context>
 <context>
@@ -158,7 +157,7 @@ USB摄像头</translation>
     <message>
         <location filename="../src/CameraWidget.cpp" line="22"/>
         <source>Source...</source>
-        <translation>源...</translation>
+        <translation>输入源...</translation>
     </message>
 </context>
 <context>
@@ -194,7 +193,7 @@ USB摄像头</translation>
     <message>
         <location filename="../ui/ChannelConfigurationsWidget.ui" line="78"/>
         <source>Export</source>
-        <translation>输出</translation>
+        <translation>导出</translation>
     </message>
     <message>
         <location filename="../ui/ChannelConfigurationsWidget.ui" line="102"/>
@@ -271,7 +270,7 @@ USB摄像头</translation>
     <message>
         <location filename="../ui/ChannelSetupWidget.ui" line="92"/>
         <source>Configure...</source>
-        <translation>设置...</translation>
+        <translation>配置...</translation>
     </message>
 </context>
 <context>
@@ -411,7 +410,7 @@ USB摄像头</translation>
     <message>
         <location filename="../src/CombinedMotorWidget.cpp" line="56"/>
         <source>Speed</source>
-        <translation>速度</translation>
+        <translation>速率</translation>
     </message>
 </context>
 <context>
@@ -466,7 +465,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../ui/CompilingWidget.ui" line="14"/>
         <source>Compiling</source>
-        <translation>编译</translation>
+        <translation>正在编译</translation>
     </message>
     <message>
         <location filename="../src/CompilingWidget.cpp" line="14"/>
@@ -569,7 +568,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/DepthImageView.cpp" line="79"/>
         <source>Just a second...</source>
-        <translation>请等待...</translation>
+        <translation>请稍等...</translation>
     </message>
     <message>
         <location filename="../src/DepthImageView.cpp" line="84"/>
@@ -591,7 +590,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../ui/EditorWidget.ui" line="14"/>
         <source>Editor</source>
-        <translation>编辑</translation>
+        <translation>编辑器</translation>
     </message>
     <message>
         <location filename="../ui/EditorWidget.ui" line="28"/>
@@ -616,7 +615,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/EditorWidget.cpp" line="74"/>
         <source>No files to edit.</source>
-        <translation>没有文件用于编辑.</translation>
+        <translation>没有可编辑的文件.</translation>
     </message>
     <message>
         <location filename="../src/EditorWidget.cpp" line="95"/>
@@ -639,7 +638,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../ui/FactoryWidget.ui" line="26"/>
         <source>Factory Setup</source>
-        <translation>设置工厂</translation>
+        <translation>工厂设置</translation>
     </message>
     <message>
         <location filename="../ui/FactoryWidget.ui" line="60"/>
@@ -650,7 +649,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../ui/FactoryWidget.ui" line="116"/>
         <source>Confirm</source>
-        <translation>确定</translation>
+        <translation>确认</translation>
     </message>
 </context>
 <context>
@@ -705,7 +704,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Copy</source>
-        <translation>拷贝</translation>
+        <translation>复制</translation>
     </message>
     <message>
         <source>Paste</source>
@@ -747,7 +746,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/FirstRunWizard.cpp" line="25"/>
         <source>This wizard will help you register your %1.</source>
-        <translation>本向导将帮助你注册 %1.</translation>
+        <translation>本向导将帮助你注册你的 %1.</translation>
     </message>
     <message>
         <location filename="../src/FirstRunWizard.cpp" line="40"/>
@@ -762,7 +761,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/FirstRunWizard.cpp" line="60"/>
         <source>If you have a wireless internet connection, your %1 can automatically connect and download the latest updates. Would you like to connect to a wireless network at this time?</source>
-        <translation>如果连接了无线网,你的%1将自动连接和下载最新更新,希望连接到无线网吗?</translation>
+        <translation>如果连接到了无线网络, 你的%1将会自动连接和下载最新更新, 你希望现在连接到无线网络吗?</translation>
     </message>
 </context>
 <context>
@@ -920,7 +919,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../ui/HsvChannelConfigWidget.ui" line="157"/>
         <source>Hue</source>
-        <translation>色相(Hue)</translation>
+        <translation>色相 (Hue)</translation>
     </message>
     <message>
         <location filename="../ui/HsvChannelConfigWidget.ui" line="167"/>
@@ -932,7 +931,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../ui/HsvChannelConfigWidget.ui" line="190"/>
         <source>Saturation</source>
-        <translation>饱和度(Saturation)</translation>
+        <translation>饱和度 (Saturation)</translation>
     </message>
     <message>
         <location filename="../ui/HsvChannelConfigWidget.ui" line="223"/>
@@ -958,37 +957,37 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../ui/KissIdeSettingsWidget.ui" line="45"/>
         <source>Disable Wireless Downloading</source>
-        <translation>不启用无线下载</translation>
+        <translation>禁用无线下载</translation>
     </message>
     <message>
         <location filename="../ui/KissIdeSettingsWidget.ui" line="67"/>
         <source>Session Timeout:</source>
-        <translation>Session 到时:</translation>
+        <translation>Session （会话） 超时时间:</translation>
     </message>
     <message>
         <location filename="../ui/KissIdeSettingsWidget.ui" line="78"/>
         <source>1 Minute</source>
-        <translation>1分钟</translation>
+        <translation>1 分钟</translation>
     </message>
     <message>
         <location filename="../ui/KissIdeSettingsWidget.ui" line="83"/>
         <source>5 Minutes</source>
-        <translation>5分钟</translation>
+        <translation>5 分钟</translation>
     </message>
     <message>
         <location filename="../ui/KissIdeSettingsWidget.ui" line="88"/>
         <source>10 Minutes</source>
-        <translation>10分钟</translation>
+        <translation>10 分钟</translation>
     </message>
     <message>
         <location filename="../ui/KissIdeSettingsWidget.ui" line="93"/>
         <source>30 Minutes</source>
-        <translation>30分钟</translation>
+        <translation>30 分钟</translation>
     </message>
     <message>
         <location filename="../ui/KissIdeSettingsWidget.ui" line="98"/>
         <source>1 Hour</source>
-        <translation>1小时</translation>
+        <translation>1 小时</translation>
     </message>
     <message>
         <location filename="../ui/KissIdeSettingsWidget.ui" line="134"/>
@@ -1056,7 +1055,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/LineEdit.cpp" line="66"/>
         <source>Tap to Edit...</source>
         <comment>Text for enabled line edit</comment>
-        <translation>Tap to Edit...</translation>
+        <translation>点按以编辑...</translation>
     </message>
 </context>
 <context>
@@ -1127,7 +1126,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../ui/MotorsSensorsWidget.ui" line="121"/>
         <source>Sensor Graph</source>
-        <translation>传感器图</translation>
+        <translation>传感器图表</translation>
     </message>
     <message>
         <location filename="../ui/MotorsSensorsWidget.ui" line="132"/>
@@ -1167,22 +1166,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../ui/MotorsWidget.ui" line="138"/>
         <source>Port 0</source>
-        <translation>电机0</translation>
+        <translation>电机 0</translation>
     </message>
     <message>
         <location filename="../ui/MotorsWidget.ui" line="149"/>
         <source>Port 1</source>
-        <translation>电机1</translation>
+        <translation>电机 1</translation>
     </message>
     <message>
         <location filename="../ui/MotorsWidget.ui" line="160"/>
         <source>Port 2</source>
-        <translation>电机2</translation>
+        <translation>电机 2</translation>
     </message>
     <message>
         <location filename="../ui/MotorsWidget.ui" line="171"/>
         <source>Port 3</source>
-        <translation>电机3</translation>
+        <translation>电机 3</translation>
     </message>
     <message>
         <location filename="../ui/MotorsWidget.ui" line="195"/>
@@ -1237,7 +1236,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../ui/NetworkSettingsWidget.ui" line="136"/>
         <source>SSID:</source>
-        <translation>SSID名:</translation>
+        <translation>SSID 名:</translation>
     </message>
     <message>
         <location filename="../ui/NetworkSettingsWidget.ui" line="143"/>
@@ -1267,7 +1266,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/NetworkSettingsWidget.cpp" line="67"/>
         <source>No IP</source>
-        <translation>No IP</translation>
+        <translation>无 IP</translation>
     </message>
 </context>
 <context>
@@ -1281,7 +1280,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../ui/NetworkTestWizardPage.ui" line="20"/>
         <source>Here is a list of networks I can see</source>
-        <translation>以下是可供连接的网络</translation>
+        <translation>以下是目前发现的网络</translation>
     </message>
 </context>
 <context>
@@ -1315,7 +1314,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/NumpadDialog.cpp" line="23"/>
         <source> to </source>
-        <translation>到</translation>
+        <translation> 到 </translation>
     </message>
     <message>
         <location filename="../src/NumpadDialog.cpp" line="50"/>
@@ -1325,7 +1324,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/NumpadDialog.cpp" line="51"/>
         <source>DEL</source>
-        <translation>DEL</translation>
+        <translation>删除</translation>
     </message>
     <message>
         <location filename="../src/NumpadDialog.cpp" line="52"/>
@@ -1353,42 +1352,42 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../ui/OnOffWizardPage.ui" line="99"/>
         <source>Port 0 On</source>
-        <translation>端口0打开</translation>
+        <translation>端口 0 打开</translation>
     </message>
     <message>
         <location filename="../ui/OnOffWizardPage.ui" line="119"/>
         <source>Port 0 Off</source>
-        <translation>端口0关闭</translation>
+        <translation>端口 0 关闭</translation>
     </message>
     <message>
         <location filename="../ui/OnOffWizardPage.ui" line="140"/>
         <source>Port 1 On</source>
-        <translation>端口1打开</translation>
+        <translation>端口 1 打开</translation>
     </message>
     <message>
         <location filename="../ui/OnOffWizardPage.ui" line="160"/>
         <source>Port 1 Off</source>
-        <translation>端口0关闭</translation>
+        <translation>端口 1 关闭</translation>
     </message>
     <message>
         <location filename="../ui/OnOffWizardPage.ui" line="188"/>
         <source>Port 2 On</source>
-        <translation>端口2打开</translation>
+        <translation>端口 2 打开</translation>
     </message>
     <message>
         <location filename="../ui/OnOffWizardPage.ui" line="208"/>
         <source>Port 2 Off</source>
-        <translation>端口0关闭</translation>
+        <translation>端口 2 关闭</translation>
     </message>
     <message>
         <location filename="../ui/OnOffWizardPage.ui" line="229"/>
         <source>Port 3 On</source>
-        <translation>端口0打开</translation>
+        <translation>端口 3 打开</translation>
     </message>
     <message>
         <location filename="../ui/OnOffWizardPage.ui" line="249"/>
         <source>Port 3 Off</source>
-        <translation>端口0关闭</translation>
+        <translation>端口 3 关闭</translation>
     </message>
 </context>
 <context>
@@ -1445,7 +1444,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../ui/PairWidget.ui" line="14"/>
         <source>Pair</source>
-        <translation>Pair</translation>
+        <translation>配对</translation>
     </message>
     <message>
         <location filename="../ui/PairWidget.ui" line="54"/>
@@ -1459,27 +1458,27 @@ p, li { white-space: pre-wrap; }
         <location filename="../ui/PidTunerWidget.ui" line="14"/>
         <location filename="../src/PidTunerWidget.cpp" line="20"/>
         <source>PID Tuner</source>
-        <translation>PID参数调节</translation>
+        <translation>PID 参数调节</translation>
     </message>
     <message>
         <location filename="../ui/PidTunerWidget.ui" line="24"/>
         <source>Motor 0</source>
-        <translation>电机0</translation>
+        <translation>电机 0</translation>
     </message>
     <message>
         <location filename="../ui/PidTunerWidget.ui" line="29"/>
         <source>Motor 1</source>
-        <translation>电机1</translation>
+        <translation>电机 1</translation>
     </message>
     <message>
         <location filename="../ui/PidTunerWidget.ui" line="34"/>
         <source>Motor 2</source>
-        <translation>电机2</translation>
+        <translation>电机 2</translation>
     </message>
     <message>
         <location filename="../ui/PidTunerWidget.ui" line="39"/>
         <source>Motor 3</source>
-        <translation>电机3</translation>
+        <translation>电机 3</translation>
     </message>
     <message>
         <location filename="../ui/PidTunerWidget.ui" line="52"/>
@@ -1499,17 +1498,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/PidTunerWidget.cpp" line="29"/>
         <source>P Value</source>
-        <translation>P参数</translation>
+        <translation>P 参数</translation>
     </message>
     <message>
         <location filename="../src/PidTunerWidget.cpp" line="30"/>
         <source>I Value</source>
-        <translation>I参数</translation>
+        <translation>I 参数</translation>
     </message>
     <message>
         <location filename="../src/PidTunerWidget.cpp" line="31"/>
         <source>D Value</source>
-        <translation>D参数</translation>
+        <translation>D 参数</translation>
     </message>
 </context>
 <context>
@@ -1517,7 +1516,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../ui/PidWidget.ui" line="14"/>
         <source>PID Motor Control</source>
-        <translation>PID电机控制</translation>
+        <translation>PID 电机控制</translation>
     </message>
     <message>
         <location filename="../ui/PidWidget.ui" line="50"/>
@@ -1527,22 +1526,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../ui/PidWidget.ui" line="63"/>
         <source>Port 0</source>
-        <translation>端口0</translation>
+        <translation>端口 0</translation>
     </message>
     <message>
         <location filename="../ui/PidWidget.ui" line="74"/>
         <source>Port 1</source>
-        <translation>端口1</translation>
+        <translation>端口 1</translation>
     </message>
     <message>
         <location filename="../ui/PidWidget.ui" line="85"/>
         <source>Port 2</source>
-        <translation>端口2</translation>
+        <translation>端口 2</translation>
     </message>
     <message>
         <location filename="../ui/PidWidget.ui" line="96"/>
         <source>Port 3</source>
-        <translation>端口3</translation>
+        <translation>端口 3</translation>
     </message>
     <message>
         <location filename="../ui/PidWidget.ui" line="126"/>
@@ -1740,7 +1739,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ProgramsWidget.cpp" line="145"/>
         <source>You&apos;re about to overwrite the program &quot;%1&quot;. Continue?
 </source>
-        <translation>你正在覆盖%1程序,继续吗?</translation>
+        <translation>你正在覆盖程序 &quot;%1&quot;,继续吗?</translation>
     </message>
     <message>
         <location filename="../src/ProgramsWidget.cpp" line="196"/>
@@ -1750,7 +1749,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ProgramsWidget.cpp" line="214"/>
         <source>Compile finished.</source>
-        <translation>编译结束.</translation>
+        <translation>编译完成.</translation>
     </message>
     <message>
         <location filename="../src/ProgramsWidget.cpp" line="216"/>
@@ -1794,7 +1793,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/SensorModel.cpp" line="19"/>
         <source> %1</source>
-        <translation>%1</translation>
+        <translation> %1</translation>
     </message>
     <message>
         <location filename="../src/SensorModel.cpp" line="42"/>
@@ -1809,17 +1808,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/SensorModel.cpp" line="44"/>
         <source>Accelerometer X</source>
-        <translation>加速度计X轴</translation>
+        <translation>加速度计 X 轴</translation>
     </message>
     <message>
         <location filename="../src/SensorModel.cpp" line="45"/>
         <source>Accelerometer Y</source>
-        <translation>加速度计Y轴</translation>
+        <translation>加速度计 Y 轴</translation>
     </message>
     <message>
         <location filename="../src/SensorModel.cpp" line="46"/>
         <source>Accelerometer Z</source>
-        <translation>加速度计Z轴</translation>
+        <translation>加速度计 Z 轴</translation>
     </message>
     <message>
         <location filename="../src/SensorModel.cpp" line="49"/>
@@ -1867,7 +1866,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/SensorListWidget.cpp" line="51"/>
         <source>Toggle Pull-up</source>
-        <translation>启用上拉电阻</translation>
+        <translation>切换上拉电阻模式</translation>
     </message>
 </context>
 <context>
@@ -1881,12 +1880,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../ui/SensorTestWizardPage.ui" line="20"/>
         <source>Here is a plot of port zero&apos;s values</source>
-        <translation>端口0的图</translation>
+        <translation>端口 0 数值的图</translation>
     </message>
     <message>
         <location filename="../ui/SensorTestWizardPage.ui" line="29"/>
         <source>Current Port: 0</source>
-        <translation>当前端口:0</translation>
+        <translation>当前端口: 0</translation>
     </message>
 </context>
 <context>
@@ -1901,91 +1900,91 @@ p, li { white-space: pre-wrap; }
         <location filename="../ui/SensorsWidget.ui" line="45"/>
         <location filename="../ui/SensorsWidget.ui" line="127"/>
         <source>Analog 0</source>
-        <translation>模拟0</translation>
+        <translation>模拟 0</translation>
     </message>
     <message>
         <location filename="../ui/SensorsWidget.ui" line="50"/>
         <location filename="../ui/SensorsWidget.ui" line="132"/>
         <source>Analog 1</source>
-        <translation>模拟1</translation>
+        <translation>模拟 1</translation>
     </message>
     <message>
         <location filename="../ui/SensorsWidget.ui" line="55"/>
         <location filename="../ui/SensorsWidget.ui" line="137"/>
         <source>Analog 2</source>
-        <translation>模拟2</translation>
+        <translation>模拟 2</translation>
     </message>
     <message>
         <location filename="../ui/SensorsWidget.ui" line="60"/>
         <location filename="../ui/SensorsWidget.ui" line="142"/>
         <source>Analog 3</source>
-        <translation>模拟3</translation>
+        <translation>模拟 3</translation>
     </message>
     <message>
         <location filename="../ui/SensorsWidget.ui" line="65"/>
         <location filename="../ui/SensorsWidget.ui" line="147"/>
         <source>Analog 4</source>
-        <translation>模拟4</translation>
+        <translation>模拟 4</translation>
     </message>
     <message>
         <location filename="../ui/SensorsWidget.ui" line="70"/>
         <location filename="../ui/SensorsWidget.ui" line="152"/>
         <source>Analog 5</source>
-        <translation>模拟5</translation>
+        <translation>模拟 5</translation>
     </message>
     <message>
         <location filename="../ui/SensorsWidget.ui" line="75"/>
         <location filename="../ui/SensorsWidget.ui" line="157"/>
         <source>Analog 6</source>
-        <translation>模拟6</translation>
+        <translation>模拟 6</translation>
     </message>
     <message>
         <location filename="../ui/SensorsWidget.ui" line="80"/>
         <location filename="../ui/SensorsWidget.ui" line="162"/>
         <source>Analog 7</source>
-        <translation>模拟7</translation>
+        <translation>模拟 7</translation>
     </message>
     <message>
         <location filename="../ui/SensorsWidget.ui" line="85"/>
         <location filename="../ui/SensorsWidget.ui" line="167"/>
         <source>Back EMF 0</source>
-        <translation>反电动势(EMF)0</translation>
+        <translation>反电动势(Back EMF) 0</translation>
     </message>
     <message>
         <location filename="../ui/SensorsWidget.ui" line="90"/>
         <location filename="../ui/SensorsWidget.ui" line="172"/>
         <source>Back EMF 1</source>
-        <translation>反电动势(EMF)1</translation>
+        <translation>反电动势(Back EMF) 1</translation>
     </message>
     <message>
         <location filename="../ui/SensorsWidget.ui" line="95"/>
         <location filename="../ui/SensorsWidget.ui" line="177"/>
         <source>Back EMF 2</source>
-        <translation>反电动势(EMF)2</translation>
+        <translation>反电动势(Back EMF) 2</translation>
     </message>
     <message>
         <location filename="../ui/SensorsWidget.ui" line="100"/>
         <location filename="../ui/SensorsWidget.ui" line="182"/>
         <source>Back EMF 3</source>
-        <translation>反电动势(EMF)3</translation>
+        <translation>反电动势(Back EMF) 3</translation>
     </message>
     <message>
         <location filename="../ui/SensorsWidget.ui" line="105"/>
         <location filename="../ui/SensorsWidget.ui" line="187"/>
         <source>Accel X</source>
-        <translation>加速度计X</translation>
+        <translation>加速度计 X 轴</translation>
     </message>
     <message>
         <location filename="../ui/SensorsWidget.ui" line="110"/>
         <location filename="../ui/SensorsWidget.ui" line="192"/>
         <source>Accel Y</source>
-        <translation>加速度计Y</translation>
+        <translation>加速度计 Y 轴</translation>
     </message>
     <message>
         <location filename="../ui/SensorsWidget.ui" line="115"/>
         <location filename="../ui/SensorsWidget.ui" line="197"/>
         <source>Accel Z</source>
-        <translation>加速度计Z</translation>
+        <translation>加速度计 Z 轴</translation>
     </message>
     <message>
         <location filename="../ui/SensorsWidget.ui" line="235"/>
@@ -2014,22 +2013,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../ui/ServosWidget.ui" line="78"/>
         <source>Port 0</source>
-        <translation>端口0</translation>
+        <translation>端口 0</translation>
     </message>
     <message>
         <location filename="../ui/ServosWidget.ui" line="89"/>
         <source>Port 1</source>
-        <translation>端口1</translation>
+        <translation>端口 1</translation>
     </message>
     <message>
         <location filename="../ui/ServosWidget.ui" line="100"/>
         <source>Port 2</source>
-        <translation>端口2</translation>
+        <translation>端口 2</translation>
     </message>
     <message>
         <location filename="../ui/ServosWidget.ui" line="111"/>
         <source>Port 3</source>
-        <translation>端口3</translation>
+        <translation>端口 3</translation>
     </message>
     <message>
         <location filename="../ui/ServosWidget.ui" line="135"/>
