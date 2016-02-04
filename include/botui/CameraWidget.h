@@ -33,9 +33,14 @@ public slots:
   void update();
   
 private:
+  void setFrameRate(const unsigned frameRate);
+  void slowFrameRate();
+  void fastFrameRate();
+  
   Camera::Device *m_camDevice;
   QTimer *m_timer;
   bool m_trackBlobs;
+  unsigned m_frameRate;
 };
 
 #endif

@@ -12,11 +12,9 @@ CameraWidget::CameraWidget(QWidget *parent)
   : CvWidget(parent),
   m_camDevice(new Camera::Device()),
   m_timer(new QTimer(this))
-{
-  m_camDevice->open();
-  // TODO: Smarter fps system
+{  
   connect(m_timer, SIGNAL(timeout()), SLOT(update()));
-  m_timer->start(130);
+  this->fastFrameRate();
 }
 
 CameraWidget::~CameraWidget()
@@ -56,12 +54,12 @@ void CameraWidget::update()
     // Camera isn't open, so try to open
     if(!m_camDevice->open()) {
       // Camera not available; lower frame rate and quit
-      // TODO: lower framerate
+      this->slowFrameRate();
       return;
     }
     
     // Successfully opened camera; raise frame rate
-    // TODO: raise framerate
+    this->fastFrameRate();
   }
   
   if(!isVisible()) return;
@@ -70,7 +68,7 @@ void CameraWidget::update()
   if(!m_camDevice->update()) {
     // Update failed, so close camera and lower frame rate
     m_camDevice->close();
-    // TODO: lower framerate
+    this->slowFrameRate();
   }
   else {
     qDebug() << "Camera updated!";
@@ -94,4 +92,26 @@ void CameraWidget::update()
   }
   
   this->updateImage(image);
+}
+
+void CameraWidget::setFrameRate(const unsigned frameRate)
+{
+  if(frameRate == m_frameRate)
+    return;
+  
+  m_frameRate = frameRate;
+  if(m_frameRate == 0)
+    m_timer->stop();
+  else
+    m_timer->start(1000.0 / m_frameRate); 
+}
+
+void CameraWidget::slowFrameRate()
+{
+  this->setFrameRate(1);
+}
+
+void CameraWidget::fastFrameRate()
+{
+  this->setFrameRate(10);
 }
