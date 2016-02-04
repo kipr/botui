@@ -70,20 +70,6 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="export_">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="text">
-          <string>Export</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/arrow_out.png</normaloff>:/icons/arrow_out.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
         <spacer name="verticalSpacer_2">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
