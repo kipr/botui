@@ -1,14 +1,6 @@
 #include "CameraWidget.h"
-#include "ui_CameraWidget.h"
-#include "Device.h"
-#include "ChannelConfigurationsModel.h"
-#include "CameraInputSelectorWidget.h"
-#include "RootController.h"
-#include "CameraInputManager.h"
-#include "MenuBar.h"
-#include <QDebug>
 
-#include <opencv2/highgui/highgui.hpp>
+#include <QDebug>
 
 #ifdef WALLABY
 #include <wallaby/camera.hpp>
@@ -16,72 +8,75 @@
 #include <kovan/camera.hpp>
 #endif
 
-CameraWidget::CameraWidget(Device *device, QWidget *parent)
-  : StandardWidget(device, parent),
-  ui(new Ui::CameraWidget),
-  m_device(new Camera::Device()),
-  m_model(new ChannelConfigurationsModel(this)),
+CameraWidget::CameraWidget(QWidget *parent)
+  : CvWidget(parent),
+  m_camDevice(new Camera::Device()),
   m_timer(new QTimer(this))
 {
-  ui->setupUi(this);
-  performStandardSetup(tr("Camera"), false);
-  
-  ui->config->setModel(m_model);
-  ui->config->setRootModelIndex(m_model->index(m_model->rootPath()));
-  
-  ui->config->setCurrentIndex(m_model->defaultConfiguration().row());
-  
-  connect(ui->config, SIGNAL(currentIndexChanged(int)), SLOT(currentIndexChanged(int)));
-  
-  m_device->open();
+  m_camDevice->open();
   // TODO: Smarter fps system
-  connect(m_timer, SIGNAL(timeout()), SLOT(updateImage()));
+  connect(m_timer, SIGNAL(timeout()), SLOT(update()));
   m_timer->start(130);
-  //connect(&CameraInputManager::ref(), SIGNAL(frameAvailable(cv::Mat)),
-    //SLOT(updateImage()), Qt::QueuedConnection);
 }
 
 CameraWidget::~CameraWidget()
 {
-  m_device->close();
-  delete ui;
-  delete m_device;
+  m_camDevice->close();
+  delete m_timer;
+  delete m_camDevice;
 }
 
-void CameraWidget::updateImage()
+void CameraWidget::setConfig(Config *config)
+{
+  m_camDevice->setConfig(config ? *config : Config());
+}
+
+void CameraWidget::setChannelConfig(const Config &config, int channelNum)
+{
+  if(m_camDevice->channels().size() <= channelNum)
+    return;
+  
+  m_camDevice->channels()[channelNum]->setConfig(config);
+}
+
+void CameraWidget::setTrackBlobs(const bool trackBlobs)
+{
+  m_trackBlobs = trackBlobs;
+}
+
+bool CameraWidget::trackBlobs() const
+{
+  return m_trackBlobs;
+}
+
+// TODO: Make it configurable which channels to show
+void CameraWidget::update()
 {
   // TODO: Gracefully handle camera connections (retry, lower fps, etc.)
   if(!isVisible()) return;
-  if(!m_device->update()) {
+  if(!m_camDevice->update()) {
     qWarning() << "camera update failed";
     return;
   }
   qWarning() << "camera updated";
   
-  cv::Mat image = m_device->rawImage();
-  int h = 0;
-  const static int hStep = 137; // Golden angle
-  Camera::ChannelPtrVector::const_iterator it = m_device->channels().begin();
-  for(; it != m_device->channels().end(); ++it, h += hStep) {
-    const QColor rectColor = QColor::fromHsv(h % 360, 255, 255);
-    const Camera::ObjectVector *objs = (*it)->objects();
-    Camera::ObjectVector::const_iterator oit = objs->begin();
-    for(; oit != objs->end(); ++oit) {
-      const Camera::Object &obj = *oit;
-      cv::rectangle(image, cv::Rect(obj.boundingBox().x(), obj.boundingBox().y(),
-        obj.boundingBox().width(), obj.boundingBox().height()),
-        cv::Scalar(rectColor.red(), rectColor.blue(), rectColor.blue()), 2);
+  cv::Mat image = m_camDevice->rawImage();
+  if(m_trackBlobs) {
+    int h = 0;
+    const static int hStep = 137; // Golden angle
+    Camera::ChannelPtrVector::const_iterator it = m_camDevice->channels().begin();
+    for(; it != m_camDevice->channels().end(); ++it, h += hStep) {
+      const QColor rectColor = QColor::fromHsv(h % 360, 255, 255);
+      const Camera::ObjectVector *objs = (*it)->objects();
+      Camera::ObjectVector::const_iterator oit = objs->begin();
+      for(; oit != objs->end(); ++oit) {
+        const Camera::Object &obj = *oit;
+        cv::rectangle(image, cv::Rect(obj.boundingBox().x(), obj.boundingBox().y(),
+          obj.boundingBox().width(), obj.boundingBox().height()),
+          cv::Scalar(rectColor.red(), rectColor.blue(), rectColor.blue()), 2);
+      }
     }
   }
   
-  ui->camera->updateImage(image);
-}
-
-void CameraWidget::currentIndexChanged(const int &index)
-{
-  const QString path = m_model->filePath(m_model->index(index,
-    0, ui->config->rootModelIndex()));
-  Config *conf = Config::load(path.toStdString());
-  m_device->setConfig(conf ? *conf : Config());
-  delete conf;
+  this->updateImage(image);
 }

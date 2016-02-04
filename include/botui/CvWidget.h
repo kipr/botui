@@ -21,7 +21,7 @@ public slots:
 	void updateImage(const cv::Mat &image);
 	
 signals:
-	void pressed(const int &x, const int &y);
+	void pressed(const cv::Mat &image, const int &x, const int &y);
 	
 protected:
 	virtual void resizeEvent(QResizeEvent *event);

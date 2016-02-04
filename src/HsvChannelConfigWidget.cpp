@@ -19,9 +19,7 @@
 HsvChannelConfigWidget::HsvChannelConfigWidget(const QModelIndex &index, QWidget *parent)
 	: ChannelConfigWidget(index, parent),
 	ui(new Ui::HsvChannelConfigWidget),
-	m_numpad(new NumpadDialog("Enter Value")),
-	m_camera(new Camera::Device()),
-  m_timer(new QTimer(this))
+	m_numpad(new NumpadDialog("Enter Value"))
 {
 	ui->setupUi(this);
 	
@@ -31,7 +29,7 @@ HsvChannelConfigWidget::HsvChannelConfigWidget(const QModelIndex &index, QWidget
 	deviceConfig.beginGroup((QString(CAMERA_CHANNEL_GROUP_PREFIX) + "0").toStdString());
 	deviceConfig.setValue(CAMERA_CHANNEL_TYPE_KEY, CAMERA_CHANNEL_TYPE_HSV_KEY);
 	deviceConfig.clearGroup();
-	m_camera->setConfig(deviceConfig);
+	ui->camera->setConfig(&deviceConfig);
 	
 	visual();
 	
@@ -48,7 +46,7 @@ HsvChannelConfigWidget::HsvChannelConfigWidget(const QModelIndex &index, QWidget
 	connect(ui->visual, SIGNAL(minChanged(QColor)), SLOT(visualChanged()));
 	connect(ui->visual, SIGNAL(maxChanged(QColor)), SLOT(visualChanged()));
 	
-	connect(ui->camera, SIGNAL(pressed(int, int)), SLOT(imagePressed(int, int)));
+	connect(ui->camera, SIGNAL(pressed(cv::Mat, int, int)), SLOT(imagePressed(cv::Mat, int, int)));
 	
 	connect(ui->done, SIGNAL(clicked()), SLOT(done()));
 	
@@ -58,20 +56,12 @@ HsvChannelConfigWidget::HsvChannelConfigWidget(const QModelIndex &index, QWidget
 	ui->bh->setInputProvider(m_numpad);
 	ui->bs->setInputProvider(m_numpad);
 	ui->bv->setInputProvider(m_numpad);
-	
-	m_camera->open();
-  // TODO: Smarter fps system
-  connect(m_timer, SIGNAL(timeout()), SLOT(update()));
-  m_timer->start(130);
-	
-	//connect(&CameraInputManager::ref(), SIGNAL(frameAvailable(cv::Mat)), SLOT(update()));
+  
+  ui->camera->setTrackBlobs(true);
 }
 
 HsvChannelConfigWidget::~HsvChannelConfigWidget()
 {
-	m_camera->close();
-	
-	delete m_camera;
 	delete ui;
 	delete m_numpad;
 }
@@ -123,37 +113,7 @@ void HsvChannelConfigWidget::refresh()
 	ui->bs->setText(QString::number(bs));
 	ui->bv->setText(QString::number(bv));
 	
-	m_camera->channels()[0]->setConfig(config);
-}
-
-void HsvChannelConfigWidget::update()
-{
-	if(!m_camera->update()) {
-		qWarning() << "Lost camera";
-		ui->camera->setInvalid(true);
-		return;
-	}
-	
-	const Camera::ObjectVector *objs = m_camera->channels()[0]->objects();
-	if(!objs) {
-		qWarning() << "Objects invalid";
-		ui->camera->setInvalid(true);
-		return;
-	}
-	
-	Camera::ObjectVector::const_iterator it = objs->begin();
-	cv::Mat image = m_camera->rawImage();
-	if(image.empty()) {
-		qDebug() << "Empty???";
-	}
-	for(; it != objs->end(); ++it) {
-		const Camera::Object &obj = *it;
-		cv::rectangle(image, cv::Rect(obj.boundingBox().x(), obj.boundingBox().y(),
-			obj.boundingBox().width(), obj.boundingBox().height()),
-			cv::Scalar(255, 0, 0), 2);
-	}
-	
-	ui->camera->updateImage(image);
+  ui->camera->setChannelConfig(config, 0);
 }
 
 void HsvChannelConfigWidget::visual()
@@ -223,11 +183,11 @@ void HsvChannelConfigWidget::visualChanged()
 	blockChildSignals(false);
 }
 
-void HsvChannelConfigWidget::imagePressed(const int &x, const int &y)
+void HsvChannelConfigWidget::imagePressed(const cv::Mat &image, const int &x, const int &y)
 {
-	cv::Mat image = m_camera->rawImage();
+  // This is RGB, not BGR
 	cv::Vec3b data = image.at<cv::Vec3b>(y, x);
-	const QColor c(data[2], data[1], data[0]);
+	const QColor c(data[0], data[1], data[2]);
 	
 	int th = (c.hue() / 2 + 5) % 180;
 	int ts = c.saturation() + 40;

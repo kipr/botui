@@ -2,7 +2,7 @@
 #include "ui_MotorsSensorsWidget.h"
 #include "RootController.h"
 #include <QDebug>
-#include "CameraWidget.h"
+#include "CameraLiveWidget.h"
 #include "ServosWidget.h"
 #include "CombinedMotorWidget.h"
 #include "PidTunerWidget.h"
@@ -58,7 +58,7 @@ void MotorsSensorsWidget::sensorList()
 
 void MotorsSensorsWidget::camera()
 {
-	RootController::ref().presentWidget(new CameraWidget(device()));
+	RootController::ref().presentWidget(new CameraLiveWidget(device()));
 }
 
 void MotorsSensorsWidget::pidTuner()

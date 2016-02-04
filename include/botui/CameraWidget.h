@@ -1,38 +1,41 @@
 #ifndef _CAMERAWIDGET_H_
 #define _CAMERAWIDGET_H_
 
-#include "StandardWidget.h"
+#include "CvWidget.h"
 
 #include <QTimer>
 
-namespace Ui
-{
-	class CameraWidget;
-}
+#ifdef WALLABY
+#include <wallaby/config.hpp>
+#else
+#include <kovan/config.hpp>
+#endif
 
 namespace Camera
 {
 	class Device;
 }
 
-class ChannelConfigurationsModel;
-
-class CameraWidget : public StandardWidget
+class CameraWidget : public CvWidget
 {
 Q_OBJECT
 public:
-	CameraWidget(Device *device, QWidget *parent = 0);
-	~CameraWidget();
-	
+  CameraWidget(QWidget *parent = 0);
+  ~CameraWidget();
+  
+  void setConfig(Config *config);
+  void setChannelConfig(const Config &config, int channelNum);
+  
+  void setTrackBlobs(const bool trackBlobs);
+  bool trackBlobs() const;
+  
 public slots:
-	void updateImage();
-	void currentIndexChanged(const int &index);
-	
+  void update();
+  
 private:
-	Ui::CameraWidget *ui;
-	Camera::Device *m_device;
-	ChannelConfigurationsModel *m_model;
+  Camera::Device *m_camDevice;
   QTimer *m_timer;
+  bool m_trackBlobs;
 };
 
 #endif

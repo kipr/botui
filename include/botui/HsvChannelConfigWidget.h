@@ -3,14 +3,11 @@
 
 #include "ChannelConfigWidget.h"
 
+#include <opencv2/core/core.hpp>
+
 namespace Ui
 {
 	class HsvChannelConfigWidget;
-}
-
-namespace Camera
-{
-	class Device;
 }
 
 class NumpadDialog;
@@ -25,7 +22,7 @@ public:
 	virtual void refresh();
 	
 private slots:
-	void update();
+	//void update();
 	void visual();
 	void manual();
 	
@@ -33,20 +30,16 @@ private slots:
 	
 	void visualChanged();
 	
-	void imagePressed(const int &x, const int &y);
+	void imagePressed(const cv::Mat &image, const int &x, const int &y);
 	
 	void done();
 	
 private:
-	void setSlowUpdate();
-	void setFastUpdate();
 	
 	void blockChildSignals(const bool &block);
 	
 	Ui::HsvChannelConfigWidget *ui;
 	NumpadDialog *m_numpad;
-	Camera::Device *m_camera;
-  QTimer *m_timer;
 };
 
 #endif

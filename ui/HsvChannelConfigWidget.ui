@@ -35,7 +35,7 @@
       <number>2</number>
      </property>
      <item>
-      <widget class="CvWidget" name="camera" native="true">
+      <widget class="CameraWidget" name="camera" native="true">
        <property name="minimumSize">
         <size>
          <width>140</width>
@@ -249,9 +249,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>CvWidget</class>
+   <class>CameraWidget</class>
    <extends>QWidget</extends>
-   <header>CvWidget.h</header>
+   <header>CameraWidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

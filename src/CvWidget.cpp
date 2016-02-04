@@ -74,7 +74,7 @@ void CvWidget::mousePressEvent(QMouseEvent *event)
 {
 	if(m_invalid) return;
 	const QPointF &pos = event->pos();
-	emit pressed(pos.x() / width() * m_image.cols,
+	emit pressed(m_image, pos.x() / width() * m_image.cols,
 		pos.y() / height() * m_image.rows);
 }
 

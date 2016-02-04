@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CameraWidget</class>
- <widget class="QWidget" name="CameraWidget">
+ <class>CameraLiveWidget</class>
+ <widget class="QWidget" name="CameraLiveWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -18,7 +18,7 @@
     <number>6</number>
    </property>
    <item>
-    <widget class="CvWidget" name="camera" native="true">
+    <widget class="CameraWidget" name="camera" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
        <horstretch>0</horstretch>
@@ -48,9 +48,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>CvWidget</class>
+   <class>CameraWidget</class>
    <extends>QWidget</extends>
-   <header>CvWidget.h</header>
+   <header>CameraWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
