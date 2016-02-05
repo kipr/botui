@@ -50,6 +50,8 @@ else()
   find_package(Qt5Network REQUIRED)
 endif()
 
+find_package(OpenSSL REQUIRED)
+
 file(GLOB INCLUDES ${INCLUDE}/*.h ${DEVICE_DIR}/include/*.h)
 file(GLOB SOURCES ${SRC}/*.cpp ${DEVICE_DIR}/src/*.cpp)
 file(GLOB UIS ${UI}/*)
@@ -106,7 +108,7 @@ endif()
 
 add_definitions(-O3)
 
-target_link_libraries(botui pcompiler kar z opencv_core opencv_highgui opencv_imgproc)
+target_link_libraries(botui pcompiler kar z opencv_core opencv_highgui opencv_imgproc ${OPENSSL_LIBRARIES})
 if(wallaby)
   target_link_libraries(botui wallaby)
 else()

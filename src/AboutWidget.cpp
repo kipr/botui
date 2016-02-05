@@ -1,7 +1,7 @@
 #include "AboutWidget.h"
 #include "ui_AboutWidget.h"
-#include "RootController.h"
 #include "Device.h"
+#include "SystemUtils.h"
 
 #include <QDebug>
 
@@ -11,6 +11,18 @@ AboutWidget::AboutWidget(Device *device, QWidget *parent)
 {
 	ui->setupUi(this);
 	ui->deviceName->setText(device->name() + " v" + device->version());
+  
+#ifdef WALLABY
+  const QString id = device->id();
+  if(!id.isEmpty()) {
+    const QString password = SystemUtils::sha256(id).left(6) + "00";
+    const QString ssid = id + "-wallaby";
+    ui->ssid->setText(ssid);
+    ui->password->setText(password);
+  }
+#else
+  ui->wifiBox->hide();
+#endif
 	performStandardSetup(tr("About"));
 }
 
