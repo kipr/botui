@@ -13,6 +13,7 @@ namespace Simulator
 		
 		virtual QString name() const;
 		virtual QString version() const;
+		virtual QString id() const;
 		virtual bool isTouchscreen() const;
 		
 		virtual ArchivesManager *archivesManager() const;

@@ -10,6 +10,8 @@
 #include <QDBusConnection>
 #endif
 
+#include <QFileInfo>
+#include <QProcess>
 #include <QDebug>
 
 #ifdef Q_OS_MAC
@@ -36,7 +38,8 @@ Wallaby::Device::Device()
   : m_compileProvider(new KissCompileProvider(this)),
   m_batteryLevelProvider(new Wallaby::BatteryLevelProvider()),
   m_settingsProvider(new Wallaby::SettingsProvider()),
-  m_version(getVersionNum())
+  m_version(getVersionNum()),
+  m_id(getId())
 {
   m_compileProvider->setBinariesPath("/wallaby/bin");
 #ifndef NOT_A_WALLABY
@@ -60,6 +63,11 @@ QString Wallaby::Device::name() const
 QString Wallaby::Device::version() const
 {
   return m_version;
+}
+
+QString Wallaby::Device::id() const
+{
+  return m_id;
 }
 
 bool Wallaby::Device::isTouchscreen() const
@@ -89,4 +97,23 @@ SettingsProvider *Wallaby::Device::settingsProvider() const
 ButtonProvider *Wallaby::Device::buttonProvider() const
 {
   return 0;
+}
+
+QString Wallaby::Device::getId() const
+{
+  const QFileInfo getIdScript("/usr/bin/wallaby_get_id.sh");
+  if(!getIdScript.exists() || !getIdScript.isFile()) {
+    qWarning() << "wallaby_get_id script does not exist";
+    return QString();
+  }
+  
+  QProcess proc;
+  proc.start("/bin/sh", QStringList() << getIdScript.absoluteFilePath());
+  if(proc.waitForFinished(5000))
+    return proc.readAllStandardOutput();
+  else
+  {
+    qWarning() << "Failed to get wallaby id";
+    return QString();
+  }
 }

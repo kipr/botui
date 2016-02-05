@@ -13,6 +13,7 @@ namespace Wallaby
     
     virtual QString name() const;
     virtual QString version() const;
+    virtual QString id() const;
     virtual bool isTouchscreen() const;
     
     virtual CompileProvider *compileProvider() const;
@@ -21,11 +22,13 @@ namespace Wallaby
     virtual ButtonProvider *buttonProvider() const;
     
   private:
+    QString getId() const;
+    
     CompileProvider *m_compileProvider;
     BatteryLevelProvider *m_batteryLevelProvider;
     SettingsProvider *m_settingsProvider;
     QString m_version;
-
+    QString m_id;
   };
 }
 

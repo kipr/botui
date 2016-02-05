@@ -22,6 +22,7 @@ Q_OBJECT
 public:
 	virtual QString name() const = 0;
 	virtual QString version() const = 0;
+	virtual QString id() const = 0;
 	virtual bool isTouchscreen() const = 0;
 	
 	virtual CompileProvider *compileProvider() const = 0;

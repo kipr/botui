@@ -59,6 +59,11 @@ QString Simulator::Device::version() const
 	return "0.1a";
 }
 
+QString Simulator::Device::id() const
+{
+  return QString();
+}
+
 bool Simulator::Device::isTouchscreen() const
 {
 	return false;

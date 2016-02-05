@@ -152,6 +152,11 @@ QString Kovan::Device::version() const
 	return "2.2.1";
 }
 
+QString Kovan::Device::id() const
+{
+  return QString();
+}
+
 bool Kovan::Device::isTouchscreen() const
 {
 #ifndef NOT_A_KOVAN
