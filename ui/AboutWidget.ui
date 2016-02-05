@@ -58,7 +58,7 @@
    <item>
     <widget class="QLabel" name="label_5">
      <property name="text">
-      <string>Copyright (C) 2012 - 2014</string>
+      <string>Copyright (C) 2012 - 2016</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -126,7 +126,7 @@
      <item>
       <widget class="QGroupBox" name="wifiBox">
        <property name="title">
-        <string>Wifi Info</string>
+        <string>Wi-Fi Info</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
