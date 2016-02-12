@@ -25,14 +25,18 @@ WallabyUpdateWidget::~WallabyUpdateWidget()
 }
   
 void WallabyUpdateWidget::update()
-{
-  // TODO: Verify with user that they want to do the update
-  
+{ 
   // Get single selected item
   const QList<QListWidgetItem *> selected = ui->updateList->selectedItems();
   if(selected.size() != 1)
     return;
   const QString selectedName = selected.at(0)->text();
+  
+  // Verify with user that they want to do the update
+  if(QMessageBox::question(this, "Update?",
+    QString("Are you sure you want to update using %1?").arg(selectedName),
+    QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
+      return;
   
   // Disable buttons
   ui->update->setEnabled(false);
