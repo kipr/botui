@@ -19,6 +19,7 @@ public:
 	
 private slots:
 	void colorChanged(int index);
+  void fullscreenChanged(int state);
 	
 private:
 	static void updateWidgets();

@@ -22,6 +22,9 @@ public:
 	
 	void setDismissable(bool dismissable);
 	bool isDismissable() const;
+  
+  void setFullscreen(const bool fullscreen);
+  bool isFullscreen() const;
 	
 	template<typename T>
 	void dismissUntil()
@@ -46,7 +49,7 @@ public slots:
 	
 	void dismissWidget();
 	void dismissAllWidgets();
-	
+
 private:
 	void constrain(QWidget *widget);
 	void present(QWidget *widget);
@@ -54,6 +57,7 @@ private:
 	QMap<QWidget *, bool> m_ownership;
 	QStack<QWidget *> m_stack;
 	bool m_dismissable;
+  bool m_fullscreen;
 };
 
 #endif

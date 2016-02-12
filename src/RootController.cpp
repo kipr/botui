@@ -13,7 +13,6 @@
 RootController::RootController()
 	: m_dismissable(true)
 {
-	
 }
 
 void RootController::presentQml(const QUrl& url)
@@ -84,6 +83,16 @@ bool RootController::isDismissable() const
 	return m_dismissable;
 }
 
+void RootController::setFullscreen(const bool fullscreen)
+{
+  m_fullscreen = fullscreen;
+}
+
+bool RootController::isFullscreen() const
+{
+  return m_fullscreen;
+}
+
 void RootController::constrain(QWidget *widget)
 {
 	widget->setMinimumSize(320, 240);
@@ -94,6 +103,10 @@ void RootController::present(QWidget *widget)
 {
 	if(!widget) return;
 	
-	widget->showFullScreen();
+  if(m_fullscreen)
+	  widget->showFullScreen();
+  else
+    widget->show();
+  
 	widget->raise();
 }
