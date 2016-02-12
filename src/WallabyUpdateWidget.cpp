@@ -17,9 +17,6 @@ WallabyUpdateWidget::WallabyUpdateWidget(Device *device, QWidget *parent)
   
   connect(ui->update, SIGNAL(clicked()), SLOT(update()));
   connect(ui->refresh, SIGNAL(clicked()), SLOT(refresh()));
-  
-  // TODO: Move this out of constructor
-  this->refresh();
 }
 
 WallabyUpdateWidget::~WallabyUpdateWidget()

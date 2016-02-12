@@ -86,5 +86,7 @@ void SettingsWidget::language()
 
 void SettingsWidget::update()
 {
-  RootController::ref().presentWidget(new WallabyUpdateWidget(device()));
+  WallabyUpdateWidget *const updateWidget = new WallabyUpdateWidget(device());
+  RootController::ref().presentWidget(updateWidget);
+  updateWidget->refresh();
 }
