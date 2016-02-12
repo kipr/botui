@@ -94,6 +94,6 @@ void RootController::present(QWidget *widget)
 {
 	if(!widget) return;
 	
-	widget->show();
+	widget->showFullScreen();
 	widget->raise();
 }
