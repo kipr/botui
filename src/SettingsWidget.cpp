@@ -13,6 +13,7 @@
 #include "ChannelConfigurationsWidget.h"
 #include "GuiSettingsWidget.h"
 #include "LanguageWidget.h"
+#include "WallabyUpdateWidget.h"
 
 #include <QDebug>
 
@@ -35,6 +36,7 @@ SettingsWidget::SettingsWidget(Device *device, QWidget *parent)
 	connect(ui->gui, SIGNAL(clicked()), SLOT(gui()));
 	connect(ui->calibrate, SIGNAL(clicked()), SLOT(calibrate()));
 	connect(ui->language, SIGNAL(clicked()), SLOT(language()));
+  connect(ui->update, SIGNAL(clicked()), SLOT(update()));
 
 	//TODO show buttons once the widgets are fixed
 	ui->network->setVisible(false);
@@ -80,4 +82,9 @@ void SettingsWidget::calibrate()
 void SettingsWidget::language()
 {
   RootController::ref().presentWidget(new LanguageWidget(device()));
+}
+
+void SettingsWidget::update()
+{
+  RootController::ref().presentWidget(new WallabyUpdateWidget(device()));
 }

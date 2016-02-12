@@ -153,6 +153,17 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="update">
+         <property name="text">
+          <string>Update</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../rc/icons.qrc">
+           <normaloff>:/icons/arrow_rotate_clockwise.png</normaloff>:/icons/arrow_rotate_clockwise.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
