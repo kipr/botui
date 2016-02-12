@@ -37,6 +37,7 @@ SettingsWidget::SettingsWidget(Device *device, QWidget *parent)
 	connect(ui->calibrate, SIGNAL(clicked()), SLOT(calibrate()));
 	connect(ui->language, SIGNAL(clicked()), SLOT(language()));
   connect(ui->update, SIGNAL(clicked()), SLOT(update()));
+  connect(ui->hideUi, SIGNAL(clicked()), SLOT(hideUi()));
 
 	//TODO show buttons once the widgets are fixed
 	ui->network->setVisible(false);
@@ -89,4 +90,9 @@ void SettingsWidget::update()
   WallabyUpdateWidget *const updateWidget = new WallabyUpdateWidget(device());
   RootController::ref().presentWidget(updateWidget);
   updateWidget->refresh();
+}
+
+void SettingsWidget::hideUi()
+{
+  RootController::ref().minimize();
 }

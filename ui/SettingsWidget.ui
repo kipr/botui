@@ -89,6 +89,17 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="hideUi">
+         <property name="text">
+          <string>Hide UI</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../rc/icons.qrc">
+           <normaloff>:/icons/application_osx_terminal.png</normaloff>:/icons/application_osx_terminal.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="verticalSpacer_2">
          <property name="orientation">
           <enum>Qt::Vertical</enum>

@@ -24,6 +24,7 @@ public slots:
 	void calibrate();
 	void language();
   void update();
+  void hideUi();
 	
 private:
 	Ui::SettingsWidget *ui;

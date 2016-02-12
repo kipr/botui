@@ -68,6 +68,11 @@ void RootController::dismissAllWidgets()
 	while(m_stack.size() > 1) dismissWidget();
 }
 
+void RootController::minimize()
+{
+  m_stack.top()->showMinimized();
+}
+
 const unsigned int RootController::depth() const
 {
 	return m_stack.size();

@@ -49,7 +49,9 @@ public slots:
 	
 	void dismissWidget();
 	void dismissAllWidgets();
-
+  
+  void minimize();
+	
 private:
 	void constrain(QWidget *widget);
 	void present(QWidget *widget);
