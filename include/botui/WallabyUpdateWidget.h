@@ -23,11 +23,15 @@ public slots:
   void update();
   void refresh();
   
+private slots:
+  void updateFinished(int exitCode, QProcess::ExitStatus exitStatus);
+  
 private:
   bool mountUsb(const QString device, const QDir dir);
   bool unmountUsb(const QString device);
   
   static const QString updateFileName;
+  static const QDir mountDir;
   Ui::WallabyUpdateWidget *ui;
   QProcess *m_updateProc;
 };

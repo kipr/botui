@@ -43,12 +43,11 @@ void WallabyUpdateWidget::update()
   ui->refresh->setEnabled(false);
   
   // Mount USB drive
-  const QDir mountDir("/mnt");
-  if(!this->mountUsb("/dev/sda1", mountDir) && !this->mountUsb("/dev/sdb1", mountDir))
+  if(!this->mountUsb("/dev/sda1", WallabyUpdateWidget::mountDir) && !this->mountUsb("/dev/sdb1", WallabyUpdateWidget::mountDir))
     QMessageBox::warning(this, "USB not found", "Failed to mount USB device");
   else {
     // Check if update file exists
-    QDir subDir = mountDir;
+    QDir subDir = WallabyUpdateWidget::mountDir;
     subDir.cd(selectedName);
     if(!subDir.exists(WallabyUpdateWidget::updateFileName))
       QMessageBox::warning(this, "File not found", "The update file no longer exists");
@@ -61,24 +60,12 @@ void WallabyUpdateWidget::update()
       // Run update process
       m_updateProc = new QProcess();
       ui->updateConsole->setProcess(m_updateProc);
+      connect(m_updateProc, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(updateFinished(int, QProcess::ExitStatus)));
       m_updateProc->start("sh", QStringList() << subDir.absoluteFilePath(WallabyUpdateWidget::updateFileName));
-      m_updateProc->waitForFinished(-1);
       
       // Update script will reboot the controller
-      
-      // Cleanup process
-      ui->updateConsole->setProcess(0);
-      delete m_updateProc;
     }
-    
-    // Unmount USB drive
-    if(!this->unmountUsb(mountDir.absolutePath()))
-      qDebug() << "Failed to unmount USB drive";
   }
-  
-  // Re-enable buttons
-  ui->refresh->setEnabled(true);
-  ui->update->setEnabled(true);
 }
 
 void WallabyUpdateWidget::refresh()
@@ -89,15 +76,14 @@ void WallabyUpdateWidget::refresh()
   ui->updateList->clear();
   
   // Mount USB drive
-  const QDir mountDir("/mnt");
-  if(!this->mountUsb("/dev/sda1", mountDir) && !this->mountUsb("/dev/sdb1", mountDir))
+  if(!this->mountUsb("/dev/sda1", WallabyUpdateWidget::mountDir) && !this->mountUsb("/dev/sdb1", WallabyUpdateWidget::mountDir))
     QMessageBox::warning(this, "USB not found", "Failed to mount USB device");
   else {
     // Look at each directory
-    foreach(const QString &name, mountDir.entryList(QDir::NoDotAndDotDot | QDir::Dirs))
+    foreach(const QString &name, WallabyUpdateWidget::mountDir.entryList(QDir::NoDotAndDotDot | QDir::Dirs))
     {
       // Filter out directories without updates
-      QDir subDir = mountDir;
+      QDir subDir = WallabyUpdateWidget::mountDir;
       subDir.cd(name);
       
       if(!subDir.exists(WallabyUpdateWidget::updateFileName))
@@ -108,11 +94,26 @@ void WallabyUpdateWidget::refresh()
     }
     
     // Unmount USB drive
-    if(!this->unmountUsb(mountDir.absolutePath()))
+    if(!this->unmountUsb(WallabyUpdateWidget::mountDir.absolutePath()))
       qDebug() << "Failed to unmount USB drive";
   }
   
   ui->refresh->setEnabled(true);
+}
+
+void WallabyUpdateWidget::updateFinished(int, QProcess::ExitStatus exitStatus)
+{
+  // Cleanup process
+  ui->updateConsole->setProcess(0);
+  delete m_updateProc;
+  
+  // Unmount USB drive
+  if(!this->unmountUsb(WallabyUpdateWidget::mountDir.absolutePath()))
+    qDebug() << "Failed to unmount USB drive";
+  
+  // Re-enable buttons
+  ui->refresh->setEnabled(true);
+  ui->update->setEnabled(true);
 }
 
 bool WallabyUpdateWidget::mountUsb(const QString device, const QDir dir)
@@ -130,3 +131,4 @@ bool WallabyUpdateWidget::unmountUsb(const QString device)
 }
 
 const QString WallabyUpdateWidget::updateFileName = "wallaby_update.sh";
+const QDir WallabyUpdateWidget::mountDir = QDir("/mnt");
