@@ -40,6 +40,8 @@ ServosWidget::ServosWidget(Device *device, QWidget *parent)
 	
 	ui->dial->setLabel(0);
 	ui->_0->setEnabled(false);
+  
+  disable_servos();
 	
 	activeChanged();
 
@@ -85,8 +87,8 @@ void ServosWidget::activeChanged()
 	ui->_2->setEnabled(from != ui->_2);
 	ui->_3->setEnabled(from != ui->_3);
 	
-	ui->enable->setVisible(!get_servo_enabled(label));
-	ui->disable->setVisible(get_servo_enabled(label));
+	ui->enable->setVisible(true);
+	ui->disable->setVisible(false);
 	
 	ui->dial->setLabel(label);
 	publish();
