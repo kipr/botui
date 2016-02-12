@@ -46,12 +46,20 @@
           <property name="text">
            <string>Update</string>
           </property>
+          <property name="icon">
+           <iconset resource="../rc/icons.qrc">
+            <normaloff>:/icons/arrow_rotate_clockwise.png</normaloff>:/icons/arrow_rotate_clockwise.png</iconset>
+          </property>
          </widget>
         </item>
         <item>
          <widget class="QPushButton" name="refresh">
           <property name="text">
            <string>Refresh</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../rc/icons.qrc">
+            <normaloff>:/icons/arrow_refresh.png</normaloff>:/icons/arrow_refresh.png</iconset>
           </property>
          </widget>
         </item>
