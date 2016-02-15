@@ -3,8 +3,6 @@
 #include <wallaby/general.h>
 #include <wallaby/battery.hpp>
 
-#include <QDebug>
-
 const float Wallaby::BatteryLevelProvider::batteryLevel() const
 {
 #ifndef NOT_A_WALLABY
@@ -31,7 +29,6 @@ const bool Wallaby::BatteryLevelProvider::isCharging() const
 void Wallaby::BatteryLevelProvider::setBatteryType(const int type)
 {
   m_batteryType = type;
-  qDebug() << "Battery type is now " << type;
 }
 
 int Wallaby::BatteryLevelProvider::batteryType() const
