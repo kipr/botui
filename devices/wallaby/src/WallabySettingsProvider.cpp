@@ -33,4 +33,6 @@ void Wallaby::SettingsProvider::sync()
   QDataStream stream(&m_settingsFile);
   stream << m_settings;
   m_settingsFile.close();
+  
+  emit settingsChanged();
 }

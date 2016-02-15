@@ -14,6 +14,7 @@
 #include "GuiSettingsWidget.h"
 #include "LanguageWidget.h"
 #include "WallabyUpdateWidget.h"
+#include "BatterySettingsWidget.h"
 
 #include <QDebug>
 
@@ -38,6 +39,7 @@ SettingsWidget::SettingsWidget(Device *device, QWidget *parent)
 	connect(ui->language, SIGNAL(clicked()), SLOT(language()));
   connect(ui->update, SIGNAL(clicked()), SLOT(update()));
   connect(ui->hideUi, SIGNAL(clicked()), SLOT(hideUi()));
+  connect(ui->battery, SIGNAL(clicked()), SLOT(battery()));
 
 	//TODO show buttons once the widgets are fixed
 	ui->network->setVisible(false);
@@ -95,4 +97,9 @@ void SettingsWidget::update()
 void SettingsWidget::hideUi()
 {
   RootController::ref().minimize();
+}
+
+void SettingsWidget::battery()
+{
+  RootController::ref().presentWidget(new BatterySettingsWidget(device()));
 }

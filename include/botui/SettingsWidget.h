@@ -20,11 +20,11 @@ public slots:
 	void comm();
 	void channels();
 	void gui();
-	
 	void calibrate();
 	void language();
   void update();
   void hideUi();
+  void battery();
 	
 private:
 	Ui::SettingsWidget *ui;

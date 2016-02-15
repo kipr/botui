@@ -7,6 +7,7 @@ namespace Wallaby
 {  
   class Device : public ::Device
   {
+  Q_OBJECT
   public:
     Device();
     ~Device();
@@ -20,6 +21,9 @@ namespace Wallaby
     virtual BatteryLevelProvider *batteryLevelProvider() const;
     virtual SettingsProvider *settingsProvider() const;
     virtual ButtonProvider *buttonProvider() const;
+    
+  private slots:
+    void settingsChanged();
     
   private:
     QString getId() const;

@@ -175,6 +175,17 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="battery">
+         <property name="text">
+          <string>Battery</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../rc/icons.qrc">
+           <normaloff>:/icons/lightning.png</normaloff>:/icons/lightning.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>

@@ -42,6 +42,7 @@ Wallaby::Device::Device()
   m_id(getId())
 {
   m_compileProvider->setBinariesPath("/wallaby/bin");
+  connect(m_settingsProvider, SIGNAL(settingsChanged()), SLOT(settingsChanged()));
 #ifndef NOT_A_WALLABY
   halt();
 #endif
@@ -97,6 +98,12 @@ SettingsProvider *Wallaby::Device::settingsProvider() const
 ButtonProvider *Wallaby::Device::buttonProvider() const
 {
   return 0;
+}
+
+void Wallaby::Device::settingsChanged()
+{
+  const int type = m_settingsProvider->value("battery_type", 0).toInt();
+  ((Wallaby::BatteryLevelProvider *)m_batteryLevelProvider)->setBatteryType(type);
 }
 
 QString Wallaby::Device::getId() const
