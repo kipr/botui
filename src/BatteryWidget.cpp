@@ -1,11 +1,19 @@
 #include "BatteryWidget.h"
 #include "BatteryLevelProvider.h"
 
+#include "Device.h"
+#include "WallabyDevice.h"
+#include "WallabyBatteryProvider.h"
+
 #include <QPainter>
 #include <QTimer>
 #include <QDebug>
 
-#define TEXT_SIZE 35
+#define CAPACITY_TEXT_SIZE 35
+#define CHEMISTRY_TEXT_SIZE 35
+
+#define BATTERY_TYPE_KEY "battery_type"
+
 
 BatteryWidget::BatteryWidget(QWidget *parent)
 	: QWidget(parent), m_batteryLevelProvider(0)
@@ -16,8 +24,8 @@ BatteryWidget::BatteryWidget(QWidget *parent)
 BatteryWidget::BatteryWidget(BatteryLevelProvider *batteryLevelProvider, QWidget *parent)
 	: QWidget(parent), m_batteryLevelProvider(batteryLevelProvider)
 {
-	setMinimumSize(25 + TEXT_SIZE, 14);
-	setMaximumSize(25 + TEXT_SIZE, 14);
+	setMinimumSize(25 + CAPACITY_TEXT_SIZE + CHEMISTRY_TEXT_SIZE, 14);
+	setMaximumSize(25 + CAPACITY_TEXT_SIZE + CHEMISTRY_TEXT_SIZE, 14);
 	
 	startTimer();
 }
@@ -47,28 +55,56 @@ void BatteryWidget::paintEvent(QPaintEvent *event)
 	const int w = width();
 	const int h = height();
 	
-	const static int connectorSize = 3;
-	const static int textSize = TEXT_SIZE;
+	const static int connectorSize = 3; // the little +V battery nub
+	const static int textSize = CAPACITY_TEXT_SIZE; // width of the battery % text
 	
-	const int adjustedWidth = w - connectorSize - textSize;
 	
 	QPainter painter(this);
 	//painter.setRenderHint(QPainter::Antialiasing);
+
+	QRectF battTypeTextRect(0, 0, CHEMISTRY_TEXT_SIZE, h);
+	QTextOption battTypeTextOpt(Qt::AlignAbsolute | Qt::AlignHCenter | Qt::AlignVCenter);
+
+	QString battTypeString = QString("    ");
+
+	int battTypeInt = ((Wallaby::BatteryLevelProvider *)m_batteryLevelProvider)->batteryType();
+
+	switch(battTypeInt)
+	{
+	case 0:
+		battTypeString = QString("LiFe");
+		break;
+	case 1:
+		battTypeString = QString("LiPo");
+		break;
+	case 2:
+		battTypeString = QString("NiMH");
+		break;
+	default:
+		break;
+	}
+
+
+
+	painter.drawText(battTypeTextRect, battTypeString, battTypeTextOpt); // TODO: get battery type string elsewhere
+
+	const int adjustedWidth = w - connectorSize - textSize - CHEMISTRY_TEXT_SIZE;
+	const int battOffset = 0 + CHEMISTRY_TEXT_SIZE;
 	QPointF polygon[8] = {
-		QPointF(0, 0),
-		QPointF(adjustedWidth, 0),
-		QPointF(adjustedWidth, h / 4.0),
-		QPointF(adjustedWidth + connectorSize, h / 4.0),
-		QPointF(adjustedWidth + connectorSize, 3.0 * h / 4.0),
-		QPointF(adjustedWidth, 3.0 * h / 4.0),
-		QPointF(adjustedWidth, h - 1),
-		QPointF(0, h - 1)
+		QPointF(0+battOffset, 0),
+		QPointF(adjustedWidth+battOffset, 0),
+		QPointF(adjustedWidth+battOffset, h / 4.0),
+		QPointF(adjustedWidth+battOffset + connectorSize, h / 4.0),
+		QPointF(adjustedWidth+battOffset + connectorSize, 3.0 * h / 4.0),
+		QPointF(adjustedWidth+battOffset, 3.0 * h / 4.0),
+		QPointF(adjustedWidth+battOffset, h - 1),
+		QPointF(0+battOffset, h - 1)
 	};
 	painter.setPen(QColor(30, 30, 30));
 	painter.setBrush(Qt::darkGray);
 	painter.drawPolygon(polygon, 8);
 	
-	const int offset = 2;
+	const int offset = 2 + CHEMISTRY_TEXT_SIZE;
 	painter.setPen(Qt::NoPen);
 	
 	const bool charging = m_batteryLevelProvider->isCharging();
@@ -86,7 +122,7 @@ void BatteryWidget::paintEvent(QPaintEvent *event)
 	painter.setPen(Qt::black);
 	painter.setBrush(Qt::NoBrush);
 	
-	QRectF textRect(adjustedWidth + connectorSize + offset, 0, textSize - offset, h);
+	QRectF textRect(adjustedWidth + connectorSize + offset, 0, textSize - offset + CHEMISTRY_TEXT_SIZE, h);
 	QTextOption textOpt(Qt::AlignAbsolute | Qt::AlignHCenter | Qt::AlignVCenter);
 	if(m_batteryLevelProvider) {
 		painter.drawText(textRect, QString::number((int)(percentage * 100.0f)) + "\%", textOpt);
