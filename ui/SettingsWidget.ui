@@ -39,34 +39,6 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="mouse">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="text">
-          <string>Mouse</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/mouse.png</normaloff>:/icons/mouse.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="keyboard">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="text">
-          <string>Keyboard</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/keyboard.png</normaloff>:/icons/keyboard.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QPushButton" name="gui">
          <property name="text">
           <string>GUI</string>
@@ -116,20 +88,6 @@
      </item>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_2">
-       <item>
-        <widget class="QPushButton" name="programSettings">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="text">
-          <string>Program</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/application_osx_terminal.png</normaloff>:/icons/application_osx_terminal.png</iconset>
-         </property>
-        </widget>
-       </item>
        <item>
         <widget class="QPushButton" name="comm">
          <property name="text">
