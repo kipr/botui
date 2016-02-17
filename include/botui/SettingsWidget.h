@@ -25,6 +25,7 @@ public slots:
   void update();
   void hideUi();
   void battery();
+  void cameraView();
 	
 private:
 	Ui::SettingsWidget *ui;

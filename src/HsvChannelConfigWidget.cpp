@@ -57,7 +57,8 @@ HsvChannelConfigWidget::HsvChannelConfigWidget(const QModelIndex &index, QWidget
 	ui->bs->setInputProvider(m_numpad);
 	ui->bv->setInputProvider(m_numpad);
   
-  ui->camera->setTrackBlobs(true);
+  ui->camera->setShowBbox(true);
+  ui->camera->setNumBlobLabels(0);
 }
 
 HsvChannelConfigWidget::~HsvChannelConfigWidget()

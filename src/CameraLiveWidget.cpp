@@ -5,6 +5,7 @@
 #include "ui_CameraLiveWidget.h"
 #include "Device.h"
 #include "ChannelConfigurationsModel.h"
+#include "SettingsProvider.h"
 
 CameraLiveWidget::CameraLiveWidget(Device *device, QWidget *parent)
   : StandardWidget(device, parent),
@@ -20,7 +21,13 @@ CameraLiveWidget::CameraLiveWidget(Device *device, QWidget *parent)
   
   connect(ui->config, SIGNAL(currentIndexChanged(int)), SLOT(currentIndexChanged(int)));
   
-  ui->camera->setTrackBlobs(true);
+  const SettingsProvider *const settingsProvider = device->settingsProvider();
+  if(settingsProvider) {
+    const bool showBbox = settingsProvider->value("bounding_box", true).toBool();
+    const int numLabels = settingsProvider->value("num_blob_labels", 0).toInt();
+    ui->camera->setShowBbox(showBbox);
+    ui->camera->setNumBlobLabels(numLabels);
+  }
 }
 
 CameraLiveWidget::~CameraLiveWidget()

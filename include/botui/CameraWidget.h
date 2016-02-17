@@ -26,8 +26,11 @@ public:
   void setConfig(Config *config);
   void setChannelConfig(const Config &config, int channelNum);
   
-  void setTrackBlobs(const bool trackBlobs);
-  bool trackBlobs() const;
+  void setShowBbox(const bool showBbox);
+  bool showBbox() const;
+  
+  void setNumBlobLabels(const int numBlobLabels);
+  bool numBlobLabels() const;
   
 public slots:
   void update();
@@ -39,7 +42,8 @@ private:
   
   Camera::Device *m_camDevice;
   QTimer *m_timer;
-  bool m_trackBlobs;
+  bool m_showBbox;
+  int m_numBlobLabels;
   unsigned m_frameRate;
 };
 

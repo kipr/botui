@@ -1,6 +1,7 @@
 #include "CameraWidget.h"
 
 #include <QDebug>
+#include <sstream>
 
 #ifdef WALLABY
 #include <wallaby/camera.hpp>
@@ -37,14 +38,23 @@ void CameraWidget::setChannelConfig(const Config &config, int channelNum)
   m_camDevice->channels()[channelNum]->setConfig(config);
 }
 
-void CameraWidget::setTrackBlobs(const bool trackBlobs)
+void CameraWidget::setShowBbox(const bool showBbox)
 {
-  m_trackBlobs = trackBlobs;
+  m_showBbox = showBbox;
 }
 
-bool CameraWidget::trackBlobs() const
+bool CameraWidget::showBbox() const
 {
-  return m_trackBlobs;
+  return m_showBbox;
+}
+
+void CameraWidget::setNumBlobLabels(const int numBlobLabels)
+{
+  m_numBlobLabels = numBlobLabels;
+}
+bool CameraWidget::numBlobLabels() const
+{
+  return m_numBlobLabels;
 }
 
 // TODO: Make it configurable which channels to show
@@ -73,19 +83,43 @@ void CameraWidget::update()
   else {
     qDebug() << "Camera updated!";
     image = m_camDevice->rawImage();
-    if(m_trackBlobs) {
+    // If we need to draw additional things...
+    if(m_showBbox || m_numBlobLabels > 0) {
       int h = 0;
       const static int hStep = 137; // Golden angle
+      
+      // Iterate over all channels
       Camera::ChannelPtrVector::const_iterator it = m_camDevice->channels().begin();
       for(; it != m_camDevice->channels().end(); ++it, h += hStep) {
         const QColor rectColor = QColor::fromHsv(h % 360, 255, 255);
+        
+        // Iterate over all objects for this channel
         const Camera::ObjectVector *objs = (*it)->objects();
-        Camera::ObjectVector::const_iterator oit = objs->begin();
-        for(; oit != objs->end(); ++oit) {
-          const Camera::Object &obj = *oit;
-          cv::rectangle(image, cv::Rect(obj.boundingBox().x(), obj.boundingBox().y(),
-            obj.boundingBox().width(), obj.boundingBox().height()),
-            cv::Scalar(rectColor.red(), rectColor.blue(), rectColor.blue()), 2);
+        for(int objNum = 0; objNum < objs->size(); ++objNum) {
+          const Camera::Object &obj = objs->at(objNum);
+          
+          // If needed, draw bbox
+          if(m_showBbox) {
+            cv::rectangle(image, cv::Rect(obj.boundingBox().x(), obj.boundingBox().y(),
+              obj.boundingBox().width(), obj.boundingBox().height()),
+              cv::Scalar(rectColor.red(), rectColor.blue(), rectColor.blue()), 2);
+          }
+          
+          // If needed, draw blob labels
+          if(m_numBlobLabels > objNum) {
+            std::ostringstream stm;
+            stm << objNum;
+            const std::string &numStr = stm.str();
+            const int fontFace = cv::FONT_HERSHEY_SCRIPT_SIMPLEX;
+            const double fontScale = 0.4;
+            const int thickness = 1;
+            int baseline = 0;
+            cv::Size textSize = cv::getTextSize(numStr, fontFace, fontScale, thickness, &baseline);
+            baseline += thickness;
+            cv::Point textOrg(obj.boundingBox().x() + obj.boundingBox().width()/2 - textSize.width/2,
+                              obj.boundingBox().y() + obj.boundingBox().height()/2 + textSize.height/2);
+            cv::putText(image, numStr, textOrg, fontFace, fontScale, cv::Scalar::all(255), thickness, 8);
+          }
         }
       }
     }

@@ -28,6 +28,17 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
+        <widget class="QPushButton" name="cameraView">
+         <property name="text">
+          <string>Camera View</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../rc/icons.qrc">
+           <normaloff>:/icons/camera.png</normaloff>:/icons/camera.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="channels">
          <property name="text">
           <string>Channels</string>
