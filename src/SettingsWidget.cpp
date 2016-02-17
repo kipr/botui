@@ -15,6 +15,7 @@
 #include "LanguageWidget.h"
 #include "WallabyUpdateWidget.h"
 #include "BatterySettingsWidget.h"
+#include "CameraSettingsWidget.h"
 
 #include <QDebug>
 
@@ -43,11 +44,7 @@ SettingsWidget::SettingsWidget(Device *device, QWidget *parent)
 
 	//TODO show buttons once the widgets are fixed
 	ui->network->setVisible(false);
-	//ui->channels->setVisible(false);
 	ui->comm->setVisible(false);
-	ui->keyboard->setVisible(false);
-	ui->mouse->setVisible(false);
-	ui->programSettings->setVisible(false);
 }
 
 SettingsWidget::~SettingsWidget()
