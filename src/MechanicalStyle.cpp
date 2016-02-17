@@ -659,6 +659,9 @@ QSize MechanicalStyle::sizeFromContents(ContentsType ct, const QStyleOption *opt
 		QPixmap pixmap = button->icon.pixmap(button->iconSize, mode, state);
 		return QSize(size.width() + pixmap.width() * 2, size.height());
 	}
+  if(ct == CT_SpinBox) {
+    return QSize(size.width(), size.height() + 5);
+  }
 	return size;
 }
 
