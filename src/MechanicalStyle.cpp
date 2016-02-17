@@ -636,7 +636,7 @@ void MechanicalStyle::polish(QWidget *widget)
 void MechanicalStyle::polish(QPalette& pal)
 {
 	PARENT_STYLE_CLASS ::polish(pal);
-	pal.setBrush(QPalette::Button, Qt::black);
+	//pal.setBrush(QPalette::Button, Qt::black);
 }
 
 QSize MechanicalStyle::sizeFromContents(ContentsType ct, const QStyleOption *opt, const QSize & csz, const QWidget *widget) const
