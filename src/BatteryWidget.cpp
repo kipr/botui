@@ -104,7 +104,7 @@ void BatteryWidget::paintEvent(QPaintEvent *event)
 	painter.setBrush(Qt::darkGray);
 	painter.drawPolygon(polygon, 8);
 	
-	const int offset = 2 + CHEMISTRY_TEXT_SIZE;
+	const int offset = 2;
 	painter.setPen(Qt::NoPen);
 	
 	const bool charging = m_batteryLevelProvider->isCharging();
@@ -116,13 +116,13 @@ void BatteryWidget::paintEvent(QPaintEvent *event)
 	else painter.setBrush(Qt::green);
 	
 	const float barWidth = adjustedWidth * percentage;
-	QRect rect(offset, offset, (barWidth > offset ? barWidth : offset) - offset - 1, h - offset * 2);
+	QRect rect(offset + CHEMISTRY_TEXT_SIZE, offset, (barWidth > offset ? barWidth : offset) - offset - 1, h - offset * 2);
 	painter.drawRect(rect);
 	
 	painter.setPen(Qt::black);
 	painter.setBrush(Qt::NoBrush);
 	
-	QRectF textRect(adjustedWidth + connectorSize + offset, 0, textSize - offset + CHEMISTRY_TEXT_SIZE, h);
+	QRectF textRect(adjustedWidth + connectorSize + offset + CHEMISTRY_TEXT_SIZE, 0, textSize - offset, h);
 	QTextOption textOpt(Qt::AlignAbsolute | Qt::AlignHCenter | Qt::AlignVCenter);
 	if(m_batteryLevelProvider) {
 		painter.drawText(textRect, QString::number((int)(percentage * 100.0f)) + "\%", textOpt);
