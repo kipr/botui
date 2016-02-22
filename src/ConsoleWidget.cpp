@@ -26,8 +26,7 @@ void ConsoleWidget::setProcess(QIODevice *process)
 	if(!m_process) return;
 	clear();
 	
-	connect(m_process, SIGNAL(readyReadStandardOutput()), this, SLOT(readStandard()));
-  connect(m_process, SIGNAL(readyReadStandardError()), this, SLOT(readStandard()));
+	connect(m_process, SIGNAL(readyRead()), this, SLOT(readStandardOut()));
 }
 
 QIODevice *ConsoleWidget::process() const
@@ -35,7 +34,7 @@ QIODevice *ConsoleWidget::process() const
 	return m_process;
 }
 
-void ConsoleWidget::readStandard()
+void ConsoleWidget::readStandardOut()
 {
 	QByteArray array = m_process->readAll();
 	int i = array.lastIndexOf('\f');

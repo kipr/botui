@@ -15,7 +15,7 @@ public:
 	QIODevice *process() const;
 
 private slots:
-	void readStandard();
+	void readStandardOut();
 
 	void startBeep();
 	void endBeep();
