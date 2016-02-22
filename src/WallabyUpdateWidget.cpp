@@ -60,9 +60,10 @@ void WallabyUpdateWidget::update()
       // Run update process
       m_updateProc = new QProcess();
       m_updateProc->setProcessChannelMode(QProcess::MergedChannels);
+      m_updateProc->setWorkingDirectory(subDir.absolutePath());
       ui->updateConsole->setProcess(m_updateProc);
       connect(m_updateProc, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(updateFinished(int, QProcess::ExitStatus)));
-      m_updateProc->start("sh", QStringList() << subDir.absoluteFilePath(WallabyUpdateWidget::updateFileName));
+      m_updateProc->start("sh", QStringList() << WallabyUpdateWidget::updateFileName);
       
       // Update script will reboot the controller
     }
