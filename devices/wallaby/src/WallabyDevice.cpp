@@ -47,6 +47,9 @@ Wallaby::Device::Device()
   halt();
 #endif
   set_auto_publish(0);
+
+  // load settings
+  settingsChanged();
 }
 
 Wallaby::Device::~Device()
