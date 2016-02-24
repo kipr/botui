@@ -24,15 +24,20 @@ namespace Wallaby
     
   private slots:
     void settingsChanged();
-    
+
+  protected:
+    void timerEvent(QTimerEvent *event);
+
   private:
     QString getId() const;
     
     CompileProvider *m_compileProvider;
     BatteryLevelProvider *m_batteryLevelProvider;
     SettingsProvider *m_settingsProvider;
+    float m_batteryLevelWarningThresh;
     QString m_version;
     QString m_id;
+    int m_timerId;
   };
 }
 

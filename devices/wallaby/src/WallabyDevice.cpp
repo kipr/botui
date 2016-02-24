@@ -14,6 +14,9 @@
 #include <QProcess>
 #include <QDebug>
 
+#include <iostream>
+#include <chrono>
+
 #ifdef Q_OS_MAC
 #define NOT_A_WALLABY
 #endif
@@ -38,6 +41,7 @@ Wallaby::Device::Device()
   : m_compileProvider(new KissCompileProvider(this)),
   m_batteryLevelProvider(new Wallaby::BatteryLevelProvider()),
   m_settingsProvider(new Wallaby::SettingsProvider()),
+  m_batteryLevelWarningThresh(0.1f), // TODO: settings
   m_version(getVersionNum()),
   m_id(getId())
 {
@@ -48,12 +52,15 @@ Wallaby::Device::Device()
 #endif
   set_auto_publish(0);
 
+  m_timerId = startTimer(1000);
+
   // load settings
   settingsChanged();
 }
 
 Wallaby::Device::~Device()
 {
+  killTimer(m_timerId);
   delete m_compileProvider;
   delete m_batteryLevelProvider;
   delete m_settingsProvider;
@@ -107,6 +114,25 @@ void Wallaby::Device::settingsChanged()
 {
   const int type = m_settingsProvider->value("battery_type", 0).toInt();
   ((Wallaby::BatteryLevelProvider *)m_batteryLevelProvider)->setBatteryType(type);
+}
+
+void Wallaby::Device::timerEvent(QTimerEvent *event)
+{
+  const float batteryLevel = m_batteryLevelProvider->batteryLevel();
+
+  static const double WAV_CYCLE_TIME = 5.0;
+  static auto last_warn_time = std::chrono::system_clock::now();
+
+  if (batteryLevel < m_batteryLevelWarningThresh)
+  {
+    auto now = std::chrono::system_clock::now();
+    if (std::chrono::duration<double>(now-last_warn_time).count() > WAV_CYCLE_TIME)	
+    {
+      std::cout << "Low battery!" << std::endl;
+      system("aplay /usr/share/botui/turn_off_wallaby.wav &");
+      last_warn_time = now;
+    }
+  }
 }
 
 QString Wallaby::Device::getId() const
