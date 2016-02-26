@@ -16,8 +16,12 @@ namespace Wallaby
     void setBatteryType(const int type);
     int batteryType() const;
     
+    void setWarningThresh(const float thresh);
+    float warningThresh() const;
+    
   private:
     int m_batteryType;
+    float m_warningThresh;
   };
 }
 

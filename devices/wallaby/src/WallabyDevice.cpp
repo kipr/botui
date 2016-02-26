@@ -41,7 +41,6 @@ Wallaby::Device::Device()
   : m_compileProvider(new KissCompileProvider(this)),
   m_batteryLevelProvider(new Wallaby::BatteryLevelProvider()),
   m_settingsProvider(new Wallaby::SettingsProvider()),
-  m_batteryLevelWarningThresh(0.1f), // TODO: settings
   m_version(getVersionNum()),
   m_id(getId())
 {
@@ -60,7 +59,8 @@ Wallaby::Device::Device()
 
 Wallaby::Device::~Device()
 {
-  killTimer(m_timerId);
+  if(m_timerId > 0)
+    killTimer(m_timerId);
   delete m_compileProvider;
   delete m_batteryLevelProvider;
   delete m_settingsProvider;
@@ -110,20 +110,36 @@ ButtonProvider *Wallaby::Device::buttonProvider() const
   return 0;
 }
 
+// TODO: Device shouldn't be responsible for doing this
+// TODO: Connect setting provider's signal to a battery provider slot that will load settings
 void Wallaby::Device::settingsChanged()
 {
   const int type = m_settingsProvider->value("battery_type", 0).toInt();
-  ((Wallaby::BatteryLevelProvider *)m_batteryLevelProvider)->setBatteryType(type);
+  const float thresh = m_settingsProvider->value("battery_warning_thresh", 0.1f).toFloat();
+  const bool enabled = m_settingsProvider->value("battery_warning_enabled", true).toBool();
+  
+  Wallaby::BatteryLevelProvider *wblProvider = (Wallaby::BatteryLevelProvider *)m_batteryLevelProvider;
+  wblProvider->setBatteryType(type);
+  wblProvider->setWarningThresh(thresh);
+  
+  if(m_timerId > 0 && !enabled)
+  {
+    killTimer(m_timerId);
+    m_timerId = 0;
+  }
+  else if(m_timerId <= 0 && enabled)
+    m_timerId = startTimer(1000);
 }
 
 void Wallaby::Device::timerEvent(QTimerEvent *event)
 {
   const float batteryLevel = m_batteryLevelProvider->batteryLevel();
-
+  const float warningThresh = ((Wallaby::BatteryLevelProvider *)m_batteryLevelProvider)->warningThresh();
+  
   static const double WAV_CYCLE_TIME = 5.0;
   static auto last_warn_time = std::chrono::system_clock::now();
 
-  if (batteryLevel < m_batteryLevelWarningThresh)
+  if (batteryLevel < warningThresh)
   {
     auto now = std::chrono::system_clock::now();
     if (std::chrono::duration<double>(now-last_warn_time).count() > WAV_CYCLE_TIME)	

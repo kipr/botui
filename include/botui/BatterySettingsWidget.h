@@ -2,6 +2,7 @@
 #define _BATTERYSETTINGSWIDGET_H_
 
 #include "StandardWidget.h"
+#include "NumpadDialog.h"
 
 namespace Ui
 {
@@ -17,9 +18,12 @@ public:
   
 private slots:
   void typeChanged(int type);
+  void warnEnabledChanged(int state);
+  void warnThreshChanged(QString text);
   
 private:
   Ui::BatterySettingsWidget *ui;
+  NumpadDialog *m_numpadInput;
 };
 
 #endif

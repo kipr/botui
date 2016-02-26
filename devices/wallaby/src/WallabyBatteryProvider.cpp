@@ -35,3 +35,13 @@ int Wallaby::BatteryLevelProvider::batteryType() const
 {
   return m_batteryType;
 }
+
+void Wallaby::BatteryLevelProvider::setWarningThresh(const float thresh)
+{
+  m_warningThresh = thresh;
+}
+
+float Wallaby::BatteryLevelProvider::warningThresh() const
+{
+  return m_warningThresh;
+}
