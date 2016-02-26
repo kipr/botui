@@ -24,6 +24,8 @@ private slots:
 private:
   Ui::BatterySettingsWidget *ui;
   NumpadDialog *m_numpadInput;
+  
+  int m_currType;
 };
 
 #endif

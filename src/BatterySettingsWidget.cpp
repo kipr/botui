@@ -1,6 +1,7 @@
 #include "BatterySettingsWidget.h"
 #include "ui_BatterySettingsWidget.h"
 
+#include <QMessageBox>
 #include <QDebug>
 
 #include "Device.h"
@@ -25,7 +26,10 @@ BatterySettingsWidget::BatterySettingsWidget(Device *device, QWidget *const pare
     // Set current battery type
     const int currType = settingsProvider->value(BATTERY_TYPE_KEY, 0).toInt();
     if(currType >= 0 && currType <= 2)
+    {
+      m_currType = currType;
       ui->batteryType->setCurrentIndex(currType);
+    }
     
     // Set current warning settings
     const bool warnEnabled = settingsProvider->value(BATTERY_WARNING_ENABLED, true).toBool();
@@ -52,10 +56,23 @@ BatterySettingsWidget::~BatterySettingsWidget()
 
 void BatterySettingsWidget::typeChanged(int type)
 {
+  // Do nothing if we're changing to the current type
+  if(type == m_currType)
+    return;
+  
   SettingsProvider *const settingsProvider = device()->settingsProvider();
   if(!settingsProvider)
     return;
   
+  // Make sure user ACTUALLY wants to change the type
+  const QString typeName = ui->batteryType->currentText();
+  if(QMessageBox::question(this, "Change battery type?", QString("Are you sure you have a %1 battery?").arg(typeName), QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
+  {
+    ui->batteryType->setCurrentIndex(m_currType);
+    return;
+  }
+  
+  m_currType = type;
   settingsProvider->setValue(BATTERY_TYPE_KEY, type);
   settingsProvider->sync();
 }
