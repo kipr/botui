@@ -57,11 +57,11 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,1">
+    <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,1,0,0">
      <item>
       <widget class="QLabel" name="label_4">
        <property name="text">
-        <string>Low battery warning:</string>
+        <string>Enable low battery warning:</string>
        </property>
       </widget>
      </item>
@@ -72,14 +72,10 @@
        </property>
       </widget>
      </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,1">
      <item>
-      <widget class="QLabel" name="label_2">
+      <widget class="QLabel" name="pctLabel">
        <property name="text">
-        <string>Low battery threshold:</string>
+        <string>at percent:</string>
        </property>
       </widget>
      </item>

@@ -33,7 +33,8 @@ BatterySettingsWidget::BatterySettingsWidget(Device *device, QWidget *const pare
     const int warnThreshPct = (int)(warnThresh * 100 + 0.5f);
     ui->warningEnabled->setChecked(warnEnabled);
     ui->warningThresh->setText(QString::number(warnThreshPct));
-    ui->warningThresh->setEnabled(warnEnabled);
+    ui->warningThresh->setVisible(warnEnabled);
+    ui->pctLabel->setVisible(warnEnabled);
   }
     
   ui->warningThresh->setInputProvider(m_numpadInput);
@@ -66,7 +67,8 @@ void BatterySettingsWidget::warnEnabledChanged(int state)
     return;
   
   const bool enabled = state;
-  ui->warningThresh->setEnabled(enabled);
+  ui->pctLabel->setVisible(enabled);
+  ui->warningThresh->setVisible(enabled);
   settingsProvider->setValue(BATTERY_WARNING_ENABLED, enabled);
   settingsProvider->sync();
 }
