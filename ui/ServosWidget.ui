@@ -67,7 +67,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="_0">
+        <widget class="QPushButton" name="port_0">
          <property name="minimumSize">
           <size>
            <width>75</width>
@@ -84,7 +84,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="_1">
+        <widget class="QPushButton" name="port_1">
          <property name="text">
           <string>Port 1</string>
          </property>
@@ -95,7 +95,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="_2">
+        <widget class="QPushButton" name="port_2">
          <property name="text">
           <string>Port 2</string>
          </property>
@@ -106,7 +106,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="_3">
+        <widget class="QPushButton" name="port_3">
          <property name="text">
           <string>Port 3</string>
          </property>

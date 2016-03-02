@@ -25,93 +25,101 @@ ServosWidget::ServosWidget(Device *device, QWidget *parent)
 	
 	ui->number->setInputProvider(m_provider);
 	
-	connect(ui->dial, SIGNAL(valueChanged(double)), SLOT(valueChanged(double)));
-	connect(ui->_0, SIGNAL(clicked()), SLOT(activeChanged()));
-	connect(ui->_1, SIGNAL(clicked()), SLOT(activeChanged()));
-	connect(ui->_2, SIGNAL(clicked()), SLOT(activeChanged()));
-	connect(ui->_3, SIGNAL(clicked()), SLOT(activeChanged()));
-	connect(ui->number, SIGNAL(textEdited(QString)), SLOT(manualEntry(QString)));
+	connect(ui->dial, SIGNAL(valueChanged(double)), SLOT(positionChanged(double)));
+  connect(ui->number, SIGNAL(textEdited(QString)), SLOT(manualEntry(QString)));
+	connect(ui->port_0, SIGNAL(clicked()), SLOT(activeChanged()));
+	connect(ui->port_1, SIGNAL(clicked()), SLOT(activeChanged()));
+	connect(ui->port_2, SIGNAL(clicked()), SLOT(activeChanged()));
+	connect(ui->port_3, SIGNAL(clicked()), SLOT(activeChanged()));
 	connect(ui->enable, SIGNAL(clicked()), SLOT(enable()));
 	connect(ui->disable, SIGNAL(clicked()), SLOT(disable()));
 	
+  // Setup ui for port 0 (the default servo)
 	ui->dial->setMinimumValue(0);
 	ui->dial->setMaximumValue(2047);
-	ui->dial->setValue(1024);
-	
+	ui->dial->setValue(get_servo_position(0));
 	ui->dial->setLabel(0);
-	ui->_0->setEnabled(false);
+	ui->port_0->setEnabled(false);
   
-  disable_servos();
-	
-	activeChanged();
-
+  const bool servoEnabled = get_servo_enabled(0);
+	ui->enable->setVisible(!servoEnabled);
+	ui->disable->setVisible(servoEnabled);
+  
 	publish();
 }
 
 ServosWidget::~ServosWidget()
 {
-	disable_servos();
-	publish();
 	delete ui;
 	delete m_provider;
 }
 
-void ServosWidget::valueChanged(const double &value)
+void ServosWidget::positionChanged(const double &value)
 {
-	ui->number->setText(QString::number(round(ui->dial->value())));
+  // Keep position label in sync with dial
+	ui->number->setText(QString::number(round(value)));
   
-	double safeValue = value;
-	if(safeValue < 50.0) safeValue = 50.0;
-	else if(safeValue > 1998.0) safeValue = 1998.0;
+	set_servo_position(ui->dial->label(), round(value));
   
-	set_servo_position(ui->dial->label(), safeValue);
 	publish();
 }
 
 void ServosWidget::activeChanged()
 {
 	QObject *from = sender();
-	if(!from) from = ui->_0;
+		
+  // Set dial label for new servo
+  int newPort = -1;
+	if(from == ui->port_0) newPort = 0;
+	else if(from == ui->port_1) newPort = 1;
+	else if(from == ui->port_2) newPort = 2;
+	else if(from == ui->port_3) newPort = 3;
+  else return;
+  ui->dial->setLabel(newPort);
+  
+  // Set dial value for new servo
+  ui->dial->setValue(get_servo_position(newPort));
 	
-	disable_servo(ui->dial->label());
+  // Enable/disable appropriate port buttons
+	ui->port_0->setEnabled(from != ui->port_0);
+	ui->port_1->setEnabled(from != ui->port_1);
+	ui->port_2->setEnabled(from != ui->port_2);
+	ui->port_3->setEnabled(from != ui->port_3);
 	
-	quint16 label = 0xFFFF;
+  // Show/hide enable and disable buttons
+  const bool servoEnabled = get_servo_enabled(newPort);
+	ui->enable->setVisible(!servoEnabled);
+	ui->disable->setVisible(servoEnabled);
 	
-	if(from == ui->_0) label = 0;
-	else if(from == ui->_1) label = 1;
-	else if(from == ui->_2) label = 2;
-	else if(from == ui->_3) label = 3;
-	
-	ui->_0->setEnabled(from != ui->_0);
-	ui->_1->setEnabled(from != ui->_1);
-	ui->_2->setEnabled(from != ui->_2);
-	ui->_3->setEnabled(from != ui->_3);
-	
-	ui->enable->setVisible(true);
-	ui->disable->setVisible(false);
-	
-	ui->dial->setLabel(label);
 	publish();
-	ui->dial->setValue(get_servo_position(label));
 }
 
 void ServosWidget::enable()
 {
-	enable_servo(ui->dial->label());
+  // Enable current servo
+  const int port = ui->dial->label();
+	enable_servo(port);
 	publish();
+  
+  // Update enable/disable button visibility
 	ui->enable->hide();
 	ui->disable->show();
 }
 
 void ServosWidget::disable()
 {
-	disable_servo(ui->dial->label());
+  // Disable current servo
+  const int port = ui->dial->label();
+	disable_servo(port);
 	publish();
+  
+  // Update enable/disable button visibility
 	ui->enable->show();
 	ui->disable->hide();
 }
 
 void ServosWidget::manualEntry(const QString &text)
 {
+  // Keep dial in sync with position label
 	ui->dial->setValue(text.toInt());
 }

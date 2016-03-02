@@ -18,7 +18,7 @@ public:
 	~ServosWidget();
 	
 private slots:
-	void valueChanged(const double &value);
+	void positionChanged(const double &value);
 	void activeChanged();
 	
 	void enable();
