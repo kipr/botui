@@ -14,9 +14,6 @@
    <string>Servos</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_4">
-   <property name="spacing">
-    <number>0</number>
-   </property>
    <property name="leftMargin">
     <number>6</number>
    </property>
@@ -31,9 +28,6 @@
    </property>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0">
-     <property name="spacing">
-      <number>0</number>
-     </property>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,0">
        <property name="spacing">
