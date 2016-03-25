@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="zh_CN">
+<TS version="2.0" language="zh_CN">
 <context>
     <name>AboutWidget</name>
     <message>
@@ -18,7 +18,7 @@
         <location filename="ui/AboutWidget.ui" line="61"/>
         <source>Copyright (C) 2012 - 2016</source>
         <oldsource>Copyright (C) 2012 - 2014</oldsource>
-        <translation type="unfinished">Copyright (C) 2012 - 2014</translation>
+        <translation>Copyright (C) 2012 - 2016</translation>
     </message>
     <message>
         <location filename="ui/AboutWidget.ui" line="71"/>
@@ -48,17 +48,17 @@
     <message>
         <location filename="ui/AboutWidget.ui" line="129"/>
         <source>Wi-Fi Info</source>
-        <translation type="unfinished">Wi-Fi信息</translation>
+        <translation>Wi-Fi信息</translation>
     </message>
     <message>
         <location filename="ui/AboutWidget.ui" line="137"/>
         <source>SSID:</source>
-        <translation type="unfinished">SSID名:</translation>
+        <translation>SSID名:</translation>
     </message>
     <message>
         <location filename="ui/AboutWidget.ui" line="155"/>
         <source>Password:</source>
-        <translation type="unfinished">密码:</translation>
+        <translation>密码:</translation>
     </message>
     <message>
         <source>Icons</source>
@@ -123,12 +123,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="ui/BatterySettingsWidget.ui" line="14"/>
         <source>Battery Settings</source>
-        <translation type="unfinished">电池设置</translation>
+        <translation>电池设置</translation>
     </message>
     <message>
         <location filename="ui/BatterySettingsWidget.ui" line="34"/>
         <source>Battery type:</source>
-        <translation type="unfinished">电池类型</translation>
+        <translation>电池类型:</translation>
     </message>
     <message>
         <location filename="ui/BatterySettingsWidget.ui" line="42"/>
@@ -148,7 +148,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="src/BatterySettingsWidget.cpp" line="16"/>
         <source>Battery Settings Widget</source>
-        <translation type="unfinished">电池设置对话框</translation>
+        <translation>电池设置对话框</translation>
     </message>
 </context>
 <context>
@@ -161,12 +161,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="ui/CameraInputSelectorWidget.ui" line="34"/>
         <source>Source:</source>
-        <translation type="unfinished">源:</translation>
+        <translation>源:</translation>
     </message>
     <message>
         <location filename="ui/CameraInputSelectorWidget.ui" line="42"/>
         <source>USB Camera</source>
-        <translation type="unfinished">USB摄像头</translation>
+        <translation>USB摄像头</translation>
     </message>
     <message>
         <location filename="ui/CameraInputSelectorWidget.ui" line="47"/>
@@ -193,12 +193,12 @@ p, li { white-space: pre-wrap; }
         <location filename="ui/CameraLiveWidget.ui" line="14"/>
         <location filename="src/CameraLiveWidget.cpp" line="16"/>
         <source>Camera</source>
-        <translation type="unfinished">摄像头</translation>
+        <translation>摄像头</translation>
     </message>
     <message>
         <location filename="ui/CameraLiveWidget.ui" line="38"/>
         <source>Configuration:</source>
-        <translation type="unfinished">配置:</translation>
+        <translation>配置:</translation>
     </message>
 </context>
 <context>
@@ -206,37 +206,37 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="ui/CameraSettingsWidget.ui" line="14"/>
         <source>Camera Settings</source>
-        <translation type="unfinished">摄像头设置</translation>
+        <translation>摄像头设置</translation>
     </message>
     <message>
         <location filename="ui/CameraSettingsWidget.ui" line="34"/>
         <source>Show bounding boxes:</source>
-        <translation type="unfinished">显示外包边框</translation>
+        <translation>显示外包边框:</translation>
     </message>
     <message>
         <location filename="ui/CameraSettingsWidget.ui" line="52"/>
         <source>Show blob labels:</source>
-        <translation type="unfinished">显示色块标记</translation>
+        <translation>显示色块标记:</translation>
     </message>
     <message>
         <location filename="ui/CameraSettingsWidget.ui" line="59"/>
         <source> blob(s)</source>
-        <translation type="unfinished">色块</translation>
+        <translation>色块</translation>
     </message>
     <message>
         <location filename="ui/CameraSettingsWidget.ui" line="62"/>
         <source>First </source>
-        <translation type="unfinished">第一</translation>
+        <translation>第一</translation>
     </message>
     <message>
         <location filename="ui/CameraSettingsWidget.ui" line="74"/>
         <source>Note: These settings only affect the camera view. Other programs will not be affected.</source>
-        <translation type="unfinished">注意:这些设置只影响摄像头,其它程序不受影响.</translation>
+        <translation>注意:这些设置只影响摄像头,其它程序不受影响.</translation>
     </message>
     <message>
         <location filename="src/CameraSettingsWidget.cpp" line="15"/>
         <source>Camera Settings Widget</source>
-        <translation type="unfinished">摄像头设置窗口</translation>
+        <translation>摄像头设置窗口</translation>
     </message>
 </context>
 <context>
@@ -301,17 +301,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="src/ChannelConfigurationsWidget.cpp" line="58"/>
         <source>Import</source>
-        <translation type="unfinished">导入</translation>
+        <translation>导入</translation>
     </message>
     <message>
         <location filename="src/ChannelConfigurationsWidget.cpp" line="111"/>
         <source>Rename %1</source>
-        <translation type="unfinished">重命名 %1</translation>
+        <translation>重命名 %1</translation>
     </message>
     <message>
         <location filename="src/ChannelConfigurationsWidget.cpp" line="135"/>
         <source>Create New Configuration</source>
-        <translation type="unfinished">创建新配置</translation>
+        <translation>创建新配置</translation>
     </message>
 </context>
 <context>
@@ -330,7 +330,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="src/ChannelSettingsWidget.cpp" line="13"/>
         <source>Min Blob Size</source>
-        <translation type="unfinished">最小色块尺寸</translation>
+        <translation>最小色块尺寸</translation>
     </message>
 </context>
 <context>
@@ -656,7 +656,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="src/CvWidget.cpp" line="63"/>
         <source>No image available. Check camera connection.</source>
-        <translation type="unfinished">无可用图像,请检查摄像头连接</translation>
+        <translation>无可用图像,请检查摄像头连接</translation>
     </message>
 </context>
 <context>
@@ -917,7 +917,7 @@ p, li { white-space: pre-wrap; }
         <location filename="ui/GuiSettingsWidget.ui" line="25"/>
         <source>Menubar color:</source>
         <oldsource>Menubar Color</oldsource>
-        <translation type="unfinished">菜单颜色</translation>
+        <translation>菜单颜色:</translation>
     </message>
     <message>
         <location filename="ui/GuiSettingsWidget.ui" line="33"/>
@@ -957,7 +957,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="ui/GuiSettingsWidget.ui" line="75"/>
         <source>Fullscreen:</source>
-        <translation type="unfinished">全屏</translation>
+        <translation>全屏:</translation>
     </message>
 </context>
 <context>
@@ -995,7 +995,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="src/HomeWidget.cpp" line="41"/>
         <source>Shut Down</source>
-        <translation type="unfinished">关机</translation>
+        <translation>关机</translation>
     </message>
 </context>
 <context>
@@ -1129,7 +1129,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="ui/LanguageWidget.ui" line="14"/>
         <source>Language Settings</source>
-        <translation type="unfinished">语言设置</translation>
+        <translation>语言设置</translation>
     </message>
     <message>
         <location filename="ui/LanguageWidget.ui" line="34"/>
@@ -1139,7 +1139,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="ui/LanguageWidget.ui" line="46"/>
         <source>Note: System must be restarted to apply changes.</source>
-        <translation type="unfinished">注意:必须重启系统以使更改生效</translation>
+        <translation>注意:必须重启系统以使更改生效</translation>
     </message>
     <message>
         <location filename="src/LanguageWidget.cpp" line="15"/>
@@ -1471,7 +1471,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="ui/OnOffWizardPage.ui" line="160"/>
         <source>Port 1 Off</source>
-        <translation type="unfinished">端口1关闭</translation>
+        <translation>端口1关闭</translation>
     </message>
     <message>
         <location filename="ui/OnOffWizardPage.ui" line="188"/>
@@ -1481,17 +1481,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="ui/OnOffWizardPage.ui" line="208"/>
         <source>Port 2 Off</source>
-        <translation type="unfinished">端口2关闭</translation>
+        <translation>端口2关闭</translation>
     </message>
     <message>
         <location filename="ui/OnOffWizardPage.ui" line="229"/>
         <source>Port 3 On</source>
-        <translation type="unfinished">端口3打开</translation>
+        <translation>端口3打开</translation>
     </message>
     <message>
         <location filename="ui/OnOffWizardPage.ui" line="249"/>
         <source>Port 3 Off</source>
-        <translation type="unfinished">端口3关闭</translation>
+        <translation>端口3关闭</translation>
     </message>
 </context>
 <context>
@@ -1822,7 +1822,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="ui/ProgramsWidget.ui" line="75"/>
         <source>Recover</source>
-        <translation type="unfinished">恢复</translation>
+        <translation>恢复</translation>
     </message>
     <message>
         <source>Transfer</source>
@@ -1841,12 +1841,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="src/ProgramsWidget.cpp" line="117"/>
         <source>No Executable</source>
-        <translation type="unfinished">无可执行程序</translation>
+        <translation>无可执行程序</translation>
     </message>
     <message>
         <location filename="src/ProgramsWidget.cpp" line="117"/>
         <source>No executable exists for the selected proejct.</source>
-        <translation type="unfinished">在所选项目中无可执行程序</translation>
+        <translation>在所选项目中无可执行程序</translation>
     </message>
     <message>
         <location filename="src/ProgramsWidget.cpp" line="176"/>
@@ -1885,7 +1885,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="src/CameraConfigModel.cpp" line="62"/>
         <source>Channel %1</source>
-        <translation type="unfinished">通道%1</translation>
+        <translation>通道%1</translation>
     </message>
     <message>
         <location filename="src/FileActionCompile.cpp" line="22"/>
@@ -1941,32 +1941,32 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="src/SensorModel.cpp" line="60"/>
         <source>Gyrometer X</source>
-        <translation type="unfinished">陀螺仪X轴</translation>
+        <translation>陀螺仪X轴</translation>
     </message>
     <message>
         <location filename="src/SensorModel.cpp" line="61"/>
         <source>Gyrometer Y</source>
-        <translation type="unfinished">陀螺仪Y轴</translation>
+        <translation>陀螺仪Y轴</translation>
     </message>
     <message>
         <location filename="src/SensorModel.cpp" line="62"/>
         <source>Gyrometer Z</source>
-        <translation type="unfinished">陀螺仪Z轴</translation>
+        <translation>陀螺仪Z轴</translation>
     </message>
     <message>
         <location filename="src/SensorModel.cpp" line="63"/>
         <source>Magnetometer X</source>
-        <translation type="unfinished">磁强计X轴</translation>
+        <translation>磁强计X轴</translation>
     </message>
     <message>
         <location filename="src/SensorModel.cpp" line="64"/>
         <source>Magnetometer Y</source>
-        <translation type="unfinished">磁强计Y轴</translation>
+        <translation>磁强计Y轴</translation>
     </message>
     <message>
         <location filename="src/SensorModel.cpp" line="65"/>
         <source>Magnetometer Z</source>
-        <translation type="unfinished">磁强计Z轴</translation>
+        <translation>磁强计Z轴</translation>
     </message>
     <message>
         <location filename="src/SensorModel.cpp" line="69"/>
@@ -2000,7 +2000,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="src/FileActionRunShell.cpp" line="8"/>
         <source>Run</source>
-        <translation type="unfinished">运行</translation>
+        <translation>运行</translation>
     </message>
 </context>
 <context>
@@ -2137,37 +2137,37 @@ p, li { white-space: pre-wrap; }
         <location filename="ui/SensorsWidget.ui" line="110"/>
         <location filename="ui/SensorsWidget.ui" line="212"/>
         <source>Gyro X</source>
-        <translation type="unfinished">陀螺仪X轴</translation>
+        <translation>陀螺仪X轴</translation>
     </message>
     <message>
         <location filename="ui/SensorsWidget.ui" line="115"/>
         <location filename="ui/SensorsWidget.ui" line="217"/>
         <source>Gyro Y</source>
-        <translation type="unfinished">陀螺仪Y轴</translation>
+        <translation>陀螺仪Y轴</translation>
     </message>
     <message>
         <location filename="ui/SensorsWidget.ui" line="120"/>
         <location filename="ui/SensorsWidget.ui" line="222"/>
         <source>Gyro Z</source>
-        <translation type="unfinished">陀螺仪Z轴</translation>
+        <translation>陀螺仪Z轴</translation>
     </message>
     <message>
         <location filename="ui/SensorsWidget.ui" line="125"/>
         <location filename="ui/SensorsWidget.ui" line="227"/>
         <source>Magneto X</source>
-        <translation type="unfinished">磁强计X轴</translation>
+        <translation>磁强计X轴</translation>
     </message>
     <message>
         <location filename="ui/SensorsWidget.ui" line="130"/>
         <location filename="ui/SensorsWidget.ui" line="232"/>
         <source>Magneto Y</source>
-        <translation type="unfinished">磁强计Y轴</translation>
+        <translation>磁强计Y轴</translation>
     </message>
     <message>
         <location filename="ui/SensorsWidget.ui" line="135"/>
         <location filename="ui/SensorsWidget.ui" line="237"/>
         <source>Magneto Z</source>
-        <translation type="unfinished">磁强计Z轴</translation>
+        <translation>磁强计Z轴</translation>
     </message>
     <message>
         <location filename="ui/SensorsWidget.ui" line="275"/>
@@ -2267,7 +2267,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="ui/SettingsWidget.ui" line="33"/>
         <source>Camera View</source>
-        <translation type="unfinished">摄像头视野</translation>
+        <translation>摄像头视野</translation>
     </message>
     <message>
         <location filename="ui/SettingsWidget.ui" line="66"/>
@@ -2277,7 +2277,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="ui/SettingsWidget.ui" line="77"/>
         <source>Hide UI</source>
-        <translation type="unfinished">隐藏UI</translation>
+        <translation>隐藏UI</translation>
     </message>
     <message>
         <location filename="ui/SettingsWidget.ui" line="127"/>
@@ -2287,12 +2287,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="ui/SettingsWidget.ui" line="138"/>
         <source>Update</source>
-        <translation type="unfinished">更新</translation>
+        <translation>更新</translation>
     </message>
     <message>
         <location filename="ui/SettingsWidget.ui" line="149"/>
         <source>Battery</source>
-        <translation type="unfinished">电池</translation>
+        <translation>电池</translation>
     </message>
 </context>
 <context>
@@ -2334,7 +2334,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="devices/wallaby/src/WallabyDevice.cpp" line="61"/>
         <source>Wallaby</source>
-        <translation type="unfinished">Wallaby</translation>
+        <translation>Wallaby</translation>
     </message>
 </context>
 <context>
@@ -2343,17 +2343,17 @@ p, li { white-space: pre-wrap; }
         <location filename="ui/WallabyUpdateWidget.ui" line="14"/>
         <location filename="ui/WallabyUpdateWidget.ui" line="47"/>
         <source>Update</source>
-        <translation type="unfinished">更新</translation>
+        <translation>更新</translation>
     </message>
     <message>
         <location filename="ui/WallabyUpdateWidget.ui" line="32"/>
         <source>Select an update:</source>
-        <translation type="unfinished">选择一个更新</translation>
+        <translation>选择一个更新</translation>
     </message>
     <message>
         <location filename="ui/WallabyUpdateWidget.ui" line="58"/>
         <source>Refresh</source>
-        <translation type="unfinished">刷新</translation>
+        <translation>刷新</translation>
     </message>
 </context>
 <context>
