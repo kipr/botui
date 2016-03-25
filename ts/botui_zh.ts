@@ -77,12 +77,12 @@
         <source>Accessories</source>
         <translation>附件</translation>
     </message>
-    <message>
+    <message utf8="true">
         <location filename="ui/AccessoriesWidget.ui" line="62"/>
         <source>iRobot® Create™</source>
         <translation>iRobot® Create™</translation>
     </message>
-    <message>
+    <message utf8="true">
         <location filename="ui/AccessoriesWidget.ui" line="69"/>
         <source>Parrot® AR.Drone™</source>
         <translation>Parrot® AR.Drone™</translation>
@@ -146,7 +146,17 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/BatterySettingsWidget.cpp" line="16"/>
+        <location filename="ui/BatterySettingsWidget.ui" line="64"/>
+        <source>Enable low battery warning:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ui/BatterySettingsWidget.ui" line="78"/>
+        <source>at percent:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/BatterySettingsWidget.cpp" line="20"/>
         <source>Battery Settings Widget</source>
         <translation>电池设置对话框</translation>
     </message>
@@ -168,12 +178,12 @@ p, li { white-space: pre-wrap; }
         <source>USB Camera</source>
         <translation>USB摄像头</translation>
     </message>
-    <message>
+    <message utf8="true">
         <location filename="ui/CameraInputSelectorWidget.ui" line="47"/>
         <source>Parrot® AR.Drone™ Front Camera</source>
         <translation>Parrot® AR.Drone™ Front Camera</translation>
     </message>
-    <message>
+    <message utf8="true">
         <location filename="ui/CameraInputSelectorWidget.ui" line="52"/>
         <source>Parrot® AR.Drone™ Bottom Camera</source>
         <translation>Parrot® AR.Drone™ Bottom Camera</translation>
@@ -2188,38 +2198,38 @@ p, li { white-space: pre-wrap; }
     <name>ServosWidget</name>
     <message>
         <location filename="ui/ServosWidget.ui" line="14"/>
-        <location filename="ui/ServosWidget.ui" line="62"/>
+        <location filename="ui/ServosWidget.ui" line="56"/>
         <location filename="src/ServosWidget.cpp" line="24"/>
         <source>Servos</source>
         <translation>舵机</translation>
     </message>
     <message>
-        <location filename="ui/ServosWidget.ui" line="78"/>
+        <location filename="ui/ServosWidget.ui" line="72"/>
         <source>Port 0</source>
         <translation>端口0</translation>
     </message>
     <message>
-        <location filename="ui/ServosWidget.ui" line="89"/>
+        <location filename="ui/ServosWidget.ui" line="83"/>
         <source>Port 1</source>
         <translation>端口1</translation>
     </message>
     <message>
-        <location filename="ui/ServosWidget.ui" line="100"/>
+        <location filename="ui/ServosWidget.ui" line="94"/>
         <source>Port 2</source>
         <translation>端口2</translation>
     </message>
     <message>
-        <location filename="ui/ServosWidget.ui" line="111"/>
+        <location filename="ui/ServosWidget.ui" line="105"/>
         <source>Port 3</source>
         <translation>端口3</translation>
     </message>
     <message>
-        <location filename="ui/ServosWidget.ui" line="135"/>
+        <location filename="ui/ServosWidget.ui" line="129"/>
         <source>Enable</source>
         <translation>启用</translation>
     </message>
     <message>
-        <location filename="ui/ServosWidget.ui" line="146"/>
+        <location filename="ui/ServosWidget.ui" line="140"/>
         <source>Disable</source>
         <translation>关闭</translation>
     </message>
@@ -2332,7 +2342,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>Wallaby::Device</name>
     <message>
-        <location filename="devices/wallaby/src/WallabyDevice.cpp" line="61"/>
+        <location filename="devices/wallaby/src/WallabyDevice.cpp" line="71"/>
         <source>Wallaby</source>
         <translation>Wallaby</translation>
     </message>
