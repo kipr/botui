@@ -2,6 +2,7 @@
 
 #include "WallabyBatteryProvider.h"
 #include "WallabySettingsProvider.h"
+#include "WallabyButtonProvider.h"
 #include "KissCompileProvider.h"
 
 #include <wallaby/wallaby.hpp>
@@ -41,6 +42,7 @@ Wallaby::Device::Device()
   : m_compileProvider(new KissCompileProvider(this)),
   m_batteryLevelProvider(new Wallaby::BatteryLevelProvider()),
   m_settingsProvider(new Wallaby::SettingsProvider()),
+  m_buttonProvider(new Wallaby::ButtonProvider()),
   m_version(getVersionNum()),
   m_id(getId())
 {
@@ -107,7 +109,7 @@ SettingsProvider *Wallaby::Device::settingsProvider() const
 
 ButtonProvider *Wallaby::Device::buttonProvider() const
 {
-  return 0;
+  return m_buttonProvider;
 }
 
 // TODO: Device shouldn't be responsible for doing this

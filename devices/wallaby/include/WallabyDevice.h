@@ -34,6 +34,7 @@ namespace Wallaby
     CompileProvider *m_compileProvider;
     BatteryLevelProvider *m_batteryLevelProvider;
     SettingsProvider *m_settingsProvider;
+    ButtonProvider *m_buttonProvider;
     QString m_version;
     QString m_id;
     int m_timerId;
