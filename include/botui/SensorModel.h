@@ -21,6 +21,8 @@ public:
 		MagnetoX,
 		MagnetoY,
 		MagnetoZ,
+		ButtonLeft,
+		ButtonRight,
 #endif
 		Other
 	};
@@ -41,6 +43,7 @@ private:
 #ifdef WALLABY
 	void populateGyro();
 	void populateMagneto();
+	void populateButtons();
 #endif
 };
 

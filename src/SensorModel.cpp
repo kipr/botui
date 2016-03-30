@@ -8,6 +8,8 @@
 #include <wallaby/magneto.hpp>
 #include <wallaby/sensor_logic.hpp>
 #include <wallaby/general.h>
+#include <wallaby/button.h>
+#include <wallaby/button.hpp>
 #else
 #include <kovan/analog.hpp>
 #include <kovan/digital.hpp>
@@ -63,6 +65,8 @@ private:
 		case SensorModel::MagnetoX: return QObject::tr("Magnetometer X");
 		case SensorModel::MagnetoY: return QObject::tr("Magnetometer Y");
 		case SensorModel::MagnetoZ: return QObject::tr("Magnetometer Z");
+		case SensorModel::ButtonLeft: return QObject::tr("Button - Left");
+		case SensorModel::ButtonRight: return QObject::tr("Button - Right");
 #endif
 		default: break;
 		}
@@ -176,6 +180,7 @@ void SensorModel::populate()
 #ifdef WALLABY
 	populateGyro();
 	populateMagneto();
+	populateButtons();
 #endif
 }
 
@@ -239,4 +244,18 @@ void SensorModel::populateMagneto()
 		<< new SensorNameItem(SensorModel::MagnetoZ)
 		<< new SensorValueItem<short>(new ::MagnetoZ(), true));
 }
+
+void SensorModel::populateButtons()
+{
+	appendRow(QList<QStandardItem *>()
+		<< new SensorNameItem(SensorModel::ButtonLeft)
+		<< new SensorValueItem<bool>(new ::IdButton(Button::Type::Left, ""), true));
+//		<< new SensorValueItem<bool>(&(::Button::Left), true));
+	appendRow(QList<QStandardItem *>()
+		<< new SensorNameItem(SensorModel::ButtonRight)
+//		<< new SensorValueItem<bool>(&(::Button::Right), true));
+		<< new SensorValueItem<bool>(new ::IdButton(Button::Type::Right, ""), true));
+
+}
+
 #endif

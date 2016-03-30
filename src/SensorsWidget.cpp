@@ -70,6 +70,8 @@ double SensorsWidget::rawValue(const int &i) const
 	else if(i == 16) val = magneto_x();
 	else if(i == 17) val = magneto_y();
 	else if(i == 18) val = magneto_z();
+	else if(i == 19) val = left_button();
+	else if(i == 20) val = right_button();
 #else
 	if(i < 8) val = analog(i);
 	else if(i < 12) val = get_motor_position_counter(i - 8);
