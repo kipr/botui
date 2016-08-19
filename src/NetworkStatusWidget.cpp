@@ -19,7 +19,28 @@
 #include <sys/ioctl.h>
 #include <sys/socket.h>
 #include <net/if.h>
+#include <fstream>
 #endif
+
+
+void setWiFiStatusLED(bool on)
+{
+#ifdef WALLABY
+	std::fstream fs;
+	fs.open("/sys/class/leds/botball:D11:blue/brightness", std::fstream::out);
+
+	if (on)
+	{
+		fs << "1";
+	}
+	else
+	{
+		fs << "0";
+	}
+
+	fs.close();
+#endif
+}
 
 NetworkStatusWidget::NetworkStatusWidget(QWidget *parent)
 	: QWidget(parent)
@@ -73,11 +94,12 @@ void NetworkStatusWidget::paintEvent(QPaintEvent *event)
 	
 	static const QColor green = QColor(50, 150, 50);
 	static const QColor red = QColor(250, 100, 100);
-	static const QColor orange = QColor(250, 127, 0);
+	// static const QColor orange = QColor(250, 127, 0);
 
 #ifdef WALLABY
 	const bool off = isNetworkUp("wlan0") == false;
 	QColor color = off ? red : green;
+	setWiFiStatusLED(!off);
 #else	
 	const bool off = !NetworkManager::ref().isOn();
 	QColor color = off ? red : green;
