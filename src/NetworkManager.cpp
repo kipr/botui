@@ -195,6 +195,27 @@ void NetworkManager::turnOff()
 	settings.endGroup();
 }
 
+
+bool NetworkManager::enableAP()
+{
+#ifdef WALLABY
+	int ret = system("/usr/bin/python /usr/bin/wifi_configurator.py &");
+	return (ret == 0);
+#endif
+	return true;
+}
+
+
+bool NetworkManager::disableAP()
+{
+#ifdef WALLABY
+	int ret = system("killall hostapd");
+	return (ret == 0);
+#endif
+	return true;
+}
+
+
 bool NetworkManager::isOn() const
 {
 	return m_nm->networkingEnabled();

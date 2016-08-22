@@ -56,7 +56,7 @@ NetworkStatusWidget::NetworkStatusWidget(QWidget *parent)
 
 #ifdef WALLABY
 
-bool isNetworkUp(const std::string networkName)
+bool NetworkStatusWidget::isNetworkUp(const std::string networkName)
 {
 	bool wifi_up = false;
 
