@@ -11,6 +11,7 @@
 #include "ConnectWidget.h"
 #include "ManageNetworksWidget.h"
 #include "NetworkManager.h"
+#include "SystemUtils.h"
 
 #include <QTimer>
 
@@ -25,11 +26,18 @@ NetworkSettingsWidget::NetworkSettingsWidget(Device *device, QWidget *parent)
 	
 	ui->turnOn->setVisible(false);
 	ui->turnOff->setVisible(false);
-	
+
+
 	QObject::connect(ui->connect, SIGNAL(clicked()), SLOT(connect()));
 	QObject::connect(ui->manage, SIGNAL(clicked()), SLOT(manage()));
 	NetworkManager::ref().connect(ui->turnOn, SIGNAL(clicked()), SLOT(turnOn()));
 	NetworkManager::ref().connect(ui->turnOff, SIGNAL(clicked()), SLOT(turnOff()));
+
+	// TODO: put back after we support client mode WiFi
+	ui->connect->setVisible(false);
+	ui->manage->setVisible(false);
+	ui->security->setVisible(false);
+	ui->securityLabel->setVisible(false);
 	
 	QObject::connect(&NetworkManager::ref(),
 		SIGNAL(stateChanged(const NetworkManager::State &, const NetworkManager::State &)),
@@ -60,8 +68,17 @@ void NetworkSettingsWidget::updateInformation()
 	ui->turnOn->setVisible(!on);
 	ui->turnOff->setVisible(on);
 	ui->connect->setEnabled(on);
+
+	const QString id = device()->id();
+	if(!id.isEmpty()) {
+		const QString password = SystemUtils::sha256(id).left(6) + "00";
+		const QString ssid = id + "-wallaby";
+		ui->ssid->setText(ssid);
+		ui->password->setText(password);
+	}
+
 	Network active = NetworkManager::ref().active();
-	ui->ssid->setText(active.ssid());
+	//ui->ssid->setText(active.ssid());
 	ui->security->setText(active.securityString());
 	const QString ip = NetworkManager::ref().ipAddress();
 	ui->ip->setText(ip.isEmpty() ? tr("No IP") : ip);
