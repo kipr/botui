@@ -3,6 +3,7 @@
 #ifdef NETWORK_ENABLED
 
 #include "NetworkSettingsWidget.h"
+#include "NetworkStatusWidget.h"
 #include "ui_NetworkSettingsWidget.h"
 #include "MenuBar.h"
 #include "RootController.h"
@@ -63,7 +64,7 @@ void NetworkSettingsWidget::manage()
 
 void NetworkSettingsWidget::updateInformation()
 {
-	const bool on = NetworkManager::ref().isOn();
+	const bool on = NetworkStatusWidget::isNetworkUp(); //NetworkManager::ref().isOn();
 	ui->state->setText(on ? tr("ON") : tr("OFF"));
 	ui->turnOn->setVisible(!on);
 	ui->turnOff->setVisible(on);
