@@ -170,7 +170,10 @@
           <item>
            <widget class="QLabel" name="password">
             <property name="text">
-             <string>password</string>
+             <string/>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
             </property>
            </widget>
           </item>
