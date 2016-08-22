@@ -79,13 +79,13 @@ void NetworkSettingsWidget::manage()
 
 void NetworkSettingsWidget::enableAP()
 {
-	//disableAPControlsTemporarily();
+	disableAPControlsTemporarily();
 	NetworkManager::ref().enableAP();
 }
 
 void NetworkSettingsWidget::disableAP()
 {
-	//disableAPControlsTemporarily();
+	disableAPControlsTemporarily();
 	NetworkManager::ref().disableAP();
 }
 

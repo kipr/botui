@@ -199,7 +199,7 @@ void NetworkManager::turnOff()
 bool NetworkManager::enableAP()
 {
 #ifdef WALLABY
-	int ret = system("/usr/bin/python /usr/bin/wifi_configurator.py");
+	int ret = system("/usr/bin/python /usr/bin/wifi_configurator.py &");
 	return (ret == 0);
 #endif
 	return true;
