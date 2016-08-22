@@ -44,6 +44,10 @@ NetworkSettingsWidget::NetworkSettingsWidget(Device *device, QWidget *parent)
 		SIGNAL(stateChanged(const NetworkManager::State &, const NetworkManager::State &)),
 		SLOT(stateChanged(const NetworkManager::State &, const NetworkManager::State &)));
 	
+	QTimer *updateTimer = new QTimer(this);
+	QObject::connect(updateTimer, SIGNAL(timeout()), SLOT(updateInformation()));
+	updateTimer->start(10000);
+
 	updateInformation();
 }
 
