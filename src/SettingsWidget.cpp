@@ -25,13 +25,13 @@ SettingsWidget::SettingsWidget(Device *device, QWidget *parent)
 {
 	ui->setupUi(this);
 	performStandardSetup(tr("Settings"));
-	
+
   #ifdef NETWORK_ENABLED
   ui->network->setEnabled(true);
   #else
   ui->network->setEnabled(false);
   #endif
-	
+
 	connect(ui->network, SIGNAL(clicked()), SLOT(network()));
 	connect(ui->comm, SIGNAL(clicked()), SLOT(comm()));
 	connect(ui->channels, SIGNAL(clicked()), SLOT(channels()));
@@ -44,7 +44,7 @@ SettingsWidget::SettingsWidget(Device *device, QWidget *parent)
   connect(ui->cameraView, SIGNAL(clicked()), SLOT(cameraView()));
 
 	//TODO show buttons once the widgets are fixed
-	ui->network->setVisible(false);
+	//ui->network->setVisible(false);
 	ui->comm->setVisible(false);
 }
 
