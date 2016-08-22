@@ -60,6 +60,10 @@ public slots:
 	bool turnOn();
 	void turnOff();
 	
+	bool enableAP();
+	bool disableAP();
+
+
 signals:
 	void networkAdded(const Network &network);
 	void networkForgotten(const Network &network);

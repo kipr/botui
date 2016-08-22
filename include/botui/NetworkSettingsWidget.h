@@ -8,6 +8,8 @@
 #include "StandardWidget.h"
 #include "NetworkManager.h"
 
+class QTimer;
+
 namespace Ui
 {
 	class NetworkSettingsWidget;
@@ -24,14 +26,19 @@ public slots:
 	void connect();
 	void manage();
 	void updateInformation();
-	bool enableAP();
-	bool disableAP();
+	void enableAP();
+	void disableAP();
+	void enableAPControls();
+	void disableAPControls();
+	void disableAPControlsTemporarily();
+
 	
 private slots:
 	void stateChanged(const NetworkManager::State &newState, const NetworkManager::State &oldState);
 	
 private:
 	Ui::NetworkSettingsWidget *ui;
+	QTimer *enableCoolOffTimer;
 };
 
 #endif

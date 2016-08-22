@@ -24,15 +24,25 @@ NetworkSettingsWidget::NetworkSettingsWidget(Device *device, QWidget *parent)
 {
 	ui->setupUi(this);
 	performStandardSetup(tr("Network Settings"));
+
+	enableCoolOffTimer = new QTimer(this);
+	enableCoolOffTimer->setSingleShot(true);
+	QObject::connect(enableCoolOffTimer, SIGNAL(timeout()), SLOT(enableAPControls()));
 	
 	ui->turnOn->setVisible(false);
 	ui->turnOff->setVisible(false);
 
-
 	QObject::connect(ui->connect, SIGNAL(clicked()), SLOT(connect()));
 	QObject::connect(ui->manage, SIGNAL(clicked()), SLOT(manage()));
-	NetworkManager::ref().connect(ui->turnOn, SIGNAL(clicked()), SLOT(enableAP())); //SLOT(turnOn()));
-	NetworkManager::ref().connect(ui->turnOff, SIGNAL(clicked()), SLOT(disableAP())); //SLOT(turnOff()));
+
+	//QObject::connect(ui->turnOn, SIGNAL(clicked()), SLOT(disableAPControlsTemporarily()));
+	//QObject::connect(ui->turnOff, SIGNAL(clicked()), SLOT(disableAPControlsTemporarily()));
+	//NetworkManager::ref().connect(ui->turnOn, SIGNAL(clicked()), SLOT(enableAP())); //SLOT(turnOn()));
+	//NetworkManager::ref().connect(ui->turnOff, SIGNAL(clicked()), SLOT(disableAP())); //SLOT(turnOff()));
+
+	QObject::connect(ui->turnOn, SIGNAL(clicked()), SLOT(enableAP()));
+	QObject::connect(ui->turnOff, SIGNAL(clicked()), SLOT(disableAP()));
+
 
 	// TODO: put back after we support client mode WiFi
 	ui->connect->setVisible(false);
@@ -54,6 +64,7 @@ NetworkSettingsWidget::NetworkSettingsWidget(Device *device, QWidget *parent)
 NetworkSettingsWidget::~NetworkSettingsWidget()
 {
 	delete ui;
+	delete enableCoolOffTimer;
 }
 
 void NetworkSettingsWidget::connect()
@@ -66,23 +77,36 @@ void NetworkSettingsWidget::manage()
 	RootController::ref().presentWidget(new ManageNetworksWidget(device()));
 }
 
-bool NetworkSettingsWidget::enableAP()
+void NetworkSettingsWidget::enableAP()
 {
-#ifdef WALLABY
-	int ret = system("/usr/bin/python /usr/bin/wifi_configurator.py");
-	return (ret == 0);
-#endif
-	return true;
+	//disableAPControlsTemporarily();
+	NetworkManager::ref().enableAP();
 }
 
-
-bool NetworkSettingsWidget::disableAP()
+void NetworkSettingsWidget::disableAP()
 {
-#ifdef WALLABY
-	int ret = system("killall hostapd");
-	return (ret == 0);
-#endif
-	return true;
+	//disableAPControlsTemporarily();
+	NetworkManager::ref().disableAP();
+}
+
+void NetworkSettingsWidget::enableAPControls()
+{
+	ui->turnOn->setEnabled(true);
+	ui->turnOff->setEnabled(true);
+}
+
+void NetworkSettingsWidget::disableAPControls()
+{
+	ui->turnOn->setEnabled(false);
+	ui->turnOff->setEnabled(false);
+}
+
+void NetworkSettingsWidget::disableAPControlsTemporarily()
+{
+	ui->turnOn->setEnabled(false);
+	ui->turnOff->setEnabled(false);
+
+	enableCoolOffTimer->start(20000);
 }
 
 void NetworkSettingsWidget::updateInformation()
