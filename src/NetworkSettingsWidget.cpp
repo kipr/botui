@@ -31,8 +31,8 @@ NetworkSettingsWidget::NetworkSettingsWidget(Device *device, QWidget *parent)
 
 	QObject::connect(ui->connect, SIGNAL(clicked()), SLOT(connect()));
 	QObject::connect(ui->manage, SIGNAL(clicked()), SLOT(manage()));
-	NetworkManager::ref().connect(ui->turnOn, SIGNAL(clicked()), SLOT(turnOn()));
-	NetworkManager::ref().connect(ui->turnOff, SIGNAL(clicked()), SLOT(turnOff()));
+	NetworkManager::ref().connect(ui->turnOn, SIGNAL(clicked()), SLOT(enableAP())); //SLOT(turnOn()));
+	NetworkManager::ref().connect(ui->turnOff, SIGNAL(clicked()), SLOT(disableAP())); //SLOT(turnOff()));
 
 	// TODO: put back after we support client mode WiFi
 	ui->connect->setVisible(false);
@@ -64,6 +64,25 @@ void NetworkSettingsWidget::connect()
 void NetworkSettingsWidget::manage()
 {
 	RootController::ref().presentWidget(new ManageNetworksWidget(device()));
+}
+
+bool NetworkSettingsWidget::enableAP()
+{
+#ifdef WALLABY
+	int ret = system("/usr/bin/python /usr/bin/wifi_configurator.py");
+	return (ret == 0);
+#endif
+	return true;
+}
+
+
+bool NetworkSettingsWidget::disableAP()
+{
+#ifdef WALLABY
+	int ret = system("killall hostapd");
+	return (ret == 0);
+#endif
+	return true;
 }
 
 void NetworkSettingsWidget::updateInformation()

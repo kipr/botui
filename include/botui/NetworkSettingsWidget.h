@@ -24,6 +24,8 @@ public slots:
 	void connect();
 	void manage();
 	void updateInformation();
+	bool enableAP();
+	bool disableAP();
 	
 private slots:
 	void stateChanged(const NetworkManager::State &newState, const NetworkManager::State &oldState);
