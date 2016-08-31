@@ -112,7 +112,7 @@ void ProgramsWidget::run()
 	}*/
   // TODO: hardcoded system path
   // Make sure binary exists for this project
-  const QDir projDir("/home/kipr/Documents/KISS/" + name);
+  const QDir projDir("/home/root/Documents/KISS/" + name);
   qDebug() << name;
   if(!projDir.exists("bin/botball_user_program")) {
     QMessageBox::warning(this, tr("No Executable"), tr("No executable exists for the selected proejct."));
