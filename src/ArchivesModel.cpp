@@ -36,7 +36,7 @@ ArchivesModel::ArchivesModel(Device *device, QObject *parent)
 	
   QFileSystemWatcher *watcher = new QFileSystemWatcher(this);
   // TODO: hardcoded system path
-  watcher->addPath("/home/root/Documents/KISS/bin/");
+  watcher->addPath("/home/kipr/Documents/KISS/");
   //watcher->addPath(SystemPrefix::ref().rootManager()->archivesPath());
 	
   connect(watcher, SIGNAL(directoryChanged(QString)), SLOT(refresh()));
@@ -76,13 +76,19 @@ void ArchivesModel::archiveRemoved(const QString &name)
 
 void ArchivesModel::refresh()
 {
-	clear();
+  clear();
   // TODO: hardcoded system path
-  const QDir binDir("/home/root/Documents/KISS/bin/");
-  foreach(const QString &name, binDir.entryList(QDir::NoDot | QDir::NoDotDot | QDir::Dirs))
-    appendRow(new ArchiveItem(name));
-	/*foreach(const QString &name, SystemPrefix::ref().rootManager()->archives()
-      .entryList(QDir::NoDot | QDir::NoDotDot | QDir::Files)) {
-		appendRow(new ArchiveItem(name));
-	}*/
+  const QDir kissDir("/home/kipr/Documents/KISS/");
+
+  foreach(const QString &userName, kissDir.entryList(QDir::NoDot | QDir::NoDotDot | QDir::Dirs))
+  {
+    const QDir userDir("/home/kipr/Documents/KISS/" + userName);
+    foreach(const QString &projectName, userDir.entryList(QDir::NoDot | QDir::NoDotDot | QDir::Dirs))
+    {
+      const QString userAndProject = userName + "/" + projectName+ "/";
+      const QDir projDir(kissDir.absolutePath() +  "/" + userAndProject + "/");
+      const QDir binDir(projDir.absolutePath() + "/bin/");
+      if (binDir.exists("botball_user_program")) appendRow(new ArchiveItem(userAndProject));
+    }
+  }
 }

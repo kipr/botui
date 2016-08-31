@@ -112,8 +112,9 @@ void ProgramsWidget::run()
 	}*/
   // TODO: hardcoded system path
   // Make sure binary exists for this project
-  const QDir projDir("/home/root/Documents/KISS/bin/" + name);
-  if(!projDir.exists("botball_user_program")) {
+  const QDir projDir("/home/kipr/Documents/KISS/" + name);
+  qDebug() << name;
+  if(!projDir.exists("bin/botball_user_program")) {
     QMessageBox::warning(this, tr("No Executable"), tr("No executable exists for the selected proejct."));
     return;
   }
@@ -146,7 +147,7 @@ void ProgramsWidget::run()
 	}*/
   
   ProgramWidget *programWidget = new ProgramWidget(Program::instance(), device());
-  const bool success = Program::instance()->start(projDir.filePath("botball_user_program"), QStringList());
+  const bool success = Program::instance()->start(projDir.filePath("bin/botball_user_program"), QStringList());
   
   if(success) RootController::ref().presentWidget(programWidget);
   else delete programWidget;
