@@ -40,6 +40,32 @@ EditorWidget::~EditorWidget()
 }
 
 
+bool EditorWidget::getFileContents(const QString &filepath, QString & contents) const
+{
+	bool success = false;
+
+    // open file
+    QFile file(filepath);
+    if(!file.exists()){
+        qDebug() << "Missing file: "<< filepath;
+        return success;
+    }
+
+    // load file contents
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text)){
+        QTextStream stream(&file);
+        contents = stream.readAll();
+    }else{
+    	return success;
+    }
+
+    // close file
+    file.close();
+
+    success = true;
+    return success;
+}
+
 void EditorWidget::setProjectPath(const QString &projectPath)
 {
 	m_projectPath = projectPath;
@@ -69,31 +95,18 @@ void EditorWidget::setProjectPath(const QString &projectPath)
 	if(m_lookup.isEmpty()) {
 		fileChanged(-1);
 		return;
-	}else{
-		qDebug() << " m_lookup[0] " << m_lookup[0];
 	}
 
 	// clear text window
     ui->text->clear();
 
-    // open file
-    QString filepath = projectPath + m_lookup[0];
-    QFile file(filepath);
-    if(!file.exists()){
-        qDebug() << "Missing file: "<< filepath;
-    }
+    QString filepath = m_projectPath + m_lookup[0];
 
-    // load file contents
-    if (file.open(QIODevice::ReadOnly | QIODevice::Text)){
-        QTextStream stream(&file);
-        QString contents = stream.readAll();
-
-        //display contents
+    QString contents;
+    if (getFileContents(filepath, contents))
+    {
         ui->text->setPlainText(contents);
     }
-
-    // close file
-    file.close();
 }
 
 const QString &EditorWidget::projectPath() const
@@ -103,7 +116,6 @@ const QString &EditorWidget::projectPath() const
 
 void EditorWidget::fileChanged(int i)
 {
-	/*
 	ui->text->setEnabled(i >= 0);
 	if(i < 0) {
 		ui->text->setPlainText(tr("No files to edit."));
@@ -111,11 +123,18 @@ void EditorWidget::fileChanged(int i)
 	}
 	if(i >= m_lookup.size() || i < 0) return;
 	
-	if(m_currentIndex >= 0) m_archive->setFile(m_lookup[m_currentIndex], ui->text->toPlainText().toUtf8());
-	ui->text->setPlainText(m_archive->data(m_lookup[i]));
+	// clear text window
+    ui->text->clear();
+
+    QString filepath = m_projectPath + m_lookup[i];
+
+    QString contents;
+    if (getFileContents(filepath, contents))
+    {
+        ui->text->setPlainText(contents);
+    }
 	
 	m_currentIndex = i;
-	*/
 }
 
 bool EditorWidget::removeDir(const QString &path) const

@@ -31,6 +31,7 @@ private slots:
 	
 private:
   bool removeDir(const QString &path) const;
+  bool getFileContents(const QString &filepath, QString & contents) const;
   
 	Device *m_device;
 	
