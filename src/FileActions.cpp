@@ -27,7 +27,7 @@ FileActionExtension::FileActionExtension(const QString &name, const QStringList 
 bool FileActionExtension::canHandle(const QString &path) const
 {
 	// Kars can have any extension, so automatically discard kar files.
-	if(kiss::Kar::isValid(path)) return false;
+	//FIXME: if(kiss::Kar::isValid(path)) return false;
 	
 	qWarning() << m_extensions << "contains" << QFileInfo(path).suffix() << "?";
 	return m_extensions.contains(QFileInfo(path).suffix());

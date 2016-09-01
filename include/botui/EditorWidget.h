@@ -2,7 +2,7 @@
 #define _EDITORWIDGET_H_
 
 #include <QWidget>
-#include <kar/kar.hpp>
+//#include <kar/kar.hpp>
 
 class Device;
 class MenuBar;
@@ -19,12 +19,10 @@ public:
 	EditorWidget(Device *device, QWidget *parent = 0);
 	~EditorWidget();
 	
-	void setSavePath(const QString &savePath);
-	const QString &savePath() const;
-	
-	void setArchive(const kiss::KarPtr &archive);
-	const kiss::KarPtr &archive() const;
-	
+	void setProjectPath(const QString &projectPath);
+	const QString &projectPath() const;
+
+
 private slots:
 	void fileChanged(int i);
 	void saveAndExit();
@@ -39,8 +37,7 @@ private:
 	Ui::EditorWidget *ui;
 	MenuBar *m_menuBar;
 	
-	QString m_savePath;
-	kiss::KarPtr m_archive;
+	QString m_projectPath;
 	
 	QList<QString> m_lookup;
 	

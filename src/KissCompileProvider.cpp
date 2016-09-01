@@ -32,6 +32,7 @@ Compiler::OutputList KissCompileProvider::compile(const QString &name, const kis
 			QByteArray(), "error: KarPtr is null");
 	}
 	
+	/* FIXME:
 	const QString path = tempPath();
 	qDebug() << path;
 	
@@ -51,6 +52,8 @@ Compiler::OutputList KissCompileProvider::compile(const QString &name, const kis
 	OutputList ret = engine.compile(input, opts);
 	
   ret << SystemPrefix::ref().rootManager()->install(ret, name);
+  */
+  OutputList ret;
   return ret;
 }
 

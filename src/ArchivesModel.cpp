@@ -78,11 +78,11 @@ void ArchivesModel::refresh()
 {
   clear();
   // TODO: hardcoded system path
-  const QDir kissDir("/home/root/Documents/KISS/");
+  const QDir kissDir("/home/kipr/Documents/KISS/");
 
   foreach(const QString &userName, kissDir.entryList(QDir::NoDot | QDir::NoDotDot | QDir::Dirs))
   {
-    const QDir userDir("/home/root/Documents/KISS/" + userName);
+    const QDir userDir("/home/kipr/Documents/KISS/" + userName);
     foreach(const QString &projectName, userDir.entryList(QDir::NoDot | QDir::NoDotDot | QDir::Dirs))
     {
       const QString userAndProject = userName + "/" + projectName+ "/";

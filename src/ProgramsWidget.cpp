@@ -56,7 +56,7 @@ ProgramsWidget::ProgramsWidget(Device *device, QWidget *parent)
 	connect(ui->transfer, SIGNAL(clicked()), SLOT(transfer()));
 	
 	// TODO: remove these once the buttons all work
-	ui->edit->setVisible(false);
+	ui->edit->setVisible(true);
 	ui->add->setVisible(false);
 	ui->remove->setVisible(false);
 	ui->args->setVisible(false);
@@ -112,7 +112,7 @@ void ProgramsWidget::run()
 	}*/
   // TODO: hardcoded system path
   // Make sure binary exists for this project
-  const QDir projDir("/home/root/Documents/KISS/" + name);
+  const QDir projDir("/home/kipr/Documents/KISS/" + name);
   qDebug() << name;
   if(!projDir.exists("bin/botball_user_program")) {
     QMessageBox::warning(this, tr("No Executable"), tr("No executable exists for the selected proejct."));
@@ -162,13 +162,22 @@ void ProgramsWidget::edit()
 	
   
 	const QString name = m_model->name(currents[0]);
-  const QString archivePath = SystemPrefix::ref().rootManager()->archivesPath(name);
-	kiss::KarPtr archive = kiss::Kar::load(archivePath);
-	if(archive.isNull()) return;
+	qDebug() << "edit clicked for " << name;
+
+    //const QString archivePath = SystemPrefix::ref().rootManager()->archivesPath(name);
+    //qDebug() << "archivePath" << archivePath;
+	//kiss::KarPtr archive = kiss::Kar::load(archivePath);
+	//if(archive.isNull()) return;
+
+	// TODO: hardcoded
+	const QString projectPath = "/home/kipr/Documents/KISS/" + name;
+	qDebug() << "project path: " << projectPath;
 	
 	EditorWidget *editor = new EditorWidget(device());
-	editor->setArchive(archive);
-	editor->setSavePath(archivePath);
+	editor->setProjectPath(projectPath);
+	//editor->setArchive(archive);
+	//editor->setSavePath(archivePath);
+
 	RootController::ref().presentWidget(editor);
 }
 
@@ -179,8 +188,10 @@ void ProgramsWidget::add()
 	const QString name = keyboard.input();
 	if(name.isEmpty()) return;
 	
-  const QString archivePath = SystemPrefix::ref().rootManager()->archivesPath(name);
-	if(!kiss::Kar::load(archivePath).isNull()) {
+	/* FIXME
+	const QString archivePath = SystemPrefix::ref().rootManager()->archivesPath(name);
+
+    if(!kiss::Kar::load(archivePath).isNull()) {
 		AreYouSureDialog dialog;
 		dialog.setDescription(tr("You're about to overwrite the program \"%1\". Continue?\n").arg(name));
 		if(RootController::ref().presentDialog(&dialog) != QDialog::Accepted) return;
@@ -192,9 +203,10 @@ void ProgramsWidget::add()
 		return;
 	}
 	
+	*/
 	EditorWidget *editor = new EditorWidget(device());
-	editor->setArchive(archive);
-	editor->setSavePath(archivePath);
+	//FIXME: editor->setArchive(archive);
+	//FIXME: editor->setSavePath(archivePath);
 	RootController::ref().presentWidget(editor);
 }
 
@@ -219,10 +231,11 @@ void ProgramsWidget::transfer()
 	QModelIndexList currents = ui->programs->selectionModel()->selectedIndexes();
 	if(currents.size() != 1) return;
   const QString name = m_model->name(currents[0]);
-	const kiss::KarPtr archive = kiss::Kar::load(SystemPrefix::ref().rootManager()->archivesPath(name));
+	/* FIXME: const kiss::KarPtr archive = kiss::Kar::load(SystemPrefix::ref().rootManager()->archivesPath(name));
   const QDir flashDrive("/kovan/media/sda1/transfers/" + name);
   QDir().mkpath(flashDrive.path());
   archive->extract(flashDrive.path());
+  */
 }
 
 void ProgramsWidget::compileStarted(const QString &name, ConcurrentCompile *compiler)

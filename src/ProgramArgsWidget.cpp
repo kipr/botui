@@ -30,7 +30,7 @@ ProgramArgsWidget::ProgramArgsWidget(const QString &name, Device *device, QWidge
 	
 	delete ui->args->takeItem(0);
 	
-	ui->args->addItems(ProgramArguments::arguments(kiss::Kar::load(SystemPrefix::ref().rootManager()->archivesPath(m_name))));
+	//FIXME: ui->args->addItems(ProgramArguments::arguments(kiss::Kar::load(SystemPrefix::ref().rootManager()->archivesPath(m_name))));
 	
 	currentItemChanged(0);
 }
@@ -47,11 +47,12 @@ ProgramArgsWidget::~ProgramArgsWidget()
 		args << ui->args->item(i)->text();
 	}
 	
+	/* FIXME:
   const QString path = SystemPrefix::ref().rootManager()->archivesPath(m_name);
   kiss::KarPtr archive = kiss::Kar::load(path);
 	ProgramArguments::setArguments(archive, args);
 	archive->save(path);
-	
+	*/
 	delete ui;
 }
 
