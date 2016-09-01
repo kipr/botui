@@ -222,7 +222,32 @@ void ProgramsWidget::args()
 
 void ProgramsWidget::compile()
 {
-	qDebug() << "compile was pressed";
+	QModelIndexList currents = ui->programs->selectionModel()->selectedIndexes();
+	if(currents.size() != 1) return;
+
+  	const QString name = m_model->name(currents[0]);
+
+  	qDebug() << "compile clicked for " << name;
+
+	// TODO: hardcoded
+	const QString projectPath = "/home/kipr/Documents/KISS/" + name;
+
+
+	const QDir includeDir(projectPath + "/include/");
+	const QDir srcDir(projectPath + "/src/");
+
+	QString binFilePath = projectPath + "bin/botball_user_program";
+
+	QString compileCommand = "gcc -o " + binFilePath + " -lwallaby -lm -I " + includeDir.absolutePath() + " " + srcDir.absolutePath() + "/*.c";
+	qDebug() << compileCommand;
+
+	QByteArray ba = compileCommand.toLatin1();
+	const char *compileCommandC = ba.data();
+
+	int ret = std::system(compileCommandC);
+
+
+	qDebug() << "ret = " << ret;
 }
 
 void ProgramsWidget::remove()
