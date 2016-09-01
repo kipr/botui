@@ -25,6 +25,7 @@ public:
 
 private slots:
 	void fileChanged(int i);
+	void save();
 	void saveAndExit();
 	void addFile();
 	void removeFile();
@@ -32,6 +33,8 @@ private slots:
 private:
   bool removeDir(const QString &path) const;
   bool getFileContents(const QString &filepath, QString & contents) const;
+  bool saveFileContents(const QString &filepath, const QString & contents) const;
+
   
 	Device *m_device;
 	
