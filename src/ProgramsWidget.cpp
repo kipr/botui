@@ -51,6 +51,7 @@ ProgramsWidget::ProgramsWidget(Device *device, QWidget *parent)
 	connect(ui->run, SIGNAL(clicked()), SLOT(run()));
 	connect(ui->edit, SIGNAL(clicked()), SLOT(edit()));
 	connect(ui->add, SIGNAL(clicked()), SLOT(add()));
+	connect(ui->compile, SIGNAL(clicked()), SLOT(compile()));
 	connect(ui->remove, SIGNAL(clicked()), SLOT(remove()));
 	connect(ui->args, SIGNAL(clicked()), SLOT(args()));
 	connect(ui->transfer, SIGNAL(clicked()), SLOT(transfer()));
@@ -61,6 +62,7 @@ ProgramsWidget::ProgramsWidget(Device *device, QWidget *parent)
 	ui->remove->setVisible(false);
 	ui->args->setVisible(false);
 	ui->transfer->setVisible(false);
+	ui->compile->setVisible(true);
 
 	connect(ui->programs->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
 		SLOT(update()));
@@ -216,6 +218,11 @@ void ProgramsWidget::args()
 	if(currents.size() != 1) return;
 	const QString name = m_model->name(currents[0]);
 	RootController::ref().presentWidget(new ProgramArgsWidget(name, device()));
+}
+
+void ProgramsWidget::compile()
+{
+	qDebug() << "compile was pressed";
 }
 
 void ProgramsWidget::remove()
