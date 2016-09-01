@@ -57,20 +57,43 @@ void EditorWidget::setProjectPath(const QString &projectPath)
 	//foreach(const QString &file, m_archive->files()) m_lookup << file;
 
 	qDebug() << " checking for source files at " << srcDir.absolutePath();
-	foreach(const QString &file, srcDir.entryList(QDir::NoDot | QDir::NoDotDot | QDir::Files)) m_lookup << file;
+	foreach(const QString &file, srcDir.entryList(QDir::NoDot | QDir::NoDotDot | QDir::Files)) m_lookup << "/src/" + file;
 
 	qDebug() << " checking for include files at " << includeDir.absolutePath();
-	foreach(const QString &file, includeDir.entryList(QDir::NoDot | QDir::NoDotDot | QDir::Files)) m_lookup << file;
+	foreach(const QString &file, includeDir.entryList(QDir::NoDot | QDir::NoDotDot | QDir::Files)) m_lookup << "/include/" + file;
 
 	qDebug() << " checking for data files at " << dataDir.absolutePath();
-	foreach(const QString &file, dataDir.entryList(QDir::NoDot | QDir::NoDotDot | QDir::Files)) m_lookup << file;
+	foreach(const QString &file, dataDir.entryList(QDir::NoDot | QDir::NoDotDot | QDir::Files)) m_lookup << "/data/" + file;
 
 	ui->files->addItems(m_lookup);
 	if(m_lookup.isEmpty()) {
 		fileChanged(-1);
 		return;
+	}else{
+		qDebug() << " m_lookup[0] " << m_lookup[0];
 	}
-	// FIXME: ui->text->setPlainText(m_archive->data(m_lookup[0]));
+
+	// clear text window
+    ui->text->clear();
+
+    // open file
+    QString filepath = projectPath + m_lookup[0];
+    QFile file(filepath);
+    if(!file.exists()){
+        qDebug() << "Missing file: "<< filepath;
+    }
+
+    // load file contents
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text)){
+        QTextStream stream(&file);
+        QString contents = stream.readAll();
+
+        //display contents
+        ui->text->setPlainText(contents);
+    }
+
+    // close file
+    file.close();
 }
 
 const QString &EditorWidget::projectPath() const
