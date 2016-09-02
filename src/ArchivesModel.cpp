@@ -36,7 +36,7 @@ ArchivesModel::ArchivesModel(Device *device, QObject *parent)
 	
   QFileSystemWatcher *watcher = new QFileSystemWatcher(this);
   // TODO: hardcoded system path
-  watcher->addPath("/home/kipr/Documents/KISS/");
+  watcher->addPath("/home/root/Documents/KISS/");
   //watcher->addPath(SystemPrefix::ref().rootManager()->archivesPath());
 	
   connect(watcher, SIGNAL(directoryChanged(QString)), SLOT(refresh()));
