@@ -5,6 +5,7 @@
 #include "RootController.h"
 #include "StatusBar.h"
 #include "EditorWidget.h"
+#include "Config.h"
 #include "Device.h"
 #include "SystemPrefix.h"
 #include "CompileProvider.h"
@@ -51,16 +52,18 @@ ProgramsWidget::ProgramsWidget(Device *device, QWidget *parent)
 	connect(ui->run, SIGNAL(clicked()), SLOT(run()));
 	connect(ui->edit, SIGNAL(clicked()), SLOT(edit()));
 	connect(ui->add, SIGNAL(clicked()), SLOT(add()));
+	connect(ui->compile, SIGNAL(clicked()), SLOT(compile()));
 	connect(ui->remove, SIGNAL(clicked()), SLOT(remove()));
 	connect(ui->args, SIGNAL(clicked()), SLOT(args()));
 	connect(ui->transfer, SIGNAL(clicked()), SLOT(transfer()));
 	
 	// TODO: remove these once the buttons all work
-	ui->edit->setVisible(false);
+	ui->edit->setVisible(true);
 	ui->add->setVisible(false);
 	ui->remove->setVisible(false);
 	ui->args->setVisible(false);
 	ui->transfer->setVisible(false);
+	ui->compile->setVisible(true);
 
 	connect(ui->programs->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
 		SLOT(update()));
@@ -110,9 +113,9 @@ void ProgramsWidget::run()
       return;
     }
 	}*/
-  // TODO: hardcoded system path
+
   // Make sure binary exists for this project
-  const QDir projDir("/home/root/Documents/KISS/" + name);
+  const QDir projDir(botui::pathToKISS + name);
   qDebug() << name;
   if(!projDir.exists("bin/botball_user_program")) {
     QMessageBox::warning(this, tr("No Executable"), tr("No executable exists for the selected proejct."));
@@ -162,13 +165,21 @@ void ProgramsWidget::edit()
 	
   
 	const QString name = m_model->name(currents[0]);
-  const QString archivePath = SystemPrefix::ref().rootManager()->archivesPath(name);
-	kiss::KarPtr archive = kiss::Kar::load(archivePath);
-	if(archive.isNull()) return;
+	qDebug() << "edit clicked for " << name;
+
+    //const QString archivePath = SystemPrefix::ref().rootManager()->archivesPath(name);
+    //qDebug() << "archivePath" << archivePath;
+	//kiss::KarPtr archive = kiss::Kar::load(archivePath);
+	//if(archive.isNull()) return;
+
+	const QString projectPath = botui::pathToKISS + name;
+	qDebug() << "project path: " << projectPath;
 	
 	EditorWidget *editor = new EditorWidget(device());
-	editor->setArchive(archive);
-	editor->setSavePath(archivePath);
+	editor->setProjectPath(projectPath);
+	//editor->setArchive(archive);
+	//editor->setSavePath(archivePath);
+
 	RootController::ref().presentWidget(editor);
 }
 
@@ -179,8 +190,10 @@ void ProgramsWidget::add()
 	const QString name = keyboard.input();
 	if(name.isEmpty()) return;
 	
-  const QString archivePath = SystemPrefix::ref().rootManager()->archivesPath(name);
-	if(!kiss::Kar::load(archivePath).isNull()) {
+	/* FIXME
+	const QString archivePath = SystemPrefix::ref().rootManager()->archivesPath(name);
+
+    if(!kiss::Kar::load(archivePath).isNull()) {
 		AreYouSureDialog dialog;
 		dialog.setDescription(tr("You're about to overwrite the program \"%1\". Continue?\n").arg(name));
 		if(RootController::ref().presentDialog(&dialog) != QDialog::Accepted) return;
@@ -192,9 +205,10 @@ void ProgramsWidget::add()
 		return;
 	}
 	
+	*/
 	EditorWidget *editor = new EditorWidget(device());
-	editor->setArchive(archive);
-	editor->setSavePath(archivePath);
+	//FIXME: editor->setArchive(archive);
+	//FIXME: editor->setSavePath(archivePath);
 	RootController::ref().presentWidget(editor);
 }
 
@@ -204,6 +218,35 @@ void ProgramsWidget::args()
 	if(currents.size() != 1) return;
 	const QString name = m_model->name(currents[0]);
 	RootController::ref().presentWidget(new ProgramArgsWidget(name, device()));
+}
+
+void ProgramsWidget::compile()
+{
+	QModelIndexList currents = ui->programs->selectionModel()->selectedIndexes();
+	if(currents.size() != 1) return;
+
+  	const QString name = m_model->name(currents[0]);
+
+  	qDebug() << "compile clicked for " << name;
+
+	const QString projectPath = botui::pathToKISS + name;
+
+
+	const QDir includeDir(projectPath + "/include/");
+	const QDir srcDir(projectPath + "/src/");
+
+	QString binFilePath = projectPath + "bin/botball_user_program";
+
+	QString compileCommand = "gcc -o " + binFilePath + " -lwallaby -lm -I " + includeDir.absolutePath() + " " + srcDir.absolutePath() + "/*.c";
+	qDebug() << compileCommand;
+
+	QByteArray ba = compileCommand.toLatin1();
+	const char *compileCommandC = ba.data();
+
+	int ret = std::system(compileCommandC);
+
+
+	qDebug() << "ret = " << ret;
 }
 
 void ProgramsWidget::remove()
@@ -219,10 +262,11 @@ void ProgramsWidget::transfer()
 	QModelIndexList currents = ui->programs->selectionModel()->selectedIndexes();
 	if(currents.size() != 1) return;
   const QString name = m_model->name(currents[0]);
-	const kiss::KarPtr archive = kiss::Kar::load(SystemPrefix::ref().rootManager()->archivesPath(name));
+	/* FIXME: const kiss::KarPtr archive = kiss::Kar::load(SystemPrefix::ref().rootManager()->archivesPath(name));
   const QDir flashDrive("/kovan/media/sda1/transfers/" + name);
   QDir().mkpath(flashDrive.path());
   archive->extract(flashDrive.path());
+  */
 }
 
 void ProgramsWidget::compileStarted(const QString &name, ConcurrentCompile *compiler)

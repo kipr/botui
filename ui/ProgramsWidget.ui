@@ -94,6 +94,17 @@
         </spacer>
        </item>
        <item>
+        <widget class="QPushButton" name="compile">
+         <property name="text">
+          <string>Compile</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../rc/icons/package.png</normaloff>../rc/icons/package.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="add">
          <property name="text">
           <string>New</string>

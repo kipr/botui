@@ -12,7 +12,6 @@
 #include "CompileProvider.h"
 #include "CompileHelpers.h"
 
-#include <kar/kar.hpp>
 #include <QFileInfo>
 #include <QThreadPool>
 
@@ -26,6 +25,7 @@ FileActionCompileSingle::FileActionCompileSingle()
 
 bool FileActionCompileSingle::act(const QString &path, Device *device) const
 {
+	/*
 	// Sanity check
 	QFileInfo input(path);
 	if(!input.isFile()) {
@@ -89,7 +89,7 @@ bool FileActionCompileSingle::act(const QString &path, Device *device) const
 	// will be selected. Maybe make this a bit
 	// more assured in the future.
 	RootController::ref().presentWidget(new ProgramsWidget(device));
-	
+	*/
 	return true;
 }
 

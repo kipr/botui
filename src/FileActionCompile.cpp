@@ -12,7 +12,7 @@
 #include "CompileProvider.h"
 #include "CompileHelpers.h"
 
-#include <kar/kar.hpp>
+//#include <kar/kar.hpp>
 #include <QFileInfo>
 #include <QThreadPool>
 
@@ -32,7 +32,7 @@ bool FileActionCompile::act(const QString &path, Device *device) const
 		qWarning() << "We don't know how to compile a non-file";
 		return false;
 	}
-	
+	/*
 	// Create a program archive containing the input file
 	kiss::KarPtr archive = kiss::Kar::create(input.path());
   qDebug() << archive->files();
@@ -94,7 +94,7 @@ bool FileActionCompile::act(const QString &path, Device *device) const
 	// will be selected. Maybe make this a bit
 	// more assured in the future.
 	RootController::ref().presentWidget(new ProgramsWidget(device));
-	
+	*/
 	return true;
 }
 

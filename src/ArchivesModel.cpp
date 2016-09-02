@@ -1,4 +1,5 @@
 #include "ArchivesModel.h"
+#include "Config.h"
 #include "Device.h"
 #include "SystemPrefix.h"
 
@@ -35,9 +36,8 @@ ArchivesModel::ArchivesModel(Device *device, QObject *parent)
 {
 	
   QFileSystemWatcher *watcher = new QFileSystemWatcher(this);
-  // TODO: hardcoded system path
-  watcher->addPath("/home/root/Documents/KISS/");
-  //watcher->addPath(SystemPrefix::ref().rootManager()->archivesPath());
+
+  watcher->addPath(botui::pathToKISS);
 	
   connect(watcher, SIGNAL(directoryChanged(QString)), SLOT(refresh()));
 	refresh();
@@ -77,12 +77,11 @@ void ArchivesModel::archiveRemoved(const QString &name)
 void ArchivesModel::refresh()
 {
   clear();
-  // TODO: hardcoded system path
-  const QDir kissDir("/home/root/Documents/KISS/");
+  const QDir kissDir(botui::pathToKISS);
 
   foreach(const QString &userName, kissDir.entryList(QDir::NoDot | QDir::NoDotDot | QDir::Dirs))
   {
-    const QDir userDir("/home/root/Documents/KISS/" + userName);
+    const QDir userDir(botui::pathToKISS + userName);
     foreach(const QString &projectName, userDir.entryList(QDir::NoDot | QDir::NoDotDot | QDir::Dirs))
     {
       const QString userAndProject = userName + "/" + projectName+ "/";

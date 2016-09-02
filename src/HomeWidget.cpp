@@ -35,12 +35,13 @@ HomeWidget::HomeWidget(Device *device, QWidget *parent)
 	// TODO: fix fileManager and then remove this line
 	ui->fileManager->setVisible(false);
 
-	// QAction *lock = menuBar()->addAction(UiStandards::lockString());
+	//QAction *lock = menuBar()->addAction(UiStandards::lockString());
 	// connect(lock, SIGNAL(triggered()), SLOT(lock()));
 	QAction *about = menuBar()->addAction(tr("About"));
-  QAction *shutDown = menuBar()->addAction(tr("Shut Down"));
+	QAction *shutDown = menuBar()->addAction(tr("Shut Down"));
+	menuBar()->adjustSize() ;
 	connect(about, SIGNAL(triggered()), SLOT(about()));
-  connect(shutDown, SIGNAL(triggered()), SLOT(shutDown()));
+	connect(shutDown, SIGNAL(triggered()), SLOT(shutDown()));
 }
 
 HomeWidget::~HomeWidget()

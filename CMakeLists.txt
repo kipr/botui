@@ -121,7 +121,7 @@ endif()
 
 add_definitions(-O3)
 
-target_link_libraries(botui pcompiler kar z opencv_core opencv_highgui opencv_imgproc ${OPENSSL_LIBRARIES})
+target_link_libraries(botui pcompiler z opencv_core opencv_highgui opencv_imgproc ${OPENSSL_LIBRARIES})
 if(wallaby)
   target_link_libraries(botui wallaby)
 else()

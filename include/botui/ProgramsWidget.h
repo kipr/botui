@@ -25,6 +25,7 @@ public slots:
 	void edit();
 	void add();
 	void args();
+	void compile();
 	void remove();
 	void transfer();
 	
