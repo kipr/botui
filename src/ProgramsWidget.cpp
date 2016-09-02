@@ -5,6 +5,7 @@
 #include "RootController.h"
 #include "StatusBar.h"
 #include "EditorWidget.h"
+#include "Config.h"
 #include "Device.h"
 #include "SystemPrefix.h"
 #include "CompileProvider.h"
@@ -112,9 +113,9 @@ void ProgramsWidget::run()
       return;
     }
 	}*/
-  // TODO: hardcoded system path
+
   // Make sure binary exists for this project
-  const QDir projDir("/home/kipr/Documents/KISS/" + name);
+  const QDir projDir(botui::pathToKISS + name);
   qDebug() << name;
   if(!projDir.exists("bin/botball_user_program")) {
     QMessageBox::warning(this, tr("No Executable"), tr("No executable exists for the selected proejct."));
@@ -171,8 +172,7 @@ void ProgramsWidget::edit()
 	//kiss::KarPtr archive = kiss::Kar::load(archivePath);
 	//if(archive.isNull()) return;
 
-	// TODO: hardcoded
-	const QString projectPath = "/home/kipr/Documents/KISS/" + name;
+	const QString projectPath = botui::pathToKISS + name;
 	qDebug() << "project path: " << projectPath;
 	
 	EditorWidget *editor = new EditorWidget(device());
@@ -229,8 +229,7 @@ void ProgramsWidget::compile()
 
   	qDebug() << "compile clicked for " << name;
 
-	// TODO: hardcoded
-	const QString projectPath = "/home/kipr/Documents/KISS/" + name;
+	const QString projectPath = botui::pathToKISS + name;
 
 
 	const QDir includeDir(projectPath + "/include/");
