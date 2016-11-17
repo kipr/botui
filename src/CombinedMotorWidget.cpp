@@ -84,7 +84,7 @@ void CombinedMotorWidget::pwmChanged(double pwm)
 	ui->fd->setEnabled(pwm < 99.5);
 	ui->bk->setEnabled(pwm > -99.5);
 	ui->pwmStop->setEnabled(qAbs(pwm) > 0.5);
-	motor(ui->motors->currentIndex(), pwm);
+	motor_power(ui->motors->currentIndex(), pwm);
 #ifdef A_KOVAN
 	publish();
 #endif
