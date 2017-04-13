@@ -81,7 +81,7 @@ void CameraWidget::update()
     this->slowFrameRate();
   }
   else {
-    qDebug() << "Camera updated!";
+    //qDebug() << "Camera updated!";
     image = m_camDevice->rawImage();
     // If we need to draw additional things...
     if(m_showBbox || m_numBlobLabels > 0) {
