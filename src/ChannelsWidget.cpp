@@ -28,7 +28,8 @@ public:
 		: QItemDelegate(parent),
 		m_model(model),
 		m_hsv(QIcon(":/icons/color_wheel.png").pixmap(16, 16)),
-		m_qr(QIcon(":/icons/qr.png").pixmap(16, 16))
+		m_qr(QIcon(":/icons/qr.png").pixmap(16, 16)),
+		m_aruco(QIcon(":/icons/aruco.png").pixmap(16, 16))
 	{
 	}
 	
@@ -41,6 +42,7 @@ public:
 		QPixmap pixmap;
 		if(type == CAMERA_CHANNEL_TYPE_HSV_KEY) pixmap = m_hsv;
 		else if(type == CAMERA_CHANNEL_TYPE_QR_KEY) pixmap = m_qr;
+		else if(type == CAMERA_CHANNEL_TYPE_ARUCO_KEY) pixmap = m_aruco;
 
 		const QPoint right = option.rect.topRight();
 		painter->drawPixmap(right.x() - 24, right.y() + option.rect.height() / 2 - 8,
@@ -51,6 +53,7 @@ private:
 	CameraConfigModel *m_model;
 	QPixmap m_hsv;
 	QPixmap m_qr;
+	QPixmap m_aruco;
 };
 
 ChannelsWidget::ChannelsWidget(Device *device, QWidget *parent)

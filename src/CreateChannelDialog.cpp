@@ -24,6 +24,7 @@ QString CreateChannelDialog::type() const
 	switch(ui->type->currentIndex()) {
 	case 0: return CAMERA_CHANNEL_TYPE_HSV_KEY;
 	case 1: return CAMERA_CHANNEL_TYPE_QR_KEY;
+	case 2: return CAMERA_CHANNEL_TYPE_ARUCO_KEY;
 	}
 	return QString();
 }

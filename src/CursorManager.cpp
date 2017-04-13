@@ -8,7 +8,7 @@
 #include <QDebug>
 
 CursorManager::CursorManager()
-	: m_forceVisible(false),
+	: m_forceVisible(true),
 	m_watcher(new QFileSystemWatcher(this)),
 	m_device(0)
 {

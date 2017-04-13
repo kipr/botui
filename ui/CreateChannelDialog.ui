@@ -75,6 +75,11 @@
          <string>QR Code Scanner</string>
         </property>
        </item>
+       <item>
+        <property name="text">
+         <string>Aruco Marker Detector</string>
+        </property>
+       </item>
       </widget>
      </item>
     </layout>
