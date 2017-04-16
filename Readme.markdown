@@ -7,9 +7,7 @@ The icons used throughout botui are from the [Silk icon set](http://www.famfamfa
 
 Requirements
 ============
-
-* libkar
-* pcompiler
+* pcompiler  (Use_qt4 branch: https://github.com/kipr/pcompiler/tree/use_Qt4)
 * CMake 2.6.0 or later
 * Qt 4.7.4 or later
 
