@@ -19,11 +19,12 @@ public:
 	
 private slots:
 	void colorChanged(int index);
-  void fullscreenChanged(int state);
+  	void fullscreenChanged(int state);
+	void on_invert_screen_clicked();
 	
 private:
 	static void updateWidgets();
-	
+
 	Ui::GuiSettingsWidget *ui;
 };
 

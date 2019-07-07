@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>320</width>
-    <height>240</height>
+    <width>800</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,6 +29,11 @@
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
         <widget class="QPushButton" name="cameraView">
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Camera View</string>
          </property>
@@ -40,6 +45,11 @@
        </item>
        <item>
         <widget class="QPushButton" name="channels">
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Channels</string>
          </property>
@@ -51,6 +61,11 @@
        </item>
        <item>
         <widget class="QPushButton" name="gui">
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>GUI</string>
          </property>
@@ -62,6 +77,11 @@
        </item>
        <item>
         <widget class="QPushButton" name="calibrate">
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Calibrate</string>
          </property>
@@ -73,6 +93,11 @@
        </item>
        <item>
         <widget class="QPushButton" name="hideUi">
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Hide UI</string>
          </property>
@@ -101,6 +126,11 @@
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
         <widget class="QPushButton" name="comm">
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Communic...</string>
          </property>
@@ -112,6 +142,11 @@
        </item>
        <item>
         <widget class="QPushButton" name="network">
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Network</string>
          </property>
@@ -123,6 +158,11 @@
        </item>
        <item>
         <widget class="QPushButton" name="language">
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Language</string>
          </property>
@@ -134,6 +174,11 @@
        </item>
        <item>
         <widget class="QPushButton" name="update">
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Update</string>
          </property>
@@ -145,6 +190,11 @@
        </item>
        <item>
         <widget class="QPushButton" name="battery">
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Battery</string>
          </property>

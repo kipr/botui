@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>329</width>
-    <height>240</height>
+    <width>800</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,6 +30,11 @@
     <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1">
      <item>
       <widget class="QLabel" name="label">
+       <property name="font">
+        <font>
+         <pointsize>22</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Battery type:</string>
        </property>
@@ -37,6 +42,11 @@
      </item>
      <item>
       <widget class="QComboBox" name="batteryType">
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
+       </property>
        <item>
         <property name="text">
          <string>LiFe</string>
@@ -60,6 +70,11 @@
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
       <widget class="QLabel" name="label_4">
+       <property name="font">
+        <font>
+         <pointsize>22</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Enable low battery warning:</string>
        </property>
@@ -67,6 +82,11 @@
      </item>
      <item>
       <widget class="QCheckBox" name="warningEnabled">
+       <property name="font">
+        <font>
+         <pointsize>22</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -74,13 +94,24 @@
      </item>
      <item>
       <widget class="QLabel" name="pctLabel">
+       <property name="font">
+        <font>
+         <pointsize>22</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>at percent:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="LineEdit" name="warningThresh"/>
+      <widget class="LineEdit" name="warningThresh">
+       <property name="font">
+        <font>
+         <pointsize>22</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
      <item>
       <spacer name="horizontalSpacer">

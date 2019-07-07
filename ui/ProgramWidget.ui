@@ -6,14 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>320</width>
-    <height>240</height>
+    <width>800</width>
+    <height>480</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="maximumSize">
    <size>
-    <width>320</width>
-    <height>240</height>
+    <width>800</width>
+    <height>480</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -40,6 +46,7 @@
      <property name="font">
       <font>
        <family>Courier New</family>
+       <pointsize>22</pointsize>
       </font>
      </property>
      <property name="focusPolicy">
@@ -67,6 +74,11 @@
       </property>
       <item>
        <widget class="QPushButton" name="a">
+        <property name="font">
+         <font>
+          <pointsize>33</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>A</string>
         </property>
@@ -74,6 +86,11 @@
       </item>
       <item>
        <widget class="QPushButton" name="b">
+        <property name="font">
+         <font>
+          <pointsize>33</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>B</string>
         </property>
@@ -81,6 +98,11 @@
       </item>
       <item>
        <widget class="QPushButton" name="c">
+        <property name="font">
+         <font>
+          <pointsize>33</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>C</string>
         </property>
@@ -97,6 +119,11 @@
       </property>
       <item>
        <widget class="QPushButton" name="x">
+        <property name="font">
+         <font>
+          <pointsize>33</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>X</string>
         </property>
@@ -104,6 +131,11 @@
       </item>
       <item>
        <widget class="QPushButton" name="y">
+        <property name="font">
+         <font>
+          <pointsize>33</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>Y</string>
         </property>
@@ -111,6 +143,11 @@
       </item>
       <item>
        <widget class="QPushButton" name="z">
+        <property name="font">
+         <font>
+          <pointsize>33</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>Z</string>
         </property>

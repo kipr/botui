@@ -44,6 +44,7 @@ int main(int argc, char* argv[])
 	QFontDatabase::addApplicationFont(":/fonts/DejaVuSans.ttf");
 	QFontDatabase::addApplicationFont(":/fonts/DejaVuSansMono.ttf");
 	
+
 	srand(time(NULL));
 	
 	Wallaby::Device device;

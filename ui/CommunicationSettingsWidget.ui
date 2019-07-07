@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>320</width>
-    <height>240</height>
+    <width>800</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,9 +26,14 @@
       <widget class="QLabel" name="label">
        <property name="minimumSize">
         <size>
-         <width>90</width>
+         <width>180</width>
          <height>0</height>
         </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>22</pointsize>
+        </font>
        </property>
        <property name="text">
         <string>Device Name:</string>
@@ -36,12 +41,23 @@
       </widget>
      </item>
      <item>
-      <widget class="LineEdit" name="deviceName"/>
+      <widget class="LineEdit" name="deviceName">
+       <property name="font">
+        <font>
+         <pointsize>22</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
    <item>
     <widget class="QCheckBox" name="passworded">
+     <property name="font">
+      <font>
+       <pointsize>22</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>Enable Password Protection</string>
      </property>
@@ -66,6 +82,11 @@
          <height>0</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <pointsize>22</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Password:</string>
        </property>
@@ -73,6 +94,11 @@
      </item>
      <item>
       <widget class="LineEdit" name="password">
+       <property name="font">
+        <font>
+         <pointsize>22</pointsize>
+        </font>
+       </property>
        <property name="echoMode">
         <enum>QLineEdit::Normal</enum>
        </property>
@@ -148,6 +174,11 @@
        </disabled>
       </palette>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>22</pointsize>
+      </font>
+     </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
      </property>
@@ -161,8 +192,8 @@
       <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Lucida Grande'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Passwords must be between 3 and 10 characters in length. &lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Passwords are stored as plain text on the system, but are never transmitted over a connection. &lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Enabling password protection will encrypt all communication with KISS IDE.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:22pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Lucida Grande';&quot;&gt;Passwords must be between 3 and 10 characters in length. &lt;/span&gt;&lt;span style=&quot; font-family:'Lucida Grande'; font-weight:600;&quot;&gt;Passwords are stored as plain text on the system, but are never transmitted over a connection. &lt;/span&gt;&lt;span style=&quot; font-family:'Lucida Grande';&quot;&gt;Enabling password protection will encrypt all communication with KISS IDE.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="textInteractionFlags">
       <set>Qt::NoTextInteraction</set>

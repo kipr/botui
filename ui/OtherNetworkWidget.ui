@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>320</width>
-    <height>240</height>
+    <width>800</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,13 +30,24 @@
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QLabel" name="label">
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Network Name:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="LineEdit" name="ssid"/>
+      <widget class="LineEdit" name="ssid">
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -44,6 +55,11 @@
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
       <widget class="QLabel" name="label_2">
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Security:</string>
        </property>
@@ -51,6 +67,11 @@
      </item>
      <item>
       <widget class="QComboBox" name="security">
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
+       </property>
        <item>
         <property name="text">
          <string>None</string>
@@ -79,13 +100,24 @@
     <layout class="QHBoxLayout" name="horizontalLayout_5">
      <item>
       <widget class="QLabel" name="label_3">
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Password:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="LineEdit" name="password"/>
+      <widget class="LineEdit" name="password">
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -122,11 +154,22 @@
      </item>
      <item>
       <widget class="QPushButton" name="join">
+       <property name="minimumSize">
+        <size>
+         <width>200</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="maximumSize">
         <size>
          <width>120</width>
          <height>16777215</height>
         </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
        </property>
        <property name="text">
         <string>Join</string>

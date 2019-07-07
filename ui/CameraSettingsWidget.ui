@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>320</width>
-    <height>240</height>
+    <width>800</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,6 +30,11 @@
     <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,1">
      <item>
       <widget class="QLabel" name="label_2">
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Show bounding boxes:</string>
        </property>
@@ -37,8 +42,25 @@
      </item>
      <item>
       <widget class="QCheckBox" name="boundingBox">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string/>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>16</width>
+         <height>16</height>
+        </size>
        </property>
       </widget>
      </item>
@@ -48,6 +70,11 @@
     <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1">
      <item>
       <widget class="QLabel" name="label">
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Show blob labels:</string>
        </property>
@@ -55,6 +82,11 @@
      </item>
      <item>
       <widget class="QSpinBox" name="numLabels">
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
+       </property>
        <property name="suffix">
         <string> blob(s)</string>
        </property>
@@ -70,6 +102,11 @@
    </item>
    <item>
     <widget class="QLabel" name="label_3">
+     <property name="font">
+      <font>
+       <pointsize>22</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>Note: These settings only affect the camera view. Other programs will not be affected.</string>
      </property>

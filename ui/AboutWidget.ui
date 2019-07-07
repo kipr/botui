@@ -6,9 +6,26 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>320</width>
-    <height>240</height>
+    <width>800</width>
+    <height>480</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>0</height>
+   </size>
+  </property>
+  <property name="font">
+   <font>
+    <pointsize>11</pointsize>
+   </font>
   </property>
   <property name="windowTitle">
    <string>About</string>
@@ -31,6 +48,27 @@
    </property>
    <item>
     <widget class="QLabel" name="deviceName">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>52</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <family>Courier</family>
+       <pointsize>35</pointsize>
+       <weight>9</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
+     </property>
      <property name="styleSheet">
       <string notr="true">font: 75 35pt &quot;Courier&quot;;</string>
      </property>
@@ -57,8 +95,13 @@
    </item>
    <item>
     <widget class="QLabel" name="label_5">
+     <property name="font">
+      <font>
+       <pointsize>22</pointsize>
+      </font>
+     </property>
      <property name="text">
-      <string>Copyright (C) 2012 - 2017</string>
+      <string>Copyright (C) 2012 - 2019</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -67,6 +110,11 @@
    </item>
    <item>
     <widget class="QLabel" name="label_4">
+     <property name="font">
+      <font>
+       <pointsize>22</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>KISS Institute for Practical Robotics</string>
      </property>
@@ -92,6 +140,17 @@
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QGroupBox" name="groupBox_2">
+       <property name="baseSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>17</pointsize>
+        </font>
+       </property>
        <property name="title">
         <string>Developers</string>
        </property>
@@ -101,22 +160,37 @@
         </property>
         <item>
          <widget class="QLabel" name="label">
+          <property name="font">
+           <font>
+            <pointsize>17</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>Braden McDorman</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="label_2">
+         <widget class="QLabel" name="label_7">
+          <property name="font">
+           <font>
+            <pointsize>17</pointsize>
+           </font>
+          </property>
           <property name="text">
-           <string>Joshua Southerland</string>
+           <string>Nafis Zaman</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="label_7">
+         <widget class="QLabel" name="label_2">
+          <property name="font">
+           <font>
+            <pointsize>17</pointsize>
+           </font>
+          </property>
           <property name="text">
-           <string>Nafis Zaman</string>
+           <string>Joshua Southerland</string>
           </property>
          </widget>
         </item>
@@ -125,6 +199,17 @@
      </item>
      <item>
       <widget class="QGroupBox" name="wifiBox">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>17</pointsize>
+        </font>
+       </property>
        <property name="title">
         <string>Wi-Fi Info</string>
        </property>
@@ -133,6 +218,11 @@
          <layout class="QHBoxLayout" name="horizontalLayout_4">
           <item>
            <widget class="QLabel" name="label_3">
+            <property name="font">
+             <font>
+              <pointsize>17</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string>SSID:</string>
             </property>
@@ -140,6 +230,11 @@
           </item>
           <item>
            <widget class="QLabel" name="ssid">
+            <property name="font">
+             <font>
+              <pointsize>22</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -151,6 +246,11 @@
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <item>
            <widget class="QLabel" name="label_8">
+            <property name="font">
+             <font>
+              <pointsize>17</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string>Password:</string>
             </property>
@@ -158,6 +258,11 @@
           </item>
           <item>
            <widget class="QLabel" name="password">
+            <property name="font">
+             <font>
+              <pointsize>22</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string/>
             </property>

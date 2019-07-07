@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>800</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -28,6 +28,11 @@
    </property>
    <item>
     <widget class="QLabel" name="label_2">
+     <property name="font">
+      <font>
+       <pointsize>33</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>Number Edit:</string>
      </property>
@@ -35,6 +40,11 @@
    </item>
    <item>
     <widget class="LineEdit" name="number">
+     <property name="font">
+      <font>
+       <pointsize>33</pointsize>
+      </font>
+     </property>
      <property name="frame">
       <bool>true</bool>
      </property>
@@ -58,13 +68,24 @@
    </item>
    <item>
     <widget class="QLabel" name="label">
+     <property name="font">
+      <font>
+       <pointsize>33</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>String Edit:</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="LineEdit" name="string"/>
+    <widget class="LineEdit" name="string">
+     <property name="font">
+      <font>
+       <pointsize>33</pointsize>
+      </font>
+     </property>
+    </widget>
    </item>
    <item>
     <spacer name="verticalSpacer">

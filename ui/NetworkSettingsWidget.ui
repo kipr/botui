@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>320</width>
-    <height>240</height>
+    <width>800</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -35,6 +35,17 @@
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
         <widget class="QPushButton" name="connect">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Connect to...</string>
          </property>
@@ -46,6 +57,17 @@
        </item>
        <item>
         <widget class="QPushButton" name="manage">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Manage...</string>
          </property>
@@ -70,6 +92,17 @@
        </item>
        <item>
         <widget class="QPushButton" name="turnOn">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Turn On</string>
          </property>
@@ -81,6 +114,17 @@
        </item>
        <item>
         <widget class="QPushButton" name="turnOff">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Turn Off</string>
          </property>
@@ -94,15 +138,26 @@
      </item>
      <item>
       <widget class="QGroupBox" name="groupBox">
+       <property name="font">
+        <font>
+         <pointsize>22</pointsize>
+        </font>
+       </property>
        <property name="title">
         <string>Network Information</string>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0,0,0,0">
+        <property name="spacing">
+         <number>6</number>
+        </property>
         <property name="leftMargin">
          <number>6</number>
         </property>
         <property name="topMargin">
-         <number>6</number>
+         <number>30</number>
         </property>
         <property name="rightMargin">
          <number>6</number>
@@ -114,6 +169,11 @@
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
            <widget class="QLabel" name="stateLabel">
+            <property name="font">
+             <font>
+              <pointsize>22</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string>Wifi is currently:</string>
             </property>
@@ -126,6 +186,11 @@
               <width>25</width>
               <height>0</height>
              </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>22</pointsize>
+             </font>
             </property>
             <property name="text">
              <string>ON</string>
@@ -141,6 +206,11 @@
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <item>
            <widget class="QLabel" name="ssidLabel">
+            <property name="font">
+             <font>
+              <pointsize>22</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string>SSID:</string>
             </property>
@@ -148,6 +218,11 @@
           </item>
           <item>
            <widget class="QLabel" name="ssid">
+            <property name="font">
+             <font>
+              <pointsize>22</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string>kovanet</string>
             </property>
@@ -162,6 +237,11 @@
          <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="0,0">
           <item>
            <widget class="QLabel" name="passwordLabel">
+            <property name="font">
+             <font>
+              <pointsize>22</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string>Password:</string>
             </property>
@@ -169,6 +249,11 @@
           </item>
           <item>
            <widget class="QLabel" name="password">
+            <property name="font">
+             <font>
+              <pointsize>22</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -186,6 +271,11 @@
             <property name="enabled">
              <bool>true</bool>
             </property>
+            <property name="font">
+             <font>
+              <pointsize>22</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string>Security:</string>
             </property>
@@ -193,6 +283,11 @@
           </item>
           <item>
            <widget class="QLabel" name="security">
+            <property name="font">
+             <font>
+              <pointsize>22</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string>WPA2</string>
             </property>
@@ -208,10 +303,13 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Preferred</enum>
+          </property>
           <property name="sizeHint" stdset="0">
            <size>
             <width>20</width>
-            <height>40</height>
+            <height>20</height>
            </size>
           </property>
          </spacer>
@@ -220,6 +318,11 @@
          <layout class="QHBoxLayout" name="horizontalLayout_5">
           <item>
            <widget class="QLabel" name="ip">
+            <property name="font">
+             <font>
+              <pointsize>33</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string>0.0.0.0</string>
             </property>

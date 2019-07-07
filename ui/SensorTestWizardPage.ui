@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>320</width>
-    <height>240</height>
+    <width>800</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,13 +25,24 @@
    </property>
    <item>
     <widget class="QLabel" name="label">
+     <property name="font">
+      <font>
+       <pointsize>22</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>Current Port: 0</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="PlotWidget" name="plot" native="true"/>
+    <widget class="PlotWidget" name="plot" native="true">
+     <property name="font">
+      <font>
+       <pointsize>22</pointsize>
+      </font>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

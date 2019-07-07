@@ -1,0 +1,20 @@
+Source: botui
+Maintainer: Mustafa Ghazi <mghazi@kipr.org>
+Section: misc
+Priority: optional
+Standards-Version: 3.9.2
+Build-Depends: debhelper (>= 9)
+
+Package: botui
+Architecture: any
+Depends: ${shlibs:Depends}, 
+         ${misc:Depends}, 
+         libssl-dev (>= 1.0.1),
+         zlib1g-dev(>= 1.2.8),
+         libopencv-dev (>= 2.4.9.1),
+         qt4-default (>= 4.7.4),
+         libwallaby (>= 25.0),
+         libkar (>= 24.1),
+         pcompiler (>= 24.1)
+Description: graphical interface
+ Botui is a device-independent graphical interface designed initially for the Kovan controller. The icons used throughout botui are from the Silk icon set by Mark James.

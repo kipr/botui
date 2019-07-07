@@ -5,11 +5,12 @@
 #include <QPixmap>
 
 class QLabel;
+class QHBoxLayout;
 class StopButtonWidget;
 class Device;
 class Program;
 
-class MenuBar : public QMenuBar
+class MenuBar : public QWidget
 {
 Q_OBJECT
 Q_PROPERTY(QString title READ title WRITE setTitle)
@@ -22,13 +23,23 @@ public:
 	QString title() const;
 	
 	void addHomeAndBackButtons();
-	
+
+	void addAction(QAction *const action);
+	QAction *addAction(const QString &str);
+
 private:
 	void init();
+
+	void clear();
+
+
+	
 	
 	QLabel *m_title;
 	Program *m_program;
 	StopButtonWidget *m_stopButton;
+
+	QHBoxLayout *m_layout;
 };
 
 #endif

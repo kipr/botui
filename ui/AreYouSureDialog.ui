@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>320</width>
-    <height>240</height>
+    <width>800</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,6 +19,11 @@
    </property>
    <item>
     <widget class="QTextBrowser" name="descr">
+     <property name="font">
+      <font>
+       <pointsize>33</pointsize>
+      </font>
+     </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
      </property>
@@ -29,15 +34,26 @@
       <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Lucida Grande'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Arial,Helvetica,sans'; color:#000000;&quot;&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi quis lorem nunc, a fermentum urna. In facilisis tempus lectus vitae facilisis. Integer volutpat risus et nibh lacinia tincidunt. Quisque et sapien ut sem vulputate posuere semper sit amet nisl. Phasellus sit amet cursus libero. Nullam magna lectus, rutrum at placerat ultricies, egestas vitae lorem. Maecenas porttitor nisi quis nunc laoreet placerat. Proin dui purus, ultrices nec aliquam a, rhoncus at risus.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:33pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Arial,Helvetica,sans'; font-size:13pt; color:#000000;&quot;&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi quis lorem nunc, a fermentum urna. In facilisis tempus lectus vitae facilisis. Integer volutpat risus et nibh lacinia tincidunt. Quisque et sapien ut sem vulputate posuere semper sit amet nisl. Phasellus sit amet cursus libero. Nullam magna lectus, rutrum at placerat ultricies, egestas vitae lorem. Maecenas porttitor nisi quis nunc laoreet placerat. Proin dui purus, ultrices nec aliquam a, rhoncus at risus.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0">
+     <property name="spacing">
+      <number>6</number>
+     </property>
+     <property name="sizeConstraint">
+      <enum>QLayout::SetDefaultConstraint</enum>
+     </property>
      <item>
       <widget class="QLabel" name="label">
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Are You Sure?</string>
        </property>
@@ -45,6 +61,26 @@ p, li { white-space: pre-wrap; }
      </item>
      <item>
       <widget class="QDialogButtonBox" name="buttonBox">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>80</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
