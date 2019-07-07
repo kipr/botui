@@ -32,9 +32,12 @@ GuiSettingsWidget::GuiSettingsWidget(Device *device, QWidget *parent)
 {
 	ui->setupUi(this);
 	performStandardSetup(tr("GUI Settings"));
-        connect(ui->invert_screen, SIGNAL(clicked()), SLOT(on_invert_screen_clicked()));
+  connect(ui->invert_screen, SIGNAL(clicked()), SLOT(on_invert_screen_clicked()));
 	connect(ui->colors, SIGNAL(currentIndexChanged(int)), SLOT(colorChanged(int)));
-        connect(ui->fullscreen, SIGNAL(stateChanged(int)), SLOT(fullscreenChanged(int)));
+  connect(ui->fullscreen, SIGNAL(stateChanged(int)), SLOT(fullscreenChanged(int)));
+	// QPushButton *const button = new QPushButton(action->icon(), action->text(), this);
+	// connect(button, SIGNAL(clicked()), RootController::ptr(), SLOT(setOrientation()));
+	// ui->addWidget(button);
 	
 	SettingsProvider *settings = device->settingsProvider();
 	if(!settings) {
@@ -97,8 +100,12 @@ void GuiSettingsWidget::fullscreenChanged(int state)
 
 void GuiSettingsWidget::on_invert_screen_clicked()
 {
-	QProcess process;
-	process.startDetached("/bin/sh", QStringList()<< "/home/pi/got2/Screen_settings/find.sh");
+	// QProcess process;
+	// process.startDetached("/bin/sh", QStringList()<< "/home/pi/got2/Screen_settings/find.sh");
+
+	static int i = 0;
+
+	if(i++ % 2 == 0) RootController::ref().setOrientation(RootController::ref().orientation() == RootController::Orientation::Normal ? RootController::Orientation::Inverted : RootController::Orientation::Normal);
 }
 
 void GuiSettingsWidget::updateWidgets()

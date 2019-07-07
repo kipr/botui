@@ -16,6 +16,11 @@ Q_OBJECT
 Q_PROPERTY(bool dismissable READ isDismissable WRITE setDismissable)
 Q_PROPERTY(unsigned int depth READ depth)
 public:
+	enum class Orientation {
+		Normal,
+		Inverted
+	};
+
 	RootController();
 	
 	const unsigned int depth() const;
@@ -25,6 +30,9 @@ public:
   
   void setFullscreen(const bool fullscreen);
   bool isFullscreen() const;
+
+	void setOrientation(const Orientation orientation);
+	Orientation orientation() const;
 	
 	template<typename T>
 	void dismissUntil()
@@ -51,15 +59,23 @@ public slots:
 	void dismissAllWidgets();
   
   void minimize();
+
+private slots:
+	void orient();
 	
 private:
 	void constrain(QWidget *widget);
 	void present(QWidget *widget);
+	void setOrientation_(double rot);
 	
 	QMap<QWidget *, bool> m_ownership;
 	QStack<QWidget *> m_stack;
 	bool m_dismissable;
   bool m_fullscreen;
+	Orientation m_orientation;
+
+	QTimer *m_orientationTimer;
+	
 };
 
 #endif
