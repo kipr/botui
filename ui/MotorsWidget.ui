@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>320</width>
-    <height>240</height>
+    <width>800</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -43,10 +43,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="TouchDial" name="dial" native="true">
-         <zorder>horizontalLayoutWidget_2</zorder>
-         <zorder>horizontalLayoutWidget_2</zorder>
-        </widget>
+        <widget class="TouchDial" name="dial" native="true"/>
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,1">
@@ -58,6 +55,11 @@
          </property>
          <item>
           <widget class="QLabel" name="label">
+           <property name="font">
+            <font>
+             <pointsize>33</pointsize>
+            </font>
+           </property>
            <property name="text">
             <string>Ticks:</string>
            </property>
@@ -79,6 +81,11 @@
              <width>16777215</width>
              <height>16777215</height>
             </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>33</pointsize>
+            </font>
            </property>
            <property name="text">
             <string>000000</string>
@@ -105,7 +112,13 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1">
          <item>
-          <widget class="LineEdit" name="number"/>
+          <widget class="LineEdit" name="number">
+           <property name="font">
+            <font>
+             <pointsize>33</pointsize>
+            </font>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -118,6 +131,11 @@
        </property>
        <item>
         <widget class="QLabel" name="label_2">
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Motors</string>
          </property>
@@ -128,11 +146,22 @@
        </item>
        <item>
         <widget class="QPushButton" name="_0">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
-           <width>85</width>
+           <width>280</width>
            <height>0</height>
           </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
          </property>
          <property name="text">
           <string>Port 0</string>
@@ -145,6 +174,11 @@
        </item>
        <item>
         <widget class="QPushButton" name="_1">
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Port 1</string>
          </property>
@@ -156,6 +190,11 @@
        </item>
        <item>
         <widget class="QPushButton" name="_2">
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Port 2</string>
          </property>
@@ -167,6 +206,11 @@
        </item>
        <item>
         <widget class="QPushButton" name="_3">
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Port 3</string>
          </property>
@@ -191,6 +235,11 @@
        </item>
        <item>
         <widget class="QPushButton" name="reset">
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Reset</string>
          </property>

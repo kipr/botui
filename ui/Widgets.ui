@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>800</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,17 +18,27 @@
     <layout class="QGridLayout" name="gridLayout">
      <item row="2" column="2">
       <widget class="QTextEdit" name="textEdit">
+       <property name="font">
+        <font>
+         <pointsize>22</pointsize>
+        </font>
+       </property>
        <property name="html">
         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Lucida Grande'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Text Edit&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:22pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Lucida Grande'; font-size:13pt;&quot;&gt;Text Edit&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
      </item>
      <item row="1" column="2">
       <widget class="QPushButton" name="pushButton">
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>PushButton</string>
        </property>
@@ -36,19 +46,35 @@ p, li { white-space: pre-wrap; }
      </item>
      <item row="2" column="3">
       <widget class="QLineEdit" name="lineEdit">
+       <property name="font">
+        <font>
+         <pointsize>22</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Line Edit</string>
        </property>
       </widget>
      </item>
      <item row="1" column="3">
-      <widget class="QSpinBox" name="spinBox"/>
+      <widget class="QSpinBox" name="spinBox">
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
      <item row="3" column="3">
       <widget class="QDial" name="dial"/>
      </item>
      <item row="3" column="2">
       <widget class="QComboBox" name="comboBox">
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
+       </property>
        <item>
         <property name="text">
          <string>Item 1</string>
@@ -63,6 +89,11 @@ p, li { white-space: pre-wrap; }
      </item>
      <item row="5" column="3">
       <widget class="QSlider" name="horizontalSlider">
+       <property name="font">
+        <font>
+         <pointsize>22</pointsize>
+        </font>
+       </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -70,6 +101,11 @@ p, li { white-space: pre-wrap; }
      </item>
      <item row="5" column="2">
       <widget class="QScrollBar" name="horizontalScrollBar">
+       <property name="font">
+        <font>
+         <pointsize>22</pointsize>
+        </font>
+       </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -77,6 +113,11 @@ p, li { white-space: pre-wrap; }
      </item>
      <item row="3" column="0">
       <widget class="QCheckBox" name="checkBox">
+       <property name="font">
+        <font>
+         <pointsize>22</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>CheckBox</string>
        </property>
@@ -84,6 +125,11 @@ p, li { white-space: pre-wrap; }
      </item>
      <item row="2" column="0">
       <widget class="QScrollBar" name="verticalScrollBar">
+       <property name="font">
+        <font>
+         <pointsize>22</pointsize>
+        </font>
+       </property>
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
@@ -91,6 +137,11 @@ p, li { white-space: pre-wrap; }
      </item>
      <item row="2" column="1">
       <widget class="QSlider" name="verticalSlider">
+       <property name="font">
+        <font>
+         <pointsize>22</pointsize>
+        </font>
+       </property>
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>

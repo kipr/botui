@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>326</width>
-    <height>240</height>
+    <width>800</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,13 +24,24 @@
     <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1">
      <item>
       <widget class="QLabel" name="label">
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Current File:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="files"/>
+      <widget class="QComboBox" name="files">
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -39,6 +50,7 @@
      <property name="font">
       <font>
        <family>Courier New</family>
+       <pointsize>22</pointsize>
       </font>
      </property>
      <property name="lineWrapMode">

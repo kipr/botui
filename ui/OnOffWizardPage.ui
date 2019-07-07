@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>256</width>
-    <height>210</height>
+    <width>800</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -36,8 +36,13 @@
        <property name="minimumSize">
         <size>
          <width>80</width>
-         <height>0</height>
+         <height>80</height>
         </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
        </property>
        <property name="text">
         <string>All Off</string>
@@ -53,8 +58,13 @@
        <property name="minimumSize">
         <size>
          <width>80</width>
-         <height>0</height>
+         <height>80</height>
         </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
        </property>
        <property name="text">
         <string>All On</string>
@@ -92,8 +102,13 @@
          <property name="minimumSize">
           <size>
            <width>80</width>
-           <height>0</height>
+           <height>80</height>
           </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
          </property>
          <property name="text">
           <string>Port 0 On</string>
@@ -112,8 +127,13 @@
          <property name="minimumSize">
           <size>
            <width>80</width>
-           <height>0</height>
+           <height>80</height>
           </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
          </property>
          <property name="text">
           <string>Port 0 Off</string>
@@ -133,8 +153,13 @@
          <property name="minimumSize">
           <size>
            <width>80</width>
-           <height>0</height>
+           <height>80</height>
           </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
          </property>
          <property name="text">
           <string>Port 1 On</string>
@@ -153,8 +178,13 @@
          <property name="minimumSize">
           <size>
            <width>80</width>
-           <height>0</height>
+           <height>80</height>
           </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
          </property>
          <property name="text">
           <string>Port 1 Off</string>
@@ -181,8 +211,13 @@
          <property name="minimumSize">
           <size>
            <width>80</width>
-           <height>0</height>
+           <height>80</height>
           </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
          </property>
          <property name="text">
           <string>Port 2 On</string>
@@ -201,8 +236,13 @@
          <property name="minimumSize">
           <size>
            <width>80</width>
-           <height>0</height>
+           <height>80</height>
           </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
          </property>
          <property name="text">
           <string>Port 2 Off</string>
@@ -222,8 +262,13 @@
          <property name="minimumSize">
           <size>
            <width>80</width>
-           <height>0</height>
+           <height>80</height>
           </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
          </property>
          <property name="text">
           <string>Port 3 On</string>
@@ -242,8 +287,13 @@
          <property name="minimumSize">
           <size>
            <width>80</width>
-           <height>0</height>
+           <height>80</height>
           </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
          </property>
          <property name="text">
           <string>Port 3 Off</string>

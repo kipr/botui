@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>320</width>
-    <height>240</height>
+    <width>800</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,18 +30,34 @@
     <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1">
      <item>
       <widget class="QLabel" name="label">
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Language:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="languages"/>
+      <widget class="QComboBox" name="languages">
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
    <item>
     <widget class="QLabel" name="noteLabel">
+     <property name="font">
+      <font>
+       <pointsize>22</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>Note: System must be restarted to apply changes.</string>
      </property>

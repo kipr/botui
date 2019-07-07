@@ -1,0 +1,43 @@
+." ********************************************************************
+." This is an example manpage for a package called helloworld. It was
+." created manually using gedit.
+." To preview the manually created manpage, from the same directory, do:
+." $ groff -man -Tascii ./helloworld.1 | less
+." Writing and formatting a manpage:
+." http://www.linuxhowtos.org/System/creatingman.htm
+." ********************************************************************
+." title header 
+." [name of program] [section number] [center footer] [left footer] [center header]
+.TH botui 1 "22 Sep 2018" "version 24.4"
+." name of the program, followed by a short description of what it does or what 
+." the name stands for if it is in an acronym. This will be read by apropos, 
+." man -k, makewhatis and whatis
+.SH NAME
+botui - graphical interface
+." synopsis is the syntax used to run the program from the command line. An 
+." example would be like: foo [-d] [-e] [ -f filename]
+.SH SYNOPSIS
+.B none
+." this is the full or long description
+.SH DESCRIPTION
+.B botui
+botui is a device-independent graphical interface designed initially for the 
+Kovan controller.
+." new paragraph
+.PP
+The icons used throughout botui are from the Silk icon set by Mark James.
+.SH BUGS
+.PP
+- bug 1
+.PP
+- bug 2
+.PP
+- bug 3
+." author information - name and email
+.SH AUTHOR
+.PP
+- Braden McDorman
+.PP
+- Joshua Southerland
+.PP
+- Nafis Zaman

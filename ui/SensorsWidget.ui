@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>320</width>
-    <height>234</height>
+    <width>800</width>
+    <height>400</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -37,6 +37,11 @@
      </item>
      <item>
       <widget class="QComboBox" name="plot1">
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
         <string notr="true"/>
        </property>
@@ -139,6 +144,11 @@
      </item>
      <item>
       <widget class="QComboBox" name="plot2">
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
         <string notr="true"/>
        </property>
@@ -252,7 +262,13 @@
     </layout>
    </item>
    <item>
-    <widget class="PlotWidget" name="plot" native="true"/>
+    <widget class="PlotWidget" name="plot" native="true">
+     <property name="font">
+      <font>
+       <pointsize>22</pointsize>
+      </font>
+     </property>
+    </widget>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,1,1,0">
@@ -271,6 +287,11 @@
      </item>
      <item>
       <widget class="QLabel" name="val1">
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>512</string>
        </property>
@@ -278,6 +299,11 @@
      </item>
      <item>
       <widget class="QLabel" name="val2">
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>512</string>
        </property>

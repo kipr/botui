@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>320</width>
-    <height>240</height>
+    <width>800</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -28,6 +28,11 @@
    </property>
    <item>
     <widget class="QLabel" name="title">
+     <property name="font">
+      <font>
+       <pointsize>33</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>Channel X Setup:</string>
      </property>
@@ -37,6 +42,11 @@
     <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1">
      <item>
       <widget class="QLabel" name="label">
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Channel Type:</string>
        </property>
@@ -44,6 +54,11 @@
      </item>
      <item>
       <widget class="QComboBox" name="type">
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
+       </property>
        <item>
         <property name="text">
          <string>HSV Blob Tracking</string>
@@ -88,12 +103,23 @@
      </item>
      <item>
       <widget class="QPushButton" name="configure">
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Configure...</string>
        </property>
        <property name="icon">
         <iconset resource="../rc/icons.qrc">
          <normaloff>:/icons/wrench.png</normaloff>:/icons/wrench.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>16</width>
+         <height>16</height>
+        </size>
        </property>
       </widget>
      </item>

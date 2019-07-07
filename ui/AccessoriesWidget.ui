@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>320</width>
-    <height>240</height>
+    <width>800</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -58,6 +58,11 @@
        </item>
        <item>
         <widget class="QPushButton" name="pushButton_2">
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>iRobot® Create™</string>
          </property>
@@ -65,6 +70,11 @@
        </item>
        <item>
         <widget class="QPushButton" name="pushButton">
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Parrot® AR.Drone™</string>
          </property>

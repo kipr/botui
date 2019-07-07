@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>800</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,12 +29,29 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QListView" name="networks"/>
+      <widget class="QListView" name="networks">
+       <property name="font">
+        <font>
+         <pointsize>22</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
         <widget class="QPushButton" name="connect">
+         <property name="minimumSize">
+          <size>
+           <width>280</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Connect</string>
          </property>
@@ -46,6 +63,11 @@
        </item>
        <item>
         <widget class="QPushButton" name="other">
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Other...</string>
          </property>
@@ -72,6 +94,11 @@
         <widget class="QPushButton" name="refresh">
          <property name="enabled">
           <bool>false</bool>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
          </property>
          <property name="text">
           <string>Refresh</string>

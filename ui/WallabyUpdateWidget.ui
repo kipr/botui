@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>320</width>
-    <height>240</height>
+    <width>800</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -28,6 +28,11 @@
    </property>
    <item>
     <widget class="QLabel" name="statusLabel">
+     <property name="font">
+      <font>
+       <pointsize>22</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>Select an update:</string>
      </property>
@@ -37,12 +42,29 @@
     <widget class="QWidget" name="selectionWidget" native="true">
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QListWidget" name="updateList"/>
+       <widget class="QListWidget" name="updateList">
+        <property name="font">
+         <font>
+          <pointsize>22</pointsize>
+         </font>
+        </property>
+       </widget>
       </item>
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
          <widget class="QPushButton" name="update">
+          <property name="minimumSize">
+           <size>
+            <width>280</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>33</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>Update</string>
           </property>
@@ -54,6 +76,11 @@
         </item>
         <item>
          <widget class="QPushButton" name="refresh">
+          <property name="font">
+           <font>
+            <pointsize>33</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>Refresh</string>
           </property>
@@ -86,6 +113,7 @@
      <property name="font">
       <font>
        <family>Courier New</family>
+       <pointsize>22</pointsize>
        <italic>true</italic>
       </font>
      </property>

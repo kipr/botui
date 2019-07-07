@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>320</width>
-    <height>240</height>
+    <width>800</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -58,11 +58,25 @@
        </item>
        <item>
         <widget class="QPushButton" name="programs">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
-           <width>230</width>
-           <height>0</height>
+           <width>460</width>
+           <height>80</height>
           </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
          </property>
          <property name="text">
           <string>Programs</string>
@@ -71,10 +85,27 @@
           <iconset resource="../rc/icons.qrc">
            <normaloff>:/icons/application_osx_terminal.png</normaloff>:/icons/application_osx_terminal.png</iconset>
          </property>
+         <property name="iconSize">
+          <size>
+           <width>16</width>
+           <height>16</height>
+          </size>
+         </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="fileManager">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>File Manager</string>
          </property>
@@ -82,10 +113,27 @@
           <iconset resource="../rc/icons.qrc">
            <normaloff>:/icons/folder_magnify.png</normaloff>:/icons/folder_magnify.png</iconset>
          </property>
+         <property name="iconSize">
+          <size>
+           <width>16</width>
+           <height>16</height>
+          </size>
+         </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="motorsSensors">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Motors and Sensors</string>
          </property>
@@ -93,10 +141,27 @@
           <iconset resource="../rc/icons.qrc">
            <normaloff>:/icons/lightbulb.png</normaloff>:/icons/lightbulb.png</iconset>
          </property>
+         <property name="iconSize">
+          <size>
+           <width>16</width>
+           <height>16</height>
+          </size>
+         </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="settings">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Settings</string>
          </property>
@@ -104,12 +169,21 @@
           <iconset resource="../rc/icons.qrc">
            <normaloff>:/icons/user.png</normaloff>:/icons/user.png</iconset>
          </property>
+         <property name="iconSize">
+          <size>
+           <width>16</width>
+           <height>16</height>
+          </size>
+         </property>
         </widget>
        </item>
        <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Expanding</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>

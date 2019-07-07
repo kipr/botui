@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>320</width>
-    <height>240</height>
+    <width>800</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,20 +17,17 @@
    <property name="spacing">
     <number>3</number>
    </property>
-   <property name="leftMargin">
-    <number>6</number>
-   </property>
-   <property name="topMargin">
-    <number>6</number>
-   </property>
-   <property name="rightMargin">
-    <number>6</number>
-   </property>
-   <property name="bottomMargin">
+   <property name="margin">
     <number>6</number>
    </property>
    <item>
-    <widget class="QListView" name="files"/>
+    <widget class="QListView" name="files">
+     <property name="font">
+      <font>
+       <pointsize>22</pointsize>
+      </font>
+     </property>
+    </widget>
    </item>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -38,9 +35,14 @@
       <widget class="QPushButton" name="open">
        <property name="minimumSize">
         <size>
-         <width>117</width>
+         <width>280</width>
          <height>0</height>
         </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
        </property>
        <property name="text">
         <string>Open</string>
@@ -53,6 +55,11 @@
      </item>
      <item>
       <widget class="QPushButton" name="remove">
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Delete</string>
        </property>
@@ -77,6 +84,11 @@
      </item>
      <item>
       <widget class="QPushButton" name="home">
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>User Dir</string>
        </property>

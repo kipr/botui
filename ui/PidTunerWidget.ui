@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>320</width>
-    <height>240</height>
+    <width>800</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,6 +19,11 @@
    </property>
    <item>
     <widget class="QComboBox" name="motor">
+     <property name="font">
+      <font>
+       <pointsize>33</pointsize>
+      </font>
+     </property>
      <item>
       <property name="text">
        <string>Motor 0</string>
@@ -42,39 +47,78 @@
     </widget>
    </item>
    <item>
-    <widget class="PlotWidget" name="plot" native="true"/>
+    <widget class="PlotWidget" name="plot" native="true">
+     <property name="font">
+      <font>
+       <pointsize>22</pointsize>
+      </font>
+     </property>
+    </widget>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QLabel" name="label">
+       <property name="font">
+        <font>
+         <pointsize>22</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>P:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="LineEdit" name="p"/>
+      <widget class="LineEdit" name="p">
+       <property name="font">
+        <font>
+         <pointsize>22</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QLabel" name="label_2">
+       <property name="font">
+        <font>
+         <pointsize>22</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>I:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="LineEdit" name="i"/>
+      <widget class="LineEdit" name="i">
+       <property name="font">
+        <font>
+         <pointsize>22</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QLabel" name="label_3">
+       <property name="font">
+        <font>
+         <pointsize>22</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>D:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="LineEdit" name="d"/>
+      <widget class="LineEdit" name="d">
+       <property name="font">
+        <font>
+         <pointsize>22</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

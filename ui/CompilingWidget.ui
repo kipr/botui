@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>320</width>
-    <height>240</height>
+    <width>800</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -28,6 +28,17 @@
    </property>
    <item>
     <widget class="QTextEdit" name="log">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>384</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>22</pointsize>
+      </font>
+     </property>
      <property name="focusPolicy">
       <enum>Qt::NoFocus</enum>
      </property>
@@ -37,7 +48,13 @@
     </widget>
    </item>
    <item>
-    <widget class="QTabWidget" name="results"/>
+    <widget class="QTabWidget" name="results">
+     <property name="font">
+      <font>
+       <pointsize>22</pointsize>
+      </font>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

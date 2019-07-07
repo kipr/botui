@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>320</width>
-    <height>240</height>
+    <width>800</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -42,6 +42,17 @@
        </property>
        <item>
         <widget class="QPushButton" name="configure">
+         <property name="minimumSize">
+          <size>
+           <width>280</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Configure</string>
          </property>
@@ -53,6 +64,11 @@
        </item>
        <item>
         <widget class="QPushButton" name="up">
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Up</string>
          </property>
@@ -64,6 +80,11 @@
        </item>
        <item>
         <widget class="QPushButton" name="down">
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Down</string>
          </property>
@@ -88,6 +109,11 @@
        </item>
        <item>
         <widget class="QPushButton" name="add">
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Add</string>
          </property>
@@ -99,6 +125,11 @@
        </item>
        <item>
         <widget class="QPushButton" name="remove">
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Remove</string>
          </property>

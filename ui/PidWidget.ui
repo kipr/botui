@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>320</width>
-    <height>240</height>
+    <width>800</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -35,9 +35,7 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="TouchDial" name="speed" native="true">
-       <zorder>verticalLayoutWidget</zorder>
-      </widget>
+      <widget class="TouchDial" name="speed" native="true"/>
      </item>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0,0,0">
@@ -46,6 +44,11 @@
        </property>
        <item>
         <widget class="QLabel" name="label_3">
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Motors</string>
          </property>
@@ -59,6 +62,17 @@
          <property name="enabled">
           <bool>false</bool>
          </property>
+         <property name="minimumSize">
+          <size>
+           <width>280</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Port 0</string>
          </property>
@@ -70,6 +84,11 @@
        </item>
        <item>
         <widget class="QPushButton" name="_1">
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Port 1</string>
          </property>
@@ -81,6 +100,11 @@
        </item>
        <item>
         <widget class="QPushButton" name="_2">
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Port 2</string>
          </property>
@@ -92,6 +116,11 @@
        </item>
        <item>
         <widget class="QPushButton" name="_3">
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Port 3</string>
          </property>
@@ -122,16 +151,38 @@
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QLabel" name="label">
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Position:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="LineEdit" name="position"/>
+      <widget class="LineEdit" name="position">
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QPushButton" name="go">
+       <property name="minimumSize">
+        <size>
+         <width>180</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Go</string>
        </property>

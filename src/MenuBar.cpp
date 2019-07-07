@@ -5,22 +5,26 @@
 #include "Program.h"
 
 #include <QLabel>
+#include <QHBoxLayout>
+#include <QPushButton>
 #include "StopButtonWidget.h"
 
 MenuBar::MenuBar(Program *program, QWidget *parent)
-	: QMenuBar(parent),
-	m_title(new QLabel("", 0)),
-	m_program(program),
-	m_stopButton(new StopButtonWidget(m_program))
+	: QWidget(parent)
+	, m_title(new QLabel("", 0))
+	, m_program(program)
+	, m_stopButton(new StopButtonWidget(m_program))
+	, m_layout(new QHBoxLayout(this))
 {
 	init();
 }
 
 MenuBar::MenuBar(QWidget *parent)
-	: QMenuBar(parent),
-	m_title(new QLabel("", 0)),
-	m_program(Program::instance()),
-	m_stopButton(new StopButtonWidget(m_program))
+	: QWidget(parent)
+	, m_title(new QLabel("", 0))
+	, m_program(Program::instance())
+	, m_stopButton(new StopButtonWidget(m_program))
+	, m_layout(new QHBoxLayout(this))
 {
 	init();
 }
@@ -45,8 +49,8 @@ void MenuBar::addHomeAndBackButtons()
 {
 	clear();
 	if(RootController::ref().depth() > 0) {
-		QAction *homeAction = addAction(UiStandards::homeString());
-		connect(homeAction, SIGNAL(triggered()), RootController::ptr(), SLOT(dismissAllWidgets()));
+		 QAction *homeAction = addAction(UiStandards::homeString());
+		 connect(homeAction, SIGNAL(triggered()), RootController::ptr(), SLOT(dismissAllWidgets()));
 	}
 
 	if(RootController::ref().depth() > 1) {
@@ -58,19 +62,53 @@ void MenuBar::addHomeAndBackButtons()
 
 void MenuBar::init()
 {
-	setNativeMenuBar(false);
+	QPalette pal = palette();
+
+// set black background
+	pal.setColor(QPalette::Background, Qt::black);
+	setAutoFillBackground(true);
+	setPalette(pal);
+
+	setLayout(m_layout);
+
+	
+
+	// setNativeMenuBar(false);
+	setMinimumHeight(50);
 	m_title->setAlignment(Qt::AlignVCenter | Qt::AlignRight);
-	m_title->setMinimumSize(50, 21);
+	//m_title->setMinimumSize(50, 21);
 	QPalette palette = m_title->palette();
 	palette.setColor(m_title->foregroundRole(), Qt::white);
 	m_title->setPalette(palette);
-	//setCornerWidget(m_title);
+	// setCornerWidget(m_title);
 	m_stopButton->setMinimumSize(10, 22);
 	m_stopButton->resize(50, 22);
 	m_stopButton->setMaximumSize(100, 22);
 	
 	m_program->connect(m_stopButton, SIGNAL(clicked()), SLOT(stop()));
-	setCornerWidget(m_stopButton);
 	
-	setTitle("Untitled");
+	
+	// setTitle("Untitled")
+}
+
+void MenuBar::addAction(QAction *const action)
+{
+	QPushButton *const button = new QPushButton(action->icon(), action->text(), this);
+	connect(button, SIGNAL(clicked()), action, SLOT(trigger()));
+	m_layout->addWidget(button);
+}
+
+QAction *MenuBar::addAction(const QString &str)
+{
+	QAction *const action = new QAction(str, this);
+	addAction(action);
+	return action;
+}
+
+void MenuBar::clear()
+{
+	for(int i = 0; i < m_layout->count(); ++i)
+	{
+		m_layout->removeItem(m_layout->itemAt(i));
+	}
 }

@@ -6,13 +6,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>337</width>
-    <height>240</height>
+    <width>800</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="maximumSize">
    <size>
-    <width>337</width>
+    <width>800</width>
     <height>16777215</height>
    </size>
   </property>
@@ -30,6 +30,17 @@
     <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0,0">
      <item>
       <widget class="QComboBox" name="motors">
+       <property name="maximumSize">
+        <size>
+         <width>400</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
+       </property>
        <item>
         <property name="text">
          <string>Motor 0</string>
@@ -70,6 +81,11 @@
      </item>
      <item>
       <widget class="QLabel" name="label">
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Position:</string>
        </property>
@@ -89,6 +105,11 @@
          <height>0</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>0</string>
        </property>
@@ -104,6 +125,11 @@
    </item>
    <item>
     <widget class="QTabWidget" name="tabs">
+     <property name="font">
+      <font>
+       <pointsize>33</pointsize>
+      </font>
+     </property>
      <property name="autoFillBackground">
       <bool>false</bool>
      </property>
@@ -187,7 +213,7 @@
           <widget class="QPushButton" name="bk">
            <property name="minimumSize">
             <size>
-             <width>125</width>
+             <width>280</width>
              <height>0</height>
             </size>
            </property>
@@ -231,7 +257,7 @@
            </property>
            <property name="minimumSize">
             <size>
-             <width>125</width>
+             <width>280</width>
              <height>0</height>
             </size>
            </property>
@@ -289,13 +315,24 @@
              <height>0</height>
             </size>
            </property>
+           <property name="font">
+            <font>
+             <pointsize>33</pointsize>
+            </font>
+           </property>
            <property name="text">
             <string>Goal Position:</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="LineEdit" name="goalPos"/>
+          <widget class="LineEdit" name="goalPos">
+           <property name="font">
+            <font>
+             <pointsize>33</pointsize>
+            </font>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -312,13 +349,24 @@
              <height>0</height>
             </size>
            </property>
+           <property name="font">
+            <font>
+             <pointsize>33</pointsize>
+            </font>
+           </property>
            <property name="text">
             <string>Speed:</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="LineEdit" name="speed"/>
+          <widget class="LineEdit" name="speed">
+           <property name="font">
+            <font>
+             <pointsize>33</pointsize>
+            </font>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -344,9 +392,14 @@
            </property>
            <property name="minimumSize">
             <size>
-             <width>125</width>
+             <width>280</width>
              <height>0</height>
             </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>33</pointsize>
+            </font>
            </property>
            <property name="text">
             <string>Stop</string>
@@ -374,9 +427,14 @@
           <widget class="QPushButton" name="go">
            <property name="minimumSize">
             <size>
-             <width>125</width>
+             <width>280</width>
              <height>0</height>
             </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>33</pointsize>
+            </font>
            </property>
            <property name="text">
             <string>Go</string>

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>320</width>
-    <height>240</height>
+    <width>800</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -44,7 +44,7 @@
      <property name="font">
       <font>
        <family>DejaVu Sans Mono</family>
-       <pointsize>90</pointsize>
+       <pointsize>180</pointsize>
       </font>
      </property>
      <property name="styleSheet">

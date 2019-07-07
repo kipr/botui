@@ -100,8 +100,8 @@ bool RootController::isFullscreen() const
 
 void RootController::constrain(QWidget *widget)
 {
-	widget->setMinimumSize(320, 240);
-	widget->setMaximumSize(320, 240);
+	widget->setMinimumSize(800, 480);
+	widget->setMaximumSize(800, 480);
 }
 
 void RootController::present(QWidget *widget)
