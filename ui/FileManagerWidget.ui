@@ -49,7 +49,13 @@
        </property>
        <property name="icon">
         <iconset resource="../rc/icons.qrc">
-         <normaloff>:/icons/arrow_right.png</normaloff>:/icons/arrow_right.png</iconset>
+         <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/folder-open.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/folder-open.svg</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>35</width>
+         <height>35</height>
+        </size>
        </property>
       </widget>
      </item>
@@ -65,7 +71,13 @@
        </property>
        <property name="icon">
         <iconset resource="../rc/icons.qrc">
-         <normaloff>:/icons/delete.png</normaloff>:/icons/delete.png</iconset>
+         <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/folder-minus.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/folder-minus.svg</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>35</width>
+         <height>35</height>
+        </size>
        </property>
       </widget>
      </item>
@@ -94,7 +106,13 @@
        </property>
        <property name="icon">
         <iconset resource="../rc/icons.qrc">
-         <normaloff>:/icons/folder_user.png</normaloff>:/icons/folder_user.png</iconset>
+         <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/user-check.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/user-check.svg</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>35</width>
+         <height>35</height>
+        </size>
        </property>
       </widget>
      </item>

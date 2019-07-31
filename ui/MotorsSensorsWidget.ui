@@ -70,12 +70,12 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/car.png</normaloff>:/icons/car.png</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/car-side.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/car-side.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>16</width>
-           <height>16</height>
+           <width>45</width>
+           <height>45</height>
           </size>
          </property>
         </widget>
@@ -98,12 +98,12 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/chart_curve.png</normaloff>:/icons/chart_curve.png</iconset>
+           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/chart-bar.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/chart-bar.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>16</width>
-           <height>16</height>
+           <width>45</width>
+           <height>45</height>
           </size>
          </property>
         </widget>
@@ -126,12 +126,12 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/lightning.png</normaloff>:/icons/lightning.png</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/microchip.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/microchip.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>16</width>
-           <height>16</height>
+           <width>45</width>
+           <height>45</height>
           </size>
          </property>
         </widget>
@@ -184,12 +184,12 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/chart_line.png</normaloff>:/icons/chart_line.png</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/chart-line.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/chart-line.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>16</width>
-           <height>16</height>
+           <width>45</width>
+           <height>45</height>
           </size>
          </property>
         </widget>
@@ -212,12 +212,12 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/text_list_bullets.png</normaloff>:/icons/text_list_bullets.png</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/list.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/list.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>16</width>
-           <height>16</height>
+           <width>45</width>
+           <height>45</height>
           </size>
          </property>
         </widget>
@@ -240,12 +240,12 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/webcam.png</normaloff>:/icons/webcam.png</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/camera.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/camera.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>16</width>
-           <height>16</height>
+           <width>45</width>
+           <height>45</height>
           </size>
          </property>
         </widget>
@@ -268,12 +268,12 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/coins.png</normaloff>:/icons/coins.png</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/sort-amount-down-alt.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/sort-amount-down-alt.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>16</width>
-           <height>16</height>
+           <width>45</width>
+           <height>45</height>
           </size>
          </property>
         </widget>

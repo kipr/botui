@@ -83,12 +83,12 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/application_osx_terminal.png</normaloff>:/icons/application_osx_terminal.png</iconset>
+           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/window-restore.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/window-restore.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>16</width>
-           <height>16</height>
+           <width>45</width>
+           <height>45</height>
           </size>
          </property>
         </widget>
@@ -111,12 +111,12 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/folder_magnify.png</normaloff>:/icons/folder_magnify.png</iconset>
+           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/folder-open.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/folder-open.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>16</width>
-           <height>16</height>
+           <width>45</width>
+           <height>45</height>
           </size>
          </property>
         </widget>
@@ -139,12 +139,12 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/lightbulb.png</normaloff>:/icons/lightbulb.png</iconset>
+           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/lightbulb.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/lightbulb.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>16</width>
-           <height>16</height>
+           <width>45</width>
+           <height>45</height>
           </size>
          </property>
         </widget>
@@ -167,12 +167,12 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/user.png</normaloff>:/icons/user.png</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/cogs.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/cogs.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>16</width>
-           <height>16</height>
+           <width>45</width>
+           <height>45</height>
           </size>
          </property>
         </widget>

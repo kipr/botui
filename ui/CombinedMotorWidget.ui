@@ -140,7 +140,13 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>30</width>
+       <height>30</height>
+      </size>
      </property>
      <property name="elideMode">
       <enum>Qt::ElideNone</enum>
@@ -154,7 +160,7 @@
      <widget class="QWidget" name="powerTab">
       <attribute name="icon">
        <iconset resource="../rc/icons.qrc">
-        <normaloff>:/icons/lightning.png</normaloff>:/icons/lightning.png</iconset>
+        <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/wrench.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/wrench.svg</iconset>
       </attribute>
       <attribute name="title">
        <string>Power</string>
@@ -181,7 +187,13 @@
            </property>
            <property name="icon">
             <iconset resource="../rc/icons.qrc">
-             <normaloff>:/icons/stop.png</normaloff>:/icons/stop.png</iconset>
+             <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/pause-circle.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/pause-circle.svg</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>35</width>
+             <height>35</height>
+            </size>
            </property>
           </widget>
          </item>
@@ -205,7 +217,13 @@
            </property>
            <property name="icon">
             <iconset resource="../rc/icons.qrc">
-             <normaloff>:/icons/arrow_right.png</normaloff>:/icons/arrow_right.png</iconset>
+             <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/arrow-right.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/arrow-right.svg</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>35</width>
+             <height>35</height>
+            </size>
            </property>
           </widget>
          </item>
@@ -222,7 +240,13 @@
            </property>
            <property name="icon">
             <iconset resource="../rc/icons.qrc">
-             <normaloff>:/icons/arrow_left.png</normaloff>:/icons/arrow_left.png</iconset>
+             <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/arrow-left.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/arrow-left.svg</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>35</width>
+             <height>35</height>
+            </size>
            </property>
           </widget>
          </item>
@@ -233,7 +257,7 @@
      <widget class="QWidget" name="velTab">
       <attribute name="icon">
        <iconset resource="../rc/icons.qrc">
-        <normaloff>:/icons/car.png</normaloff>:/icons/car.png</iconset>
+        <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/rocket.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/rocket.svg</iconset>
       </attribute>
       <attribute name="title">
        <string>Velocity</string>
@@ -290,7 +314,7 @@
      <widget class="QWidget" name="positionTab">
       <attribute name="icon">
        <iconset resource="../rc/icons.qrc">
-        <normaloff>:/icons/joystick.png</normaloff>:/icons/joystick.png</iconset>
+        <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/location-arrow.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/location-arrow.svg</iconset>
       </attribute>
       <attribute name="title">
        <string>Position</string>
@@ -406,7 +430,13 @@
            </property>
            <property name="icon">
             <iconset resource="../rc/icons.qrc">
-             <normaloff>:/icons/stop.png</normaloff>:/icons/stop.png</iconset>
+             <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/stop-circle.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/stop-circle.svg</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>35</width>
+             <height>35</height>
+            </size>
            </property>
           </widget>
          </item>
@@ -441,7 +471,13 @@
            </property>
            <property name="icon">
             <iconset resource="../rc/icons.qrc">
-             <normaloff>:/icons/arrow_right.png</normaloff>:/icons/arrow_right.png</iconset>
+             <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/arrow-right.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/arrow-right.svg</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>35</width>
+             <height>35</height>
+            </size>
            </property>
           </widget>
          </item>

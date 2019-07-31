@@ -27,6 +27,18 @@
        <pointsize>22</pointsize>
       </font>
      </property>
+     <property name="lineWidth">
+      <number>1</number>
+     </property>
+     <property name="midLineWidth">
+      <number>0</number>
+     </property>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOn</enum>
+     </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAsNeeded</enum>
+     </property>
      <property name="editTriggers">
       <set>QAbstractItemView::NoEditTriggers</set>
      </property>
@@ -44,6 +56,15 @@
      </property>
      <property name="selectionBehavior">
       <enum>QAbstractItemView::SelectRows</enum>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="textElideMode">
+      <enum>Qt::ElideRight</enum>
      </property>
      <property name="showGrid">
       <bool>false</bool>

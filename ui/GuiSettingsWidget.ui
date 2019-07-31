@@ -14,16 +14,7 @@
    <string>GUI Settings</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
-   <property name="leftMargin">
-    <number>6</number>
-   </property>
-   <property name="topMargin">
-    <number>6</number>
-   </property>
-   <property name="rightMargin">
-    <number>6</number>
-   </property>
-   <property name="bottomMargin">
+   <property name="margin">
     <number>6</number>
    </property>
    <item>
@@ -111,6 +102,12 @@
        <property name="text">
         <string/>
        </property>
+       <property name="iconSize">
+        <size>
+         <width>100</width>
+         <height>20</height>
+        </size>
+       </property>
       </widget>
      </item>
     </layout>
@@ -120,7 +117,7 @@
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>50</height>
+       <height>100</height>
       </size>
      </property>
      <property name="font">
@@ -130,6 +127,16 @@
      </property>
      <property name="text">
       <string>Screen Invert</string>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>../rc/icons/fontawesome/regular/share-square.svg</normaloff>../rc/icons/fontawesome/regular/share-square.svg</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>45</width>
+       <height>50</height>
+      </size>
      </property>
     </widget>
    </item>

@@ -60,7 +60,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/cog_go.png</normaloff>:/icons/cog_go.png</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/cogs.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/cogs.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>35</width>
+           <height>35</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -76,7 +82,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/cog_edit.png</normaloff>:/icons/cog_edit.png</iconset>
+           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/sun.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/sun.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>35</width>
+           <height>35</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -92,7 +104,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/wrench.png</normaloff>:/icons/wrench.png</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/wrench.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/wrench.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>35</width>
+           <height>35</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -108,7 +126,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/drive_go.png</normaloff>:/icons/drive_go.png</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/history.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/history.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>35</width>
+           <height>35</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -137,7 +161,13 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../rc/icons/package.png</normaloff>../rc/icons/package.png</iconset>
+           <normaloff>../rc/icons/fontawesome/solid/save.svg</normaloff>../rc/icons/fontawesome/solid/save.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>35</width>
+           <height>35</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -153,7 +183,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/folder-plus.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/folder-plus.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>35</width>
+           <height>35</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -169,7 +205,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/delete.png</normaloff>:/icons/delete.png</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/folder-minus.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/folder-minus.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>35</width>
+           <height>35</height>
+          </size>
          </property>
         </widget>
        </item>

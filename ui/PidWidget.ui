@@ -188,7 +188,13 @@
        </property>
        <property name="icon">
         <iconset resource="../rc/icons.qrc">
-         <normaloff>:/icons/arrow_right.png</normaloff>:/icons/arrow_right.png</iconset>
+         <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/arrow-right.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/arrow-right.svg</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>35</width>
+         <height>35</height>
+        </size>
        </property>
       </widget>
      </item>
@@ -198,15 +204,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>LineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>LineEdit.h</header>
-  </customwidget>
-  <customwidget>
    <class>TouchDial</class>
    <extends>QWidget</extends>
    <header>TouchDial.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>LineEdit.h</header>
   </customwidget>
  </customwidgets>
  <resources>

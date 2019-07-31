@@ -51,7 +51,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/transmit_add.png</normaloff>:/icons/transmit_add.png</iconset>
+           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/check-circle.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/check-circle.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>35</width>
+           <height>35</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -73,7 +79,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/transmit_edit.png</normaloff>:/icons/transmit_edit.png</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/plus.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/plus.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>35</width>
+           <height>35</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -108,7 +120,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/lightbulb.png</normaloff>:/icons/lightbulb.png</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/sun.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/sun.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>35</width>
+           <height>35</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -130,7 +148,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/lightbulb_off.png</normaloff>:/icons/lightbulb_off.png</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/power-off.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/power-off.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>35</width>
+           <height>35</height>
+          </size>
          </property>
         </widget>
        </item>

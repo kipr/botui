@@ -90,7 +90,13 @@
        </property>
        <property name="icon">
         <iconset resource="../rc/icons.qrc">
-         <normaloff>:/icons/arrow_turn_right.png</normaloff>:/icons/arrow_turn_right.png</iconset>
+         <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/share-square.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/share-square.svg</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>35</width>
+         <height>35</height>
+        </size>
        </property>
       </widget>
      </item>

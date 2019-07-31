@@ -49,7 +49,13 @@
        </property>
        <property name="icon">
         <iconset resource="../rc/icons.qrc">
-         <normaloff>:/icons/lightbulb_off.png</normaloff>:/icons/lightbulb_off.png</iconset>
+         <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/power-off.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/power-off.svg</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>35</width>
+         <height>35</height>
+        </size>
        </property>
       </widget>
      </item>
@@ -71,7 +77,13 @@
        </property>
        <property name="icon">
         <iconset resource="../rc/icons.qrc">
-         <normaloff>:/icons/lightbulb.png</normaloff>:/icons/lightbulb.png</iconset>
+         <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/lightbulb.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/lightbulb.svg</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>35</width>
+         <height>35</height>
+        </size>
        </property>
       </widget>
      </item>
@@ -115,7 +127,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/lightbulb.png</normaloff>:/icons/lightbulb.png</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/lightbulb.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/lightbulb.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>35</width>
+           <height>35</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -140,7 +158,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/lightbulb_off.png</normaloff>:/icons/lightbulb_off.png</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/power-off.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/power-off.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>35</width>
+           <height>35</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -166,7 +190,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/lightbulb.png</normaloff>:/icons/lightbulb.png</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/lightbulb.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/lightbulb.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>35</width>
+           <height>35</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -191,7 +221,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/lightbulb_off.png</normaloff>:/icons/lightbulb_off.png</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/power-off.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/power-off.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>35</width>
+           <height>35</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -224,7 +260,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/lightbulb.png</normaloff>:/icons/lightbulb.png</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/lightbulb.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/lightbulb.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>35</width>
+           <height>35</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -249,7 +291,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/lightbulb_off.png</normaloff>:/icons/lightbulb_off.png</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/power-off.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/power-off.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>35</width>
+           <height>35</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -275,7 +323,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/lightbulb.png</normaloff>:/icons/lightbulb.png</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/lightbulb.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/lightbulb.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>35</width>
+           <height>35</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -300,7 +354,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/lightbulb_off.png</normaloff>:/icons/lightbulb_off.png</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/power-off.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/power-off.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>35</width>
+           <height>35</height>
+          </size>
          </property>
         </widget>
        </item>

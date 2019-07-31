@@ -172,7 +172,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/control_play.png</normaloff>:/icons/control_play.png</iconset>
+           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/play-circle.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/play-circle.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>35</width>
+           <height>35</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -188,7 +194,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/control_stop.png</normaloff>:/icons/control_stop.png</iconset>
+           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/pause-circle.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/pause-circle.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>35</width>
+           <height>35</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -200,15 +212,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>LineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>LineEdit.h</header>
-  </customwidget>
-  <customwidget>
    <class>TouchDial</class>
    <extends>QWidget</extends>
    <header>TouchDial.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>LineEdit.h</header>
   </customwidget>
  </customwidgets>
  <resources>

@@ -39,7 +39,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/camera.png</normaloff>:/icons/camera.png</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/camera-retro.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/camera-retro.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -55,7 +61,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/television.png</normaloff>:/icons/television.png</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/tv.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/tv.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -71,7 +83,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/application_view_tile.png</normaloff>:/icons/application_view_tile.png</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/laptop-code.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/laptop-code.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -87,7 +105,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/monitor.png</normaloff>:/icons/monitor.png</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/arrows-alt.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/arrows-alt.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -103,7 +127,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/application_osx_terminal.png</normaloff>:/icons/application_osx_terminal.png</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/window-minimize.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/window-minimize.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -136,7 +166,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/server.png</normaloff>:/icons/server.png</iconset>
+           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/hdd.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/hdd.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -152,7 +188,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/drive_network.png</normaloff>:/icons/drive_network.png</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/wifi.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/wifi.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -168,7 +210,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/world.png</normaloff>:/icons/world.png</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/atlas.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/atlas.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -184,7 +232,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/arrow_rotate_clockwise.png</normaloff>:/icons/arrow_rotate_clockwise.png</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/cloud-download-alt.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/cloud-download-alt.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -200,7 +254,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/lightning.png</normaloff>:/icons/lightning.png</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/battery-full.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/battery-full.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
          </property>
         </widget>
        </item>

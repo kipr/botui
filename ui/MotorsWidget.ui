@@ -245,7 +245,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/arrow_undo.png</normaloff>:/icons/arrow_undo.png</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/history.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/history.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>45</width>
+           <height>45</height>
+          </size>
          </property>
         </widget>
        </item>

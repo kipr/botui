@@ -60,7 +60,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/page_white_edit.png</normaloff>:/icons/page_white_edit.png</iconset>
+           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/sun.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/sun.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>35</width>
+           <height>35</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -76,7 +82,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/arrow_up.png</normaloff>:/icons/arrow_up.png</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/angle-up.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/angle-up.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>35</width>
+           <height>35</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -92,7 +104,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/arrow_down.png</normaloff>:/icons/arrow_down.png</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/angle-down.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/angle-down.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>35</width>
+           <height>35</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -121,7 +139,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
+           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/calendar-plus.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/calendar-plus.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>35</width>
+           <height>35</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -137,7 +161,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/delete.png</normaloff>:/icons/delete.png</iconset>
+           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/calendar-minus.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/calendar-minus.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>35</width>
+           <height>35</height>
+          </size>
          </property>
         </widget>
        </item>

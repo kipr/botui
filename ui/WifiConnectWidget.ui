@@ -57,7 +57,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/connect.png</normaloff>:/icons/connect.png</iconset>
+           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/check-circle.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/check-circle.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>35</width>
+           <height>35</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -73,7 +79,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
+           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/list-alt.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/list-alt.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>35</width>
+           <height>35</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -102,7 +114,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/arrow_refresh.png</normaloff>:/icons/arrow_refresh.png</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/undo.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/undo.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>35</width>
+           <height>35</height>
+          </size>
          </property>
         </widget>
        </item>

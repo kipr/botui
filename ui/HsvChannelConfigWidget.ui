@@ -94,7 +94,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/color_wheel.png</normaloff>:/icons/color_wheel.png</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/glasses.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/glasses.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>35</width>
+           <height>35</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -110,7 +116,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/cog.png</normaloff>:/icons/cog.png</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/book-open.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/book-open.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>35</width>
+           <height>35</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -139,7 +151,13 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/disk.png</normaloff>:/icons/disk.png</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/check.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/check.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>35</width>
+           <height>35</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -344,15 +362,15 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>LineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>LineEdit.h</header>
+  </customwidget>
+  <customwidget>
    <class>CameraWidget</class>
    <extends>QWidget</extends>
    <header>CameraWidget.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>LineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>LineEdit.h</header>
   </customwidget>
   <customwidget>
    <class>QHsvPicker</class>

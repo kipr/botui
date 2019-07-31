@@ -36,9 +36,6 @@
        <property name="text">
         <string/>
        </property>
-       <property name="pixmap">
-        <pixmap resource="../rc/icons.qrc">:/icons/webcam.png</pixmap>
-       </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
