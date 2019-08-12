@@ -3,7 +3,9 @@ botui
 
 Botui is a device-independent graphical interface designed initially for the Kovan controller.
 
-The icons used throughout botui are from the [Silk icon set](http://www.famfamfam.com/lab/icons/silk/) by Mark James.
+The icons used throughout botui are from the [Font Awesome](https://fontawesome.com/icons?d=gallery) by © Fonticons, Inc.
+
+
 
 Requirements
 ============
@@ -16,6 +18,7 @@ Authors
 * Braden McDorman
 * Joshua Southerland
 * Nafis Zaman
+* Prithviraj Kadiyala
 
 
 License
