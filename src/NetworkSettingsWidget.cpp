@@ -120,7 +120,7 @@ void NetworkSettingsWidget::updateInformation()
 	const QString id = device()->id();
 	if(!id.isEmpty()) {
 		const QString password = SystemUtils::sha256(id).left(6) + "00";
-		const QString ssid = id + "-wallaby";
+                const QString ssid = id + "-wombat";
 		ui->ssid->setText(ssid);
 		ui->password->setText(password);
 	}

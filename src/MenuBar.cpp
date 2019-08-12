@@ -47,24 +47,24 @@ QString MenuBar::title() const
 
 void MenuBar::addHomeAndBackButtons()
 {
-	clear();
-	if(RootController::ref().depth() > 0) {
-		 QAction *homeAction = addAction(UiStandards::homeString());
-		 connect(homeAction, SIGNAL(triggered()), RootController::ptr(), SLOT(dismissAllWidgets()));
-	}
+        clear();
+        if(RootController::ref().depth() > 0) {
+                 QAction *homeAction = addAction(UiStandards::homeString());
+                 connect(homeAction, SIGNAL(triggered()), RootController::ptr(), SLOT(dismissAllWidgets()));
+        }
 
-	if(RootController::ref().depth() > 1) {
-		QAction *backAction = addAction(UiStandards::backString());
-		connect(backAction, SIGNAL(triggered()),
-			RootController::ptr(), SLOT(dismissWidget()));
-	}
+        if(RootController::ref().depth() > 1) {
+                QAction *backAction = addAction(UiStandards::backString());
+                connect(backAction, SIGNAL(triggered()),
+                        RootController::ptr(), SLOT(dismissWidget()));
+        }
 }
 
 void MenuBar::init()
 {
 	QPalette pal = palette();
 
-// set black background
+        // set black background
 	pal.setColor(QPalette::Background, Qt::black);
 	setAutoFillBackground(true);
 	setPalette(pal);
@@ -74,7 +74,7 @@ void MenuBar::init()
 	
 
 	// setNativeMenuBar(false);
-	setMinimumHeight(50);
+        //setMinimumHeight(65);
 	m_title->setAlignment(Qt::AlignVCenter | Qt::AlignRight);
 	//m_title->setMinimumSize(50, 21);
 	QPalette palette = m_title->palette();
@@ -84,7 +84,7 @@ void MenuBar::init()
 	m_stopButton->setMinimumSize(10, 22);
 	m_stopButton->resize(50, 22);
 	m_stopButton->setMaximumSize(100, 22);
-	
+        setStyleSheet("QPushButton { height:35px;font-size: 30px; }");//Delete this if errors
 	m_program->connect(m_stopButton, SIGNAL(clicked()), SLOT(stop()));
 	
 	
@@ -94,6 +94,7 @@ void MenuBar::init()
 void MenuBar::addAction(QAction *const action)
 {
 	QPushButton *const button = new QPushButton(action->icon(), action->text(), this);
+
 	connect(button, SIGNAL(clicked()), action, SLOT(trigger()));
 	m_layout->addWidget(button);
 }
