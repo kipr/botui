@@ -1,0 +1,7 @@
+v24.7
+*Added Version Number to About Page
+*Fixed the Taskbar showing while keyboard pops up.
+*Deleted the program start overlap from the /etc/init.d/botui
+*WiFi renamed to Wombat from Wallaby
+
+
