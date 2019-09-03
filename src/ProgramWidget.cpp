@@ -23,6 +23,8 @@ ProgramWidget::ProgramWidget(Program *program, Device *device, QWidget *parent)
   // connect(lock, SIGNAL(triggered()), SLOT(lock()));
   
   ui->extra->setVisible(false);
+  QAction *stop = menuBar()->addAction(UiStandards::stopString());
+  connect(stop, SIGNAL(triggered()), SLOT(stop(m_program)));
   
   connect(m_program, SIGNAL(started()), SLOT(started()));
   connect(m_program,

@@ -1,10 +1,5 @@
-botui (24.7-1) UNRELEASED; urgency=low
+botui (24.8-1) UNRELEASED; urgency=low
 
   * Initial release. (Closes: #XXXXXX)
 
- -- Prithviraj Kadiyiala <pkadiyala@kipr.org>  Wed, 12 Aug 2019 10:00:00 -0500
-
-* Changed the Wi-Fi name to wombat from wallaby.
-* Bigger Nav buttons with bigger font.
-
-
+ -- Prithviraj Kadiyala <pkadiyala@kipr.org>  Wed, 28 Aug 2019 17:43:19 -0500

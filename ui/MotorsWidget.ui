@@ -249,8 +249,8 @@
          </property>
          <property name="iconSize">
           <size>
-           <width>45</width>
-           <height>45</height>
+           <width>30</width>
+           <height>30</height>
           </size>
          </property>
         </widget>

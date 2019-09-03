@@ -57,12 +57,12 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/check-circle.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/check-circle.svg</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/plug.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/plug.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>35</width>
-           <height>35</height>
+           <width>30</width>
+           <height>30</height>
           </size>
          </property>
         </widget>
@@ -79,12 +79,12 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/list-alt.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/list-alt.svg</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/plus.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/plus.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>35</width>
-           <height>35</height>
+           <width>30</width>
+           <height>30</height>
           </size>
          </property>
         </widget>
@@ -114,12 +114,12 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/undo.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/undo.svg</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/sync-alt.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/sync-alt.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>35</width>
-           <height>35</height>
+           <width>30</width>
+           <height>30</height>
           </size>
          </property>
         </widget>

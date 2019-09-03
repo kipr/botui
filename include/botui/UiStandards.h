@@ -10,6 +10,8 @@ public:
 	static QString backString();
 	static QString cancelString();
 	static QString lockString();
+	static QString stopString();
+	
 };
 
 #endif

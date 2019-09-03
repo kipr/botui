@@ -73,7 +73,7 @@
       <string notr="true">font: 75 35pt &quot;Courier&quot;;</string>
      </property>
      <property name="text">
-      <string>Device Name</string>
+      <string>Wombat v 24.8</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -124,14 +124,14 @@
     </widget>
    </item>
    <item>
-    <spacer name="verticalSpacer_4">
+    <spacer name="verticalSpacer_3">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>30</height>
+       <height>40</height>
       </size>
      </property>
     </spacer>

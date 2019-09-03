@@ -21,3 +21,7 @@ QString UiStandards::lockString()
 {
 	return QObject::tr("Lock Screen");
 }
+QString UiStandards::stopString()
+{
+        return QObject::tr("STOP!!");
+}

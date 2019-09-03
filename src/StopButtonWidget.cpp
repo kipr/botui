@@ -23,13 +23,13 @@ QSize StopButtonWidget::sizeHint() const
 
 void StopButtonWidget::paintEvent(QPaintEvent *event)
 {
-	QStylePainter p(this);
-	QStyleOptionButton opt;
-	opt.rect = rect().adjusted(0, 0, -2, -1);
-	opt.text = tr("Stop");
-	if(m_running) opt.state |= QStyle::State_Enabled;
-	if(m_running && m_pressed) opt.state |= QStyle::State_Sunken;
-	p.drawControl((QStyle::ControlElement)MechanicalStyle::CE_StopButton, opt);
+        QStylePainter p(this);
+        QStyleOptionButton opt;
+        opt.rect = rect().adjusted(0, 0, -2, -1);
+        opt.text = tr("Stop");
+        if(m_running) opt.state |= QStyle::State_Enabled;
+        if(m_running && m_pressed) opt.state |= QStyle::State_Sunken;
+        p.drawControl((QStyle::ControlElement)MechanicalStyle::CE_StopButton, opt);
 }
 
 void StopButtonWidget::mousePressEvent(QMouseEvent *event)

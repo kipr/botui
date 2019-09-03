@@ -60,12 +60,12 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/sun.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/sun.svg</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/wrench.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/wrench.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>35</width>
-           <height>35</height>
+           <width>30</width>
+           <height>30</height>
           </size>
          </property>
         </widget>
@@ -82,12 +82,12 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/angle-up.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/angle-up.svg</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/arrow-up.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/arrow-up.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>35</width>
-           <height>35</height>
+           <width>30</width>
+           <height>30</height>
           </size>
          </property>
         </widget>
@@ -104,12 +104,12 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/angle-down.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/angle-down.svg</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/arrow-down.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/arrow-down.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>35</width>
-           <height>35</height>
+           <width>30</width>
+           <height>30</height>
           </size>
          </property>
         </widget>
@@ -139,12 +139,12 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/calendar-plus.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/calendar-plus.svg</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/plus.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/plus.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>35</width>
-           <height>35</height>
+           <width>30</width>
+           <height>30</height>
           </size>
          </property>
         </widget>
@@ -161,12 +161,12 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/calendar-minus.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/calendar-minus.svg</iconset>
+           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/trash-alt.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/trash-alt.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>35</width>
-           <height>35</height>
+           <width>30</width>
+           <height>30</height>
           </size>
          </property>
         </widget>
