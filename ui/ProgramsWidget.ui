@@ -32,17 +32,7 @@
       <number>2</number>
      </property>
      <item>
-      <widget class="QListView" name="programs">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-         <horstretch>0</horstretch>
-         <verstretch>10</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="resizeMode">
-        <enum>QListView::Adjust</enum>
-       </property>
-      </widget>
+      <widget class="QListView" name="programs"/>
      </item>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -70,12 +60,12 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/cogs.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/cogs.svg</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/cog.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/cog.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>35</width>
-           <height>35</height>
+           <width>25</width>
+           <height>25</height>
           </size>
          </property>
         </widget>
@@ -92,12 +82,12 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/sun.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/sun.svg</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/edit.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/edit.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>35</width>
-           <height>35</height>
+           <width>30</width>
+           <height>30</height>
           </size>
          </property>
         </widget>
@@ -118,8 +108,8 @@
          </property>
          <property name="iconSize">
           <size>
-           <width>35</width>
-           <height>35</height>
+           <width>30</width>
+           <height>30</height>
           </size>
          </property>
         </widget>
@@ -136,12 +126,12 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/history.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/history.svg</iconset>
+           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/hdd.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/hdd.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>35</width>
-           <height>35</height>
+           <width>30</width>
+           <height>30</height>
           </size>
          </property>
         </widget>
@@ -171,12 +161,12 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../rc/icons/fontawesome/solid/save.svg</normaloff>../rc/icons/fontawesome/solid/save.svg</iconset>
+           <normaloff>../rc/icons/fontawesome/solid/archive.svg</normaloff>../rc/icons/fontawesome/solid/archive.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>35</width>
-           <height>35</height>
+           <width>30</width>
+           <height>30</height>
           </size>
          </property>
         </widget>
@@ -193,12 +183,12 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/folder-plus.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/folder-plus.svg</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/plus.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/plus.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>35</width>
-           <height>35</height>
+           <width>30</width>
+           <height>30</height>
           </size>
          </property>
         </widget>
@@ -215,12 +205,12 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/folder-minus.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/folder-minus.svg</iconset>
+           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/trash-alt.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/trash-alt.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>35</width>
-           <height>35</height>
+           <width>30</width>
+           <height>30</height>
           </size>
          </property>
         </widget>

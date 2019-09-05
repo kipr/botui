@@ -10,39 +10,39 @@
 #include "StopButtonWidget.h"
 
 MenuBar::MenuBar(Program *program, QWidget *parent)
-	: QWidget(parent)
-	, m_title(new QLabel("", 0))
-	, m_program(program)
-	, m_stopButton(new StopButtonWidget(m_program))
-	, m_layout(new QHBoxLayout(this))
+        : QWidget(parent)
+        , m_title(new QLabel("", 0))
+        , m_program(program)
+        , m_stopButton(new StopButtonWidget(m_program))
+        , m_layout(new QHBoxLayout(this))
 {
-	init();
+        init();
 }
 
 MenuBar::MenuBar(QWidget *parent)
-	: QWidget(parent)
-	, m_title(new QLabel("", 0))
-	, m_program(Program::instance())
-	, m_stopButton(new StopButtonWidget(m_program))
-	, m_layout(new QHBoxLayout(this))
+        : QWidget(parent)
+        , m_title(new QLabel("", 0))
+        , m_program(Program::instance())
+        , m_stopButton(new StopButtonWidget(m_program))
+        , m_layout(new QHBoxLayout(this))
 {
-	init();
+        init();
 }
 
 MenuBar::~MenuBar()
 {
-	delete m_title;
+        delete m_title;
 }
 
 void MenuBar::setTitle(const QString& title, const QPixmap& icon)
 {
-	m_title->setText(title + "  ");
-	if(!icon.isNull()) m_title->setPixmap(icon);
+        m_title->setText(title + "  ");
+        if(!icon.isNull()) m_title->setPixmap(icon);
 }
 
 QString MenuBar::title() const
 {
-	return m_title->text();
+        return m_title->text();
 }
 
 void MenuBar::addHomeAndBackButtons()
@@ -62,54 +62,53 @@ void MenuBar::addHomeAndBackButtons()
 
 void MenuBar::init()
 {
-	QPalette pal = palette();
+        QPalette pal = palette();
 
         // set black background
-	pal.setColor(QPalette::Background, Qt::black);
-	setAutoFillBackground(true);
-	setPalette(pal);
+        pal.setColor(QPalette::Background, Qt::black);
+        setAutoFillBackground(true);
+        setPalette(pal);
 
-	setLayout(m_layout);
+        setLayout(m_layout);
 
-	
 
-	// setNativeMenuBar(false);
+
+        // setNativeMenuBar(false);
         //setMinimumHeight(65);
-	m_title->setAlignment(Qt::AlignVCenter | Qt::AlignRight);
-	//m_title->setMinimumSize(50, 21);
-	QPalette palette = m_title->palette();
-	palette.setColor(m_title->foregroundRole(), Qt::white);
-	m_title->setPalette(palette);
-	// setCornerWidget(m_title);
-	m_stopButton->setMinimumSize(10, 22);
-	m_stopButton->resize(50, 22);
-	m_stopButton->setMaximumSize(100, 22);
-        setStyleSheet("QPushButton { height:35px;font-size: 30px; }");//Delete this if errors
-	m_program->connect(m_stopButton, SIGNAL(clicked()), SLOT(stop()));
-	
-	
-	// setTitle("Untitled")
+        m_title->setAlignment(Qt::AlignVCenter | Qt::AlignRight);
+        //m_title->setMinimumSize(50, 21);
+        QPalette palette = m_title->palette();
+        palette.setColor(m_title->foregroundRole(), Qt::white);
+        m_title->setPalette(palette);
+        // setCornerWidget(m_title);
+        //m_stopButton->setMinimumSize(10, 22);
+        //m_stopButton->resize(50, 22);
+        //m_stopButton->setMaximumSize(100, 22);
+        setStyleSheet("QPushButton { height:35px;font-size: 30px; }");//Delete this if error
+        //QAction *stopButton = addAction(UiStandards::stopString());
+        m_program->connect(m_stopButton, SIGNAL(clicked()), SLOT(stop()));
+        // setTitle("Untitled")
 }
 
 void MenuBar::addAction(QAction *const action)
 {
-	QPushButton *const button = new QPushButton(action->icon(), action->text(), this);
+        QPushButton *const button = new QPushButton(action->icon(), action->text(), this);
 
-	connect(button, SIGNAL(clicked()), action, SLOT(trigger()));
-	m_layout->addWidget(button);
+        connect(button, SIGNAL(clicked()), action, SLOT(trigger()));
+        m_layout->addWidget(button);
 }
 
 QAction *MenuBar::addAction(const QString &str)
 {
-	QAction *const action = new QAction(str, this);
-	addAction(action);
-	return action;
+        QAction *const action = new QAction(str, this);
+        addAction(action);
+        return action;
 }
 
 void MenuBar::clear()
 {
-	for(int i = 0; i < m_layout->count(); ++i)
-	{
-		m_layout->removeItem(m_layout->itemAt(i));
-	}
+        for(int i = 0; i < m_layout->count(); ++i)
+        {
+                m_layout->removeItem(m_layout->itemAt(i));
+        }
 }

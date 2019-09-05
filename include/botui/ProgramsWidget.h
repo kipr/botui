@@ -33,7 +33,7 @@ private slots:
 	void compileStarted(const QString &name, ConcurrentCompile *compiler);
 	void compileFinished(const Compiler::OutputList &output, ConcurrentCompile *compiler);
 	void update();
-	
+
 private:
 	Ui::ProgramsWidget *ui;
 	ArchivesModel *m_model;

@@ -1,5 +1,5 @@
 Source: botui
-Maintainer: Prithviraj Kadiyala <pkadiyala@kipr.org>
+Maintainer: Mustafa Ghazi <mghazi@kipr.org>
 Section: misc
 Priority: optional
 Standards-Version: 3.9.2
@@ -17,4 +17,4 @@ Depends: ${shlibs:Depends},
          libkar (>= 24.1),
          pcompiler (>= 24.1)
 Description: graphical interface
- Botui is a device-independent graphical interface designed initially for the Kovan controller. The icons used throughout botui are from the FontAwesome icon set by © Fonticons, Inc.
+ Botui is a device-independent graphical interface designed initially for the Kovan controller. The icons used throughout botui are from the Silk icon set by Mark James.

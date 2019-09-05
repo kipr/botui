@@ -65,8 +65,9 @@ private:
 		case SensorModel::MagnetoX: return QObject::tr("Magnetometer X");
 		case SensorModel::MagnetoY: return QObject::tr("Magnetometer Y");
 		case SensorModel::MagnetoZ: return QObject::tr("Magnetometer Z");
-		case SensorModel::ButtonLeft: return QObject::tr("Button - Left");
-		case SensorModel::ButtonRight: return QObject::tr("Button - Right");
+                //case SensorModel::ButtonLeft: return QObject::tr("Button - Left");
+                case SensorModel::Button: return QObject::tr("Button");
+
 #endif
 		default: break;
 		}
@@ -247,14 +248,15 @@ void SensorModel::populateMagneto()
 
 void SensorModel::populateButtons()
 {
-	appendRow(QList<QStandardItem *>()
-		<< new SensorNameItem(SensorModel::ButtonLeft)
-		<< new SensorValueItem<bool>(new ::IdButton(Button::Type::Left, ""), true));
+//        appendRow(QList<QStandardItem *>()
+ //               << new SensorNameItem(SensorModel::ButtonLeft)
+ //               << new SensorValueItem<bool>(new ::IdButton(Button::Type::Left, ""), true));
 //		<< new SensorValueItem<bool>(&(::Button::Left), true));
-	appendRow(QList<QStandardItem *>()
-		<< new SensorNameItem(SensorModel::ButtonRight)
+        appendRow(QList<QStandardItem *>()
+                << new SensorNameItem(SensorModel::Button)
 //		<< new SensorValueItem<bool>(&(::Button::Right), true));
-		<< new SensorValueItem<bool>(new ::IdButton(Button::Type::Right, ""), true));
+                << new SensorValueItem<bool>(new ::IdButton(Button::Type::Right, ""), true));
+
 
 }
 

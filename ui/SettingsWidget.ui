@@ -39,12 +39,12 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/camera-retro.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/camera-retro.svg</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/camera.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/camera.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>40</width>
-           <height>40</height>
+           <width>35</width>
+           <height>35</height>
           </size>
          </property>
         </widget>
@@ -65,8 +65,8 @@
          </property>
          <property name="iconSize">
           <size>
-           <width>40</width>
-           <height>40</height>
+           <width>35</width>
+           <height>35</height>
           </size>
          </property>
         </widget>
@@ -83,12 +83,12 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/laptop-code.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/laptop-code.svg</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/table.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/table.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>40</width>
-           <height>40</height>
+           <width>35</width>
+           <height>35</height>
           </size>
          </property>
         </widget>
@@ -105,12 +105,12 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/arrows-alt.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/arrows-alt.svg</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/compress.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/compress.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>40</width>
-           <height>40</height>
+           <width>35</width>
+           <height>35</height>
           </size>
          </property>
         </widget>
@@ -127,12 +127,12 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/window-minimize.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/window-minimize.svg</iconset>
+           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/window-minimize.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/window-minimize.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>40</width>
-           <height>40</height>
+           <width>35</width>
+           <height>35</height>
           </size>
          </property>
         </widget>
@@ -166,12 +166,12 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/hdd.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/hdd.svg</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/globe-americas.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/globe-americas.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>40</width>
-           <height>40</height>
+           <width>35</width>
+           <height>35</height>
           </size>
          </property>
         </widget>
@@ -192,8 +192,8 @@
          </property>
          <property name="iconSize">
           <size>
-           <width>40</width>
-           <height>40</height>
+           <width>35</width>
+           <height>35</height>
           </size>
          </property>
         </widget>
@@ -210,12 +210,12 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/atlas.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/atlas.svg</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/book.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/book.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>40</width>
-           <height>40</height>
+           <width>35</width>
+           <height>35</height>
           </size>
          </property>
         </widget>
@@ -236,8 +236,8 @@
          </property>
          <property name="iconSize">
           <size>
-           <width>40</width>
-           <height>40</height>
+           <width>35</width>
+           <height>35</height>
           </size>
          </property>
         </widget>
@@ -258,8 +258,8 @@
          </property>
          <property name="iconSize">
           <size>
-           <width>40</width>
-           <height>40</height>
+           <width>35</width>
+           <height>35</height>
           </size>
          </property>
         </widget>

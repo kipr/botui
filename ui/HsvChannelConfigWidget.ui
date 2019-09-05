@@ -94,13 +94,7 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/glasses.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/glasses.svg</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>35</width>
-           <height>35</height>
-          </size>
+           <normaloff>:/icons/color_wheel.png</normaloff>:/icons/color_wheel.png</iconset>
          </property>
         </widget>
        </item>
@@ -116,12 +110,12 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/book-open.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/book-open.svg</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/cog.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/cog.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>35</width>
-           <height>35</height>
+           <width>25</width>
+           <height>25</height>
           </size>
          </property>
         </widget>
@@ -151,12 +145,12 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/check.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/check.svg</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/save.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/save.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>35</width>
-           <height>35</height>
+           <width>25</width>
+           <height>25</height>
           </size>
          </property>
         </widget>
@@ -362,15 +356,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>LineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>LineEdit.h</header>
-  </customwidget>
-  <customwidget>
    <class>CameraWidget</class>
    <extends>QWidget</extends>
    <header>CameraWidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>LineEdit.h</header>
   </customwidget>
   <customwidget>
    <class>QHsvPicker</class>

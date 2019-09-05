@@ -58,8 +58,8 @@
          </property>
          <property name="iconSize">
           <size>
-           <width>35</width>
-           <height>35</height>
+           <width>25</width>
+           <height>25</height>
           </size>
          </property>
         </widget>
@@ -76,12 +76,12 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/edit.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/edit.svg</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/pencil-alt.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/pencil-alt.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>35</width>
-           <height>35</height>
+           <width>25</width>
+           <height>25</height>
           </size>
          </property>
         </widget>
@@ -98,12 +98,12 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/check-square.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/check-square.svg</iconset>
+           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/star.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/star.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>35</width>
-           <height>35</height>
+           <width>25</width>
+           <height>25</height>
           </size>
          </property>
         </widget>
@@ -133,12 +133,12 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/folder-plus.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/folder-plus.svg</iconset>
+           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/plus.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/plus.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>35</width>
-           <height>35</height>
+           <width>25</width>
+           <height>25</height>
           </size>
          </property>
         </widget>
@@ -155,12 +155,12 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/folder-minus.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/folder-minus.svg</iconset>
+           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/trash-alt.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/trash-alt.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>35</width>
-           <height>35</height>
+           <width>25</width>
+           <height>25</height>
           </size>
          </property>
         </widget>

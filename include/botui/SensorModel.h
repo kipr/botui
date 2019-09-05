@@ -21,8 +21,7 @@ public:
 		MagnetoX,
 		MagnetoY,
 		MagnetoZ,
-		ButtonLeft,
-		ButtonRight,
+		Button,
 #endif
 		Other
 	};

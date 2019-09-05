@@ -90,12 +90,12 @@
        </property>
        <property name="icon">
         <iconset resource="../rc/icons.qrc">
-         <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/share-square.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/share-square.svg</iconset>
+         <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/share.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/share.svg</iconset>
        </property>
        <property name="iconSize">
         <size>
-         <width>35</width>
-         <height>35</height>
+         <width>25</width>
+         <height>25</height>
         </size>
        </property>
       </widget>

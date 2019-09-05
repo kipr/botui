@@ -140,12 +140,12 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <property name="iconSize">
       <size>
-       <width>30</width>
-       <height>30</height>
+       <width>25</width>
+       <height>25</height>
       </size>
      </property>
      <property name="elideMode">
@@ -160,7 +160,7 @@
      <widget class="QWidget" name="powerTab">
       <attribute name="icon">
        <iconset resource="../rc/icons.qrc">
-        <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/wrench.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/wrench.svg</iconset>
+        <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/charging-station.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/charging-station.svg</iconset>
       </attribute>
       <attribute name="title">
        <string>Power</string>
@@ -187,13 +187,7 @@
            </property>
            <property name="icon">
             <iconset resource="../rc/icons.qrc">
-             <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/pause-circle.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/pause-circle.svg</iconset>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>35</width>
-             <height>35</height>
-            </size>
+             <normaloff>:/icons/stop.png</normaloff>:/icons/stop.png</iconset>
            </property>
           </widget>
          </item>
@@ -217,12 +211,12 @@
            </property>
            <property name="icon">
             <iconset resource="../rc/icons.qrc">
-             <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/arrow-right.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/arrow-right.svg</iconset>
+             <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/angle-double-right.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/angle-double-right.svg</iconset>
            </property>
            <property name="iconSize">
             <size>
-             <width>35</width>
-             <height>35</height>
+             <width>25</width>
+             <height>25</height>
             </size>
            </property>
           </widget>
@@ -240,12 +234,12 @@
            </property>
            <property name="icon">
             <iconset resource="../rc/icons.qrc">
-             <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/arrow-left.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/arrow-left.svg</iconset>
+             <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/angle-double-left.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/angle-double-left.svg</iconset>
            </property>
            <property name="iconSize">
             <size>
-             <width>35</width>
-             <height>35</height>
+             <width>25</width>
+             <height>25</height>
             </size>
            </property>
           </widget>
@@ -257,7 +251,7 @@
      <widget class="QWidget" name="velTab">
       <attribute name="icon">
        <iconset resource="../rc/icons.qrc">
-        <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/rocket.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/rocket.svg</iconset>
+        <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/fighter-jet.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/fighter-jet.svg</iconset>
       </attribute>
       <attribute name="title">
        <string>Velocity</string>
@@ -430,12 +424,12 @@
            </property>
            <property name="icon">
             <iconset resource="../rc/icons.qrc">
-             <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/stop-circle.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/stop-circle.svg</iconset>
+             <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/stop-circle.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/stop-circle.svg</iconset>
            </property>
            <property name="iconSize">
             <size>
-             <width>35</width>
-             <height>35</height>
+             <width>25</width>
+             <height>25</height>
             </size>
            </property>
           </widget>
@@ -475,8 +469,8 @@
            </property>
            <property name="iconSize">
             <size>
-             <width>35</width>
-             <height>35</height>
+             <width>25</width>
+             <height>25</height>
             </size>
            </property>
           </widget>

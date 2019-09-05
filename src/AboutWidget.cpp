@@ -10,7 +10,8 @@ AboutWidget::AboutWidget(Device *device, QWidget *parent)
 	ui(new Ui::AboutWidget)
 {
 	ui->setupUi(this);
-        ui->deviceName->setText("Wombat v24.7");
+        //ui->deviceName->setText(device->name() + " v" + device->version());
+        ui->deviceName->setText("Wombat v24.8");
   
 #ifdef WALLABY
   const QString id = device->id();
