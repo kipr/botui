@@ -118,7 +118,7 @@ void BatteryWidget::paintEvent(QPaintEvent *event)
 	const float barWidth = adjustedWidth * percentage;
 	QRect rect(offset + CHEMISTRY_TEXT_SIZE, offset, (barWidth > offset ? barWidth : offset) - offset - 1, h - offset * 2);
 	painter.drawRect(rect);
-	
+	/*
 	painter.setPen(Qt::black);
 	painter.setBrush(Qt::NoBrush);
 	
@@ -135,6 +135,7 @@ void BatteryWidget::paintEvent(QPaintEvent *event)
 		painter.drawRect(3.0 * adjustedWidth / 7.0 - offset, 6, adjustedWidth / 7.0 + offset * 2, 3);
 		painter.drawRect(3.5 * adjustedWidth / 7.0 - 1, 9, 1, 2);
 	}
+	*/
 }
 
 void BatteryWidget::constrain()
