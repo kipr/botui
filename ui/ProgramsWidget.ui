@@ -32,7 +32,16 @@
       <number>2</number>
      </property>
      <item>
-      <widget class="QListView" name="programs"/>
+      <widget class="QListView" name="programs">
+       <property name="font">
+        <font>
+         <family>Segoe Script</family>
+         <pointsize>22</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
+        </font>
+       </property>
+      </widget>
      </item>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout">
