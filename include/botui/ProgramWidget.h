@@ -3,6 +3,8 @@
 
 #include "StandardWidget.h"
 #include <QProcess>
+#include <QAction>
+#include <QPushButton>
 #include "ButtonProvider.h"
 
 namespace Ui
@@ -22,6 +24,7 @@ public:
 public slots:
 	void lock();
 	void started();
+	void stoppressed();
 	
 private slots:
 	void finished(int exitCode, QProcess::ExitStatus exitStatus);
@@ -46,6 +49,8 @@ private slots:
 private:
 	Ui::ProgramWidget *ui;
 	Program *m_program;
+	bool m_running;
+	//QPushButton *m_button;
 };
 
 #endif

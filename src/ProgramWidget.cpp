@@ -15,7 +15,8 @@
 ProgramWidget::ProgramWidget(Program *program, Device *device, QWidget *parent)
   : StandardWidget(device, parent),
   ui(new Ui::ProgramWidget),
-  m_program(program)
+  m_program(program),
+  m_running(m_program->isRunning())
 {
   ui->setupUi(this);
   performStandardSetup(tr("Program"), false);
@@ -23,9 +24,10 @@ ProgramWidget::ProgramWidget(Program *program, Device *device, QWidget *parent)
   // connect(lock, SIGNAL(triggered()), SLOT(lock()));
   
   ui->extra->setVisible(false);
-  QAction *stop = menuBar()->addAction(UiStandards::stopString());
-  connect(stop, SIGNAL(triggered()), SLOT(stop(m_program)));
-  
+
+  //Stop Button
+  QAction *m_button = menuBar()->addAction("Stop");
+  connect(m_button, SIGNAL(triggered()), SLOT(stoppressed()));
   connect(m_program, SIGNAL(started()), SLOT(started()));
   connect(m_program,
     SIGNAL(finished(int, QProcess::ExitStatus)),
@@ -75,6 +77,16 @@ ProgramWidget::ProgramWidget(Program *program, Device *device, QWidget *parent)
   }
 }
 
+void ProgramWidget::stoppressed()
+{
+	ui->console->insertPlainText(QString("Stop is being pressed\n"));
+	ui->console->setProcess(0);
+  	m_program->stop();
+  	ui->console->insertPlainText(QString("Program exited\n"));
+	m_running = false;
+	update();
+}
+
 void ProgramWidget::lock()
 {
   LockScreen::lock();
@@ -91,7 +103,7 @@ void ProgramWidget::finished(int exitCode, QProcess::ExitStatus exitStatus)
 {
   ui->console->setProcess(0);
   m_program->stop();
-  ui->console->insertPlainText(QString("Program exited with code %1").arg(exitCode));
+  ui->console->insertPlainText(QString("Program exited with code %1\n").arg(exitCode));
 }
 
 void ProgramWidget::buttonTextChanged(const ButtonProvider::ButtonId& id, const QString& text)
