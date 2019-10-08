@@ -9,6 +9,8 @@
 #include "RootController.h"
 
 #include <QApplication>
+#include <QProcess>
+#include <QMessageBox>
 
 
 
@@ -31,14 +33,16 @@ GuiSettingsWidget::GuiSettingsWidget(Device *device, QWidget *parent)
 {
 	ui->setupUi(this);
 	performStandardSetup(tr("GUI Settings"));
-	
+        connect(ui->invert_screen, SIGNAL(clicked()), SLOT(on_invert_screen_clicked()));
 	connect(ui->colors, SIGNAL(currentIndexChanged(int)), SLOT(colorChanged(int)));
-  connect(ui->fullscreen, SIGNAL(stateChanged(int)), SLOT(fullscreenChanged(int)));
-	
+  	connect(ui->fullscreen, SIGNAL(stateChanged(int)), SLOT(fullscreenChanged(int)));
+	ui->colors->setVisible(false);
+	ui->label->setVisible(false);	
+
 	SettingsProvider *settings = device->settingsProvider();
 	if(!settings) {
-		ui->colors->setEnabled(false);
-    ui->fullscreen->setEnabled(false);
+        ui->colors->setVisible(false);
+    	ui->fullscreen->setEnabled(false);
 		return;
 	}
 	
@@ -92,6 +96,23 @@ void GuiSettingsWidget::fullscreenChanged(int state)
   settings->sync();
   
   RootController::ref().setFullscreen(fullscreen);
+}
+
+void GuiSettingsWidget::on_invert_screen_clicked()
+{
+#ifdef WALLABY
+  if(QMessageBox::question(this, "Reboot?", "Please wait for 5 seconds.\n\nContinue?", QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
+    return;
+  
+  const int ret = QProcess::startDetached("/bin/sh", QStringList()<< "/home/pi/got2/Screen_settings/find.sh");
+  if(ret < 0)
+    QMessageBox::information(this, "Failed", "Reboot failed.");
+#else
+  QMessageBox::information(this, "Not Available", "Shut down is only available on the kovan.");
+#endif
+        
+	//QProcess process;
+        //process.startDetached("/bin/sh", QStringList()<< "/home/pi/got2/Screen_settings/find.sh");
 }
 
 void GuiSettingsWidget::updateWidgets()

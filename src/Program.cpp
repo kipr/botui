@@ -20,13 +20,12 @@ bool Program::start(const QString& path, const QStringList &arguments)
 	if(path.isEmpty()) return false;
 	stop();
 	m_process = new QProcess(this);
-  QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-  const QString libPath = env.value("LD_LIBRARY_PATH");
-  env.insert("LD_LIBRARY_PATH", (libPath.isEmpty() ? "" : libPath + ":")
-    + SystemPrefix::ref().rootManager()->libDirectoryPaths().join(":"));
-  m_process->setProcessEnvironment(env);
+        QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+        const QString libPath = env.value("LD_LIBRARY_PATH");
+        env.insert("LD_LIBRARY_PATH", (libPath.isEmpty() ? "" : libPath + ":") + SystemPrefix::ref().rootManager()->libDirectoryPaths().join(":"));
+        m_process->setProcessEnvironment(env);
 	m_process->setProcessChannelMode(QProcess::MergedChannels);
-	connect(m_process, SIGNAL(finished(int, QProcess::ExitStatus)), SIGNAL(finished(int, QProcess::ExitStatus)));
+	connect(m_process, SIGNAL(finished(int, QProcess::ExitStatus)), SIGNAL(finished(int, 		QProcess::ExitStatus)));
 	connect(m_process, SIGNAL(readyRead()), SIGNAL(readyRead()));
 	
 	set_auto_publish(true);

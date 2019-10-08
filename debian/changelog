@@ -1,5 +1,5 @@
-botui (24.8-1) UNRELEASED; urgency=low
+botui (25.0-1) UNRELEASED; urgency=low
 
   * Initial release. (Closes: #XXXXXX)
 
- -- Prithviraj Kadiyala <pkadiyala@kipr.org>  Wed, 28 Aug 2019 17:43:19 -0500
+ -- Prithviraj Kadiyala <pkadiyala@kipr.org>  Wed, 23 Sep 2019 17:43:19 -0500

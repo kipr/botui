@@ -73,7 +73,7 @@
       <string notr="true">font: 75 35pt &quot;Courier&quot;;</string>
      </property>
      <property name="text">
-      <string>Wombat v 24.8</string>
+      <string>Wombat v 25.0</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>

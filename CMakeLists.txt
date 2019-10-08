@@ -38,6 +38,8 @@ include_directories(
 if(NOT qt5)
   cmake_minimum_required(VERSION 2.6.0)
   find_package(Qt4 REQUIRED)
+  find_package( PythonInterp 2.7 REQUIRED )
+  find_package( PythonLibs 2.7 REQUIRED )
   set(QT_USE_QTDECLARATIVE TRUE)
   set(QT_USE_QTNETWORK TRUE)
   set(QT_USE_QTDBUS TRUE)

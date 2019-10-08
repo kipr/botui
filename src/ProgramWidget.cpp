@@ -28,6 +28,7 @@ ProgramWidget::ProgramWidget(Program *program, Device *device, QWidget *parent)
   //Stop Button
   QAction *m_button = menuBar()->addAction("Stop");
   connect(m_button, SIGNAL(triggered()), SLOT(stoppressed()));
+  
   connect(m_program, SIGNAL(started()), SLOT(started()));
   connect(m_program,
     SIGNAL(finished(int, QProcess::ExitStatus)),
@@ -79,12 +80,10 @@ ProgramWidget::ProgramWidget(Program *program, Device *device, QWidget *parent)
 
 void ProgramWidget::stoppressed()
 {
-	ui->console->insertPlainText(QString("Stop is being pressed\n"));
+        ui->console->insertPlainText(QString("\nStop is being pressed\n"));
 	ui->console->setProcess(0);
   	m_program->stop();
   	ui->console->insertPlainText(QString("Program exited\n"));
-	m_running = false;
-	update();
 }
 
 void ProgramWidget::lock()

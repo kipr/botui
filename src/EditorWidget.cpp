@@ -28,6 +28,9 @@ EditorWidget::EditorWidget(Device *device, QWidget *parent)
 	QAction *addFile = m_menuBar->addAction(tr("Add File"));
 	connect(addFile, SIGNAL(triggered()), SLOT(addFile()));
 	
+	QAction *m_button = m_menuBar->addAction("Cancel");
+  	connect(m_button, SIGNAL(triggered()), RootController::ptr(), SLOT(dismissWidget()));	
+	
 	QAction *removeFile = m_menuBar->addAction(tr("Delete File"));
 	connect(removeFile, SIGNAL(triggered()), SLOT(removeFile()));
 	

@@ -63,7 +63,7 @@ ProgramsWidget::ProgramsWidget(Device *device, QWidget *parent)
 	ui->remove->setVisible(false);
 	ui->args->setVisible(false);
 	ui->transfer->setVisible(false);
-	ui->compile->setVisible(true);
+	ui->compile->setVisible(false);
 
 	connect(ui->programs->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
 		SLOT(update()));
