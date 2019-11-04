@@ -265,6 +265,34 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="backup">
+         <property name="minimumSize">
+          <size>
+           <width>388</width>
+           <height>59</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Backup</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../rc/icons.qrc">
+           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/file-archive.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/file-archive.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>35</width>
+           <height>35</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>

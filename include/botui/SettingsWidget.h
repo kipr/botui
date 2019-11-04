@@ -22,10 +22,11 @@ public slots:
 	void gui();
 	void calibrate();
 	void language();
-  void update();
-  void hideUi();
-  void battery();
-  void cameraView();
+  	void update();
+  	void hideUi();
+  	void battery();
+  	void cameraView();
+	void backup();
 	
 private:
 	Ui::SettingsWidget *ui;

@@ -38,10 +38,11 @@ SettingsWidget::SettingsWidget(Device *device, QWidget *parent)
 	connect(ui->gui, SIGNAL(clicked()), SLOT(gui()));
 	connect(ui->calibrate, SIGNAL(clicked()), SLOT(calibrate()));
 	connect(ui->language, SIGNAL(clicked()), SLOT(language()));
-  connect(ui->update, SIGNAL(clicked()), SLOT(update()));
-  connect(ui->hideUi, SIGNAL(clicked()), SLOT(hideUi()));
-  connect(ui->battery, SIGNAL(clicked()), SLOT(battery()));
-  connect(ui->cameraView, SIGNAL(clicked()), SLOT(cameraView()));
+        connect(ui->update, SIGNAL(clicked()), SLOT(update()));
+        connect(ui->hideUi, SIGNAL(clicked()), SLOT(hideUi()));
+        connect(ui->battery, SIGNAL(clicked()), SLOT(battery()));
+        connect(ui->cameraView, SIGNAL(clicked()), SLOT(cameraView()));
+        connect(ui->backup, SIGNAL(clicked()), SLOT(backup()));
 
 	//TODO show buttons once the widgets are fixed
 	//ui->network->setVisible(false);
@@ -105,4 +106,8 @@ void SettingsWidget::battery()
 void SettingsWidget::cameraView()
 {
   RootController::ref().presentWidget(new CameraSettingsWidget(device()));
+}
+void SettingsWidget::backup()
+{
+  RootController::ref().presentWidget(new BackupWidget(device()));
 }
