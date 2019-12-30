@@ -132,5 +132,5 @@ bool WallabyUpdateWidget::unmountUsb(const QString device)
   return proc.waitForFinished(5000) && proc.exitCode() == 0;
 }
 
-const QString WallabyUpdateWidget::updateFileName = "wallaby_update.sh";
+const QString WallabyUpdateWidget::updateFileName = "wombat_update.sh";
 const QDir WallabyUpdateWidget::mountDir = QDir("/mnt");

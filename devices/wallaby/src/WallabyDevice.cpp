@@ -44,7 +44,8 @@ Wallaby::Device::Device()
   m_settingsProvider(new Wallaby::SettingsProvider()),
   m_buttonProvider(new Wallaby::ButtonProvider()),
   m_version(getVersionNum()),
-  m_id(getId())
+  m_id(getId()),
+  m_serial(getSerial())
 {
   m_compileProvider->setBinariesPath("/wallaby/bin");
   connect(m_settingsProvider, SIGNAL(settingsChanged()), SLOT(settingsChanged()));
@@ -70,7 +71,7 @@ Wallaby::Device::~Device()
 
 QString Wallaby::Device::name() const
 {
-  return tr("Wallaby");
+  return tr("Wombat");
 }
 
 QString Wallaby::Device::version() const
@@ -81,6 +82,11 @@ QString Wallaby::Device::version() const
 QString Wallaby::Device::id() const
 {
   return m_id;
+}
+
+QString Wallaby::Device::serial() const
+{
+  return m_serial;
 }
 
 bool Wallaby::Device::isTouchscreen() const
@@ -168,6 +174,24 @@ QString Wallaby::Device::getId() const
   else
   {
     qWarning() << "Failed to get wallaby id";
+    return QString();
+  }
+}
+
+QString Wallaby::Device::getSerial() const
+  {
+    const QFileInfo getIdScript("/usr/bin/wallaby_get_serial.sh");
+    if(!getIdScript.exists() || !getIdScript.isFile()) {
+      qWarning() << "wallaby_get_serial script does not exist";
+      return QString();
+    }
+  QProcess proc;
+  proc.start("/bin/sh", QStringList() << getIdScript.absoluteFilePath());
+  if(proc.waitForFinished(5000))
+    return proc.readAllStandardOutput();
+  else
+  {
+    qWarning() << "Failed to get wallaby serial";
     return QString();
   }
 }

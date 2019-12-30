@@ -24,7 +24,6 @@ private slots:
 	
 private:
 	static void updateWidgets();
-	
 	Ui::GuiSettingsWidget *ui;
 };
 

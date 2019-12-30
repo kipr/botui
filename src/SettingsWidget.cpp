@@ -16,6 +16,7 @@
 #include "WallabyUpdateWidget.h"
 #include "BatterySettingsWidget.h"
 #include "CameraSettingsWidget.h"
+#include "BackupWidget.h"
 
 #include <QDebug>
 

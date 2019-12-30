@@ -11,3 +11,7 @@ v24.9
 *Camera channel font is increased
 *STOP button is currently functioning in the console page.
 *Added a shortcut on the Desktop to launch the BOTUI (named as KIPR UI).
+
+v25.2
+*Update feature fixed to recognize the Wombat update folder.
+*Backup, Restore and Clear option now works(Inside the Settings menu).

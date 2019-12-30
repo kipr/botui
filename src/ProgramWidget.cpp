@@ -80,7 +80,7 @@ ProgramWidget::ProgramWidget(Program *program, Device *device, QWidget *parent)
 
 void ProgramWidget::stoppressed()
 {
-        ui->console->insertPlainText(QString("\nStop is being pressed\n"));
+        ui->console->insertPlainText(QString("\nStop button pressed\n"));
 	ui->console->setProcess(0);
   	m_program->stop();
   	ui->console->insertPlainText(QString("Program exited\n"));

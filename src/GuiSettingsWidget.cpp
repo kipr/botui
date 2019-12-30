@@ -99,20 +99,9 @@ void GuiSettingsWidget::fullscreenChanged(int state)
 }
 
 void GuiSettingsWidget::on_invert_screen_clicked()
-{
-#ifdef WALLABY
-  if(QMessageBox::question(this, "Reboot?", "Please wait for 5 seconds.\n\nContinue?", QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
-    return;
-  
-  const int ret = QProcess::startDetached("/bin/sh", QStringList()<< "/home/pi/got2/Screen_settings/find.sh");
-  if(ret < 0)
-    QMessageBox::information(this, "Failed", "Reboot failed.");
-#else
-  QMessageBox::information(this, "Not Available", "Shut down is only available on the kovan.");
-#endif
-        
-	//QProcess process;
-        //process.startDetached("/bin/sh", QStringList()<< "/home/pi/got2/Screen_settings/find.sh");
+{      
+        QProcess process;
+        process.startDetached("/bin/sh", QStringList()<< "/home/pi/got2/Screen_settings/find.sh");
 }
 
 void GuiSettingsWidget::updateWidgets()

@@ -13,6 +13,7 @@
 #include "ManageNetworksWidget.h"
 #include "NetworkManager.h"
 #include "SystemUtils.h"
+#include "Execute.h"
 
 #include <QTimer>
 
@@ -118,9 +119,10 @@ void NetworkSettingsWidget::updateInformation()
 	ui->connect->setEnabled(on);
 
 	const QString id = device()->id();
+	const QString serial = device()->serial();
 	if(!id.isEmpty()) {
 		const QString password = SystemUtils::sha256(id).left(6) + "00";
-                const QString ssid = id + "-wombat";
+                const QString ssid = serial + "-wombat";
 		ui->ssid->setText(ssid);
 		ui->password->setText(password);
 	}

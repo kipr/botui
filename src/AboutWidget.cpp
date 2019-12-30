@@ -10,14 +10,16 @@ AboutWidget::AboutWidget(Device *device, QWidget *parent)
 	ui(new Ui::AboutWidget)
 {
 	ui->setupUi(this);
+	const QString serial = device->serial();
+        ui->wombatSerial->setText(serial);
         //ui->deviceName->setText(device->name() + " v" + device->version());
-        ui->deviceName->setText("Wombat v25.1");
+        ui->deviceName->setText("Wombat v25.3");
   
 #ifdef WALLABY
-  const QString id = device->id();
+  const QString id = device-> id();
   if(!id.isEmpty()) {
     const QString password = SystemUtils::sha256(id).left(6) + "00";
-    const QString ssid = id + "-wombat";
+    const QString ssid = device->serial() + "-wombat";
     ui->ssid->setText(ssid);
     ui->password->setText(password);
   }
