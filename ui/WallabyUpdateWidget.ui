@@ -66,10 +66,10 @@
            </font>
           </property>
           <property name="text">
-           <string>Update</string>
+           <string>USB Update</string>
           </property>
           <property name="icon">
-           <iconset resource="../rc/icons.qrc">
+           <iconset>
             <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/cloud-download-alt.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/cloud-download-alt.svg</iconset>
           </property>
           <property name="iconSize">
@@ -91,7 +91,7 @@
            <string>Refresh</string>
           </property>
           <property name="icon">
-           <iconset resource="../rc/icons.qrc">
+           <iconset>
             <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/sync-alt.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/sync-alt.svg</iconset>
           </property>
           <property name="iconSize">
@@ -114,6 +114,18 @@
            </size>
           </property>
          </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="ethernet">
+          <property name="font">
+           <font>
+            <pointsize>33</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Online Update</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
