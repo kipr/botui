@@ -65,7 +65,7 @@ void WallabyUpdateWidget::update()
       m_updateProc->setWorkingDirectory(subDir.absolutePath());
       ui->updateConsole->setProcess(m_updateProc);
       connect(m_updateProc, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(updateFinished(int, QProcess::ExitStatus)));
-      m_updateProc->start("git clone https://github.com/Zacharyprime/KIPR-Update.git && cd KIPR-Update && sudo ./wallaby_update.sh");
+      m_updateProc->start("sh", QStringList() << WallabyUpdateWidget::updateFileName);
       
       // Update script will reboot the controller
     }
