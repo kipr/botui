@@ -22,6 +22,7 @@ public:
 public slots:
   void update();
   void refresh();
+  void ethernet();
   
 private slots:
   void updateFinished(int exitCode, QProcess::ExitStatus exitStatus);
