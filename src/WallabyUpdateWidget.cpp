@@ -17,6 +17,7 @@ WallabyUpdateWidget::WallabyUpdateWidget(Device *device, QWidget *parent)
   
   connect(ui->update, SIGNAL(clicked()), SLOT(update()));
   connect(ui->refresh, SIGNAL(clicked()), SLOT(refresh()));
+  connect(ui->ethernet, SIGNAL(clicked()), SLOT(ethernet()));	
 }
 
 WallabyUpdateWidget::~WallabyUpdateWidget()
@@ -41,7 +42,8 @@ void WallabyUpdateWidget::update()
   // Disable buttons
   ui->update->setEnabled(false);
   ui->refresh->setEnabled(false);
-  
+  ui->ethernet->setEnabled(false);
+
   // Mount USB drive
   if(!this->mountUsb("/dev/sda1", WallabyUpdateWidget::mountDir) && !this->mountUsb("/dev/sdb1", WallabyUpdateWidget::mountDir))
     QMessageBox::warning(this, "USB not found", "Failed to mount USB device");
@@ -63,7 +65,7 @@ void WallabyUpdateWidget::update()
       m_updateProc->setWorkingDirectory(subDir.absolutePath());
       ui->updateConsole->setProcess(m_updateProc);
       connect(m_updateProc, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(updateFinished(int, QProcess::ExitStatus)));
-      m_updateProc->start("sh", QStringList() << WallabyUpdateWidget::updateFileName);
+      m_updateProc->start("git clone https://github.com/Zacharyprime/KIPR-Update.git && cd KIPR-Update && sudo ./wallaby_update.sh");
       
       // Update script will reboot the controller
     }
@@ -134,3 +136,28 @@ bool WallabyUpdateWidget::unmountUsb(const QString device)
 
 const QString WallabyUpdateWidget::updateFileName = "wombat_update.sh";
 const QDir WallabyUpdateWidget::mountDir = QDir("/mnt");
+
+void WallabyUpdateWidget::ethernet(){
+	if(QMessageBox::question(this, "Update?",
+    QString("Is the ethernet cable plugged into the controller?"),
+    QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
+      return;
+
+
+
+	// Change UI to show output
+      ui->updateConsole->setVisible(true);
+      ui->selectionWidget->setVisible(false);
+      ui->statusLabel->setText("Update progress:");
+      
+      // Run update process
+      m_updateProc = new QProcess();
+      m_updateProc->setProcessChannelMode(QProcess::MergedChannels);
+      ui->updateConsole->setProcess(m_updateProc);
+      connect(m_updateProc, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(updateFinished(int, QProcess::ExitStatus)));
+      m_updateProc->start("sh /home/pi/updateMe.sh");
+
+
+}
+
+
