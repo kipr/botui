@@ -18,7 +18,7 @@ public:
 
 public slots:
 	void backupoption();
-	void cleardrive();
+	//void cleardrive();
 	void restore();
 	
 private:

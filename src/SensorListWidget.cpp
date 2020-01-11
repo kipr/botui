@@ -45,11 +45,11 @@ SensorListWidget::SensorListWidget(Device *device, QWidget *parent)
         setStyleSheet("QScrollBar:vertical {border: 2px solid grey;background:grey ;width: 100px; margin: 22px 0 22px 0; } QScrollBar::handle:vertical { border: 2px solid grey;background: white; min-height: 20px; } QScrollBar::add-line:vertical { border: 2px solid grey;background: #32CC99; height: 20px; subcontrol-position: bottom; subcontrol-origin: margin; } QScrollBar::sub-line:vertical {border: 2px solid grey; background: #32CC99; height: 20px; subcontrol-position: top; subcontrol-origin: margin; } QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical { border: 2px solid grey;width: 3px; height: 3px; background: white; }QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {border: 2px solid grey; background: none;}");
 	
 	ui->sensors->setModel(_model);
-  ui->sensors->setItemDelegate(new SensorItemDelegate(_model, this));
+  	ui->sensors->setItemDelegate(new SensorItemDelegate(_model, this));
 	
-  QTimer *timer = new QTimer(this);
-  _model->connect(timer, SIGNAL(timeout()), SLOT(update()));
-  timer->start(200); // 5 FPS
+  	QTimer *timer = new QTimer(this);
+  	_model->connect(timer, SIGNAL(timeout()), SLOT(update()));
+  	timer->start(200); // 5 FPS
 }
 
 SensorListWidget::~SensorListWidget()

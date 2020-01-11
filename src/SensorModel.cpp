@@ -26,7 +26,7 @@ class SensorNameItem : public QStandardItem
 public:
 	SensorNameItem(SensorModel::SensorType type, const int port = -1)
 		: m_type(type)
-    , m_port(port)
+    		, m_port(port)
 		, m_typeName(typeName(type))
 		, m_optionName(optionName(type))
 	{
@@ -80,7 +80,7 @@ private:
 	}
 	
 	SensorModel::SensorType m_type;
-  int m_port;
+  	int m_port;
 	QString m_typeName;
 	QString m_optionName;
 };

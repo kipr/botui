@@ -1,6 +1,8 @@
 #include "CameraLiveWidget.h"
+#include "kipr/camera.h"
 
 #include <QDebug>
+#include <QStringListModel>
 
 #include "ui_CameraLiveWidget.h"
 #include "Device.h"
@@ -19,6 +21,12 @@ CameraLiveWidget::CameraLiveWidget(Device *device, QWidget *parent)
   ui->config->setRootModelIndex(m_model->index(m_model->rootPath()));
   ui->config->setCurrentIndex(m_model->defaultConfiguration().row());
   
+  ui->comboBox->addItem("0");
+  ui->comboBox->addItem("1");
+  ui->comboBox->addItem("2");
+  ui->comboBox->addItem("3");
+
+  
   connect(ui->config, SIGNAL(currentIndexChanged(int)), SLOT(currentIndexChanged(int)));
   
   const SettingsProvider *const settingsProvider = device->settingsProvider();
@@ -28,11 +36,24 @@ CameraLiveWidget::CameraLiveWidget(Device *device, QWidget *parent)
     ui->camera->setShowBbox(showBbox);
     ui->camera->setNumBlobLabels(numLabels);
   }
+
+  QTimer *timer = new QTimer(this);
+  ui->ValueUpdates->connect(timer, SIGNAL(timeout()), SLOT(update()));
+  timer->start(200);
 }
 
 CameraLiveWidget::~CameraLiveWidget()
 {
   delete ui;
+}
+
+void CameraLiveWidget::update()
+{
+	int value = 0;
+	value = ui->comboBox->currentIndex();
+	QString values = QString::number(value);
+  	ui->ValueUpdates->setText(values);
+	ui->ValueUpdates->show();
 }
 
 void CameraLiveWidget::currentIndexChanged(const int &index)

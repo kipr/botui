@@ -35,7 +35,7 @@ BackupWidget::BackupWidget(Device *device, QWidget *widget)
 	
         connect(ui->backupoption, SIGNAL(clicked()), SLOT(backupoption()));
         connect(ui->restore, SIGNAL(clicked()), SLOT(restore()));
-        connect(ui->cleardrive, SIGNAL(clicked()), SLOT(cleardrive()));
+        //connect(ui->cleardrive, SIGNAL(clicked()), SLOT(cleardrive()));
 }
 
 BackupWidget::~BackupWidget()
@@ -61,11 +61,11 @@ void BackupWidget::restore()
     QMessageBox::warning(this, "Restore complete", "Restore Complete");
 }
 
-void BackupWidget::cleardrive()
+/*void BackupWidget::cleardrive()
 {
     QProcess clear_process;
     clear_process.startDetached("/bin/sh", QStringList()<< "/home/pi/got2/Backup/ClearDrive.sh");
     clear_process.waitForFinished(); // sets current thread to sleep and waits for Clear end
     ui->updateConsole->insertPlainText("Backup Complete");
     QMessageBox::warning(this, "complete", "Clear Completed");
-}
+}*/
