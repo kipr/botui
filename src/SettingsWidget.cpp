@@ -1,5 +1,6 @@
 #include "SettingsWidget.h"
 #include "ui_SettingsWidget.h"
+#include "SettingsProvider.h"
 #include "MenuBar.h"
 #include "RootController.h"
 #include "StatusBar.h"
@@ -32,7 +33,11 @@ SettingsWidget::SettingsWidget(Device *device, QWidget *parent)
   #else
   ui->network->setEnabled(false);
   #endif
-
+	const SettingsProvider *const settingsProvider = device->settingsProvider();
+	  if(settingsProvider) {
+	    const bool hideUI = settingsProvider->value("hideUI").toBool();   
+	    ui->hideUi->setVisible(hideUI);
+	  }
 	connect(ui->network, SIGNAL(clicked()), SLOT(network()));
 	connect(ui->comm, SIGNAL(clicked()), SLOT(comm()));
 	connect(ui->channels, SIGNAL(clicked()), SLOT(channels()));
@@ -48,6 +53,7 @@ SettingsWidget::SettingsWidget(Device *device, QWidget *parent)
 	//TODO show buttons once the widgets are fixed
 	//ui->network->setVisible(false);
 	ui->comm->setVisible(false);
+	
 }
 
 SettingsWidget::~SettingsWidget()

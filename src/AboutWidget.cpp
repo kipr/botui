@@ -13,7 +13,7 @@ AboutWidget::AboutWidget(Device *device, QWidget *parent)
 	const QString serial = device->serial();
         ui->wombatSerial->setText(serial);
         //ui->deviceName->setText(device->name() + " v" + device->version());
-        ui->deviceName->setText("Wombat v25.4");
+        ui->deviceName->setText("Wombat v25.6");
   
 #ifdef WALLABY
   const QString id = device-> id();

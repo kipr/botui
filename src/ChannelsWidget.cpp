@@ -2,13 +2,13 @@
 
 #include "ui_ChannelsWidget.h"
 
-#include "CameraConfigModel.h"
 #include "RootController.h"
 #include "ChannelConfigWidget.h"
 #include "ChannelConfigWidgetFactory.h"
 #include "ChannelSettingsWidget.h"
 #include "CreateChannelDialog.h"
 
+#include "CameraConfigModel.h"
 #include <QFileSystemModel>
 #include <QStyleOptionViewItem>
 #include <QItemDelegate>

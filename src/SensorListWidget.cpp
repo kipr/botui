@@ -5,6 +5,7 @@
 #include "MenuBar.h"
 
 #include <QItemDelegate>
+#include <QHeaderView>
 #include <QTimer>
 #include <QDebug>
 #include <QPainter>
@@ -46,6 +47,9 @@ SensorListWidget::SensorListWidget(Device *device, QWidget *parent)
 	
 	ui->sensors->setModel(_model);
   	ui->sensors->setItemDelegate(new SensorItemDelegate(_model, this));
+	/*QHeaderView *verticalHeader = sensors->verticalHeader();
+	ui->sensors->setResizeMode(QHeaderView::Fixed);
+	ui->sensors->setDefaultSectionSize(24);*/
 	
   	QTimer *timer = new QTimer(this);
   	_model->connect(timer, SIGNAL(timeout()), SLOT(update()));

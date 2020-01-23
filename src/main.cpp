@@ -56,7 +56,7 @@ int main(int argc, char* argv[])
   SettingsProvider *const settings = device.settingsProvider();
   const bool fullscreen = settings && settings->value("fullscreen", true).toBool();
   RootController::ref().setFullscreen(fullscreen);
-	GuiSettingsWidget::updateStyle(&device);
+	//GuiSettingsWidget::updateStyle(&device);
   
 	RootController::ref().presentWidget(new HomeWidget(&device));
 

@@ -18,8 +18,8 @@ public:
 	static void updateStyle(Device *device);
 	
 private slots:
-	void colorChanged(int index);
   	void fullscreenChanged(int state);
+	void hideUIChanged(int state);
 	void on_invert_screen_clicked();
 	
 private:

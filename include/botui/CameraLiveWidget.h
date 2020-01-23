@@ -11,6 +11,7 @@ namespace Ui
 }
 
 class ChannelConfigurationsModel;
+class CameraConfigModel;
 
 class CameraLiveWidget : public StandardWidget
 {
@@ -18,21 +19,14 @@ Q_OBJECT
 public:
 	CameraLiveWidget(Device *device, QWidget *parent = 0);
 	~CameraLiveWidget();
-
-	//bool isDefaultPath(const QModelIndex &index) const;
 	
 public slots:
 	void currentIndexChanged(const int &index);
-	void update();
 	
 private:
 	Ui::CameraLiveWidget *ui;
 	ChannelConfigurationsModel *m_model;
-	
-	//CameraConfigModel *m_channel;
-	//QString m_path;
-	//QAction *m_import;
-	//QString m_defaultPath;
+	CameraConfigModel *u_model;
 };
 
 #endif
