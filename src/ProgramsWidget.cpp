@@ -237,7 +237,7 @@ void ProgramsWidget::compile()
 
 	QString binFilePath = projectPath + "bin/botball_user_program";
 
-	QString compileCommand = "gcc -o " + binFilePath + " -lwallaby -lm -I " + includeDir.absolutePath() + " " + srcDir.absolutePath() + "/*.c";
+        QString compileCommand = "gcc -o " + binFilePath + " -lwallaby -lpthread -lm -I " + includeDir.absolutePath() + " " + srcDir.absolutePath() + "/*.c";
 	qDebug() << compileCommand;
 
 	QByteArray ba = compileCommand.toLatin1();
