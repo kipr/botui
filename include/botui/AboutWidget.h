@@ -2,6 +2,7 @@
 #define _ABOUTWIDGET_H_
 
 #include "StandardWidget.h"
+#include <QProcess>
 
 namespace Ui
 {
@@ -17,6 +18,7 @@ public:
 	
 private:
 	Ui::AboutWidget *ui;
+	QProcess proc;
 };
 
 

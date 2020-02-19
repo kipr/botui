@@ -139,9 +139,7 @@ const QString WallabyUpdateWidget::updateFileName = "wombat_update.sh";
 const QDir WallabyUpdateWidget::mountDir = QDir("/mnt");
 
 void WallabyUpdateWidget::ethernet(){
-	if(QMessageBox::question(this, "Update?",
-    QString("Is the ethernet cable plugged into the controller?"),
-    QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
+        if(QMessageBox::question(this, "Update?", QString("Is the ethernet cable plugged into the controller?"), QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
       return;
 
 
