@@ -114,12 +114,13 @@ void GuiSettingsWidget::hideUIChanged(int state)
   settings->sync();
 }
 
+
 void GuiSettingsWidget::on_invert_screen_clicked(){      
     if(QMessageBox::question(this, "Update?",
     QString("Are you sure you want to invert the screen? \n (requires reboot)"),
     QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
       return;
-
+  
     QProcess process;
     process.startDetached("/bin/sh", QStringList()<< "/home/pi/got2/Screen_settings/find.sh");
 }
