@@ -90,6 +90,24 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="tournamentMode">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Tournament Mode</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>

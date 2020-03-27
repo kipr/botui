@@ -8,6 +8,9 @@
 #include "StandardWidget.h"
 #include "NetworkManager.h"
 
+#include <QProcess>
+#include <QMessageBox>
+
 class QTimer;
 
 namespace Ui
@@ -23,6 +26,7 @@ public:
 	~NetworkSettingsWidget();
 	
 public slots:
+	void TournamentMode();
 	void connect();
 	void manage();
 	void updateInformation();
@@ -39,6 +43,8 @@ private slots:
 private:
 	Ui::NetworkSettingsWidget *ui;
 	QTimer *enableCoolOffTimer;
+	QProcess proc;
+	QMessageBox msgBox;
 };
 
 #endif

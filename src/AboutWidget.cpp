@@ -13,7 +13,7 @@ AboutWidget::AboutWidget(Device *device, QWidget *parent)
 	const QString serial = device->serial();
         ui->wombatSerial->setText(serial);
         //ui->deviceName->setText(device->name() + " v" + device->version());
-        ui->deviceName->setText("Wombat v25.7");
+        ui->deviceName->setText("Wombat v25.8");
         QProcess proc;
         proc.start("cat /sys/class/net/eth0/carrier");
 

@@ -199,7 +199,7 @@ void NetworkManager::turnOff()
 bool NetworkManager::enableAP()
 {
 #ifdef WALLABY
-	int ret = system("/usr/bin/python /usr/bin/wifi_configurator.py &");
+	int ret = system("sudo /usr/bin/python /usr/bin/wifi_configurator.py &");
 	return (ret == 0);
 #endif
 	return true;
@@ -209,7 +209,7 @@ bool NetworkManager::enableAP()
 bool NetworkManager::disableAP()
 {
 #ifdef WALLABY
-	int ret = system("killall hostapd");
+	int ret = system("sudo ifconfig wlan0 down");
 	return (ret == 0);
 #endif
 	return true;

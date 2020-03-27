@@ -1,5 +1,5 @@
 #include "Options.h"
-
+#include <QCoreApplication>
 #ifdef NETWORK_ENABLED
 
 #include "NetworkSettingsWidget.h"
@@ -43,6 +43,7 @@ NetworkSettingsWidget::NetworkSettingsWidget(Device *device, QWidget *parent)
 
 	QObject::connect(ui->turnOn, SIGNAL(clicked()), SLOT(enableAP()));
 	QObject::connect(ui->turnOff, SIGNAL(clicked()), SLOT(disableAP()));
+	QObject::connect(ui->tournamentMode, SIGNAL(clicked()), SLOT(TournamentMode()));
 
 
 	// TODO: put back after we support client mode WiFi
@@ -60,6 +61,13 @@ NetworkSettingsWidget::NetworkSettingsWidget(Device *device, QWidget *parent)
 	updateTimer->start(10000);
 
 	updateInformation();
+}
+//Tournament mode code
+void NetworkSettingsWidget::TournamentMode(){
+	system("sudo iwconfig wlan0 txpower 1");
+	QMessageBox msgBox;
+	msgBox.setText("Tournament Mode activated");
+	msgBox.exec();
 }
 
 NetworkSettingsWidget::~NetworkSettingsWidget()
@@ -82,12 +90,16 @@ void NetworkSettingsWidget::enableAP()
 {
 	disableAPControlsTemporarily();
 	NetworkManager::ref().enableAP();
+	ui->turnOn->hide();
+	ui->turnOff->show();
 }
 
 void NetworkSettingsWidget::disableAP()
 {
 	disableAPControlsTemporarily();
 	NetworkManager::ref().disableAP();
+	ui->turnOn->show();
+	ui->turnOff->hide();
 }
 
 void NetworkSettingsWidget::enableAPControls()
