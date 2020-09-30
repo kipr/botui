@@ -41,9 +41,15 @@ CameraLiveWidget::CameraLiveWidget(Device *device, QWidget *parent)
   const SettingsProvider *const settingsProvider = device->settingsProvider();
   if(settingsProvider) {
     const bool showBbox = settingsProvider->value("bounding_box", true).toBool();
+    const bool blobLabels = settingsProvider->value("blob_labels", true).toBool();
     const int numLabels = settingsProvider->value("num_blob_labels", 0).toInt();
     ui->camera->setShowBbox(showBbox);
-    ui->camera->setNumBlobLabels(numLabels);
+    if(blobLabels){
+    	ui->camera->setNumBlobLabels(numLabels);
+	}
+	else{
+		ui->camera->setNumBlobLabels(0);
+	}  
   }
   
   ui->channelView->setModel(u_model);

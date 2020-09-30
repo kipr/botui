@@ -27,19 +27,7 @@
     <number>0</number>
    </property>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,1">
-     <item>
-      <widget class="QLabel" name="label_2">
-       <property name="font">
-        <font>
-         <pointsize>33</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Show bounding boxes:</string>
-       </property>
-      </widget>
-     </item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1">
      <item>
       <widget class="QCheckBox" name="boundingBox">
        <property name="minimumSize">
@@ -54,7 +42,7 @@
         </font>
        </property>
        <property name="text">
-        <string/>
+        <string>Show Bounding Boxes?</string>
        </property>
        <property name="iconSize">
         <size>
@@ -67,6 +55,33 @@
     </layout>
    </item>
    <item>
+    <layout class="QVBoxLayout" name="verticalLayout_2"/>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="blobLabels">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>33</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Show Blob Labels?</string>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>18</width>
+       <height>18</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1">
      <item>
       <widget class="QLabel" name="label">
@@ -76,7 +91,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Show blob labels:</string>
+        <string>Max Blob Labels:</string>
        </property>
       </widget>
      </item>
@@ -91,7 +106,10 @@
         <string> blob(s)</string>
        </property>
        <property name="prefix">
-        <string>First </string>
+        <string> </string>
+       </property>
+       <property name="minimum">
+        <number>1</number>
        </property>
        <property name="maximum">
         <number>10</number>
@@ -99,21 +117,6 @@
       </widget>
      </item>
     </layout>
-   </item>
-   <item>
-    <widget class="QLabel" name="label_3">
-     <property name="font">
-      <font>
-       <pointsize>22</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Note: These settings only affect the camera view. Other programs will not be affected.</string>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
-    </widget>
    </item>
    <item>
     <spacer name="verticalSpacer">
@@ -127,6 +130,21 @@
       </size>
      </property>
     </spacer>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_3">
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Note: These settings only affect the camera view. Other programs, such as your code, will not be affected.</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
