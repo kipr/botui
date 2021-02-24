@@ -128,6 +128,9 @@ void ChannelConfigurationsWidget::default_()
 	ui->default_->setEnabled(false);
 	Camera::ConfigPath::setDefaultConfigPath(m_model->fileInfo(index).baseName().toStdString());
 	ui->configs->repaint();
+
+	RootController::ref().dismissWidget();
+	RootController::ref().presentWidget(new ChannelConfigurationsWidget(device()));
 }
 
 void ChannelConfigurationsWidget::add()
