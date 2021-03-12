@@ -23,3 +23,6 @@ License
 =======
 
 Botui is released under the terms of the GPLv3. For more information, see the LICENSE file.
+
+Want to Contribute? Start Here!: 
+https://github.com/kipr/KIPR-Development-Toolkit
