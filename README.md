@@ -9,14 +9,7 @@ Requirements
 ============
 * pcompiler  (Use_qt4 branch: https://github.com/kipr/pcompiler/tree/use_Qt4)
 * CMake 2.6.0 or later
-* Qt 4.7.4 or later
-
-Authors
-=======
-* Braden McDorman
-* Joshua Southerland
-* Nafis Zaman
-* Prithviraj Kadiyala
+* [Qt >= 4.7.4](https://www.qt.io/download-qt-installer)
 
 
 License
