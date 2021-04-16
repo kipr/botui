@@ -1,5 +1,7 @@
 botui
 =====
+[![Bob the Builder](https://github.com/kipr/botui/actions/workflows/bob.yml/badge.svg)](https://github.com/kipr/botui/actions/workflows/bob.yml)
+
 
 Botui is a device-independent graphical interface designed initially for the Kovan controller.
 
