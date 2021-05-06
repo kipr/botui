@@ -1,0 +1,13 @@
+{
+  "C_Cpp.default.includePath": [
+    "${default}",
+    "include/botui",
+    "/usr/include/x86_64-linux-gnu/qt5",
+    "/usr/include/x86_64-linux-gnu/qt5/QtCore",
+    "/usr/include/x86_64-linux-gnu/qt5/QtWidgets",
+    "/usr/include/x86_64-linux-gnu/qt5/QtQml",
+    "/usr/include/x86_64-linux-gnu/qt5/QtQuick",
+    "/usr/include/x86_64-linux-gnu/qt5/QtQuickWidgets",
+    "/usr/include/x86_64-linux-gnu/qt5/QtNetwork",
+  ]
+}

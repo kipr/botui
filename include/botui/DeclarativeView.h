@@ -1,11 +1,12 @@
 #ifndef _DECLARATIVEVIEW_H_
 #define _DECLARATIVEVIEW_H_
 
-#include <QDeclarativeView>
+#include <QQuickView>
+#include <QQuickWidget>
 
 class QFileSystemWatcher;
 
-class DeclarativeView : public QDeclarativeView
+class DeclarativeView : public QQuickWidget
 {
 Q_OBJECT
 Q_PROPERTY(bool autoReload READ autoReload WRITE setAutoReload)

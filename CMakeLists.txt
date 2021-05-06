@@ -3,6 +3,8 @@ project(botui)
 option(qt5 "Use Qt5 instead of Qt4" OFF)
 option(wallaby "Use the Wallaby controller" ON)
 
+find_package (OpenCV REQUIRED)
+
 if(NOT qt5)
   cmake_minimum_required(VERSION 2.6.0)
 else()
@@ -48,8 +50,11 @@ if(NOT qt5)
 else()
   
   find_package(Qt5Widgets REQUIRED)
-  find_package(Qt5Declarative REQUIRED)
+  find_package(Qt5Qml REQUIRED)
   find_package(Qt5Network REQUIRED)
+  find_package(Qt5Quick REQUIRED)
+  find_package(Qt5QuickWidgets REQUIRED)
+  find_package(Qt5LinguistTools REQUIRED)
 endif()
 
 find_package(OpenSSL REQUIRED)
@@ -135,9 +140,11 @@ ENDIF()
 if(NOT qt5)
   target_link_libraries(botui ${QT_LIBRARIES})
 else()
-  qt5_use_modules(botui Widgets Declarative Network)
+  qt5_use_modules(botui Widgets Qml Network Quick QuickWidgets)
 endif()
 
+
+include_directories(${OpenCV_INCLUDE_DIR})
 
 install(TARGETS botui DESTINATION bin)
 install(FILES ${QM_FILES} DESTINATION "/etc/botui/locale")
