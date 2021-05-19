@@ -88,18 +88,22 @@ void NetworkSettingsWidget::manage()
 
 void NetworkSettingsWidget::enableAP()
 {
+	/*
 	disableAPControlsTemporarily();
 	NetworkManager::ref().enableAP();
 	ui->turnOn->hide();
 	ui->turnOff->show();
+	*/
 }
 
 void NetworkSettingsWidget::disableAP()
 {
+	/*
 	disableAPControlsTemporarily();
 	NetworkManager::ref().disableAP();
 	ui->turnOn->show();
 	ui->turnOff->hide();
+	*/
 }
 
 void NetworkSettingsWidget::enableAPControls()
