@@ -3,7 +3,7 @@
 #include <QTimer>
 #include <QTime>
 
-TimeWidget::TimeWidget(QWidget *parent)
+TimeWidget::TimeWidget(QQuickWidget *parent)
 	: QLabel(parent)
 {
 	QTimer *timer = new QTimer(this);

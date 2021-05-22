@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>SensorsWidget</class>
- <widget class="QWidget" name="SensorsWidget">
+ <widget class="QQuickWidget" name="SensorsWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -332,7 +332,7 @@
  <customwidgets>
   <customwidget>
    <class>PlotWidget</class>
-   <extends>QWidget</extends>
+   <extends>QQuickWidget</extends>
    <header>PlotWidget.h</header>
    <container>1</container>
   </customwidget>

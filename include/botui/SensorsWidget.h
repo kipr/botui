@@ -1,7 +1,7 @@
 #ifndef _SENSORSWIDGET_H_
 #define _SENSORSWIDGET_H_
 
-#include <QWidget>
+#include <QQuickWidget>
 #include "MenuBar.h"
 #include "PlotWidget.h"
 
@@ -10,11 +10,11 @@ namespace Ui
 	class SensorsWidget;
 }
 
-class SensorsWidget : public QWidget
+class SensorsWidget : public QQuickWidget
 {
 Q_OBJECT
 public:
-	SensorsWidget(Device *device, QWidget *parent = 0);
+	SensorsWidget(Device *device, QQuickWidget *parent = 0);
 	~SensorsWidget();
 	
 public slots:

@@ -7,7 +7,7 @@
 #include <kovan/camera.hpp>
 #endif
 
-CreateChannelDialog::CreateChannelDialog(QWidget *parent)
+CreateChannelDialog::CreateChannelDialog(QQuickWidget *parent)
 	: QDialog(parent),
 	ui(new Ui::CreateChannelDialog)
 {

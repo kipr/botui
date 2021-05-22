@@ -1,6 +1,6 @@
 project(botui)
 
-option(qt5 "Use Qt5 instead of Qt4" OFF)
+option(qt5 "Use Qt5 instead of Qt4" ON)
 option(wallaby "Use the Wallaby controller" ON)
 
 if(NOT qt5)
@@ -26,13 +26,20 @@ set(TS ${CMAKE_SOURCE_DIR}/ts)
 
 set(DBUS ${CMAKE_SOURCE_DIR}/dbus)
 
-include_directories(
+include_directories( SYSTEM
+	/usr/include/arm-linux-gnueabihf/qt5/QtWidgets
+	/usr/include/arm-linux-gnueabihf/qt5/QtCore
+	/usr/include/arm-linux-gnueabihf/qt5/QtGui
+	/usr/include/arm-linux-gnueabihf/qt5
+	/usr/include/arm-linux-gnueabihf/qt5/QtQuickWidgets
+	/usr/include/arm-linux-gnueabihf/qt5/QtDBus
 	${CMAKE_SOURCE_DIR}
 	${CMAKE_SOURCE_DIR}/src
 	${DBUS}/include
 	${CMAKE_BINARY_DIR}
   ${DEVICE_DIR}/include
 	${INCLUDE}
+	/usr/local/include/opencv4
 )
 
 if(NOT qt5)
@@ -47,9 +54,18 @@ if(NOT qt5)
   include(${QT_USE_FILE})
 else()
   
-  find_package(Qt5Widgets REQUIRED)
-  find_package(Qt5Declarative REQUIRED)
-  find_package(Qt5Network REQUIRED)
+#  find_package(Qt5Widgets REQUIRED)
+#  find_package(Qt5Declarative REQUIRED)
+#  find_package(Qt5Network REQUIRED)
+
+  find_package(Qt5Core COMPONENTS REQUIRED core)
+#  find_package(Qt5 COMPONENTS Core REQUIRED)
+  find_package(Qt5Widgets COMPONENTS Widgets REQUIRED)
+  find_package(Qt5 COMPONENTS LinguistTools REQUIRED)
+  find_package(Qt5 COMPONENTS Quick REQUIRED)
+
+  set(QT_USE_QTNETWORK TRUE)
+  set(QT_USE_QTDBUS TRUE)
 endif()
 
 find_package(OpenSSL REQUIRED)
@@ -83,10 +99,18 @@ if(NOT qt5)
   QT4_ADD_RESOURCES(SRCS_CXX ${QRC_FILES})
   QT4_ADD_TRANSLATION(QM_FILES ${TS_FILES})
 else()
-  # set(CMAKE_AUTOMOC ON)
+  set(CMAKE_INCLUDE_CURRENT_DIR ON)
+  set(CMAKE_AUTOMOC ON)
+
+  file(GLOB DBUS_INCLUDES ${DBUS}/include/*.h)
+  file(GLOB DBUS_SOURCES ${DBUS}/src/*.cpp)
+  set(INCLUDES ${INCLUDES} ${DBUS_INCLUDES})
+  set(SOURCES ${SOURCES} ${DBUS_SOURCES})
+
   set(MOC_SRCS ${INCLUDES})
   set(SRCS_CXX ${SOURCES})
-  qt5_wrap_cpp(SRCS_CXX ${MOC_SRCS} OPTIONS -DQT_VERSION=0x050000 -UQT_DBUS_LIB)
+  qt5_wrap_cpp(SRCS_CXX ${MOC_SRCS} OPTIONS -DQT_VERSION=0x050000)
+  #qt5_wrap_cpp(SRCS_CXX ${MOC_SRCS} OPTIONS -DQT_VERSION=0x050000 -UQT_DBUS_LIB)
   qt5_wrap_ui(SRCS_CXX ${UI})
   qt5_add_resources(SRCS_CXX ${QRC_FILES})
   qt5_add_translation(QM_FILES ${TS_FILES})
@@ -121,21 +145,24 @@ else()
   add_executable(botui ${SRCS_CXX} ${QM_FILES})
 endif()
 
-add_definitions(-O3)
+add_definitions(-O3 -ggdb)
+#add_definitions(-DQT_NO_DEPRECATED)
 
-target_link_libraries(botui pcompiler z opencv_core opencv_highgui opencv_imgproc ${OPENSSL_LIBRARIES})
+target_link_libraries(botui pcompiler z opencv_core opencv_highgui opencv_imgproc Qt5QuickWidgets Qt5DBus  ${OPENSSL_LIBRARIES})
 IF(wallaby)
   target_link_libraries(botui wallaby)
 ELSEIF(wombat)
-  target_link_libraries(botui kipr)
+  target_link_libraries(botui wallaby)
 ELSE()
   target_link_libraries(botui kovan)
 ENDIF()
 
+
+
 if(NOT qt5)
-  target_link_libraries(botui ${QT_LIBRARIES})
+  target_link_libraries(botui QtCore ${QT_LIBRARIES})
 else()
-  qt5_use_modules(botui Widgets Declarative Network)
+  qt5_use_modules(botui Widgets Quick Network)
 endif()
 
 

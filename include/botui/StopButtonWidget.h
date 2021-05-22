@@ -1,15 +1,15 @@
 #ifndef _STOPBUTTONWIDGET_H_
 #define _STOPBUTTONWIDGET_H_
 
-#include <QWidget>
+#include <QQuickWidget>
 
 class Program;
 
-class StopButtonWidget : public QWidget
+class StopButtonWidget : public QQuickWidget
 {
 Q_OBJECT
 public:
-	StopButtonWidget(Program *program, QWidget *parent = 0);
+	StopButtonWidget(Program *program, QQuickWidget *parent = 0);
 	virtual QSize sizeHint() const;
 signals:
 	void clicked();

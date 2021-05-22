@@ -5,4 +5,7 @@
 #define NETWORK_ENABLED
 #endif
 
+#define NETWORK_ENABLED
+#define QT_DBUS_LIB
+
 #endif

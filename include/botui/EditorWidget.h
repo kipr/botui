@@ -1,7 +1,7 @@
 #ifndef _EDITORWIDGET_H_
 #define _EDITORWIDGET_H_
 
-#include <QWidget>
+#include <QQuickWidget>
 //#include <kar/kar.hpp>
 
 class Device;
@@ -12,11 +12,11 @@ namespace Ui
 	class EditorWidget;
 }
 
-class EditorWidget : public QWidget
+class EditorWidget : public QQuickWidget
 {
 Q_OBJECT
 public:
-	EditorWidget(Device *device, QWidget *parent = 0);
+	EditorWidget(Device *device, QQuickWidget *parent = 0);
 	~EditorWidget();
 	
 	void setProjectPath(const QString &projectPath);

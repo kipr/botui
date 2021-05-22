@@ -1,15 +1,15 @@
 #ifndef _QHSVPICKER_H_
 #define _QHSVPICKER_H_
 
-#include <QWidget>
+#include <QQuickWidget>
 
 class QTimer;
 
-class QHsvPicker : public QWidget
+class QHsvPicker : public QQuickWidget
 {
 Q_OBJECT
 public:
-	QHsvPicker(QWidget *parent = 0);
+	QHsvPicker(QQuickWidget *parent = 0);
 	~QHsvPicker();
 	
 	Q_PROPERTY(QColor max READ max WRITE setMax)

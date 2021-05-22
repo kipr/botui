@@ -2,6 +2,7 @@
 #define _MOTORTESTWIZARDPAGE_H_
 
 #include "OnOffWizardPage.h"
+#include <QWidget>
 
 class QTimer;
 

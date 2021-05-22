@@ -1,7 +1,7 @@
 #ifndef _FACTORYWIDGET_H_
 #define _FACTORYWIDGET_H_
 
-#include <QWidget>
+#include <QQuickWidget>
 
 namespace Ui
 {
@@ -11,11 +11,11 @@ namespace Ui
 class NumpadDialog;
 class Device;
 
-class FactoryWidget : public QWidget
+class FactoryWidget : public QQuickWidget
 {
 Q_OBJECT
 public:
-	FactoryWidget(Device *device, QWidget *parent = 0);
+	FactoryWidget(Device *device, QQuickWidget *parent = 0);
 	~FactoryWidget();
 	
 public slots:

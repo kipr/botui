@@ -2,6 +2,7 @@
 #define _SENSORTESTWIZARDPAGE_H_
 
 #include <QWizardPage>
+#include <QWidget>
 #include "PlotWidget.h"
 
 namespace Ui

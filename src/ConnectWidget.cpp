@@ -1,3 +1,4 @@
+#include "Options.h"
 #ifdef QT_DBUS_LIB
 
 #include "ConnectWidget.h"

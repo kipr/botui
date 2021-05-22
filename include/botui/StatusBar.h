@@ -2,6 +2,7 @@
 #define _STATUSBAR_H_
 
 #include <QStatusBar>
+#include <QWidget>
 
 class Device;
 

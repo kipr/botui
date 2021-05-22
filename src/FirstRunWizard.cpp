@@ -7,7 +7,7 @@
 #include <QLabel>
 #include <QVBoxLayout>
 
-FirstRunWizard::FirstRunWizard(Device *device, QWidget *parent)
+FirstRunWizard::FirstRunWizard(Device *device, QQuickWidget *parent)
 	: QWizard(parent),
 	m_device(device)
 {

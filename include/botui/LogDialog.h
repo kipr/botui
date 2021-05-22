@@ -2,6 +2,7 @@
 #define _LOGDIALOG_H_
 
 #include <QDialog>
+#include <QQuickWidget>
 
 namespace Ui
 {
@@ -12,7 +13,7 @@ class LogDialog : public QDialog
 {
 Q_OBJECT
 public:
-	LogDialog(QWidget *parent = 0);
+	LogDialog(QQuickWidget *parent = 0);
 	
 public slots:
 	void setDismissable(const bool &dismissable);

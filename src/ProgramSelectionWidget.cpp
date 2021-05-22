@@ -9,8 +9,8 @@
 #include "ProgramsWidget.h"
 #include <QDebug>
 
-ProgramSelectionWidget::ProgramSelectionWidget(Device *device, QWidget *parent)
-	: QWidget(parent),
+ProgramSelectionWidget::ProgramSelectionWidget(Device *device, QQuickWidget *parent)
+	: QQuickWidget(parent),
 	ui(new Ui::ProgramSelectionWidget),
 	m_device(device),
 	m_menuBar(new MenuBar(this)),

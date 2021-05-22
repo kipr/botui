@@ -8,6 +8,7 @@
 #include <QLineEdit>
 #include <QGridLayout>
 #include <limits>
+#include <QWidget>
 
 namespace Ui
 {

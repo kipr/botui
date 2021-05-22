@@ -1,7 +1,7 @@
 #ifndef _CHANNELCONFIGWIDGET_H_
 #define _CHANNELCONFIGWIDGET_H_
 
-#include <QWidget>
+#include <QQuickWidget>
 
 #ifdef WALLABY
 #include <wallaby/config.hpp>
@@ -12,11 +12,11 @@
 
 #include <QModelIndex>
 
-class ChannelConfigWidget : public QWidget
+class ChannelConfigWidget : public QQuickWidget
 {
 Q_OBJECT
 public:
-	ChannelConfigWidget(const QModelIndex &index, QWidget *parent = 0);
+	ChannelConfigWidget(const QModelIndex &index, QQuickWidget *parent = 0);
 	virtual ~ChannelConfigWidget();
 	
 	Q_PROPERTY(Config config READ config WRITE setConfig NOTIFY configChanged)

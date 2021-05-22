@@ -2,7 +2,7 @@
 
 #include <QProcess>
 
-ProcessLogDialog::ProcessLogDialog(QWidget *const parent)
+ProcessLogDialog::ProcessLogDialog(QQuickWidget *const parent)
   : LogDialog(parent)
 {
 }

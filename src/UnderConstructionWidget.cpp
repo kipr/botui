@@ -6,8 +6,8 @@
 #include "Device.h"
 #include <QDebug>
 
-UnderConstructionWidget::UnderConstructionWidget(Device *device, QWidget *parent)
-	: QWidget(parent),
+UnderConstructionWidget::UnderConstructionWidget(Device *device, QQuickWidget *parent)
+	: QQuickWidget(parent),
 	ui(new Ui::UnderConstructionWidget),
 	m_device(device),
 	m_menuBar(new MenuBar(this)),
