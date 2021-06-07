@@ -1,8 +1,8 @@
 #ifndef _PLOTWIDGET_H_
 #define _PLOTWIDGET_H_
 
-#include <QWidget>
 #include <QColor>
+#include <QWidget>
 
 typedef unsigned int PlotHandle;
 

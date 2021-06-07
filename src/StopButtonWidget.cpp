@@ -6,8 +6,8 @@
 #include <QStylePainter>
 #include <QStyleOptionButton>
 
-StopButtonWidget::StopButtonWidget(Program *program, QWidget *parent)
-	: QWidget(parent),
+StopButtonWidget::StopButtonWidget(Program *program, QQuickWidget *parent)
+	: QQuickWidget(parent),
 	m_program(program),
 	m_running(m_program->isRunning()),
 	m_pressed(false)

@@ -9,7 +9,7 @@ class ProcessLogDialog : public LogDialog
 {
   Q_OBJECT
 public:
-  ProcessLogDialog(QWidget *const parent = 0);
+  ProcessLogDialog(QQuickWidget *const parent = 0);
   
   bool start(const QString &path, const QStringList &args = QStringList());
   

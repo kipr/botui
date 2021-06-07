@@ -2,6 +2,7 @@
 #define _NOTYETIMPLEMENTEDDIALOG_H_
 
 #include <QDialog>
+#include <QQuickWidget>
 
 namespace Ui
 {
@@ -11,7 +12,7 @@ namespace Ui
 class NotYetImplementedDialog : public QDialog
 {
 public:
-	NotYetImplementedDialog(QWidget *parent = 0);
+	NotYetImplementedDialog(QQuickWidget *parent = 0);
 	~NotYetImplementedDialog();
 	
 	static void nyi();

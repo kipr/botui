@@ -178,7 +178,7 @@ const QColor &MechanicalStyle::userColor() const
 	return m_userColor;
 }
 
-QRect MechanicalStyle::subControlRect(ComplexControl cc, const QStyleOptionComplex *opt, SubControl sc, const QWidget *widget) const
+QRect MechanicalStyle::subControlRect(ComplexControl cc, const QStyleOptionComplex *opt, SubControl sc, const QQuickWidget *widget) const
 {
 	QRect ret = PARENT_STYLE_CLASS ::subControlRect(cc, opt, sc, widget);
 	if(cc == CC_ScrollBar) {
@@ -255,7 +255,7 @@ QRect MechanicalStyle::subControlRect(ComplexControl cc, const QStyleOptionCompl
 	return ret;
 }
 
-void MechanicalStyle::drawComplexControl(ComplexControl cc, const QStyleOptionComplex *opt, QPainter *p, const QWidget *widget) const
+void MechanicalStyle::drawComplexControl(ComplexControl cc, const QStyleOptionComplex *opt, QPainter *p, const QQuickWidget *widget) const
 {
 	if(cc == CC_ScrollBar) {
 		const QStyleOptionSlider *scrollbar = qstyleoption_cast<const QStyleOptionSlider *>(opt);
@@ -393,7 +393,7 @@ void MechanicalStyle::drawComplexControl(ComplexControl cc, const QStyleOptionCo
 	PARENT_STYLE_CLASS ::drawComplexControl(cc, opt, p, widget);
 }
 
-void MechanicalStyle::drawControl(ControlElement ce, const QStyleOption *opt, QPainter *p, const QWidget *widget) const
+void MechanicalStyle::drawControl(ControlElement ce, const QStyleOption *opt, QPainter *p, const QQuickWidget *widget) const
 {
 	CustomControlElement cce = (CustomControlElement)ce;
 	if(ce == CE_PushButton) {
@@ -599,7 +599,7 @@ void MechanicalStyle::drawControl(ControlElement ce, const QStyleOption *opt, QP
 	PARENT_STYLE_CLASS ::drawControl(ce, opt, p, widget);
 }
 
-void MechanicalStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, QPainter *p, const QWidget *w) const
+void MechanicalStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, QPainter *p, const QQuickWidget *w) const
 {
 	// Disable focus rectangle
 	if(pe == PE_FrameFocusRect) return;
@@ -608,7 +608,7 @@ void MechanicalStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt
 	PARENT_STYLE_CLASS ::drawPrimitive(pe, opt, p, w);
 }
 
-int MechanicalStyle::pixelMetric(PixelMetric pm, const QStyleOption *opt, const QWidget *widget) const
+int MechanicalStyle::pixelMetric(PixelMetric pm, const QStyleOption *opt, const QQuickWidget *widget) const
 {
 	if(pm == PM_MenuBarItemSpacing) {
 		return 2;
@@ -628,7 +628,7 @@ void MechanicalStyle::polish(QApplication *app)
 	PARENT_STYLE_CLASS ::polish(app);
 }
 
-void MechanicalStyle::polish(QWidget *widget)
+void MechanicalStyle::polish(QQuickWidget *widget)
 {
 	PARENT_STYLE_CLASS ::polish(widget);
 }
@@ -639,7 +639,7 @@ void MechanicalStyle::polish(QPalette& pal)
 	//pal.setBrush(QPalette::Button, Qt::black);
 }
 
-QSize MechanicalStyle::sizeFromContents(ContentsType ct, const QStyleOption *opt, const QSize & csz, const QWidget *widget) const
+QSize MechanicalStyle::sizeFromContents(ContentsType ct, const QStyleOption *opt, const QSize & csz, const QQuickWidget *widget) const
 {
 	QSize size = PARENT_STYLE_CLASS ::sizeFromContents(ct, opt, csz, widget);
 	if(ct == CT_MenuBarItem) {
@@ -665,19 +665,19 @@ QSize MechanicalStyle::sizeFromContents(ContentsType ct, const QStyleOption *opt
 	return size;
 }
 
-QPixmap MechanicalStyle::standardPixmap(StandardPixmap standardPixmap, const QStyleOption *opt, const QWidget *widget) const
+QPixmap MechanicalStyle::standardPixmap(StandardPixmap standardPixmap, const QStyleOption *opt, const QQuickWidget *widget) const
 {
 	return PARENT_STYLE_CLASS ::standardPixmap(standardPixmap, opt, widget);
 }
 
-int MechanicalStyle::styleHint(StyleHint hint, const QStyleOption *opt, const QWidget *widget, QStyleHintReturn *returnData) const
+int MechanicalStyle::styleHint(StyleHint hint, const QStyleOption *opt, const QQuickWidget *widget, QStyleHintReturn *returnData) const
 {
 	if(hint == SH_ItemView_ChangeHighlightOnFocus) return 0;
 	
 	return PARENT_STYLE_CLASS ::styleHint(hint, opt, widget, returnData);
 }
 
-QRect MechanicalStyle::subElementRect(SubElement sr, const QStyleOption *opt, const QWidget *w) const
+QRect MechanicalStyle::subElementRect(SubElement sr, const QStyleOption *opt, const QQuickWidget *w) const
 {
 	return PARENT_STYLE_CLASS ::subElementRect(sr, opt, w);
 }
@@ -687,7 +687,7 @@ void MechanicalStyle::unpolish(QApplication *app)
 	PARENT_STYLE_CLASS ::unpolish(app);
 }
 
-void MechanicalStyle::unpolish(QWidget *widget)
+void MechanicalStyle::unpolish(QQuickWidget *widget)
 {
 	PARENT_STYLE_CLASS ::unpolish(widget);
 }

@@ -3,6 +3,7 @@
 
 #include <QTextEdit>
 #include <QProcess>
+#include <QWidget>
 
 class ConsoleWidget : public QTextEdit
 {

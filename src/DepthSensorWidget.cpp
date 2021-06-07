@@ -13,7 +13,7 @@
 
 using namespace depth;
 
-DepthSensorWidget::DepthSensorWidget(Device *device, QWidget *const parent)
+DepthSensorWidget::DepthSensorWidget(Device *device, QQuickWidget *const parent)
   : StandardWidget(device, parent)
   , ui(new Ui::DepthSensorWidget)
 {

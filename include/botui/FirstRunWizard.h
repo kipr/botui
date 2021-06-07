@@ -2,6 +2,7 @@
 #define _FIRSTRUNWIZARD_H_
 
 #include <QWizard>
+#include <QQuickWidget>
 
 class QWizardPage;
 class Device;
@@ -10,7 +11,7 @@ class FirstRunWizard : public QWizard
 {
 Q_OBJECT
 public:
-	FirstRunWizard(Device *device, QWidget *parent = 0);
+	FirstRunWizard(Device *device, QQuickWidget *parent = 0);
 	
 private:
 	QWizardPage *createIntroPage();

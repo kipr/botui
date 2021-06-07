@@ -83,6 +83,7 @@ void CameraWidget::update()
   else {
     qDebug() << "Camera updated!";
     image = m_camDevice->rawImage();
+ printf("CameraWidget::update image: %x\n", image.data);
     // If we need to draw additional things...
     if(m_showBbox || m_numBlobLabels > 0) {
       int h = 0;
@@ -142,10 +143,10 @@ void CameraWidget::setFrameRate(const unsigned frameRate)
 
 void CameraWidget::slowFrameRate()
 {
-  this->setFrameRate(1);
+  this->setFrameRate(10);
 }
 
 void CameraWidget::fastFrameRate()
 {
-  this->setFrameRate(10);
+  this->setFrameRate(20);
 }

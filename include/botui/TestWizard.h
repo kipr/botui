@@ -2,6 +2,7 @@
 #define _TESTWIZARD_H_
 
 #include <QWizard>
+#include <QWidget>
 
 class QWizardPage;
 class Device;

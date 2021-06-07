@@ -19,8 +19,8 @@
 
 #include <math.h> // Temporary
 
-SensorsWidget::SensorsWidget(Device *device, QWidget *parent)
-	: QWidget(parent),
+SensorsWidget::SensorsWidget(Device *device, QQuickWidget *parent)
+	: QQuickWidget(parent),
 	m_menuBar(new MenuBar(this)),
 	ui(new Ui::SensorsWidget)
 {

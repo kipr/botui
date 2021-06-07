@@ -1,7 +1,7 @@
 #ifndef _FILEMANAGERWIDGET_H_
 #define _FILEMANAGERWIDGET_H_
 
-#include <QWidget>
+#include <QQuickWidget>
 #include <QAction>
 #include <QItemSelection>
 
@@ -14,11 +14,11 @@ class QFileSystemModel;
 class MenuBar;
 class Device;
 
-class FileManagerWidget : public QWidget
+class FileManagerWidget : public QQuickWidget
 {
 Q_OBJECT
 public:
-	FileManagerWidget(Device *device, QWidget *parent = 0);
+	FileManagerWidget(Device *device, QQuickWidget *parent = 0);
 	~FileManagerWidget();
 	
 private slots:

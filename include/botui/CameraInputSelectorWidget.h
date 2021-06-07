@@ -12,7 +12,7 @@ class CameraInputSelectorWidget : public StandardWidget
 {
 Q_OBJECT
 public:
-	CameraInputSelectorWidget(Device *device, QWidget *parent = 0);
+	CameraInputSelectorWidget(Device *device, QQuickWidget *parent = 0);
 	~CameraInputSelectorWidget();
 	
 private slots:

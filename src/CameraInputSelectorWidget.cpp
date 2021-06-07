@@ -4,7 +4,7 @@
 
 #include "CameraInputManager.h"
 
-CameraInputSelectorWidget::CameraInputSelectorWidget(Device *device, QWidget *parent)
+CameraInputSelectorWidget::CameraInputSelectorWidget(Device *device, QQuickWidget *parent)
 	: StandardWidget(device, parent),
 	ui(new Ui::CameraInputSelectorWidget)
 {

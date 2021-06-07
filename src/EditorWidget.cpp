@@ -13,8 +13,8 @@
 #include <QDebug>
 
 
-EditorWidget::EditorWidget(Device *device, QWidget *parent)
-	: QWidget(parent),
+EditorWidget::EditorWidget(Device *device, QQuickWidget *parent)
+	: QQuickWidget(parent),
 	m_device(device),
 	ui(new Ui::EditorWidget),
 	m_menuBar(new MenuBar(this)),

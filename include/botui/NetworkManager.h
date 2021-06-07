@@ -9,8 +9,10 @@
 #include "Network.h"
 #include "NetworkManagerConnection.h"
 
+#include <qdbusextratypes.h>
+
 #include <QObject>
-#include <QDBusObjectPath>
+//#include <QDBusObjectPath>
 
 class NMNetworkManager;
 class NMDevice;

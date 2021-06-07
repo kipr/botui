@@ -1,7 +1,7 @@
 #include "ChannelConfigWidget.h"
 
-ChannelConfigWidget::ChannelConfigWidget(const QModelIndex &index, QWidget *parent)
-	: QWidget(parent),
+ChannelConfigWidget::ChannelConfigWidget(const QModelIndex &index, QQuickWidget *parent)
+	: QQuickWidget(parent),
 	m_index(index)
 {
 }

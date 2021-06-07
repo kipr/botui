@@ -4,8 +4,8 @@
 #include "DeclarativeView.h"
 
 #include <QDebug>
-#include <QDeclarativeEngine>
-#include <QDeclarativeContext>
+#include <QQmlEngine>
+#include <QQmlContext>
 #include <QGraphicsOpacityEffect>
 #include <QPropertyAnimation>
 #include <QApplication>
@@ -20,7 +20,7 @@ void RootController::presentQml(const QUrl& url)
 	DeclarativeView *view = new DeclarativeView(url);
 	view->setAutoReload(DEVELOPER_MODE);
 	presentWidget(view, true);
-	view->setResizeMode(QDeclarativeView::SizeRootObjectToView);
+	view->setResizeMode(QQuickWidget::SizeRootObjectToView);
 	view->engine()->rootContext()->setContextProperty("rootController", this);
 }
 

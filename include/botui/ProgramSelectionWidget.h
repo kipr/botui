@@ -1,6 +1,6 @@
 #ifndef _PROGRAMSELECTIONWIDGET_H_
 #define _PROGRAMSELECTIONWIDGET_H_
-#include <QWidget>
+#include <QQuickWidget>
 
 namespace Ui
 {
@@ -11,11 +11,11 @@ class MenuBar;
 class StatusBar;
 class Device;
 
-class ProgramSelectionWidget : public QWidget
+class ProgramSelectionWidget : public QQuickWidget
 {
 Q_OBJECT
 public:
-	ProgramSelectionWidget(Device *device, QWidget *parent = 0);
+	ProgramSelectionWidget(Device *device, QQuickWidget *parent = 0);
 	~ProgramSelectionWidget();
 	
 public slots:

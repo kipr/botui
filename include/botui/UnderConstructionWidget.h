@@ -1,7 +1,7 @@
 #ifndef _UNDERCONSTRUCTIONWIDGET_H_
 #define _UNDERCONSTRUCTIONWIDGET_H_
 
-#include <QWidget>
+#include <QQuickWidget>
 
 namespace Ui
 {
@@ -12,11 +12,11 @@ class MenuBar;
 class StatusBar;
 class Device;
 
-class UnderConstructionWidget : public QWidget
+class UnderConstructionWidget : public QQuickWidget
 {
 Q_OBJECT
 public:
-	UnderConstructionWidget(Device *device, QWidget *parent = 0);
+	UnderConstructionWidget(Device *device, QQuickWidget *parent = 0);
 	~UnderConstructionWidget();
 	
 public slots:
