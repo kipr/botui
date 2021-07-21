@@ -1,6 +1,12 @@
 #include "FactoryWidget.h"
 #include "ui_FactoryWidget.h"
 
+#include <QApplication>
+#include <QMessageBox>
+#include <QProcess>
+#include <QFile>
+#include <QFileInfo>
+
 #include "Device.h"
 #include "NumpadDialog.h"
 #include "RootController.h"
@@ -11,6 +17,8 @@ FactoryWidget::FactoryWidget(Device *device, QWidget *parent)
 	m_serialNumpad(new NumpadDialog(tr("Serial Number"), NumpadDialog::Integer)),
 	ui(new Ui::FactoryWidget)
 {
+
+        ui->updateConsole->setVisible(false);
 	ui->setupUi(this);
 	
 	ui->serialNumber->setInputProvider(m_serialNumpad);
