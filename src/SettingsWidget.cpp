@@ -9,13 +9,9 @@
 #include "Options.h"
 #include "NotYetImplementedDialog.h"
 
-#include "NetworkSettingsWidget.h"
-#include "CommunicationSettingsWidget.h"
 #include "ChannelConfigurationsWidget.h"
-#include "GuiSettingsWidget.h"
 #include "LanguageWidget.h"
 #include "WallabyUpdateWidget.h"
-#include "BatterySettingsWidget.h"
 #include "CameraSettingsWidget.h"
 #include "BackupWidget.h"
 
@@ -26,33 +22,22 @@ SettingsWidget::SettingsWidget(Device *device, QWidget *parent)
 	ui(new Ui::SettingsWidget)
 {
 	ui->setupUi(this);
-	performStandardSetup(tr("Settings"));
+        performStandardSetup(tr("Settings"));
 
-  #ifdef NETWORK_ENABLED
-  ui->network->setEnabled(true);
-  #else
-  ui->network->setEnabled(false);
-  #endif
 	const SettingsProvider *const settingsProvider = device->settingsProvider();
 	  if(settingsProvider) {
 	    const bool hideUI = settingsProvider->value("hideUI").toBool();   
 	    ui->hideUi->setVisible(hideUI);
 	  }
-	connect(ui->network, SIGNAL(clicked()), SLOT(network()));
-	connect(ui->comm, SIGNAL(clicked()), SLOT(comm()));
+
 	connect(ui->channels, SIGNAL(clicked()), SLOT(channels()));
-	connect(ui->gui, SIGNAL(clicked()), SLOT(gui()));
 	connect(ui->calibrate, SIGNAL(clicked()), SLOT(calibrate()));
 	connect(ui->language, SIGNAL(clicked()), SLOT(language()));
         connect(ui->update, SIGNAL(clicked()), SLOT(update()));
         connect(ui->hideUi, SIGNAL(clicked()), SLOT(hideUi()));
-        connect(ui->battery, SIGNAL(clicked()), SLOT(battery()));
         connect(ui->cameraView, SIGNAL(clicked()), SLOT(cameraView()));
         connect(ui->backup, SIGNAL(clicked()), SLOT(backup()));
-
-	//TODO show buttons once the widgets are fixed
-	//ui->network->setVisible(false);
-	ui->comm->setVisible(false);
+        connect(ui->advanced, SIGNAL(clicked()), SLOT(advanced()));
 	
 }
 
@@ -61,26 +46,14 @@ SettingsWidget::~SettingsWidget()
 	delete ui;
 }
 
-void SettingsWidget::network()
+void SettingsWidget::advanced()
 {
-#ifdef NETWORK_ENABLED
-  RootController::ref().presentWidget(new NetworkSettingsWidget(device()));
-#endif
-}
-
-void SettingsWidget::comm()
-{
-	RootController::ref().presentWidget(new CommunicationSettingsWidget(device()));
+        RootController::ref().presentWidget(new AdvancedSettingsWidget(device()));
 }
 
 void SettingsWidget::channels()
 {
 	RootController::ref().presentWidget(new ChannelConfigurationsWidget(device()));
-}
-
-void SettingsWidget::gui()
-{
-	RootController::ref().presentWidget(new GuiSettingsWidget(device()));
 }
 
 void SettingsWidget::calibrate()
@@ -103,11 +76,6 @@ void SettingsWidget::update()
 void SettingsWidget::hideUi()
 {
   RootController::ref().minimize();
-}
-
-void SettingsWidget::battery()
-{
-  RootController::ref().presentWidget(new BatterySettingsWidget(device()));
 }
 
 void SettingsWidget::cameraView()
