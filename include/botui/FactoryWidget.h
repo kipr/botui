@@ -20,6 +20,8 @@ public:
 	
 public slots:
 	void confirm();
+        void reflash();
+        void experimental();
 	
 private:
 	Device *m_device;
