@@ -28,19 +28,11 @@ AdvancedSettingsWidget::AdvancedSettingsWidget(Device *device, QWidget *parent)
   #else
   ui->network->setEnabled(false);
   #endif
-	const SettingsProvider *const settingsProvider = device->settingsProvider();
-	  if(settingsProvider) {
-	    const bool hideUI = settingsProvider->value("hideUI").toBool();   
-	    ui->hideUi->setVisible(hideUI);
-	  }
+
 	connect(ui->network, SIGNAL(clicked()), SLOT(network()));
         connect(ui->factory, SIGNAL(clicked()), SLOT(factory()));
 	connect(ui->gui, SIGNAL(clicked()), SLOT(gui()));
         connect(ui->battery, SIGNAL(clicked()), SLOT(battery()));
-
-	//TODO show buttons once the widgets are fixed
-	//ui->network->setVisible(false);
-	ui->comm->setVisible(false);
 	
 }
 
