@@ -3,11 +3,7 @@ project(botui)
 option(qt5 "Use Qt5 instead of Qt4" OFF)
 option(wallaby "Use the Wallaby controller" ON)
 
-if(NOT qt5)
-  cmake_minimum_required(VERSION 2.6.0)
-else()
-  cmake_minimum_required(VERSION 2.8.11)
-endif()
+cmake_minimum_required(VERSION 3.1)
 
 if (wallaby)
   add_definitions(-DWALLABY)
@@ -35,11 +31,13 @@ include_directories(
 	${INCLUDE}
 )
 
+find_package(OpenCV REQUIRED )
+include_directories(${OPENCV_INCLUDE})
+
 if(NOT qt5)
-  cmake_minimum_required(VERSION 2.6.0)
   find_package(Qt4 REQUIRED)
-  find_package( PythonInterp 2.7 REQUIRED )
-  find_package( PythonLibs 2.7 REQUIRED )
+  find_package( PythonInterp 3.8 REQUIRED )
+  find_package( PythonLibs 3.8 REQUIRED )
   set(QT_USE_QTDECLARATIVE TRUE)
   set(QT_USE_QTNETWORK TRUE)
   set(QT_USE_QTDBUS TRUE)
@@ -121,9 +119,9 @@ else()
   add_executable(botui ${SRCS_CXX} ${QM_FILES})
 endif()
 
-add_definitions(-O3)
+add_definitions(-g -pg)
 
-target_link_libraries(botui pcompiler z opencv_core opencv_highgui opencv_imgproc ${OPENSSL_LIBRARIES})
+target_link_libraries(botui ${OpenCV_LIBS} pcompiler z ${OPENSSL_LIBRARIES})
 IF(wallaby)
   target_link_libraries(botui wallaby)
 ELSEIF(wombat)
