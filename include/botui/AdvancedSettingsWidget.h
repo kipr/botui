@@ -18,7 +18,6 @@ public:
 public slots:
 	void network();
 	void gui();
-	void calibrate();
   	void battery();
         void factory();
 	
