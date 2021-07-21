@@ -8,6 +8,7 @@
 #define NUM_BLOB_LABELS_KEY "num_blob_labels"
 #define BLOB_LABELS_KEY "blob_labels"
 
+
 CameraSettingsWidget::CameraSettingsWidget(Device *device, QWidget *const parent)
   : StandardWidget(device, parent)
   , ui(new Ui::CameraSettingsWidget)
@@ -27,7 +28,7 @@ CameraSettingsWidget::CameraSettingsWidget(Device *device, QWidget *const parent
     
     ui->boundingBox->setChecked(bbox);
     ui->blobLabels->setChecked(blobLabels);
-    ui->numLabels->intValue->display(numLabels);
+    ui->numLabels->intValue()->display(numLabels);
   }
   
 }
@@ -48,10 +49,10 @@ CameraSettingsWidget::~CameraSettingsWidget()
 
 void CameraSettingsWidget::plus()
 {
-        ui->numLabels->intValue->display(ui-numLabels->intValue()+1)
+        ui->numLabels->intValue()->display(ui->numLabels->intValue()+1)
 }
 
 void CameraSettingsWidget::minus()
 {
-        ui->numLabels->intValue->display(ui-numLabels->intValue()-1)
+        ui->numLabels->intValue()->display(ui->numLabels->intValue()-1)
 }
