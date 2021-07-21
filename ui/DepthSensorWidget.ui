@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>DepthSensorWidget</class>
- <widget class="QWidget" name="DepthSensorWidget">
+ <widget class="QQuickWidget" name="DepthSensorWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -37,7 +37,7 @@
  <customwidgets>
   <customwidget>
    <class>DepthImageView</class>
-   <extends>QWidget</extends>
+   <extends>QQuickWidget</extends>
    <header>DepthImageView.h</header>
    <container>1</container>
   </customwidget>

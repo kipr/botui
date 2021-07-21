@@ -14,8 +14,8 @@
 #include <QFile>
 #include <QDebug>
 
-FileManagerWidget::FileManagerWidget(Device *device, QWidget *parent)
-	: QWidget(parent),
+FileManagerWidget::FileManagerWidget(Device *device, QQuickWidget *parent)
+	: QQuickWidget(parent),
 	ui(new Ui::FileManagerWidget),
 	m_device(device),
 	m_menuBar(new MenuBar(this)),

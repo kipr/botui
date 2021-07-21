@@ -4,7 +4,7 @@
 
 #include <QPushButton>
 
-LogDialog::LogDialog(QWidget *parent)
+LogDialog::LogDialog(QQuickWidget *parent)
 	: QDialog(parent),
 	ui(new Ui::LogDialog)
 {

@@ -2,6 +2,7 @@
 #define _CREATECHANNELDIALOG_H_
 
 #include <QDialog>
+#include <QQuickWidget>
 
 namespace Ui
 {
@@ -11,7 +12,7 @@ namespace Ui
 class CreateChannelDialog : public QDialog
 {
 public:
-	CreateChannelDialog(QWidget *parent = 0);
+	CreateChannelDialog(QQuickWidget *parent = 0);
 	~CreateChannelDialog();
 	
 	QString type() const;

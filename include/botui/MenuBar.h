@@ -3,6 +3,7 @@
 
 #include <QMenuBar>
 #include <QPixmap>
+#include <QWidget>
 
 class QLabel;
 class QHBoxLayout;

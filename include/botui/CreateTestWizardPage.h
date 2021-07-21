@@ -2,6 +2,7 @@
 #define _CREATETESTWIZARDPAGE_H_
 
 #include <QWizardPage>
+#include <QWidget>
 
 namespace Ui
 {

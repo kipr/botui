@@ -2,7 +2,7 @@
 
 #include "ui_AreYouSureDialog.h"
 
-AreYouSureDialog::AreYouSureDialog(QWidget *parent)
+AreYouSureDialog::AreYouSureDialog(QQuickWidget *parent)
 	: QDialog(parent),
 	ui(new Ui::AreYouSureDialog)
 {

@@ -6,8 +6,8 @@
 #include "Device.h"
 #include <QDebug>
 
-PairWidget::PairWidget(Device *device, QWidget *parent)
-	: QWidget(parent),
+PairWidget::PairWidget(Device *device, QQuickWidget *parent)
+	: QQuickWidget(parent),
 	ui(new Ui::PairWidget),
 	m_device(device),
 	m_menuBar(new MenuBar(this))

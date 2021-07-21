@@ -1,7 +1,7 @@
 #ifndef _PAIRWIDGET_H_
 #define _PAIRWIDGET_H_
 
-#include <QWidget>
+#include <QQuickWidget>
 
 namespace Ui
 {
@@ -12,11 +12,11 @@ class MenuBar;
 class StatusBar;
 class Device;
 
-class PairWidget : public QWidget
+class PairWidget : public QQuickWidget
 {
 Q_OBJECT
 public:
-	PairWidget(Device *device, QWidget *parent = 0);
+	PairWidget(Device *device, QQuickWidget *parent = 0);
 	~PairWidget();
 	
 	void setPassword(const QString& password);

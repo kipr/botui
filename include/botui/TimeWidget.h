@@ -2,12 +2,13 @@
 #define _TIMEWIDGET_H_
 
 #include <QLabel>
+#include <QQuickWidget>
 
 class TimeWidget : public QLabel
 {
 Q_OBJECT
 public:
-	TimeWidget(QWidget *parent = 0);
+	TimeWidget(QQuickWidget *parent = 0);
 private slots:
 	void updateTime();
 };

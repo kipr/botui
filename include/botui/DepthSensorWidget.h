@@ -12,7 +12,7 @@ class DepthSensorWidget : public StandardWidget
 {
 Q_OBJECT
 public:
-  DepthSensorWidget(Device *device, QWidget *const parent = 0);
+  DepthSensorWidget(Device *device, QQuickWidget *const parent = 0);
   ~DepthSensorWidget();
   
 private slots:

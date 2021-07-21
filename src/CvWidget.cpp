@@ -5,6 +5,10 @@
 #include <QMouseEvent>
 #include <opencv2/highgui/highgui.hpp>
 
+#ifndef CV_BGR2RGB
+#define CV_BGR2RGB cv::COLOR_BGR2RGB
+#endif
+
 CvWidget::CvWidget(QWidget *parent)
 	: QWidget(parent),
 	m_invalid(true),
@@ -87,6 +91,9 @@ void CvWidget::scaleImage()
 	
 	cv::Mat resized;
 	cv::resize(m_image, resized, cv::Size(width(), height()));
+::printf("CvWidget::scaleImage - width() %d height() %d\n", width(), height());fflush(NULL);
+::printf("CvWidget::scaleImage - m_image.rows %d cols %d resized.rows %d cols %d\n",
+			m_image.rows, m_image.cols, resized.rows, resized.cols);fflush(NULL);
 	delete m_data;
 	m_data = new unsigned char[resized.rows * resized.cols * resized.elemSize()];
 	memcpy(m_data, resized.ptr(), resized.rows * resized.cols * resized.elemSize());

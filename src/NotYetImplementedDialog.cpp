@@ -3,7 +3,7 @@
 
 #include "RootController.h"
 
-NotYetImplementedDialog::NotYetImplementedDialog(QWidget *parent)
+NotYetImplementedDialog::NotYetImplementedDialog(QQuickWidget *parent)
 	: QDialog(parent),
 	ui(new Ui::NotYetImplementedDialog)
 {

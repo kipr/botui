@@ -1,4 +1,4 @@
-#ifdef QT_DBUS_LIB
+/*#ifdef QT_DBUS_LIB*/
 
 #ifndef _CONNECTWIDGET_H_
 #define _CONNECTWIDGET_H_
@@ -34,4 +34,4 @@ private:
 
 #endif
 
-#endif
+/*#endif*/

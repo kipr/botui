@@ -16,7 +16,7 @@
 
 #include <QDebug>
 
-HsvChannelConfigWidget::HsvChannelConfigWidget(const QModelIndex &index, QWidget *parent)
+HsvChannelConfigWidget::HsvChannelConfigWidget(const QModelIndex &index, QQuickWidget *parent)
 	: ChannelConfigWidget(index, parent),
 	ui(new Ui::HsvChannelConfigWidget),
 	m_numpad(new NumpadDialog("Enter Value"))

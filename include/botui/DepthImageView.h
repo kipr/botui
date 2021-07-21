@@ -1,7 +1,7 @@
 #ifndef _DEPTHIMAGE_VIEW_H_
 #define _DEPTHIMAGE_VIEW_H_
 /* FIXME
-#include <QWidget>
+#include <QQuickWidget>
 #include <QImage>
 #include <QPixmap>
 
@@ -10,11 +10,11 @@ namespace depth
   class DepthImage;
 }
 
-class DepthImageView : public QWidget
+class DepthImageView : public QQuickWidget
 {
 Q_OBJECT
 public:
-  DepthImageView(QWidget *const parent = 0);
+  DepthImageView(QQuickWidget *const parent = 0);
   ~DepthImageView();
   
   void setDepthImage(const depth::DepthImage *const image);

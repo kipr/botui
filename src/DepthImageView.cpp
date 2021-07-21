@@ -14,8 +14,8 @@ using namespace depth;
 static QRgb s_lookupTable[350];
 static bool s_tableInited = false;
 
-DepthImageView::DepthImageView(QWidget *const parent)
-  : QWidget(parent)
+DepthImageView::DepthImageView(QQuickWidget *const parent)
+  : QQuickWidget(parent)
   , _pleaseWait(true)
 {
   if(!s_tableInited) {

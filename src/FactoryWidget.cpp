@@ -11,8 +11,8 @@
 #include "NumpadDialog.h"
 #include "RootController.h"
 
-FactoryWidget::FactoryWidget(Device *device, QWidget *parent)
-	: QWidget(parent),
+FactoryWidget::FactoryWidget(Device *device, QQuickWidget *parent)
+	: QQuickWidget(parent),
 	m_device(device),
 	m_serialNumpad(new NumpadDialog(tr("Serial Number"), NumpadDialog::Integer)),
 	ui(new Ui::FactoryWidget)
@@ -64,4 +64,6 @@ void FactoryWidget::experimental()
     ui->updateConsole->insertPlainText("Backup Complete");
     QMessageBox::warning(this, "Backup complete", "Backup complete");
     */
+=======
+	RootController::ref().dismissWidget();
 }

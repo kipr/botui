@@ -6,8 +6,8 @@
 #include <QPropertyAnimation>
 #include <QDebug>
 
-QHsvPicker::QHsvPicker(QWidget *parent)
-	: QWidget(parent),
+QHsvPicker::QHsvPicker(QQuickWidget *parent)
+	: QQuickWidget(parent),
 	m_max(QColor::fromHsv(10, 225, 225)),
 	m_min(QColor::fromHsv(350, 30, 30)),
 	m_centerHue(0),
