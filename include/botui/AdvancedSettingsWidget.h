@@ -1,5 +1,5 @@
-#ifndef _SETTINGSWIDGET_H_
-#define _SETTINGSWIDGET_H_
+#ifndef _ADVANCEDSETTINGSWIDGET_H_
+#define _ADVANCEDSETTINGSWIDGET_H_
 
 #include "StandardWidget.h"
 

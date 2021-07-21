@@ -11,6 +11,7 @@
 
 #include "ChannelConfigurationsWidget.h"
 #include "LanguageWidget.h"
+#include "AdvancedSettingsWidget.h"
 #include "WallabyUpdateWidget.h"
 #include "CameraSettingsWidget.h"
 #include "BackupWidget.h"
