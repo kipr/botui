@@ -8,7 +8,7 @@ namespace Ui
         class AdvancedSettingsWidget;
 }
 
-class SettingsWidget : public StandardWidget
+class AdvancedSettingsWidget : public StandardWidget
 {
 Q_OBJECT
 public:
