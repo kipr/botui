@@ -28,7 +28,7 @@ CameraSettingsWidget::CameraSettingsWidget(Device *device, QWidget *const parent
     
     ui->boundingBox->setChecked(bbox);
     ui->blobLabels->setChecked(blobLabels);
-    ui->numLabels->intValue()->display(numLabels);
+    ui->numLabels->display(numLabels);
   }
   
 }
