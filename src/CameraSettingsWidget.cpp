@@ -49,10 +49,10 @@ CameraSettingsWidget::~CameraSettingsWidget()
 
 void CameraSettingsWidget::plus()
 {
-        ui->numLabels->intValue()->display(ui->numLabels->intValue()+1)
+        ui->numLabels->display(ui->numLabels->intValue()+1)
 }
 
 void CameraSettingsWidget::minus()
 {
-        ui->numLabels->intValue()->display(ui->numLabels->intValue()-1)
+        ui->numLabels->display(ui->numLabels->intValue()-1)
 }
