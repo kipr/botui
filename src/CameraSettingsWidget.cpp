@@ -15,6 +15,9 @@ CameraSettingsWidget::CameraSettingsWidget(Device *device, QWidget *const parent
   ui->setupUi(this);
   performStandardSetup(tr("Camera Settings Widget"));
     
+  connect(ui->plus, SIGNAL(clicked()), SLOT(plus()));
+  connect(ui->minus, SIGNAL(clicked()), SLOT(minus()));
+
   // Set current setting values
   const SettingsProvider *const settingsProvider = device->settingsProvider();
   if(settingsProvider) {
@@ -35,9 +38,20 @@ CameraSettingsWidget::~CameraSettingsWidget()
   if(settingsProvider) {
     settingsProvider->setValue(BOUNDING_BOX_KEY, ui->boundingBox->isChecked());
     settingsProvider->setValue(BLOB_LABELS_KEY, ui->blobLabels->isChecked());
-    settingsProvider->setValue(NUM_BLOB_LABELS_KEY, ui->numLabels->value());
+    settingsProvider->setValue(NUM_BLOB_LABELS_KEY, ui->numLabels->intValue());
     settingsProvider->sync();
   }
   
   delete ui;
+}
+
+
+void CameraSettingsWidget::plus()
+{
+        ui->numLabels->intValue->display(ui-numLabels->intValue()+1)
+}
+
+void CameraSettingsWidget::minus()
+{
+        ui->numLabels->intValue->display(ui-numLabels->intValue()-1)
 }
