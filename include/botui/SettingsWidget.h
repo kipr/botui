@@ -23,7 +23,7 @@ public slots:
   	void hideUi();
   	void cameraView();
 	void backup();
-        void advanced()
+        void advanced();
 	
 private:
 	Ui::SettingsWidget *ui;
