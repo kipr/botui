@@ -21,7 +21,7 @@ FactoryWidget::FactoryWidget(Device *device, QWidget *parent)
         ui->updateConsole->setVisible(false);
 	ui->setupUi(this);
 	
-	ui->serialNumber->setInputProvider(m_serialNumpad);
+        //ui->serialNumber->setInputProvider(serialNumber);
 	connect(ui->confirm, SIGNAL(clicked()), SLOT(confirm()));
         connect(ui->reflash, SIGNAL(clicked()), SLOT(reflash()));
         connect(ui->experimental, SIGNAL(clicked()), SLOT(experimental()));
@@ -29,7 +29,7 @@ FactoryWidget::FactoryWidget(Device *device, QWidget *parent)
 
 FactoryWidget::~FactoryWidget()
 {
-	delete m_serialNumpad;
+        //delete serialNumber;
 	delete ui;
 }
 
