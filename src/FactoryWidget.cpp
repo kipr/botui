@@ -13,7 +13,7 @@
 
 FactoryWidget::FactoryWidget(Device *device, QWidget *parent)
 	: QWidget(parent),
-	m_device(device),
+        //m_device(device),
         //m_serialNumpad(new NumpadDialog(tr("Serial Number"), NumpadDialog::Integer)),
 	ui(new Ui::FactoryWidget)
 {
@@ -25,6 +25,7 @@ FactoryWidget::FactoryWidget(Device *device, QWidget *parent)
 	connect(ui->confirm, SIGNAL(clicked()), SLOT(confirm()));
         connect(ui->reflash, SIGNAL(clicked()), SLOT(reflash()));
         connect(ui->experimental, SIGNAL(clicked()), SLOT(experimental()));
+
 }
 
 FactoryWidget::~FactoryWidget()
@@ -47,11 +48,13 @@ void FactoryWidget::confirm()
 
 void FactoryWidget::reflash()
 {
+
     QProcess backup_process;
     backup_process.startDetached("/bin/sh", QStringList()<< "/home/pi/*_flash.sh");
     backup_process.waitForFinished(); // sets current thread to sleep
     ui->updateConsole->insertPlainText("Flash Complete");
     QMessageBox::warning(this, "Flash Complete", "Flash Complete");
+
 }
 
 void FactoryWidget::experimental()

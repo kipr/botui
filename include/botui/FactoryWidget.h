@@ -24,8 +24,8 @@ public slots:
         void experimental();
 	
 private:
-	Device *m_device;
-	NumpadDialog *m_serialNumpad;
+        //Device *m_device;
+        //NumpadDialog *m_serialNumpad;
 	
 	Ui::FactoryWidget *ui;
 };
