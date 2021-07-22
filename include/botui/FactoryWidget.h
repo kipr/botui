@@ -11,7 +11,7 @@ namespace Ui
 class NumpadDialog;
 class Device;
 
-class FactoryWidget : public QWidget
+class FactoryWidget : public StandardWidget
 {
 Q_OBJECT
 public:

@@ -11,13 +11,8 @@
 #include "NumpadDialog.h"
 #include "RootController.h"
 
-FactoryWidget::FactoryWidget(Device *device, QWidget *parent)
-	: QWidget(parent),
-        //m_device(device),
-        //m_serialNumpad(new NumpadDialog(tr("Serial Number"), NumpadDialog::Integer)),
-	ui(new Ui::FactoryWidget)
+FactoryWidget::FactoryWidget(Device *device, QWidget *parent) : StandardWidget(parent), ui(new Ui::FactoryWidget)
 {
-
         ui->updateConsole->setVisible(false);
 	ui->setupUi(this);
 	
