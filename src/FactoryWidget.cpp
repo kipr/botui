@@ -21,7 +21,7 @@ FactoryWidget::FactoryWidget(Device *device, QWidget *parent)
         ui(new Ui::FactoryWidget)
 {
         std::cout << "Test 1" << std::endl;
-        ui->updateConsole->setVisible(false);
+        ui->flashConsole->setVisible(false);
         std::cout << "Test 2" << std::endl;
 	ui->setupUi(this);
         std::cout << "Test 3" << std::endl;
