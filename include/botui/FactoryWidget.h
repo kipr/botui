@@ -5,24 +5,25 @@
 
 namespace Ui
 {
-	class FactoryWidget;
+        class FactoryWidget;
 }
 
 class FactoryWidget : public StandardWidget
 {
 Q_OBJECT
 public:
-	FactoryWidget(Device *device, QWidget *parent = 0);
-	~FactoryWidget();
-	
+        FactoryWidget(Device *device, QWidget *parent = 0);
+        ~FactoryWidget();
+
 public slots:
-	void confirm();
+        void confirm();
         void reflash();
         void experimental();
-	
+
+
 private:
-	
-	Ui::FactoryWidget *ui;
+        Ui::FactoryWidget *ui;
 };
+
 
 #endif

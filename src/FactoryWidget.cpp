@@ -1,42 +1,31 @@
 #include "FactoryWidget.h"
 #include "ui_FactoryWidget.h"
-
-#include <QApplication>
-#include <QMessageBox>
-#include <QProcess>
-#include <QFile>
-#include <QFileInfo>
-#include <iostream>
-
+#include "SettingsProvider.h"
 #include "MenuBar.h"
 #include "RootController.h"
 #include "StatusBar.h"
 #include "Device.h"
+#include "Calibrate.h"
 #include "Options.h"
 #include "NotYetImplementedDialog.h"
 
+
+#include <QDebug>
 
 FactoryWidget::FactoryWidget(Device *device, QWidget *parent)
         : StandardWidget(device, parent),
         ui(new Ui::FactoryWidget)
 {
-        std::cout << "Test 1" << std::endl;
-        //ui->flashConsole->setVisible(false);
-        std::cout << "Test 2" << std::endl;
-	ui->setupUi(this);
-        std::cout << "Test 3" << std::endl;
-        //ui->serialNumber->setInputProvider(serialNumber);
-	connect(ui->confirm, SIGNAL(clicked()), SLOT(confirm()));
+        ui->setupUi(this);
+        performStandardSetup(tr("Factory"));
+
+
+        connect(ui->confirm, SIGNAL(clicked()), SLOT(confirm()));
         connect(ui->reflash, SIGNAL(clicked()), SLOT(reflash()));
         connect(ui->experimental, SIGNAL(clicked()), SLOT(experimental()));
 
 }
 
-FactoryWidget::~FactoryWidget()
-{
-        //delete serialNumber;
-	delete ui;
-}
 
 void FactoryWidget::confirm()
 {
