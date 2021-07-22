@@ -15,7 +15,9 @@
 #include "NotYetImplementedDialog.h"
 
 
-FactoryWidget::FactoryWidget(Device *device, QWidget *parent) : StandardWidget(parent), ui(new Ui::FactoryWidget)
+FactoryWidget::FactoryWidget(Device *device, QWidget *parent)
+        : StandardWidget(device, parent),
+        ui(new Ui::AdvancedSettingsWidget)
 {
         ui->updateConsole->setVisible(false);
 	ui->setupUi(this);

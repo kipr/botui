@@ -8,9 +8,6 @@ namespace Ui
 	class FactoryWidget;
 }
 
-class NumpadDialog;
-class Device;
-
 class FactoryWidget : public StandardWidget
 {
 Q_OBJECT
@@ -24,8 +21,6 @@ public slots:
         void experimental();
 	
 private:
-        //Device *m_device;
-        //NumpadDialog *m_serialNumpad;
 	
 	Ui::FactoryWidget *ui;
 };
