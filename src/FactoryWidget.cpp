@@ -7,9 +7,13 @@
 #include <QFile>
 #include <QFileInfo>
 
-#include "Device.h"
-#include "NumpadDialog.h"
+#include "MenuBar.h"
 #include "RootController.h"
+#include "StatusBar.h"
+#include "Device.h"
+#include "Options.h"
+#include "NotYetImplementedDialog.h"
+
 
 FactoryWidget::FactoryWidget(Device *device, QWidget *parent) : StandardWidget(parent), ui(new Ui::FactoryWidget)
 {

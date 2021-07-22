@@ -1,7 +1,7 @@
 #ifndef _FACTORYWIDGET_H_
 #define _FACTORYWIDGET_H_
 
-#include <QWidget>
+#include "StandardWidget.h"
 
 namespace Ui
 {
