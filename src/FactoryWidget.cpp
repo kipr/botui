@@ -17,7 +17,7 @@
 
 FactoryWidget::FactoryWidget(Device *device, QWidget *parent)
         : StandardWidget(device, parent),
-        ui(new Ui::AdvancedSettingsWidget)
+        ui(new Ui::FactoryWidget)
 {
         ui->updateConsole->setVisible(false);
 	ui->setupUi(this);
