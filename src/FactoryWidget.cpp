@@ -14,7 +14,7 @@
 FactoryWidget::FactoryWidget(Device *device, QWidget *parent)
 	: QWidget(parent),
 	m_device(device),
-	m_serialNumpad(new NumpadDialog(tr("Serial Number"), NumpadDialog::Integer)),
+        //m_serialNumpad(new NumpadDialog(tr("Serial Number"), NumpadDialog::Integer)),
 	ui(new Ui::FactoryWidget)
 {
 
