@@ -19,9 +19,11 @@ FactoryWidget::FactoryWidget(Device *device, QWidget *parent)
         : StandardWidget(device, parent),
         ui(new Ui::FactoryWidget)
 {
+        std::cout << "Test 1" << std::endl;
         ui->updateConsole->setVisible(false);
+        std::cout << "Test 2" << std::endl;
 	ui->setupUi(this);
-	
+        std::cout << "Test 3" << std::endl;
         //ui->serialNumber->setInputProvider(serialNumber);
 	connect(ui->confirm, SIGNAL(clicked()), SLOT(confirm()));
         connect(ui->reflash, SIGNAL(clicked()), SLOT(reflash()));
