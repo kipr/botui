@@ -56,7 +56,7 @@ void FactoryWidget::reflash()
     QProcess backup_process;
     backup_process.startDetached("/bin/sh", QStringList()<< "/home/pi/*_flash.sh");
     backup_process.waitForFinished(); // sets current thread to sleep
-    ui->updateConsole->insertPlainText("Flash Complete");
+    ui->flashConsole->insertPlainText("Flash Complete");
     QMessageBox::warning(this, "Flash Complete", "Flash Complete");
 
 }
