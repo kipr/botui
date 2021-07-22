@@ -6,6 +6,7 @@
 #include <QProcess>
 #include <QFile>
 #include <QFileInfo>
+#include <iostream>
 
 #include "MenuBar.h"
 #include "RootController.h"
