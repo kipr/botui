@@ -162,7 +162,7 @@
     </widget>
    </item>
    <item>
-    <widget class="ConsoleWidget" name="updateConsole">
+    <widget class="ConsoleWidget" name="flashConsole">
      <property name="minimumSize">
       <size>
        <width>450</width>
