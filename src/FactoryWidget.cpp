@@ -8,6 +8,8 @@
 #include "Calibrate.h"
 #include "Options.h"
 #include "NotYetImplementedDialog.h"
+#include <QString>
+#include <QProcess>
 
 
 #include <QDebug>
@@ -46,7 +48,6 @@ void FactoryWidget::reflash()
     backup_process.startDetached("/bin/sh", QStringList()<< "/home/pi/*_flash.sh");
     backup_process.waitForFinished(); // sets current thread to sleep
     //ui->flashConsole->insertPlainText("Flash Complete");
-    QMessageBox::warning(this, "Flash Complete", "Flash Complete");
 
 }
 
