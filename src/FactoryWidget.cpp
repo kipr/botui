@@ -8,6 +8,7 @@
 #include "Calibrate.h"
 #include "Options.h"
 #include "NotYetImplementedDialog.h"
+#include "NumpadDialog.h"
 #include <QString>
 #include <QProcess>
 
