@@ -37,9 +37,9 @@ void FactoryWidget::confirm()
 {
 
     QProcess backup_process;
-    backup_process.startDetached("/bin/sh", QStringList() << "/home/pi/wallaby_flash.sh " << ui->serialOne << " " << ui->serialTwo << " " << ui->serialThree << " " << ui->serialFour);
+    backup_process.startDetached("/bin/sh", QStringList() << "/home/pi/wallaby_flash.sh " << ui->serialOne->text() << " " << ui->serialTwo->text() << " " << ui->serialThree->text() << " " << ui->serialFour->text());
     backup_process.waitForFinished(); // sets current thread to sleep
-    ui->console->insertPlainText("Serial Number Set to " + ui->serialOne + " " + ui->serialTwo + " " + ui->serialThree + " " + ui->serialFour);
+    ui->console->insertPlainText("Serial Number Set to " + ui->serialOne->text() + " " + ui->serialTwo->text() + " " + ui->serialThree->text() + " " + ui->serialFour->text());
 
 }
 
