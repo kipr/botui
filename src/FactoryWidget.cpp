@@ -20,7 +20,7 @@ FactoryWidget::FactoryWidget(Device *device, QWidget *parent)
 {
         ui->setupUi(this);
         performStandardSetup(tr("Factory"));
-
+        ui->console->setVisible(false);
 
         connect(ui->confirm, SIGNAL(clicked()), SLOT(confirm()));
         connect(ui->reflash, SIGNAL(clicked()), SLOT(reflash()));
@@ -35,34 +35,30 @@ FactoryWidget::~FactoryWidget()
 
 void FactoryWidget::confirm()
 {
-    /*
-     * NOT YET IMPLEMENTED
+
     QProcess backup_process;
-    backup_process.startDetached("/bin/sh", QStringList()<< "/home/pi/wallaby_flash.sh " << ui->serialNumber);
+    backup_process.startDetached("/bin/sh", QStringList() << "/home/pi/wallaby_flash.sh " << ui->serialOne << " " << ui->serialTwo << " " << ui->serialThree << " " << ui->serialFour);
     backup_process.waitForFinished(); // sets current thread to sleep
-    ui->updateConsole->insertPlainText("STM32 has been Flashed");
-    QMessageBox::warning(this, "STM32 has been Flashed", "STM32 has been Flashed");
-    */
+    ui->console->insertPlainText("Serial Number Set to " + ui->serialOne + " " + ui->serialTwo + " " + ui->serialThree + " " + ui->serialFour);
+
 }
 
 void FactoryWidget::reflash()
 {
 
     QProcess backup_process;
-    backup_process.startDetached("/bin/sh", QStringList()<< "/home/pi/*_flash.sh");
+    backup_process.startDetached("/bin/sh", QStringList()<< "/home/pi/*_flash.sh"); //*_flash is to account for when wallaby_flash gets updated to wombat_flash
     backup_process.waitForFinished(); // sets current thread to sleep
-    //ui->flashConsole->insertPlainText("Flash Complete");
+    ui->console->insertPlainText("Flash Complete");
 
 }
 
 void FactoryWidget::experimental()
 {
-    /*
-     * NOT YET IMPLEMENTED
+
     QProcess backup_process;
-    backup_process.startDetached("/bin/sh", QStringList()<< "/home/pi/got2/Backup/backup.sh");
+    backup_process.startDetached("/bin/sh", QStringList()<< "/home/pi/getExperimental.sh");
     backup_process.waitForFinished(); // sets current thread to sleep
-    ui->updateConsole->insertPlainText("Backup Complete");
-    QMessageBox::warning(this, "Backup complete", "Backup complete");
-    */
+    ui->console->insertPlainText("Experimental Build Installed");
+
 }
