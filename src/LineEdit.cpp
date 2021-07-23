@@ -69,6 +69,6 @@ void LineEdit::paintEvent(QPaintEvent *e)
 
 void LineEdit::init()
 {
-	setReadOnly(!m_inputProvider);
+        //setReadOnly(!m_inputProvider);
 	setFocusPolicy(Qt::NoFocus);
 }
