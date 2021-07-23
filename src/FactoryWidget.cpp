@@ -28,6 +28,10 @@ FactoryWidget::FactoryWidget(Device *device, QWidget *parent)
 
 }
 
+FactoryWidget::~FactoryWidget()
+{
+        delete ui;
+}
 
 void FactoryWidget::confirm()
 {
