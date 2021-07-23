@@ -1,36 +1,36 @@
 #include "FactoryWidget.h"
 #include "ui_FactoryWidget.h"
-
-#include <QApplication>
-#include <QMessageBox>
-#include <QProcess>
-#include <QFile>
-#include <QFileInfo>
-
-#include "Device.h"
-#include "NumpadDialog.h"
+#include "SettingsProvider.h"
+#include "MenuBar.h"
 #include "RootController.h"
+#include "StatusBar.h"
+#include "Device.h"
+#include "Calibrate.h"
+#include "Options.h"
+#include "NotYetImplementedDialog.h"
+#include <QString>
+#include <QProcess>
+
+
+#include <QDebug>
 
 FactoryWidget::FactoryWidget(Device *device, QWidget *parent)
-	: QWidget(parent),
-	m_device(device),
-	m_serialNumpad(new NumpadDialog(tr("Serial Number"), NumpadDialog::Integer)),
-	ui(new Ui::FactoryWidget)
+        : StandardWidget(device, parent),
+        ui(new Ui::FactoryWidget)
 {
+        ui->setupUi(this);
+        performStandardSetup(tr("Factory"));
 
-        ui->updateConsole->setVisible(false);
-	ui->setupUi(this);
-	
-	ui->serialNumber->setInputProvider(m_serialNumpad);
-	connect(ui->confirm, SIGNAL(clicked()), SLOT(confirm()));
+
+        connect(ui->confirm, SIGNAL(clicked()), SLOT(confirm()));
         connect(ui->reflash, SIGNAL(clicked()), SLOT(reflash()));
         connect(ui->experimental, SIGNAL(clicked()), SLOT(experimental()));
+
 }
 
 FactoryWidget::~FactoryWidget()
 {
-	delete m_serialNumpad;
-	delete ui;
+        delete ui;
 }
 
 void FactoryWidget::confirm()
@@ -47,11 +47,12 @@ void FactoryWidget::confirm()
 
 void FactoryWidget::reflash()
 {
+
     QProcess backup_process;
     backup_process.startDetached("/bin/sh", QStringList()<< "/home/pi/*_flash.sh");
     backup_process.waitForFinished(); // sets current thread to sleep
-    ui->updateConsole->insertPlainText("Flash Complete");
-    QMessageBox::warning(this, "Flash Complete", "Flash Complete");
+    //ui->flashConsole->insertPlainText("Flash Complete");
+
 }
 
 void FactoryWidget::experimental()

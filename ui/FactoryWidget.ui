@@ -175,40 +175,7 @@
     </spacer>
    </item>
    <item>
-    <widget class="QWidget" name="widget" native="true">
-     <widget class="ConsoleWidget" name="updateConsole">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>450</width>
-        <height>478</height>
-       </rect>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>450</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <family>Courier New</family>
-        <pointsize>22</pointsize>
-        <italic>true</italic>
-       </font>
-      </property>
-      <property name="undoRedoEnabled">
-       <bool>false</bool>
-      </property>
-      <property name="readOnly">
-       <bool>true</bool>
-      </property>
-      <property name="acceptRichText">
-       <bool>false</bool>
-      </property>
-     </widget>
-    </widget>
+    <widget class="QWidget" name="widget" native="true"/>
    </item>
   </layout>
  </widget>
@@ -217,11 +184,6 @@
    <class>LineEdit</class>
    <extends>QLineEdit</extends>
    <header>LineEdit.h</header>
-  </customwidget>
-  <customwidget>
-   <class>ConsoleWidget</class>
-   <extends>QTextEdit</extends>
-   <header>ConsoleWidget.h</header>
   </customwidget>
  </customwidgets>
  <resources>
