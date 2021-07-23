@@ -8,6 +8,8 @@ namespace Ui
         class FactoryWidget;
 }
 
+class InputProviderDialog;
+
 class FactoryWidget : public StandardWidget
 {
 Q_OBJECT
