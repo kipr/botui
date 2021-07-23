@@ -23,6 +23,7 @@ public slots:
 
 private:
         Ui::FactoryWidget *ui;
+        InputProviderDialog *m_provider;
 };
 
 
