@@ -20,6 +20,13 @@ FactoryWidget::FactoryWidget(Device *device, QWidget *parent)
         ui(new Ui::FactoryWidget),
         m_provider(new NumpadDialog(QString()))
 {
+
+        //Set the text boxes to use a numpad UI
+        ui->serialOne->setInputProvider(m_provider);
+        ui->serialTwo->setInputProvider(m_provider);
+        ui->serialThree->setInputProvider(m_provider);
+        ui->serialFour->setInputProvider(m_provider);
+
         ui->setupUi(this);
         performStandardSetup(tr("Factory"));
         ui->console->setVisible(false);
