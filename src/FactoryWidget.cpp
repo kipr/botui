@@ -16,7 +16,8 @@
 
 FactoryWidget::FactoryWidget(Device *device, QWidget *parent)
         : StandardWidget(device, parent),
-        ui(new Ui::FactoryWidget)
+        ui(new Ui::FactoryWidget),
+        m_provider(new NumpadDialog(QString()))
 {
         ui->setupUi(this);
         performStandardSetup(tr("Factory"));
@@ -30,6 +31,7 @@ FactoryWidget::FactoryWidget(Device *device, QWidget *parent)
 
 FactoryWidget::~FactoryWidget()
 {
+        delete m_provider;
         delete ui;
 }
 
