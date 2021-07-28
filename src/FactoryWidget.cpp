@@ -68,6 +68,7 @@ void FactoryWidget::reflash()
     ui->reflash->setVisible(false);
     ui->experimental->setVisible(false);
     ui->changeSerialLabel->setVisible(false);
+    ui->console->setVisible(true);
 
     // Run
     m_consoleProc = new QProcess();
@@ -83,11 +84,12 @@ void FactoryWidget::reflash()
 void FactoryWidget::experimental()
 {
 
-    ui->console->setVisible(true);
+
     ui->confirm->setVisible(false);
     ui->reflash->setVisible(false);
     ui->experimental->setVisible(false);
     ui->changeSerialLabel->setVisible(false);
+    ui->console->setVisible(true);
 
     // Run
     m_consoleProc = new QProcess();
