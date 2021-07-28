@@ -80,7 +80,7 @@ void FactoryWidget::reflash()
     ui->confirm->setVisible(false);
     ui->reflash->setVisible(false);
     ui->experimental->setVisible(false);
-    ui->statusLabel->setText("Flash Progress:");
+    ui->changeSerialLabel->setText("Flash Progress:");
 
 
     //Setup QProcess
@@ -113,7 +113,7 @@ void FactoryWidget::experimental()
     ui->confirm->setVisible(false);
     ui->reflash->setVisible(false);
     ui->experimental->setVisible(false);
-    ui->statusLabel->setText("Experimental Install:");
+    ui->changeSerialLabel->setText("Experimental Install:");
 
     //Setup QProcess
     m_consoleProc = new QProcess();
