@@ -84,9 +84,6 @@ void FactoryWidget::reflash()
     ui->experimental->setVisible(false);
     ui->changeSerialLabel->setText("Flash Progress:");
 
-    //Force Redraw
-    QCoreApplication::processEvents();
-
     //Setup QProcess
     m_consoleProc = new QProcess();
     m_consoleProc->setProcessChannelMode(QProcess::MergedChannels);
@@ -97,8 +94,6 @@ void FactoryWidget::reflash()
     m_consoleProc->setWorkingDirectory("/home/pi");
     m_consoleProc->start("sudo ./wallaby_flash");
     m_consoleProc->waitForFinished();
-    ui->console->insertPlainText("Flash Complete");
-    ui->console->setProcess(0);
 
 }
 
@@ -120,9 +115,6 @@ void FactoryWidget::experimental()
     ui->experimental->setVisible(false);
     ui->changeSerialLabel->setText("Experimental Install:");
 
-    //Force Redraw
-    QCoreApplication::processEvents();
-
     //Setup QProcess
     m_consoleProc = new QProcess();
     m_consoleProc->setProcessChannelMode(QProcess::MergedChannels);
@@ -133,7 +125,5 @@ void FactoryWidget::experimental()
     m_consoleProc->setWorkingDirectory("/home/pi");
     m_consoleProc->start("sudo ./getExperimental.sh");
     m_consoleProc->waitForFinished();
-    ui->console->insertPlainText("Experimental Build Installed");
-    ui->console->setProcess(0);
 
 }
