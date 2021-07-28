@@ -30,7 +30,7 @@ public slots:
 private:
         Ui::FactoryWidget *ui;
         InputProviderDialog *m_provider;
-        QProcess *m_updateProc;
+        QProcess *m_consoleProc;
 };
 
 

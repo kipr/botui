@@ -52,11 +52,12 @@ void FactoryWidget::confirm()
     ui->console->insertPlainText("Setting Serial Number to " + ui->serialOne->text() + ui->serialTwo->text() + ui->serialThree->text() + ui->serialFour->text());
 
     // Run
-    m_updateProc = new QProcess();
-    m_updateProc->setProcessChannelMode(QProcess::MergedChannels);
-    ui->console->setProcess(m_updateProc);
-    connect(m_updateProc, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(updateFinished(int, QProcess::ExitStatus)));
-    m_updateProc->start("sh /home/pi/wallaby_set_serial.sh " + ui->serialOne->text() + " " + ui->serialTwo->text() + " " + ui->serialThree->text() + " " + ui->serialFour->text());
+    m_consoleProc = new QProcess();
+    m_consoleProc->setProcessChannelMode(QProcess::MergedChannels);
+    ui->console->setProcess(m_consoleProc);
+    connect(m_consoleProc, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(updateFinished(int, QProcess::ExitStatus)));
+
+    m_consoleProc->start("sh /home/pi/wallaby_set_serial.sh " + ui->serialOne->text() + " " + ui->serialTwo->text() + " " + ui->serialThree->text() + " " + ui->serialFour->text());
 
 }
 
@@ -67,11 +68,12 @@ void FactoryWidget::reflash()
     ui->console->setVisible(true);
 
     // Run
-    m_updateProc = new QProcess();
-    m_updateProc->setProcessChannelMode(QProcess::MergedChannels);
-    ui->console->setProcess(m_updateProc);
-    connect(m_updateProc, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(updateFinished(int, QProcess::ExitStatus)));
-    m_updateProc->start("cd /home/pi && sudo ./wallaby_flash");
+    m_consoleProc = new QProcess();
+    m_consoleProc->setProcessChannelMode(QProcess::MergedChannels);
+    ui->console->setProcess(m_consoleProc);
+    connect(m_consoleProc, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(updateFinished(int, QProcess::ExitStatus)));
+    m_consoleProc->setWorkingDirectory("/home/pi");
+    m_consoleProc->start("sudo ./wallaby_flash");
     ui->console->insertPlainText("Flash Complete");
 
 }
@@ -83,11 +85,11 @@ void FactoryWidget::experimental()
     ui->console->setVisible(true);
 
     // Run
-    m_updateProc = new QProcess();
-    m_updateProc->setProcessChannelMode(QProcess::MergedChannels);
-    ui->console->setProcess(m_updateProc);
-    connect(m_updateProc, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(updateFinished(int, QProcess::ExitStatus)));
-    m_updateProc->start("sudo ./home/pi/getExperimental.sh");
+    m_consoleProc = new QProcess();
+    m_consoleProc->setProcessChannelMode(QProcess::MergedChannels);
+    ui->console->setProcess(m_consoleProc);
+    connect(m_consoleProc, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(updateFinished(int, QProcess::ExitStatus)));
+    m_consoleProc->start("sudo ./home/pi/getExperimental.sh");
     ui->console->insertPlainText("Experimental Build Installed");
 
 
