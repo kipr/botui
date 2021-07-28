@@ -48,6 +48,7 @@ void FactoryWidget::confirm()
 {
 
     QProcess backup_process;
+    ui->console->setVisible(true);
     backup_process.startDetached("/bin/sh", QStringList() << "/home/pi/wallaby_flash.sh " << ui->serialOne->text() << " " << ui->serialTwo->text() << " " << ui->serialThree->text() << " " << ui->serialFour->text());
     backup_process.waitForFinished(); // sets current thread to sleep
     ui->console->insertPlainText("Serial Number Set to " + ui->serialOne->text() + " " + ui->serialTwo->text() + " " + ui->serialThree->text() + " " + ui->serialFour->text());
@@ -58,6 +59,7 @@ void FactoryWidget::reflash()
 {
 
     QProcess backup_process;
+    ui->console->setVisible(true);
     backup_process.startDetached("/bin/sh", QStringList()<< "/home/pi/*_flash.sh"); //*_flash is to account for when wallaby_flash gets updated to wombat_flash
     backup_process.waitForFinished(); // sets current thread to sleep
     ui->console->insertPlainText("Flash Complete");
@@ -68,6 +70,7 @@ void FactoryWidget::experimental()
 {
 
     QProcess backup_process;
+    ui->console->setVisible(true);
     backup_process.startDetached("/bin/sh", QStringList()<< "/home/pi/getExperimental.sh");
     backup_process.waitForFinished(); // sets current thread to sleep
     ui->console->insertPlainText("Experimental Build Installed");
