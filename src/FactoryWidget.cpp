@@ -71,7 +71,7 @@ void FactoryWidget::reflash()
     m_updateProc->setProcessChannelMode(QProcess::MergedChannels);
     ui->console->setProcess(m_updateProc);
     connect(m_updateProc, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(updateFinished(int, QProcess::ExitStatus)));
-    m_updateProc->start("cd /home/pi && sh /home/pi/wallaby_flash");
+    m_updateProc->start("sudo sh /home/pi/wallaby_flash");
     ui->console->insertPlainText("Flash Complete");
 
 }
