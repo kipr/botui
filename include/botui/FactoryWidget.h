@@ -3,6 +3,10 @@
 
 #include "StandardWidget.h"
 
+#include <QString>
+#include <QProcess>
+#include <QDir>
+
 namespace Ui
 {
         class FactoryWidget;
