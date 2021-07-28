@@ -47,8 +47,8 @@ FactoryWidget::~FactoryWidget()
 void FactoryWidget::confirm()
 {
 
-    QProcess backup_process;
     ui->console->setVisible(true);
+
     ui->console->insertPlainText("Setting Serial Number to " + ui->serialOne->text() + ui->serialTwo->text() + ui->serialThree->text() + ui->serialFour->text());
 
     // Run
@@ -64,8 +64,10 @@ void FactoryWidget::confirm()
 void FactoryWidget::reflash()
 {
 
-    QProcess backup_process;
-    ui->console->setVisible(true);
+    ui->confirm->setVisible(false);
+    ui->reflash->setVisible(false);
+    ui->experimental->setVisible(false);
+    ui->changeSerialLabel->setVisible(false);
 
     // Run
     m_consoleProc = new QProcess();
@@ -81,8 +83,11 @@ void FactoryWidget::reflash()
 void FactoryWidget::experimental()
 {
 
-    QProcess backup_process;
     ui->console->setVisible(true);
+    ui->confirm->setVisible(false);
+    ui->reflash->setVisible(false);
+    ui->experimental->setVisible(false);
+    ui->changeSerialLabel->setVisible(false);
 
     // Run
     m_consoleProc = new QProcess();
