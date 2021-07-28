@@ -93,7 +93,6 @@ void FactoryWidget::reflash()
     ui->console->insertPlainText("Starting Flash, please wait until finished \n");
     m_consoleProc->setWorkingDirectory("/home/pi");
     m_consoleProc->start("sudo ./wallaby_flash");
-    m_consoleProc->waitForFinished();
 
 }
 
@@ -124,6 +123,5 @@ void FactoryWidget::experimental()
     ui->console->insertPlainText("Pulling latest beta software... \n");
     m_consoleProc->setWorkingDirectory("/home/pi");
     m_consoleProc->start("sudo ./getExperimental.sh");
-    m_consoleProc->waitForFinished();
 
 }
