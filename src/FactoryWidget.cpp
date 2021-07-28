@@ -74,7 +74,6 @@ void FactoryWidget::reflash()
     m_consoleProc = new QProcess();
     m_consoleProc->setProcessChannelMode(QProcess::MergedChannels);
     ui->console->setProcess(m_consoleProc);
-    connect(m_consoleProc, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(updateFinished(int, QProcess::ExitStatus)));
     m_consoleProc->setWorkingDirectory("/home/pi");
     m_consoleProc->start("sudo ./wallaby_flash");
     m_consoleProc->waitForFinished();
@@ -96,7 +95,6 @@ void FactoryWidget::experimental()
     m_consoleProc = new QProcess();
     m_consoleProc->setProcessChannelMode(QProcess::MergedChannels);
     ui->console->setProcess(m_consoleProc);
-    connect(m_consoleProc, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(updateFinished(int, QProcess::ExitStatus)));
     m_consoleProc->start("sudo ./home/pi/getExperimental.sh");
     m_consoleProc->waitForFinished();
     ui->console->insertPlainText("Experimental Build Installed");
