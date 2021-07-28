@@ -74,6 +74,7 @@ void FactoryWidget::reflash()
     ui->changeSerialLabel->setVisible(false);
 
     ui->console->setVisible(true);
+    ui->console->insertPlainText("Starting Flash, please wait until finished \n");
 
     // Run
     m_consoleProc = new QProcess();
@@ -101,6 +102,7 @@ void FactoryWidget::experimental()
     ui->changeSerialLabel->setVisible(false);
 
     ui->console->setVisible(true);
+    ui->console->insertPlainText("Pulling latest beta software... \n");
 
     // Run
     m_consoleProc = new QProcess();
