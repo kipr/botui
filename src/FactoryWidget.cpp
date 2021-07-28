@@ -74,12 +74,14 @@ void FactoryWidget::reflash()
     ui->changeSerialLabel->setVisible(false);
 
     ui->console->setVisible(true);
-    ui->console->insertPlainText("Starting Flash, please wait until finished \n");
+
 
     // Run
     m_consoleProc = new QProcess();
     m_consoleProc->setProcessChannelMode(QProcess::MergedChannels);
     ui->console->setProcess(m_consoleProc);
+
+    ui->console->insertPlainText("Starting Flash, please wait until finished \n");
     m_consoleProc->setWorkingDirectory("/home/pi");
     m_consoleProc->start("sudo ./wallaby_flash");
     m_consoleProc->waitForFinished();
@@ -102,12 +104,14 @@ void FactoryWidget::experimental()
     ui->changeSerialLabel->setVisible(false);
 
     ui->console->setVisible(true);
-    ui->console->insertPlainText("Pulling latest beta software... \n");
 
     // Run
     m_consoleProc = new QProcess();
     m_consoleProc->setProcessChannelMode(QProcess::MergedChannels);
     ui->console->setProcess(m_consoleProc);
+
+    ui->console->insertPlainText("Pulling latest beta software... \n");
+
     m_consoleProc->start("sudo ./home/pi/getExperimental.sh");
     m_consoleProc->waitForFinished();
     ui->console->insertPlainText("Experimental Build Installed");
