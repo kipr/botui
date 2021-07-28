@@ -62,9 +62,9 @@ void FactoryWidget::confirm()
 void FactoryWidget::reflash()
 {
     //Disable Buttons
-    ui->update->setEnabled(false);
-    ui->refresh->setEnabled(false);
-    ui->ethernet->setEnabled(false);
+    ui->reflash->setEnabled(false);
+    ui->experimental->setEnabled(false);
+    ui->confirm->setEnabled(false);
 
 
     //Make console appear
