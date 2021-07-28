@@ -1,4 +1,4 @@
-gd#include "ConsoleWidget.h"
+#include "ConsoleWidget.h"
 
 #include <QApplication>
 #include <QKeyEvent>
