@@ -80,7 +80,7 @@ void FactoryWidget::reflash()
     ui->confirm->setVisible(false);
     ui->reflash->setVisible(false);
     ui->experimental->setVisible(false);
-    ui->changeSerialLabel->setVisible(false);
+    ui->statusLabel->setText("Flash Progress:");
 
 
     //Setup QProcess
@@ -99,11 +99,6 @@ void FactoryWidget::reflash()
 
 void FactoryWidget::experimental()
 {
-    //Disable Buttons
-    ui->reflash->setEnabled(false);
-    ui->experimental->setEnabled(false);
-    ui->confirm->setEnabled(false);
-
 
     //Make console appear
     ui->console->setVisible(true);
@@ -118,7 +113,7 @@ void FactoryWidget::experimental()
     ui->confirm->setVisible(false);
     ui->reflash->setVisible(false);
     ui->experimental->setVisible(false);
-    ui->changeSerialLabel->setVisible(false);
+    ui->statusLabel->setText("Experimental Install:");
 
     //Setup QProcess
     m_consoleProc = new QProcess();
