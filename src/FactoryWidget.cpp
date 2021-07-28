@@ -19,9 +19,9 @@ FactoryWidget::FactoryWidget(Device *device, QWidget *parent)
         ui(new Ui::FactoryWidget),
         m_provider(new NumpadDialog(QString()))
 {
-
-    ui->setupUi(this);
-    performStandardSetup(tr("Factory"));
+        //Standard Setup
+        ui->setupUi(this);
+        performStandardSetup(tr("Factory"));
 
         //Set the text boxes to use a numpad UI
         ui->serialOne->setInputProvider(m_provider);
@@ -29,9 +29,10 @@ FactoryWidget::FactoryWidget(Device *device, QWidget *parent)
         ui->serialThree->setInputProvider(m_provider);
         ui->serialFour->setInputProvider(m_provider);
 
-
+        //Make sure the console doesn't appear until we call it
         ui->console->setVisible(false);
 
+        //Connect the functions to their respective buttons
         connect(ui->confirm, SIGNAL(clicked()), SLOT(confirm()));
         connect(ui->reflash, SIGNAL(clicked()), SLOT(reflash()));
         connect(ui->experimental, SIGNAL(clicked()), SLOT(experimental()));
@@ -46,43 +47,48 @@ FactoryWidget::~FactoryWidget()
 
 void FactoryWidget::confirm()
 {
-
+    //Make console visable and print the requested serial
     ui->console->setVisible(true);
-
     ui->console->insertPlainText("Setting Serial Number to " + ui->serialOne->text() + ui->serialTwo->text() + ui->serialThree->text() + ui->serialFour->text());
 
-    // Run
+    // Run QProcess
     m_consoleProc = new QProcess();
     m_consoleProc->setProcessChannelMode(QProcess::MergedChannels);
     ui->console->setProcess(m_consoleProc);
-    connect(m_consoleProc, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(updateFinished(int, QProcess::ExitStatus)));
-
     m_consoleProc->start("sh /home/pi/wallaby_set_serial.sh " + ui->serialOne->text() + " " + ui->serialTwo->text() + " " + ui->serialThree->text() + " " + ui->serialFour->text());
 
 }
 
 void FactoryWidget::reflash()
 {
+    //Disable Buttons
+    ui->update->setEnabled(false);
+    ui->refresh->setEnabled(false);
+    ui->ethernet->setEnabled(false);
+
+
+    //Make console appear
     ui->console->setVisible(true);
 
+    //Make textboxes disappear
     ui->serialOne->setVisible(false);
     ui->serialTwo->setVisible(false);
     ui->serialThree->setVisible(false);
     ui->serialFour->setVisible(false);
 
+    //Make buttons and labels disappear
     ui->confirm->setVisible(false);
     ui->reflash->setVisible(false);
     ui->experimental->setVisible(false);
     ui->changeSerialLabel->setVisible(false);
 
 
-
-
-    // Run
+    //Setup QProcess
     m_consoleProc = new QProcess();
     m_consoleProc->setProcessChannelMode(QProcess::MergedChannels);
     ui->console->setProcess(m_consoleProc);
 
+    //Start QProcess
     ui->console->insertPlainText("Starting Flash, please wait until finished \n");
     m_consoleProc->setWorkingDirectory("/home/pi");
     m_consoleProc->start("sudo ./wallaby_flash");
@@ -93,28 +99,36 @@ void FactoryWidget::reflash()
 
 void FactoryWidget::experimental()
 {
+    //Disable Buttons
+    ui->update->setEnabled(false);
+    ui->refresh->setEnabled(false);
+    ui->ethernet->setEnabled(false);
+
+
+    //Make console appear
     ui->console->setVisible(true);
 
+    //Make textboxes disappear
     ui->serialOne->setVisible(false);
     ui->serialTwo->setVisible(false);
     ui->serialThree->setVisible(false);
     ui->serialFour->setVisible(false);
 
+    //Make buttons and labels disappear
     ui->confirm->setVisible(false);
     ui->reflash->setVisible(false);
     ui->experimental->setVisible(false);
     ui->changeSerialLabel->setVisible(false);
 
-
-
-    // Run
+    //Setup QProcess
     m_consoleProc = new QProcess();
     m_consoleProc->setProcessChannelMode(QProcess::MergedChannels);
     ui->console->setProcess(m_consoleProc);
 
+    //Start QProcess
     ui->console->insertPlainText("Pulling latest beta software... \n");
-
-    m_consoleProc->start("sudo ./home/pi/getExperimental.sh");
+    m_consoleProc->setWorkingDirectory("/home/pi");
+    m_consoleProc->start("sudo ./getExperimental.sh");
     m_consoleProc->waitForFinished();
     ui->console->insertPlainText("Experimental Build Installed");
 
