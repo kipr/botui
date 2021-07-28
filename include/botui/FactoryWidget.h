@@ -26,7 +26,6 @@ public slots:
         void reflash();
         void experimental();
 
-
 private:
         Ui::FactoryWidget *ui;
         InputProviderDialog *m_provider;

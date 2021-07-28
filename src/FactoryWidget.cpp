@@ -56,6 +56,9 @@ void FactoryWidget::confirm()
     m_consoleProc->setProcessChannelMode(QProcess::MergedChannels);
     ui->console->setProcess(m_consoleProc);
     m_consoleProc->start("sh /home/pi/wallaby_set_serial.sh " + ui->serialOne->text() + " " + ui->serialTwo->text() + " " + ui->serialThree->text() + " " + ui->serialFour->text());
+    ui->m_consoleProc->waitForFinished();
+    ui->console->insertPlainText("Set Serial Number to " + ui->serialOne->text() + ui->serialTwo->text() + ui->serialThree->text() + ui->serialFour->text());
+    ui->updateConsole->setProcess(0);
 
 }
 
@@ -65,7 +68,6 @@ void FactoryWidget::reflash()
     ui->reflash->setEnabled(false);
     ui->experimental->setEnabled(false);
     ui->confirm->setEnabled(false);
-
 
     //Make console appear
     ui->console->setVisible(true);
@@ -82,6 +84,8 @@ void FactoryWidget::reflash()
     ui->experimental->setVisible(false);
     ui->changeSerialLabel->setText("Flash Progress:");
 
+    //Force Redraw
+    ui->processEvents();
 
     //Setup QProcess
     m_consoleProc = new QProcess();
@@ -90,11 +94,11 @@ void FactoryWidget::reflash()
 
     //Start QProcess
     ui->console->insertPlainText("Starting Flash, please wait until finished \n");
-    connect(m_consoleProc, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(updateFinished(int, QProcess::ExitStatus)));
     m_consoleProc->setWorkingDirectory("/home/pi");
     m_consoleProc->start("sudo ./wallaby_flash");
     m_consoleProc->waitForFinished();
     ui->console->insertPlainText("Flash Complete");
+    ui->console->setProcess(0);
 
 }
 
@@ -116,6 +120,8 @@ void FactoryWidget::experimental()
     ui->experimental->setVisible(false);
     ui->changeSerialLabel->setText("Experimental Install:");
 
+    //Force Redraw
+    ui->processEvents();
 
     //Setup QProcess
     m_consoleProc = new QProcess();
@@ -124,11 +130,10 @@ void FactoryWidget::experimental()
 
     //Start QProcess
     ui->console->insertPlainText("Pulling latest beta software... \n");
-    connect(m_consoleProc, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(updateFinished(int, QProcess::ExitStatus)));
     m_consoleProc->setWorkingDirectory("/home/pi");
     m_consoleProc->start("sudo ./getExperimental.sh");
     m_consoleProc->waitForFinished();
     ui->console->insertPlainText("Experimental Build Installed");
-
+    ui->console->setProcess(0);
 
 }
