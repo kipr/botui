@@ -71,7 +71,7 @@ void FactoryWidget::reflash()
     m_updateProc->setProcessChannelMode(QProcess::MergedChannels);
     ui->console->setProcess(m_updateProc);
     connect(m_updateProc, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(updateFinished(int, QProcess::ExitStatus)));
-    m_updateProc->start("sudo ./home/pi/*_flash.sh"); //* is used so we can change wallaby_flash to wombat_flash or kipr_flash
+    m_updateProc->start("sudo ./home/pi/wallaby_flash.sh");
     ui->console->insertPlainText("Flash Complete");
 
 }
