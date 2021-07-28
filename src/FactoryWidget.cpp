@@ -9,10 +9,9 @@
 #include "Options.h"
 #include "NotYetImplementedDialog.h"
 #include "NumpadDialog.h"
+
 #include <QString>
 #include <QProcess>
-
-
 #include <QDebug>
 
 FactoryWidget::FactoryWidget(Device *device, QWidget *parent)
@@ -21,14 +20,16 @@ FactoryWidget::FactoryWidget(Device *device, QWidget *parent)
         m_provider(new NumpadDialog(QString()))
 {
 
+    ui->setupUi(this);
+    performStandardSetup(tr("Factory"));
+
         //Set the text boxes to use a numpad UI
         ui->serialOne->setInputProvider(m_provider);
         ui->serialTwo->setInputProvider(m_provider);
         ui->serialThree->setInputProvider(m_provider);
         ui->serialFour->setInputProvider(m_provider);
 
-        ui->setupUi(this);
-        performStandardSetup(tr("Factory"));
+
         ui->console->setVisible(false);
 
         connect(ui->confirm, SIGNAL(clicked()), SLOT(confirm()));
