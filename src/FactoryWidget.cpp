@@ -90,6 +90,7 @@ void FactoryWidget::reflash()
 
     //Start QProcess
     ui->console->insertPlainText("Starting Flash, please wait until finished \n");
+    connect(m_consoleProc, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(updateFinished(int, QProcess::ExitStatus)));
     m_consoleProc->setWorkingDirectory("/home/pi");
     m_consoleProc->start("sudo ./wallaby_flash");
     m_consoleProc->waitForFinished();
@@ -115,6 +116,7 @@ void FactoryWidget::experimental()
     ui->experimental->setVisible(false);
     ui->changeSerialLabel->setText("Experimental Install:");
 
+
     //Setup QProcess
     m_consoleProc = new QProcess();
     m_consoleProc->setProcessChannelMode(QProcess::MergedChannels);
@@ -122,6 +124,7 @@ void FactoryWidget::experimental()
 
     //Start QProcess
     ui->console->insertPlainText("Pulling latest beta software... \n");
+    connect(m_consoleProc, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(updateFinished(int, QProcess::ExitStatus)));
     m_consoleProc->setWorkingDirectory("/home/pi");
     m_consoleProc->start("sudo ./getExperimental.sh");
     m_consoleProc->waitForFinished();
