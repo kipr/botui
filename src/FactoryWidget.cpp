@@ -63,11 +63,16 @@ void FactoryWidget::confirm()
 
 void FactoryWidget::reflash()
 {
+    ui->serialOne->setVisible(false);
+    ui->serialTwo->setVisible(false);
+    ui->serialThree->setVisible(false);
+    ui->serialFour->setVisible(false);
 
     ui->confirm->setVisible(false);
     ui->reflash->setVisible(false);
     ui->experimental->setVisible(false);
     ui->changeSerialLabel->setVisible(false);
+
     ui->console->setVisible(true);
 
     // Run
@@ -85,10 +90,16 @@ void FactoryWidget::experimental()
 {
 
 
+    ui->serialOne->setVisible(false);
+    ui->serialTwo->setVisible(false);
+    ui->serialThree->setVisible(false);
+    ui->serialFour->setVisible(false);
+
     ui->confirm->setVisible(false);
     ui->reflash->setVisible(false);
     ui->experimental->setVisible(false);
     ui->changeSerialLabel->setVisible(false);
+
     ui->console->setVisible(true);
 
     // Run
