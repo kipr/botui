@@ -85,7 +85,7 @@ void FactoryWidget::reflash()
     ui->changeSerialLabel->setText("Flash Progress:");
 
     //Force Redraw
-    processEvents();
+    QCoreApplication::processEvents()
 
     //Setup QProcess
     m_consoleProc = new QProcess();
@@ -121,7 +121,7 @@ void FactoryWidget::experimental()
     ui->changeSerialLabel->setText("Experimental Install:");
 
     //Force Redraw
-    processEvents();
+    QCoreApplication::processEvents()
 
     //Setup QProcess
     m_consoleProc = new QProcess();
