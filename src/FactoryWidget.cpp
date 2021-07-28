@@ -56,7 +56,7 @@ void FactoryWidget::confirm()
     m_updateProc->setProcessChannelMode(QProcess::MergedChannels);
     ui->console->setProcess(m_updateProc);
     connect(m_updateProc, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(updateFinished(int, QProcess::ExitStatus)));
-    m_updateProc->start("sh /home/pi/wallaby_set_serial.sh " << ui->serialOne->text() << " " << ui->serialTwo->text() << " " << ui->serialThree->text() << " " << ui->serialFour->text());
+    m_updateProc->start("sh /home/pi/wallaby_set_serial.sh " + ui->serialOne->text() + " " << ui->serialTwo->text() + " " << ui->serialThree->text() + " " << ui->serialFour->text());
 
 }
 
