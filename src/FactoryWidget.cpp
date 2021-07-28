@@ -56,9 +56,9 @@ void FactoryWidget::confirm()
     m_consoleProc->setProcessChannelMode(QProcess::MergedChannels);
     ui->console->setProcess(m_consoleProc);
     m_consoleProc->start("sh /home/pi/wallaby_set_serial.sh " + ui->serialOne->text() + " " + ui->serialTwo->text() + " " + ui->serialThree->text() + " " + ui->serialFour->text());
-    ui->m_consoleProc->waitForFinished();
+    m_consoleProc->waitForFinished();
     ui->console->insertPlainText("Set Serial Number to " + ui->serialOne->text() + ui->serialTwo->text() + ui->serialThree->text() + ui->serialFour->text());
-    ui->updateConsole->setProcess(0);
+    ui->console->setProcess(0);
 
 }
 
