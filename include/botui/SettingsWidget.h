@@ -24,6 +24,7 @@ public slots:
   	void cameraView();
 	void backup();
         void advanced();
+    void millennialSnowflake();
 	
 private:
 	Ui::SettingsWidget *ui;

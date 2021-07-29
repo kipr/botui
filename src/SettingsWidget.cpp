@@ -39,6 +39,7 @@ SettingsWidget::SettingsWidget(Device *device, QWidget *parent)
         connect(ui->cameraView, SIGNAL(clicked()), SLOT(cameraView()));
         connect(ui->backup, SIGNAL(clicked()), SLOT(backup()));
         connect(ui->advanced, SIGNAL(clicked()), SLOT(advanced()));
+        connect(ui->millennialSnowflake, SIGNAL(clicked()), SLOT(millennialSnowflake()));
 	
 }
 
@@ -86,4 +87,18 @@ void SettingsWidget::cameraView()
 void SettingsWidget::backup()
 {
   RootController::ref().presentWidget(new BackupWidget(device()));
+}
+void SettingsWidget::millennialSnowflake()
+{
+
+  if (ui->millennialSnowflake.text() == "Make a snowflake") {
+   ui->millennialSnowflake.setText("Make a snowflake");
+
+  }
+
+  else {
+      ui->millennialSnowflake.setText("Don't make a snowflake");
+  }
+
+
 }
