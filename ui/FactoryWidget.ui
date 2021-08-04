@@ -53,7 +53,7 @@
    <item>
     <widget class="QLabel" name="subText">
      <property name="text">
-      <string/>
+      <string>(Please match with the serial number sticker)</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
