@@ -52,7 +52,8 @@ void ConsoleWidget::readStandardOut()
 	insertPlainText(array);
 
         //Output to a debug file
-        std::ofstream myfile ("/home/pi/debugLog.txt", std::ofstream::out | std::ofstream::trunc); //trunc is necessary to prevent filling the file throughout usage
+        std::ofstream myfile;
+        myfile.open("/home/pi/debugLog.txt", std::ofstream::out | std::ofstream::trunc); //trunc is necessary to prevent filling the file throughout usage
         if (myfile.is_open()){
             //Cycle through array and write to file
             for(int count = 0; count < size; count++){
