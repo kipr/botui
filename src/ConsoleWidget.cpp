@@ -65,11 +65,8 @@ void ConsoleWidget::readStandardOut()
         std::ofstream myfile;
         myfile.open("/home/pi/debugLog.txt", std::fstream::out | std::fstream::app);
         if (myfile.is_open()){
-            //Cycle through array and write to file
-            for(int count = 0; count < size; count++){
-                myfile << printer[count] << " " ;
-            }
-        myfile.close();
+            myfile << array << " " ;
+            myfile.close();
         }
 
 	moveCursor(QTextCursor::End, QTextCursor::KeepAnchor);
