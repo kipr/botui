@@ -168,7 +168,7 @@ void WallabyUpdateWidget::ethernet(){
           ui->updateConsole->insertPlainText("Update Failed, please try again or contact tech support.");
       }
       ui->updateConsole->setProcess(0);
-      }
+
 
 
 }
