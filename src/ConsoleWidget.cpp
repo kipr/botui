@@ -5,6 +5,8 @@
 #include <QTimer>
 #include <QDebug>
 
+#include <fstream>
+
 ConsoleWidget::ConsoleWidget(QWidget *parent)
 	: QTextEdit(parent),
 	m_process(0),
