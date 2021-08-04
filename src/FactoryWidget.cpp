@@ -98,6 +98,11 @@ void FactoryWidget::reflash()
     m_consoleProc->setWorkingDirectory("/home/pi");
     m_consoleProc->start("sudo ./wallaby_flash");
 
+    //Keep loading console until finished
+    while(m_consoleProc->state() != QProcess::NotRunning){
+        QApplication::processEvents();
+    }
+    ui->console->insertPlainText("Reflash Complete!");
 }
 
 void FactoryWidget::experimental()
@@ -132,6 +137,6 @@ void FactoryWidget::experimental()
     while(m_consoleProc->state() != QProcess::NotRunning){
         QApplication::processEvents();
     }
-    ui->console->insertPlainText("Reflash Complete!");
+    ui->console->insertPlainText("Experimental Build Complete!");
 
 }
