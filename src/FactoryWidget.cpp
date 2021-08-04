@@ -37,6 +37,12 @@ FactoryWidget::FactoryWidget(Device *device, QWidget *parent)
         connect(ui->reflash, SIGNAL(clicked()), SLOT(reflash()));
         connect(ui->experimental, SIGNAL(clicked()), SLOT(experimental()));
 
+        //Set the process to print a message when finished signal is reached using a lambda function
+        connect(m_consoleProc, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), [=] (int exitCode, QProcess::ExitStatus exitStatus){
+            ui->console->insertPlainText("COMPLETE!");
+        });
+
+
 }
 
 FactoryWidget::~FactoryWidget()
@@ -94,16 +100,6 @@ void FactoryWidget::reflash()
     ui->console->insertPlainText("Starting Flash, please wait until finished \n");
     m_consoleProc->setWorkingDirectory("/home/pi");
     m_consoleProc->start("sudo ./wallaby_flash");
-
-    QApplication::processEvents();
-
-    if(m_consoleProc->waitForFinished(400000)){
-        //Process succeeded
-        ui->console->insertPlainText("Reflash Succeeded");
-    }
-    else{
-        ui->console->insertPlainText("Reflash Timed Out (Failed)");
-    }
 
 }
 
