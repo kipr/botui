@@ -60,7 +60,7 @@ void ConsoleWidget::readStandardOut()
         std::ofstream myfile;
         myfile.open("/home/pi/debugLog.txt", std::fstream::out | std::fstream::app);
         if (myfile.is_open()){
-            myfile << array[i] << " " ;
+            myfile << array[i];
             myfile.close();
         }
 
