@@ -6,7 +6,6 @@
 #include <QDebug>
 
 #include <fstream>
-#include <iostream>
 
 ConsoleWidget::ConsoleWidget(QWidget *parent)
 	: QTextEdit(parent),
@@ -56,18 +55,20 @@ void ConsoleWidget::readStandardOut()
 	}
 	i = array.lastIndexOf('\a');
 	if(i >= 0) startBeep();
-	array.remove(i, 1);
-	
-	insertPlainText(array);
 
         //Output to a debug file
         std::ofstream myfile;
         myfile.open("/home/pi/debugLog.txt", std::fstream::out | std::fstream::app);
         if (myfile.is_open()){
-            myfile << array[0] << " " ;
-            std::cout << array[0];
+            myfile << array << " " ;
             myfile.close();
         }
+
+	array.remove(i, 1);
+	
+	insertPlainText(array);
+
+
 
 	moveCursor(QTextCursor::End, QTextCursor::KeepAnchor);
 	update();
