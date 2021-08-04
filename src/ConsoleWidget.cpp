@@ -34,7 +34,7 @@ void ConsoleWidget::setProcess(QIODevice *process)
         myfile << "Log Cleared." << std::endl;
         myfile.close();
 
-        //connect(m_process, SIGNAL(readyRead()), this, SLOT(readStandardOut()));
+        connect(m_process, SIGNAL(readyRead()), this, SLOT(readStandardOut()));
 }
 
 QIODevice *ConsoleWidget::process() const
