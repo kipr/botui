@@ -30,7 +30,7 @@ void ConsoleWidget::setProcess(QIODevice *process)
 	
         //Delete the log file to generate a new log
         std::ofstream myfile;
-        myfile.open("/home/pi/debugLog.txt", std::fstream::out | std::fstream::trunc);
+        myfile.open("/home/pi/debugLog.txt", std::fstream::out | std::fstream::app);
         myfile << "Log Cleared." << std::endl;
         myfile.close();
 
