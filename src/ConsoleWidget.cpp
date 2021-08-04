@@ -61,7 +61,7 @@ void ConsoleWidget::readStandardOut()
             for(int i = 0; i<array.size(); i++){
                 myfile << array[i];
             }
-            myfile << "END OF LOG" << std::endl;
+            myfile << std::endl;
             myfile.close();
         }
 
