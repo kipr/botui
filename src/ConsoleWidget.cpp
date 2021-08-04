@@ -57,10 +57,12 @@ void ConsoleWidget::readStandardOut()
         std::ofstream myfile;
         myfile.open("/home/pi/debugLog.txt");
         if (myfile.is_open()){
+            myfile << "Console Output:" << std::endl;
             //Cycle through array and write to file
             for(int count = 0; count < size; count++){
                 myfile << array[count] << " " ;
             }
+            myfile << "END";
         myfile.close();
         }
 
