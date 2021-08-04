@@ -45,8 +45,10 @@ QIODevice *ConsoleWidget::process() const
 void ConsoleWidget::readStandardOut()
 {
 	QByteArray array = m_process->readAll();
+
 	int i = array.lastIndexOf('\f');
 
+        QByteArray printer = array;
         int size = i; //For file output
 
 	if(i >= 0) {
@@ -63,12 +65,10 @@ void ConsoleWidget::readStandardOut()
         std::ofstream myfile;
         myfile.open("/home/pi/debugLog.txt", std::fstream::out | std::fstream::app);
         if (myfile.is_open()){
-            myfile << "Console Output:" << std::endl;
             //Cycle through array and write to file
             for(int count = 0; count < size; count++){
-                myfile << array[count] << " " ;
+                myfile << printer[count] << " " ;
             }
-            myfile << "END";
         myfile.close();
         }
 
