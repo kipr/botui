@@ -53,20 +53,26 @@ void ConsoleWidget::readStandardOut()
 		setPlainText("");
 		array = array.mid(i + 1);
 	}
-	i = array.lastIndexOf('\a');
-	if(i >= 0) startBeep();
 
         //Output to a debug file
         std::ofstream myfile;
         myfile.open("/home/pi/debugLog.txt", std::fstream::out | std::fstream::app);
         if (myfile.is_open()){
-            myfile << array[i];
+            for(int i = 0; i<array.size(); i++){
+                myfile << array[i];
+            }
+            myfile << endl;
             myfile.close();
         }
 
+
+	i = array.lastIndexOf('\a');
+	if(i >= 0) startBeep();
+
+
 	array.remove(i, 1);
 	
-        //insertPlainText(array);
+        insertPlainText(array);
 
 
 
