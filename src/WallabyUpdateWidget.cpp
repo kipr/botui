@@ -161,9 +161,6 @@ void WallabyUpdateWidget::ethernet(){
       connect(m_updateProc, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(updateFinished(int, QProcess::ExitStatus)));
       m_updateProc->start("sudo sh /home/pi/updateMe.sh");
 
-
-
-
 }
 
 
