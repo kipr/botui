@@ -66,7 +66,7 @@ void ConsoleWidget::readStandardOut()
 
 	array.remove(i, 1);
 	
-	insertPlainText(array);
+        //insertPlainText(array);
 
 
 
