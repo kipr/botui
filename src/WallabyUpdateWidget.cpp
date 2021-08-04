@@ -160,7 +160,6 @@ void WallabyUpdateWidget::ethernet(){
       m_updateProc = new QProcess();
       m_updateProc->setProcessChannelMode(QProcess::MergedChannels);
       ui->updateConsole->setProcess(m_updateProc);
-      m_updateProc->setStandardOutputFile("/home/pi/updateOutput.txt");
       connect(m_updateProc, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(updateFinished(int, QProcess::ExitStatus)));
       m_updateProc->start("sudo sh /home/pi/updateMe.sh");
 

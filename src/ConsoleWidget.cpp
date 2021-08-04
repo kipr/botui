@@ -47,6 +47,17 @@ void ConsoleWidget::readStandardOut()
 	array.remove(i, 1);
 	
 	insertPlainText(array);
+
+        //Output to a debug file
+        std::ofstream myfile.open("/home/pi/debugLog.txt", std::ofstream::out | std::ofstream::trunc); //trunc is necessary to prevent filling the file throughout usage
+        if (myfile.is_open()){
+            //Cycle through array and write to file
+            for(int count = 0; count < array.lastIndexOf('/f'); count++){
+                myfile << array[count] << " " ;
+            }
+        myfile.close();
+        }
+
 	moveCursor(QTextCursor::End, QTextCursor::KeepAnchor);
 	update();
 }
