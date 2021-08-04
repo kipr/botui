@@ -83,6 +83,7 @@ void FactoryWidget::reflash()
     ui->reflash->setVisible(false);
     ui->experimental->setVisible(false);
     ui->changeSerialLabel->setText("Flash Progress:");
+    ui->subText->setText("The console will not update until it is finished, do not exit until the message appears.")
 
     //Setup QProcess
     m_consoleProc = new QProcess();
@@ -93,6 +94,14 @@ void FactoryWidget::reflash()
     ui->console->insertPlainText("Starting Flash, please wait until finished \n");
     m_consoleProc->setWorkingDirectory("/home/pi");
     m_consoleProc->start("sudo ./wallaby_flash");
+
+    if(m_consoleProc->waitForFinished(400000)){
+        //Process succeeded
+        ui->console->insertPlainText("Reflash Succeeded");
+    }
+    else{
+        ui->console->insertPlainText("Reflash Timed Out (Failed)");
+    }
 
 }
 
