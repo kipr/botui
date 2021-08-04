@@ -83,7 +83,7 @@ void FactoryWidget::reflash()
     ui->reflash->setVisible(false);
     ui->experimental->setVisible(false);
     ui->changeSerialLabel->setText("Flash Progress:");
-    ui->subText->setText("The console will not update until it is finished, do not exit until the message appears.")
+    ui->subText->setText("The console will not update until it is finished, do not exit until the message appears.");
 
     //Setup QProcess
     m_consoleProc = new QProcess();
