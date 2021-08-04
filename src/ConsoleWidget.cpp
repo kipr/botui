@@ -6,6 +6,7 @@
 #include <QDebug>
 
 #include <fstream>
+#include <iostream>
 
 ConsoleWidget::ConsoleWidget(QWidget *parent)
 	: QTextEdit(parent),
