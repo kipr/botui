@@ -107,6 +107,14 @@ void WallabyUpdateWidget::refresh()
 
 void WallabyUpdateWidget::updateFinished(int, QProcess::ExitStatus exitStatus)
 {
+    //Check to see if the update failed
+    if(m_updateProc->exitStatus() == QProcess::NormalExit){
+        ui->updateConsole->insertPlainText("Update Complete");
+    }
+    else{
+        ui->updateConsole->insertPlainText("Update Failed, please try again or contact tech support.");
+    }
+
   // Cleanup process
   ui->updateConsole->setProcess(0);
   delete m_updateProc;
@@ -141,8 +149,6 @@ void WallabyUpdateWidget::ethernet(){
         if(QMessageBox::question(this, "Update?", QString("Is the ethernet cable plugged into the controller?"), QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
       return;
 
-
-
 	// Change UI to show output
       ui->updateConsole->setVisible(true);
       ui->selectionWidget->setVisible(false);
@@ -153,8 +159,7 @@ void WallabyUpdateWidget::ethernet(){
       m_updateProc->setProcessChannelMode(QProcess::MergedChannels);
       ui->updateConsole->setProcess(m_updateProc);
       connect(m_updateProc, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(updateFinished(int, QProcess::ExitStatus)));
-      m_updateProc->start("sh /home/pi/updateMe.sh");
-
+      m_updateProc->start("sudo sh /home/pi/updateMe.sh");
 
 }
 

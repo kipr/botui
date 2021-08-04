@@ -66,7 +66,7 @@ void FactoryWidget::confirm()
     }
 
     ui->console->insertPlainText("Serial Number Set to " +  ui->serialOne->text() + ui->serialTwo->text() + ui->serialThree->text() + ui->serialFour->text() + "!");
-    ui->console->setProcess(0);
+    //ui->console->setProcess(0);
 
 
 
@@ -110,7 +110,7 @@ void FactoryWidget::reflash()
         QApplication::processEvents();
     }
     ui->console->insertPlainText("Reflash Complete!");
-    ui->console->setProcess(0);
+    //ui->console->setProcess(0);
 }
 
 void FactoryWidget::experimental()
@@ -146,6 +146,6 @@ void FactoryWidget::experimental()
         QApplication::processEvents();
     }
     ui->console->insertPlainText("Experimental Build Complete!");
-    ui->console->setProcess(0);
+    //ui->console->setProcess(0);
 
 }
