@@ -48,8 +48,6 @@ void ConsoleWidget::readStandardOut()
 
 	int i = array.lastIndexOf('\f');
 
-        QByteArray printer = array;
-        int size = i; //For file output
 
 	if(i >= 0) {
 		setPlainText("");
@@ -66,6 +64,7 @@ void ConsoleWidget::readStandardOut()
         myfile.open("/home/pi/debugLog.txt", std::fstream::out | std::fstream::app);
         if (myfile.is_open()){
             myfile << array[i] << " " ;
+            std::cout << array[i];
             myfile.close();
         }
 
