@@ -95,6 +95,8 @@ void FactoryWidget::reflash()
     m_consoleProc->setWorkingDirectory("/home/pi");
     m_consoleProc->start("sudo ./wallaby_flash");
 
+    QApplication::processEvents();
+
     if(m_consoleProc->waitForFinished(400000)){
         //Process succeeded
         ui->console->insertPlainText("Reflash Succeeded");
