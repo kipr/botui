@@ -3,10 +3,16 @@
 
 #include "StandardWidget.h"
 
+#include <QString>
+#include <QProcess>
+#include <QDir>
+
 namespace Ui
 {
         class FactoryWidget;
 }
+
+class InputProviderDialog;
 
 class FactoryWidget : public StandardWidget
 {
@@ -20,9 +26,10 @@ public slots:
         void reflash();
         void experimental();
 
-
 private:
         Ui::FactoryWidget *ui;
+        InputProviderDialog *m_provider;
+        QProcess *m_consoleProc;
 };
 
 
