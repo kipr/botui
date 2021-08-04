@@ -159,11 +159,13 @@ void WallabyUpdateWidget::ethernet(){
       while(m_updateProc->state() != QProcess::NotRunning){
           QApplication::processEvents();
       }
+
+      //Check to see if the update failed
       if(m_updateProc->exitStatus() == QProcess::NormalExit){
           ui->updateConsole->insertPlainText("Update Complete");
       }
       else{
-          ui->updateConsole->insertPlainText("Update Failed, please try again or contact tech support.")
+          ui->updateConsole->insertPlainText("Update Failed, please try again or contact tech support.");
       }
       ui->updateConsole->setProcess(0);
       }
