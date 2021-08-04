@@ -37,10 +37,7 @@ FactoryWidget::FactoryWidget(Device *device, QWidget *parent)
         connect(ui->reflash, SIGNAL(clicked()), SLOT(reflash()));
         connect(ui->experimental, SIGNAL(clicked()), SLOT(experimental()));
 
-        //Set the process to print a message when finished signal is reached using a lambda function
-        connect(m_consoleProc, static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), [=](int exitCode, QProcess::ExitStatus exitStatus){
-            ui->console->insertPlainText("COMPLETE!");
-        });
+
 
 
 }
@@ -89,7 +86,7 @@ void FactoryWidget::reflash()
     ui->reflash->setVisible(false);
     ui->experimental->setVisible(false);
     ui->changeSerialLabel->setText("Flash Progress:");
-    ui->subText->setText("The console will not update until it is finished, do not exit until the message appears.");
+    ui->subText->setText("The console may not update until the end, wait for 'Reflash Complete'");
 
     //Setup QProcess
     m_consoleProc = new QProcess();
@@ -97,7 +94,7 @@ void FactoryWidget::reflash()
     ui->console->setProcess(m_consoleProc);
 
     //Start QProcess
-    ui->console->insertPlainText("Starting Flash, please wait until finished \n");
+    ui->console->insertPlainText("Starting Flash, please wait until finished... \n");
     m_consoleProc->setWorkingDirectory("/home/pi");
     m_consoleProc->start("sudo ./wallaby_flash");
 
@@ -130,5 +127,11 @@ void FactoryWidget::experimental()
     ui->console->insertPlainText("Pulling latest beta software... \n");
     m_consoleProc->setWorkingDirectory("/home/pi");
     m_consoleProc->start("sudo ./getExperimental.sh");
+
+    //Keep loading console until finished
+    while(m_consoleProc->state() != QProcess::NotRunning){
+        QApplication::processEvents();
+    }
+    ui->console->insertPlainText("Reflash Complete!");
 
 }
