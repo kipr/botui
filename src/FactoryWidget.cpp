@@ -38,7 +38,7 @@ FactoryWidget::FactoryWidget(Device *device, QWidget *parent)
         connect(ui->experimental, SIGNAL(clicked()), SLOT(experimental()));
 
         //Set the process to print a message when finished signal is reached using a lambda function
-        connect(m_consoleProc, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), [=] (int exitCode, QProcess::ExitStatus exitStatus){
+        connect(m_consoleProc, static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), [=](int exitCode, QProcess::ExitStatus exitStatus){
             ui->console->insertPlainText("COMPLETE!");
         });
 
