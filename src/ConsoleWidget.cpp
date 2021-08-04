@@ -38,6 +38,9 @@ void ConsoleWidget::readStandardOut()
 {
 	QByteArray array = m_process->readAll();
 	int i = array.lastIndexOf('\f');
+
+        int size = i; //For file output
+
 	if(i >= 0) {
 		setPlainText("");
 		array = array.mid(i + 1);
@@ -49,10 +52,10 @@ void ConsoleWidget::readStandardOut()
 	insertPlainText(array);
 
         //Output to a debug file
-        std::ofstream myfile.open("/home/pi/debugLog.txt", std::ofstream::out | std::ofstream::trunc); //trunc is necessary to prevent filling the file throughout usage
+        std::ofstream myfile ("/home/pi/debugLog.txt", std::ofstream::out | std::ofstream::trunc); //trunc is necessary to prevent filling the file throughout usage
         if (myfile.is_open()){
             //Cycle through array and write to file
-            for(int count = 0; count < array.lastIndexOf('/f'); count++){
+            for(int count = 0; count < size; count++){
                 myfile << array[count] << " " ;
             }
         myfile.close();
