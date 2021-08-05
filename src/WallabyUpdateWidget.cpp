@@ -171,7 +171,7 @@ void WallabyUpdateWidget::ethernet(){
                                              "The controller should have rebooted after it finished the update script. \n
                                              "If you are updating over internet, double check the connection and try again (it takes a few seconds to connect). \n
                                              "If you are updating over flash drive, your drive might be configured wrong. \n
-                                             "If you are still having trouble, contact KIPR tech support or open an issue at github.com/kipr/botui \n")
+                                             "If you are still having trouble, contact KIPR tech support or open an issue at github.com/kipr/botui \n");
       }
 
 }
