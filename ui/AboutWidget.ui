@@ -73,7 +73,7 @@
       <string notr="true">font: 75 35pt &quot;Courier&quot;;</string>
      </property>
      <property name="text">
-      <string>Wombat v25.2</string>
+      <string>Wombat</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -81,7 +81,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="wombatSerial">
+    <widget class="QLabel" name="version">
      <property name="minimumSize">
       <size>
        <width>0</width>
@@ -229,7 +229,7 @@
           </property>
          </widget>
         </item>
-	 <item>
+        <item>
          <widget class="QLabel" name="label_6">
           <property name="text">
            <string>Zachary Sasser</string>
