@@ -128,12 +128,6 @@ void WallabyUpdateWidget::updateFinished(int, QProcess::ExitStatus exitStatus)
   ui->refresh->setEnabled(true);
   ui->update->setEnabled(true);
 
-
-  //If the program gets to this point without rebooting, the update has probably failed.
-  //Apologies for the formatting, Qtcreator doesn't allow multiline quotes...
-  ui->updateConsole->insertPlainText("\n Update Failed (Non-start/Timeout): \n The controller should have rebooted after it finished the update script. \n If you are updating over internet, double check the connection and try again (it takes a few seconds to connect).");
-  ui->updateConsole->moveCursor(QTextCursor::End, QTextCursor::KeepAnchor);
-
 }
 
 bool WallabyUpdateWidget::mountUsb(const QString device, const QDir dir)
@@ -167,7 +161,7 @@ void WallabyUpdateWidget::ethernet(){
       m_updateProc->setProcessChannelMode(QProcess::MergedChannels);
       ui->updateConsole->setProcess(m_updateProc);
       connect(m_updateProc, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(updateFinished(int, QProcess::ExitStatus)));
-      m_updateProc->start("sudo sh /home/pi/updateMe.sh");
+      m_updateProc->start("sudo sh /home/pi/updateMe.sh || echo Update Failed");
 
 
 
