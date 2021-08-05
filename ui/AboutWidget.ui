@@ -85,12 +85,12 @@
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>40</height>
+       <height>0</height>
       </size>
      </property>
      <property name="font">
       <font>
-       <family>Noto Sans</family>
+       <family>Sans</family>
        <pointsize>14</pointsize>
        <weight>9</weight>
        <italic>false</italic>
@@ -98,7 +98,7 @@
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">\</string>
+      <string notr="true"/>
      </property>
      <property name="text">
       <string>Version 27.0 (Quark)</string>
@@ -125,11 +125,12 @@
     <widget class="QLabel" name="label_5">
      <property name="font">
       <font>
-       <pointsize>22</pointsize>
+       <family>Sans</family>
+       <pointsize>18</pointsize>
       </font>
      </property>
      <property name="text">
-      <string>Copyright (C) 2012 - 2021</string>
+      <string>Copyright © 2012 - 2021</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -239,7 +240,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="label_6">
+         <widget class="QLabel" name="label_9">
           <property name="text">
            <string>Zachary Sasser</string>
           </property>
