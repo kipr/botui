@@ -112,7 +112,8 @@ void WallabyUpdateWidget::updateFinished(int, QProcess::ExitStatus exitStatus)
         ui->updateConsole->insertPlainText("Update Complete");
     }
     else{
-        ui->updateConsole->insertPlainText("Update Failed (Crashed): \n The update script has crashed with an error. \n Contact KIPR tech support for assistance if the problem persists \n");
+        ui->updateConsole->insertPlainText("\n Update Failed (Crashed): \n The update script has crashed with an error. \n Contact KIPR tech support for assistance if the problem persists \n");
+        updateConsole->moveCursor(QTextCursor::End, QTextCursor::KeepAnchor);
     }
 
   // Cleanup process
@@ -130,8 +131,8 @@ void WallabyUpdateWidget::updateFinished(int, QProcess::ExitStatus exitStatus)
 
   //If the program gets to this point without rebooting, the update has probably failed.
   //Apologies for the formatting, Qtcreator doesn't allow multiline quotes...
-  ui->updateConsole->insertPlainText("Update Failed (Non-start/Timeout): \n The controller should have rebooted after it finished the update script. \n If you are updating over internet, double check the connection and try again (it takes a few seconds to connect). \n If you are updating over flash drive, your drive might be configured wrong. \n If you are still having trouble, contact KIPR tech support or open an issue at github.com/kipr/botui \n");
-
+  ui->updateConsole->insertPlainText("\n Update Failed (Non-start/Timeout): \n The controller should have rebooted after it finished the update script. \n If you are updating over internet, double check the connection and try again (it takes a few seconds to connect).");
+  updateConsole->moveCursor(QTextCursor::End, QTextCursor::KeepAnchor);
 
 }
 
