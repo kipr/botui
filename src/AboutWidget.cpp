@@ -12,7 +12,7 @@ AboutWidget::AboutWidget(Device *device, QWidget *parent)
 	ui->setupUi(this);
 
         //Version Number
-        ui->version->setText("Quark (v27.0)");
+        ui->version->setText("Version 27.0 (Quark)");
 
         //ui->deviceName->setText(device->name() + " v" + device->version());
 
