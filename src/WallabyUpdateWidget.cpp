@@ -112,7 +112,9 @@ void WallabyUpdateWidget::updateFinished(int, QProcess::ExitStatus exitStatus)
         ui->updateConsole->insertPlainText("Update Complete");
     }
     else{
-        ui->updateConsole->insertPlainText("Update Failed, please try again or contact tech support.");
+        ui->updateConsole->insertPlainText("Update Failed (Crashed):\n" +
+                                           "The update script has crashed with an error. \n" +
+                                           "Contact KIPR tech support for assistance");
     }
 
   // Cleanup process
@@ -126,6 +128,13 @@ void WallabyUpdateWidget::updateFinished(int, QProcess::ExitStatus exitStatus)
   // Re-enable buttons
   ui->refresh->setEnabled(true);
   ui->update->setEnabled(true);
+
+  //If the program gets to this point without rebooting, the update has probably failed.
+  ui->updateConsole->insertPlainText("Update Failed (Timed Out): \n " +
+                                     "The controller should have rebooted after it finished the update script. \n" +
+                                     "If you are updating over internet, double check the connection and try again (it takes a few seconds to connect). \n" +
+                                     "If you are updating over flash drive, your drive might be configured wrong. \n" +
+                                     "If you are still having trouble, contact KIPR tech support or open an issue at github.com/kipr/botui \n")
 }
 
 bool WallabyUpdateWidget::mountUsb(const QString device, const QDir dir)
