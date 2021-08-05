@@ -73,7 +73,7 @@
       <string notr="true">font: 75 35pt &quot;Courier&quot;;</string>
      </property>
      <property name="text">
-      <string>Wombat</string>
+      <string>Wombat-0000</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -88,11 +88,20 @@
        <height>40</height>
       </size>
      </property>
+     <property name="font">
+      <font>
+       <family>Sans</family>
+       <pointsize>20</pointsize>
+       <weight>9</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
+     </property>
      <property name="styleSheet">
-      <string notr="true">font: 75 30pt &quot;Courier&quot;;</string>
+      <string notr="true">\</string>
      </property>
      <property name="text">
-      <string>TextLabel</string>
+      <string>Version 27.0 (Quark)</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -253,7 +262,7 @@
         </font>
        </property>
        <property name="title">
-        <string>Wi-Fi Info</string>
+        <string>Network</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
