@@ -167,10 +167,10 @@ void WallabyUpdateWidget::ethernet(){
 
       if(m_updateProc->state() == QProcess::NotRunning){
           //If the program gets to this point without rebooting, the update has probably failed.
-          ui->updateConsole->insertPlainText("Update Failed (Non-start/Timeout): \n " +
-                                             "The controller should have rebooted after it finished the update script. \n" +
-                                             "If you are updating over internet, double check the connection and try again (it takes a few seconds to connect). \n" +
-                                             "If you are updating over flash drive, your drive might be configured wrong. \n" +
+          ui->updateConsole->insertPlainText("Update Failed (Non-start/Timeout): \n
+                                             "The controller should have rebooted after it finished the update script. \n
+                                             "If you are updating over internet, double check the connection and try again (it takes a few seconds to connect). \n
+                                             "If you are updating over flash drive, your drive might be configured wrong. \n
                                              "If you are still having trouble, contact KIPR tech support or open an issue at github.com/kipr/botui \n")
       }
 
