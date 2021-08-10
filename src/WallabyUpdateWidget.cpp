@@ -108,13 +108,11 @@ void WallabyUpdateWidget::refresh()
 void WallabyUpdateWidget::updateFinished(int, QProcess::ExitStatus exitStatus)
 {
     //Check to see if the update failed
-    if(m_updateProc->exitStatus() == QProcess::NormalExit){
-        ui->updateConsole->insertPlainText("Update Complete");
-    }
-    else{
+    if(m_updateProc->exitStatus() != QProcess::NormalExit){
         ui->updateConsole->insertPlainText("\n Update Failed (Crashed): \n The update script has crashed with an error. \n Contact KIPR tech support for assistance if the problem persists \n");
         ui->updateConsole->moveCursor(QTextCursor::End, QTextCursor::KeepAnchor);
     }
+
 
   // Cleanup process
   ui->updateConsole->setProcess(0);
