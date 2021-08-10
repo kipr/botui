@@ -159,7 +159,7 @@ void WallabyUpdateWidget::ethernet(){
       m_updateProc->setProcessChannelMode(QProcess::MergedChannels);
       ui->updateConsole->setProcess(m_updateProc);
       connect(m_updateProc, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(updateFinished(int, QProcess::ExitStatus)));
-      m_updateProc->start("sudo sh /home/pi/updateMe.sh || echo Update Failed");
+      m_updateProc->start("sudo sh /home/pi/updateMe.sh");
 }
 
 
