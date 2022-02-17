@@ -48,8 +48,10 @@ if(NOT qt5)
 else()
   
   find_package(Qt5Widgets REQUIRED)
-  find_package(Qt5Declarative REQUIRED)
+  find_package(Qt5Quick REQUIRED)
   find_package(Qt5Network REQUIRED)
+
+  find_package(Qt5LinguistTools REQUIRED)
 endif()
 
 find_package(OpenSSL REQUIRED)
@@ -135,7 +137,7 @@ ENDIF()
 if(NOT qt5)
   target_link_libraries(botui ${QT_LIBRARIES})
 else()
-  qt5_use_modules(botui Widgets Declarative Network)
+  qt5_use_modules(botui Widgets Quick Network)
 endif()
 
 
