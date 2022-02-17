@@ -1,7 +1,7 @@
 #include "WallabySettingsProvider.h"
 
 #include <QDir>
-
+#include <QDataStream>
 Wallaby::SettingsProvider::SettingsProvider(QObject *parent)
   : ::SettingsProvider(parent),
   m_settingsFile(QDir::homePath() + "/botui_settings", this)
