@@ -15,7 +15,7 @@ DeclarativeView::~DeclarativeView()
 	destroyWatcher();
 }
 
-void DelcarativeView::setAutoReload(const bool& autoReload)
+void DeclarativeView::setAutoReload(const bool& autoReload)
 {
 	m_autoReload = autoReload;
 	
