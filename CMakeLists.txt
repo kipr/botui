@@ -51,7 +51,7 @@ else()
   find_package(Qt5Quick REQUIRED)
   find_package(Qt5Network REQUIRED)
   find_package(Qt5LinguistTools REQUIRED)
-  find_package(Qt5 COMPONENTS Widgets REQUIRED)
+  find_package(Qt5QuickWidgets REQUIRED)
 endif()
 
 find_package(OpenSSL REQUIRED)
@@ -124,6 +124,10 @@ else()
 endif()
 
 add_definitions(-O3)
+
+IF(qt5)
+  target_link_libraries(botui Qt5::QuickWidgets)
+ENDIF()
 
 target_link_libraries(botui pcompiler z opencv_core opencv_highgui opencv_imgproc ${OPENSSL_LIBRARIES})
 IF(wallaby)

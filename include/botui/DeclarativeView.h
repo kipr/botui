@@ -2,7 +2,7 @@
 #define _DECLARATIVEVIEW_H_
 
 #include <QQuickView>
-
+#include <QQuickWidget>
 /*
  * QDeclarativeView is a Qt4 object that used to be used here.
  * Instead of renaming DeclarativeView (without the Q) to QuickView,
@@ -12,7 +12,7 @@
 
 class QFileSystemWatcher;
 
-class DeclarativeView : public QQuickView
+class DeclarativeView : public QQuickWidget
 {
 Q_OBJECT
 Q_PROPERTY(bool autoReload READ autoReload WRITE setAutoReload)
