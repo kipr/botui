@@ -1,6 +1,6 @@
 project(botui)
 
-option(qt5 "Use Qt5 instead of Qt4" OFF)
+option(qt5 "Use Qt5 instead of Qt4" ON)
 option(wallaby "Use the Wallaby controller" ON)
 
 if(NOT qt5)
