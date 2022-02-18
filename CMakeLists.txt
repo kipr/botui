@@ -50,8 +50,8 @@ else()
   find_package(Qt5Widgets REQUIRED)
   find_package(Qt5Quick REQUIRED)
   find_package(Qt5Network REQUIRED)
-
   find_package(Qt5LinguistTools REQUIRED)
+  find_package(Qt5 COMPONENTS Widgets REQUIRED)
 endif()
 
 find_package(OpenSSL REQUIRED)
