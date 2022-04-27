@@ -15,6 +15,18 @@ Requirements
 * [Qt >= 4.7.4](https://www.qt.io/download-qt-installer)
 
 
+Installation
+=======
+```
+git clone https://github.com/kipr/botui
+cd botui
+mkdir build
+cd build
+cmake ..
+make -j4
+sudo make install
+```
+
 License
 =======
 
