@@ -4,7 +4,7 @@
 #include <QImage>
 #include <QWidget>
 #include <QMutex>
-#include <opencv2/opencv.hpp>
+#include <opencv4/opencv2/opencv.hpp>
 
 class CvWidget : public QWidget
 {
