@@ -73,7 +73,7 @@
       <string notr="true">font: 75 35pt &quot;Courier&quot;;</string>
      </property>
      <property name="text">
-      <string>Wombat v25.2</string>
+      <string>Wombat-0000</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -81,18 +81,27 @@
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="wombatSerial">
+    <widget class="QLabel" name="version">
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>40</height>
+       <height>0</height>
       </size>
      </property>
+     <property name="font">
+      <font>
+       <family>Sans</family>
+       <pointsize>14</pointsize>
+       <weight>9</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
+     </property>
      <property name="styleSheet">
-      <string notr="true">font: 75 30pt &quot;Courier&quot;;</string>
+      <string notr="true"/>
      </property>
      <property name="text">
-      <string>TextLabel</string>
+      <string>Version 27.0 (Quark)</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -116,11 +125,12 @@
     <widget class="QLabel" name="label_5">
      <property name="font">
       <font>
-       <pointsize>22</pointsize>
+       <family>Sans</family>
+       <pointsize>18</pointsize>
       </font>
      </property>
      <property name="text">
-      <string>Copyright (C) 2012 - 2021</string>
+      <string>Copyright © 2012 - 2022</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -229,8 +239,8 @@
           </property>
          </widget>
         </item>
-	 <item>
-         <widget class="QLabel" name="label_6">
+        <item>
+         <widget class="QLabel" name="label_9">
           <property name="text">
            <string>Zachary Sasser</string>
           </property>
@@ -253,7 +263,7 @@
         </font>
        </property>
        <property name="title">
-        <string>Wi-Fi Info</string>
+        <string>Network</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
@@ -274,11 +284,12 @@
            <widget class="QLabel" name="ssid">
             <property name="font">
              <font>
-              <pointsize>22</pointsize>
+              <family>Noto Sans</family>
+              <pointsize>17</pointsize>
              </font>
             </property>
             <property name="text">
-             <string/>
+             <string>0000-wombat</string>
             </property>
            </widget>
           </item>
@@ -302,11 +313,12 @@
            <widget class="QLabel" name="password">
             <property name="font">
              <font>
-              <pointsize>22</pointsize>
+              <family>Noto Sans</family>
+              <pointsize>17</pointsize>
              </font>
             </property>
             <property name="text">
-             <string/>
+             <string>password</string>
             </property>
            </widget>
           </item>
@@ -324,7 +336,7 @@
           <item>
            <widget class="QLabel" name="WiFiaddr">
             <property name="text">
-             <string/>
+             <string>192.168.125.1</string>
             </property>
            </widget>
           </item>
@@ -342,7 +354,7 @@
           <item>
            <widget class="QLabel" name="LANaddr">
             <property name="text">
-             <string/>
+             <string>0.0.0.0</string>
             </property>
            </widget>
           </item>

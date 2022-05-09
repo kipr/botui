@@ -13,38 +13,37 @@
   <property name="windowTitle">
    <string>Factory</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0,0">
-   <property name="margin">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0,0,0,0,0,0">
+   <property name="leftMargin">
+    <number>6</number>
+   </property>
+   <property name="topMargin">
+    <number>6</number>
+   </property>
+   <property name="rightMargin">
+    <number>6</number>
+   </property>
+   <property name="bottomMargin">
     <number>6</number>
    </property>
    <item>
-    <widget class="QLabel" name="label_2">
+    <widget class="QLabel" name="changeSerialLabel">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="minimumSize">
-      <size>
-       <width>800</width>
-       <height>120</height>
-      </size>
-     </property>
      <property name="font">
       <font>
-       <family>Arial</family>
-       <pointsize>80</pointsize>
-       <weight>50</weight>
-       <italic>false</italic>
-       <bold>false</bold>
+       <pointsize>33</pointsize>
       </font>
      </property>
-     <property name="styleSheet">
-      <string notr="true">font: 80pt &quot;Arial&quot;;</string>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
      </property>
      <property name="text">
-      <string>Factory Setup</string>
+      <string>Change Serial Number</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -52,79 +51,14 @@
     </widget>
    </item>
    <item>
-    <spacer name="verticalSpacer_2">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
+    <widget class="QLabel" name="subText">
+     <property name="text">
+      <string>(Please match with the serial number sticker)</string>
      </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item>
-    <layout class="QFormLayout" name="formLayout">
-     <property name="fieldGrowthPolicy">
-      <enum>QFormLayout::ExpandingFieldsGrow</enum>
-     </property>
-     <property name="formAlignment">
+     <property name="alignment">
       <set>Qt::AlignCenter</set>
      </property>
-     <property name="horizontalSpacing">
-      <number>6</number>
-     </property>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label">
-       <property name="font">
-        <font>
-         <pointsize>33</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Serial Number</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="LineEdit" name="serialNumber">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>33</pointsize>
-        </font>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
+    </widget>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
@@ -142,34 +76,162 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="confirm">
-       <property name="minimumSize">
-        <size>
-         <width>280</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>33</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Confirm</string>
-       </property>
-       <property name="icon">
-        <iconset resource="../rc/icons.qrc">
-         <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/check-circle.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/check-circle.svg</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>25</width>
-         <height>25</height>
-        </size>
+      <widget class="LineEdit" name="serialOne">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="LineEdit" name="serialTwo">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="LineEdit" name="serialThree">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="LineEdit" name="serialFour">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
     </layout>
+   </item>
+   <item>
+    <widget class="QPushButton" name="confirm">
+     <property name="minimumSize">
+      <size>
+       <width>280</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>33</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Set Serial</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../rc/icons.qrc">
+       <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/check-circle.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/check-circle.svg</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>25</width>
+       <height>25</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <widget class="QPushButton" name="reflash">
+     <property name="font">
+      <font>
+       <family>Noto Sans</family>
+       <pointsize>33</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Reflash STM32</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../rc/icons.qrc">
+       <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/briefcase.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/briefcase.svg</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>35</width>
+       <height>35</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="experimental">
+     <property name="font">
+      <font>
+       <family>Sans</family>
+       <pointsize>33</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Install Experimental Build</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../rc/icons.qrc">
+       <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/vial.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/vial.svg</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>35</width>
+       <height>35</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <widget class="ConsoleWidget" name="console"/>
    </item>
   </layout>
  </widget>
@@ -178,6 +240,11 @@
    <class>LineEdit</class>
    <extends>QLineEdit</extends>
    <header>LineEdit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ConsoleWidget</class>
+   <extends>QTextEdit</extends>
+   <header>ConsoleWidget.h</header>
   </customwidget>
  </customwidgets>
  <resources>
