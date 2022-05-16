@@ -148,3 +148,5 @@ endif()
 
 install(TARGETS botui DESTINATION bin)
 install(FILES ${QM_FILES} DESTINATION "/etc/botui/locale")
+
+message( STATUS "OpenCV Include Dir: " ${OpenCV_INCLUDE_DIRS} )
