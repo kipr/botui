@@ -130,7 +130,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Copyright © 2012 - 2021</string>
+      <string>Copyright © 2012 - 2022</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>

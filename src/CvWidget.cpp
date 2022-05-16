@@ -40,7 +40,7 @@ void CvWidget::updateImage(const cv::Mat &image)
 #if CV_VERSION_EPOCH == 3
   cv::cvtColor(image, m_image, cv::COLOR_BGR2RGB);
 #else
-	cv::cvtColor(image, m_image, CV_BGR2RGB);
+	cv::cvtColor(image, m_image, cv::COLOR_BGR2RGB);
 #endif
 	scaleImage();
 	update();

@@ -1,6 +1,6 @@
 project(botui)
 
-option(qt5 "Use Qt5 instead of Qt4" OFF)
+option(qt5 "Use Qt5 instead of Qt4" ON)
 option(wallaby "Use the Wallaby controller" ON)
 
 if(NOT qt5)
@@ -12,6 +12,7 @@ endif()
 if (wallaby)
   add_definitions(-DWALLABY)
   set(DEVICE_DIR ${CMAKE_SOURCE_DIR}/devices/wallaby)
+  find_package(OpenCV REQUIRED)
 else()
   set(DEVICE_DIR ${CMAKE_SOURCE_DIR}/devices/kovan)
 endif()
@@ -48,8 +49,10 @@ if(NOT qt5)
 else()
   
   find_package(Qt5Widgets REQUIRED)
-  find_package(Qt5Declarative REQUIRED)
+  find_package(Qt5Quick REQUIRED)
   find_package(Qt5Network REQUIRED)
+  find_package(Qt5LinguistTools REQUIRED)
+  find_package(Qt5QuickWidgets REQUIRED)
 endif()
 
 find_package(OpenSSL REQUIRED)
@@ -123,6 +126,10 @@ endif()
 
 add_definitions(-O3)
 
+IF(qt5)
+  target_link_libraries(botui Qt5::QuickWidgets)
+ENDIF()
+
 target_link_libraries(botui pcompiler z opencv_core opencv_highgui opencv_imgproc ${OPENSSL_LIBRARIES})
 IF(wallaby)
   target_link_libraries(botui wallaby)
@@ -135,9 +142,11 @@ ENDIF()
 if(NOT qt5)
   target_link_libraries(botui ${QT_LIBRARIES})
 else()
-  qt5_use_modules(botui Widgets Declarative Network)
+  qt5_use_modules(botui Widgets Quick Network)
 endif()
 
 
 install(TARGETS botui DESTINATION bin)
 install(FILES ${QM_FILES} DESTINATION "/etc/botui/locale")
+
+message( STATUS "OpenCV Include Dir: " ${OpenCV_INCLUDE_DIRS} )

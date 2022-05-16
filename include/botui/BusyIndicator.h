@@ -3,9 +3,10 @@
 #ifndef _BUSYINDICATOR_H_
 #define _BUSYINDICATOR_H_
  
-#include <QDeclarativeItem>
- 
-class BusyIndicator : public QDeclarativeItem
+#include <QQuickItem>
+#include <QStyleOptionGraphicsItem>
+
+class BusyIndicator : public QQuickItem
 {
 	Q_OBJECT
 	Q_PROPERTY( qreal innerRadius READ innerRadius WRITE setInnerRadius NOTIFY innerRadiusChanged )
@@ -16,7 +17,7 @@ class BusyIndicator : public QDeclarativeItem
 	Q_PROPERTY( qreal actualOuterRadius READ actualOuterRadius NOTIFY actualOuterRadiusChanged )
  
 public:
-	explicit BusyIndicator( QDeclarativeItem* parent = 0 );
+	explicit BusyIndicator( QQuickItem* parent = 0 );
 
 	void setInnerRadius( const qreal& innerRadius );
 	qreal innerRadius() const;
