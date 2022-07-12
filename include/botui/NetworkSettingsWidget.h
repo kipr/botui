@@ -8,6 +8,8 @@
 #include "StandardWidget.h"
 #include "NetworkManager.h"
 
+#include <QProcess>
+
 class QTimer;
 
 namespace Ui
