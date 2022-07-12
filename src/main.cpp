@@ -12,6 +12,7 @@
 #include "KovanSerialBridge.h"
 #include "CursorManager.h"
 #include "SettingsProvider.h"
+#include "NetworkSettingsWidget.h"
 
 #include <QApplication>
 #include <QDir>
@@ -43,6 +44,8 @@ int main(int argc, char* argv[])
 	QFontDatabase::addApplicationFont(":/fonts/DejaVuSans-ExtraLight.ttf");
 	QFontDatabase::addApplicationFont(":/fonts/DejaVuSans.ttf");
 	QFontDatabase::addApplicationFont(":/fonts/DejaVuSansMono.ttf");
+
+  NetworkSettingsWidget::setMode(NetworkSettingsWidget::mode());
 	
 	srand(time(NULL));
 	

@@ -103,59 +103,34 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="turnOn">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>80</height>
-          </size>
-         </property>
+        <widget class="QLabel" name="label">
          <property name="font">
           <font>
            <pointsize>33</pointsize>
           </font>
          </property>
          <property name="text">
-          <string>Turn On</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/lightbulb.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/lightbulb.svg</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>30</width>
-           <height>30</height>
-          </size>
+          <string>Mode</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="turnOff">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>80</height>
-          </size>
-         </property>
+        <widget class="QComboBox" name="mode">
          <property name="font">
           <font>
            <pointsize>33</pointsize>
           </font>
          </property>
-         <property name="text">
-          <string>Turn Off</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/power-off.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/power-off.svg</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>30</width>
-           <height>30</height>
-          </size>
-         </property>
+         <item>
+          <property name="text">
+           <string>Normal</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Tournament</string>
+          </property>
+         </item>
         </widget>
        </item>
       </layout>

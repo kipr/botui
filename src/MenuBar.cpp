@@ -8,6 +8,9 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 #include "StopButtonWidget.h"
+#include "NetworkSettingsWidget.h"
+
+#include <QTimer>
 
 MenuBar::MenuBar(Program *program, QWidget *parent)
         : QWidget(parent)
@@ -65,7 +68,16 @@ void MenuBar::init()
         QPalette pal = palette();
 
         // set black background
-        pal.setColor(QPalette::Background, Qt::black);
+        switch (NetworkSettingsWidget::mode())
+        {
+                case NetworkSettingsWidget::Normal:
+                        pal.setColor(QPalette::Background, QColor(0, 0, 0));
+                        break;
+                case NetworkSettingsWidget::Tournament:
+                        pal.setColor(QPalette::Background, QColor(255, 0, 0));
+                        break;
+        }
+
         setAutoFillBackground(true);
         setPalette(pal);
 
@@ -88,6 +100,11 @@ void MenuBar::init()
         //QAction *stopButton = addAction(UiStandards::stopString());
         m_program->connect(m_stopButton, SIGNAL(clicked()), SLOT(stop()));
         // setTitle("Untitled")
+        
+        QTimer *timer = new QTimer(this);
+        timer->setInterval(5000);
+        QObject::connect(timer, SIGNAL(timeout()), this, SLOT(timeOut()));
+        timer->start();
 }
 
 void MenuBar::addAction(QAction *const action)
@@ -103,6 +120,25 @@ QAction *MenuBar::addAction(const QString &str)
         QAction *const action = new QAction(str, this);
         addAction(action);
         return action;
+}
+
+void MenuBar::timeOut()
+{
+        QPalette pal = palette();
+
+        // set black background
+        switch (NetworkSettingsWidget::mode())
+        {
+                case NetworkSettingsWidget::Normal:
+                        pal.setColor(QPalette::Background, QColor(0, 0, 0));
+                        break;
+                case NetworkSettingsWidget::Tournament:
+                        pal.setColor(QPalette::Background, QColor(255, 0, 0));
+                        break;
+        }
+
+        setAutoFillBackground(true);
+        setPalette(pal);
 }
 
 void MenuBar::clear()

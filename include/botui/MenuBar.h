@@ -27,6 +27,9 @@ public:
 	void addAction(QAction *const action);
 	QAction *addAction(const QString &str);
 
+private slots:
+	void timeOut();
+
 private:
 	void init();
 
