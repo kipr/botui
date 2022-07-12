@@ -45,6 +45,7 @@ public slots:
 	
 private slots:
 	void stateChanged(const NetworkManager::State &newState, const NetworkManager::State &oldState);
+	void modeChanged(int index);
 
 private:
 	int currentMode();
