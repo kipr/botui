@@ -222,4 +222,4 @@ void NetworkSettingsWidget::stateChanged(const NetworkManager::State &newState, 
 	QTimer::singleShot(300, this, SLOT(updateInformation()));
 }
 
-// #endif
+#endif
