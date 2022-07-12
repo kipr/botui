@@ -51,8 +51,6 @@ private:
 
 	Ui::NetworkSettingsWidget *ui;
 	QTimer *enableCoolOffTimer;
-	QProcess proc;
-	QMessageBox msgBox;
 
 	static Mode mode_;
 };
