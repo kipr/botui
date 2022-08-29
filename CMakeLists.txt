@@ -1,5 +1,6 @@
 project(botui)
 
+option(qt6 "use Qt6 instead of Qt5" ON)
 option(qt5 "Use Qt5 instead of Qt4" ON)
 option(wallaby "Use the Wallaby controller" ON)
 
@@ -15,10 +16,12 @@ if (wallaby)
   find_package(OpenCV REQUIRED)
 else()
   set(DEVICE_DIR ${CMAKE_SOURCE_DIR}/devices/kovan)
+  
 endif()
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/deploy)
 
+set(CMAKE_PREFIX_PATH "/home/erin/Qt/6.3.1/gcc_64")
 set(INCLUDE ${CMAKE_SOURCE_DIR}/include/botui)
 set(RC ${CMAKE_SOURCE_DIR}/rc)
 set(SRC ${CMAKE_SOURCE_DIR}/src)
@@ -36,23 +39,28 @@ include_directories(
 	${INCLUDE}
 )
 
-if(NOT qt5)
-  cmake_minimum_required(VERSION 2.6.0)
-  find_package(Qt4 REQUIRED)
-  find_package( PythonInterp 2.7 REQUIRED )
-  find_package( PythonLibs 2.7 REQUIRED )
-  set(QT_USE_QTDECLARATIVE TRUE)
-  set(QT_USE_QTNETWORK TRUE)
-  set(QT_USE_QTDBUS TRUE)
-
-  include(${QT_USE_FILE})
-else()
+#if(NOT qt5)
   
-  find_package(Qt5Widgets REQUIRED)
-  find_package(Qt5Quick REQUIRED)
-  find_package(Qt5Network REQUIRED)
-  find_package(Qt5LinguistTools REQUIRED)
-  find_package(Qt5QuickWidgets REQUIRED)
+  #cmake_minimum_required(VERSION 2.6.0)
+  #find_package(Qt4 REQUIRED)
+  #find_package( PythonInterp 2.7 REQUIRED )
+  #find_package( PythonLibs 2.7 REQUIRED )
+  #set(QT_USE_QTDECLARATIVE TRUE)
+  #set(QT_USE_QTNETWORK TRUE)
+  #set(QT_USE_QTDBUS TRUE)
+
+ # include(${QT_USE_FILE})
+if(qt6)
+
+  
+  find_package(Qt6 REQUIRED COMPONENTS Core)
+  
+  find_package(Qt6 REQUIRED COMPONENTS Widgets)
+  find_package(Qt6 REQUIRED COMPONENTS Network)
+  find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
+  find_package(Qt6 REQUIRED COMPONENTS QuickWidgets)
+  find_package(Qt6 REQUIRED COMPONENTS Quick)
+  
 endif()
 
 find_package(OpenSSL REQUIRED)
@@ -89,10 +97,10 @@ else()
   # set(CMAKE_AUTOMOC ON)
   set(MOC_SRCS ${INCLUDES})
   set(SRCS_CXX ${SOURCES})
-  qt5_wrap_cpp(SRCS_CXX ${MOC_SRCS} OPTIONS -DQT_VERSION=0x050000 -UQT_DBUS_LIB)
-  qt5_wrap_ui(SRCS_CXX ${UI})
-  qt5_add_resources(SRCS_CXX ${QRC_FILES})
-  qt5_add_translation(QM_FILES ${TS_FILES})
+  qt6_wrap_cpp(SRCS_CXX ${MOC_SRCS} OPTIONS -DQT_VERSION=0x050000 -UQT_DBUS_LIB)
+  qt6_wrap_ui(SRCS_CXX ${UI})
+  qt6_add_resources(SRCS_CXX ${QRC_FILES})
+  qt6_add_translation(QM_FILES ${TS_FILES})
 endif()
 
 add_definitions(-Wall)
@@ -102,7 +110,10 @@ add_definitions(-Wall)
 include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
 CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
-if(COMPILER_SUPPORTS_CXX11)
+CHECK_CXX_COMPILER_FLAG("-std=c++17" COMPILER_SUPPORTS_CXX17)
+if(COMPILER_SUPPORTS_CXX17)
+  add_definitions(--std=c++17)
+elseif(COMPILER_SUPPORTS_CXX11)
   add_definitions(--std=c++11)
 elseif(COMPILER_SUPPORTS_CXX0X)
   add_definitions(--std=c++0x)
@@ -126,10 +137,14 @@ endif()
 
 add_definitions(-O3)
 
-IF(qt5)
-  target_link_libraries(botui Qt5::QuickWidgets)
+#IF(qt5)
+ # target_link_libraries(botui Qt5::QuickWidgets)
+#ENDIF()
+IF(qt6)
+	target_link_libraries(botui Qt6::Core)
+	target_link_libraries(botui  Qt6::Quick)
+	target_link_libraries(botui  Qt6::QuickWidgets)
 ENDIF()
-
 target_link_libraries(botui pcompiler z opencv_core opencv_highgui opencv_imgproc ${OPENSSL_LIBRARIES})
 IF(wallaby)
   target_link_libraries(botui wallaby)
@@ -139,10 +154,10 @@ ELSE()
   target_link_libraries(botui kovan)
 ENDIF()
 
-if(NOT qt5)
+if(qt5)
   target_link_libraries(botui ${QT_LIBRARIES})
 else()
-  qt5_use_modules(botui Widgets Quick Network)
+  qt6_use_modules(botui Widgets Quick Network)
 endif()
 
 

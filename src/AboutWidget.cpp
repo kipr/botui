@@ -4,6 +4,7 @@
 #include "SystemUtils.h"
 
 #include <QDebug>
+#include <QRegularExpression>
 
 AboutWidget::AboutWidget(Device *device, QWidget *parent)
 	: StandardWidget(device, parent),
@@ -36,7 +37,7 @@ AboutWidget::AboutWidget(Device *device, QWidget *parent)
             QString output = proc.readAllStandardOutput();
 
             //Parse the output and set as text for IP addresses
-            QStringList list = output.split(QRegExp("\\s+"), QString::SkipEmptyParts);
+            QStringList list = output.split(QRegularExpression("\\s+"), Qt::SkipEmptyParts);
             ui->WiFiaddr->setText(list[1]);
             ui->LANaddr->setText(list[0]);
         }
