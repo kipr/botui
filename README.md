@@ -9,11 +9,23 @@ The icons used throughout botui are from the [Font Awesome](https://fontawesome.
 
 Requirements
 ============
-* pcompiler  (Use_qt4 branch: https://github.com/kipr/pcompiler/tree/use_Qt4)
+* [pcompiler ](https://github.com/kipr/pcompiler)
 * CMake 2.6.0 or later
 * OpenCV
 * [Qt >= 4.7.4](https://www.qt.io/download-qt-installer)
 
+
+Installation
+=======
+```
+git clone https://github.com/kipr/botui
+cd botui
+mkdir build
+cd build
+cmake ..
+make -j4
+sudo make install
+```
 
 License
 =======
