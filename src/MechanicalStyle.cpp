@@ -603,7 +603,7 @@ void MechanicalStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt
 {
 	// Disable focus rectangle
 	if(pe == PE_FrameFocusRect) return;
-	if(pe == PE_FrameStatusBar) return;
+	if(pe == PE_FrameStatusBarItem) return;
 	
 	PARENT_STYLE_CLASS ::drawPrimitive(pe, opt, p, w);
 }

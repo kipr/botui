@@ -65,7 +65,7 @@ void MenuBar::init()
         QPalette pal = palette();
 
         // set black background
-        pal.setColor(QPalette::Background, Qt::black);
+        pal.setColor(QPalette::Window, Qt::black);
         setAutoFillBackground(true);
         setPalette(pal);
 

@@ -64,7 +64,6 @@
       <font>
        <family>Courier</family>
        <pointsize>35</pointsize>
-       <weight>9</weight>
        <italic>false</italic>
        <bold>false</bold>
       </font>
@@ -92,7 +91,6 @@
       <font>
        <family>Sans</family>
        <pointsize>14</pointsize>
-       <weight>9</weight>
        <italic>false</italic>
        <bold>false</bold>
       </font>
@@ -126,7 +124,7 @@
      <property name="font">
       <font>
        <family>Sans</family>
-       <pointsize>18</pointsize>
+       <pointsize>20</pointsize>
       </font>
      </property>
      <property name="text">

@@ -1,14 +1,10 @@
 project(botui)
 
 option(qt6 "use Qt6 instead of Qt5" ON)
-option(qt5 "Use Qt5 instead of Qt4" ON)
+
 option(wallaby "Use the Wallaby controller" ON)
 
-if(NOT qt5)
-  cmake_minimum_required(VERSION 2.6.0)
-else()
-  cmake_minimum_required(VERSION 2.8.11)
-endif()
+cmake_minimum_required(VERSION 2.8.11)
 
 if (wallaby)
   add_definitions(-DWALLABY)
@@ -20,8 +16,12 @@ else()
 endif()
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/deploy)
-
-set(CMAKE_PREFIX_PATH "/home/erin/Qt/6.3.1/gcc_64")
+set(CMAKE_THREAD_LIBS_INIT "-lpthread")
+set(CMAKE_HAVE_THREADS_LIBRARY 1)
+set(CMAKE_USE_WIN32_THREADS_INIT 0)
+set(CMAKE_USE_PTHREADS_INIT 1)
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+set(CMAKE_PREFIX_PATH "/home/erin/Qt/6.2.4/gcc_64")
 set(INCLUDE ${CMAKE_SOURCE_DIR}/include/botui)
 set(RC ${CMAKE_SOURCE_DIR}/rc)
 set(SRC ${CMAKE_SOURCE_DIR}/src)
@@ -54,7 +54,7 @@ if(qt6)
 
   
   find_package(Qt6 REQUIRED COMPONENTS Core)
-  
+  find_package(Qt6 REQUIRED COMPONENTS Gui)
   find_package(Qt6 REQUIRED COMPONENTS Widgets)
   find_package(Qt6 REQUIRED COMPONENTS Network)
   find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
@@ -80,20 +80,17 @@ set(QRC_FILES
 	${RC}/target.qrc
 )
 
-if(NOT qt5)
-  file(GLOB DBUS_INCLUDES ${DBUS}/include/*.h)
-  file(GLOB DBUS_SOURCES ${DBUS}/src/*.cpp)
-  set(INCLUDES ${INCLUDES} ${DBUS_INCLUDES})
-  set(SOURCES ${SOURCES} ${DBUS_SOURCES})
+#if(NOT qt5)
+  #file(GLOB DBUS_INCLUDES ${DBUS}/include/*.h)
+  #file(GLOB DBUS_SOURCES ${DBUS}/src/*.cpp)
+  #set(INCLUDES ${INCLUDES} ${DBUS_INCLUDES})
+  #set(SOURCES ${SOURCES} ${DBUS_SOURCES})
   
-  set(MOC_SRCS ${INCLUDES})
-  set(SRCS_CXX ${SOURCES})
+  #set(MOC_SRCS ${INCLUDES})
+  #set(SRCS_CXX ${SOURCES})
   
-  QT4_WRAP_CPP(SRCS_CXX ${MOC_SRCS} OPTIONS -DQT_VERSION=0x040000)
-  QT4_WRAP_UI(SRCS_CXX ${UI})
-  QT4_ADD_RESOURCES(SRCS_CXX ${QRC_FILES})
-  QT4_ADD_TRANSLATION(QM_FILES ${TS_FILES})
-else()
+ 
+if(qt6)
   # set(CMAKE_AUTOMOC ON)
   set(MOC_SRCS ${INCLUDES})
   set(SRCS_CXX ${SOURCES})
@@ -142,8 +139,10 @@ add_definitions(-O3)
 #ENDIF()
 IF(qt6)
 	target_link_libraries(botui Qt6::Core)
+	target_link_libraries(botui  Qt6::Gui)
 	target_link_libraries(botui  Qt6::Quick)
 	target_link_libraries(botui  Qt6::QuickWidgets)
+	target_link_libraries(botui  Qt6::Widgets)
 ENDIF()
 target_link_libraries(botui pcompiler z opencv_core opencv_highgui opencv_imgproc ${OPENSSL_LIBRARIES})
 IF(wallaby)
@@ -154,10 +153,9 @@ ELSE()
   target_link_libraries(botui kovan)
 ENDIF()
 
-if(qt5)
+if(qt6)
   target_link_libraries(botui ${QT_LIBRARIES})
-else()
-  qt6_use_modules(botui Widgets Quick Network)
+
 endif()
 
 
