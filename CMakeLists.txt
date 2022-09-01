@@ -38,28 +38,13 @@ include_directories(
 	${INCLUDE}
 )
 
-#if(NOT qt5)
-  
-  #cmake_minimum_required(VERSION 2.6.0)
-  #find_package(Qt4 REQUIRED)
-  #find_package( PythonInterp 2.7 REQUIRED )
-  #find_package( PythonLibs 2.7 REQUIRED )
-  #set(QT_USE_QTDECLARATIVE TRUE)
-  #set(QT_USE_QTNETWORK TRUE)
-  #set(QT_USE_QTDBUS TRUE)
 
- # include(${QT_USE_FILE})
 if(qt6)
 
   
-  find_package(Qt6 REQUIRED COMPONENTS Core)
-  find_package(Qt6 REQUIRED COMPONENTS Gui)
-  find_package(Qt6 REQUIRED COMPONENTS Widgets)
-  find_package(Qt6 REQUIRED COMPONENTS Network)
-  find_package(Qt6 REQUIRED COMPONENTS Quick)
-  #find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
-  find_package(Qt6 REQUIRED COMPONENTS QuickWidgets)
+  find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Network Quick QuickWidgets)
  
+  #find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
   
 endif()
 
@@ -80,21 +65,14 @@ set(QRC_FILES
 	${RC}/target.qrc
 )
 
-#if(NOT qt5)
-  #file(GLOB DBUS_INCLUDES ${DBUS}/include/*.h)
-  #file(GLOB DBUS_SOURCES ${DBUS}/src/*.cpp)
-  #set(INCLUDES ${INCLUDES} ${DBUS_INCLUDES})
-  #set(SOURCES ${SOURCES} ${DBUS_SOURCES})
-  
-  #set(MOC_SRCS ${INCLUDES})
-  #set(SRCS_CXX ${SOURCES})
+
   
  
 if(qt6)
   # set(CMAKE_AUTOMOC ON)
   set(MOC_SRCS ${INCLUDES})
   set(SRCS_CXX ${SOURCES})
-  qt6_wrap_cpp(SRCS_CXX ${MOC_SRCS} OPTIONS -DQT_VERSION=0x050000 -UQT_DBUS_LIB)
+  qt6_wrap_cpp(SRCS_CXX ${MOC_SRCS} OPTIONS -DQT_VERSION=0x060000 -UQT_DBUS_LIB)
   qt6_wrap_ui(SRCS_CXX ${UI})
   qt6_add_resources(SRCS_CXX ${QRC_FILES})
   #qt6_add_translation(QM_FILES ${TS_FILES})
@@ -110,7 +88,7 @@ CHECK_CXX_COMPILER_FLAG("-std=c++17" COMPILER_SUPPORTS_CXX17)
 if(COMPILER_SUPPORTS_CXX17)
   add_definitions(--std=c++17)
 elseif(COMPILER_SUPPORTS_CXX11)
-  add_definitions(--std=c++11)
+  
 elseif(COMPILER_SUPPORTS_CXX0X)
   add_definitions(--std=c++0x)
 else()
@@ -133,15 +111,10 @@ endif()
 
 add_definitions(-O3)
 
-#IF(qt5)
- # target_link_libraries(botui Qt5::QuickWidgets)
-#ENDIF()
+
 IF(qt6)
-	target_link_libraries(botui Qt6::Core)
-	target_link_libraries(botui  Qt6::Gui)
-	
-	target_link_libraries(botui  Qt6::QuickWidgets)
-	target_link_libraries(botui  Qt6::Widgets)
+	target_link_libraries(botui Qt6::Core Qt6::Gui Qt6::Quick Qt6::QuickWidgets Qt6::Widgets)
+
 ENDIF()
 target_link_libraries(botui pcompiler z opencv_core opencv_highgui opencv_imgproc ${OPENSSL_LIBRARIES})
 IF(wallaby)
