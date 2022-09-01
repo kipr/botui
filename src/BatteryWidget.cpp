@@ -1,5 +1,5 @@
 #include "BatteryWidget.h"
-#include "BatteryLevelProvider.h"
+#include <BatteryLevelProvider.h>
 
 #include "Device.h"
 #include "WallabyDevice.h"

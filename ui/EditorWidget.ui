@@ -56,7 +56,7 @@
      <property name="lineWrapMode">
       <enum>QTextEdit::NoWrap</enum>
      </property>
-     <property name="tabStopWidth">
+     <property name="tabStopDistance">
       <number>20</number>
      </property>
     </widget>

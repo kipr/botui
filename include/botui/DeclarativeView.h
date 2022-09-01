@@ -1,8 +1,8 @@
 #ifndef _DECLARATIVEVIEW_H_
 #define _DECLARATIVEVIEW_H_
 
-#include <QQuickView>
-#include <QQuickWidget>
+#include <QtQuick/QQuickView>
+#include <QtQuickWidgets/QQuickWidget>
 /*
  * QDeclarativeView is a Qt4 object that used to be used here.
  * Instead of renaming DeclarativeView (without the Q) to QuickView,

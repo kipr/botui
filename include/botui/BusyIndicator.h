@@ -3,7 +3,7 @@
 #ifndef _BUSYINDICATOR_H_
 #define _BUSYINDICATOR_H_
  
-#include <QQuickItem>
+#include <QtQuick/QQuickItem>
 #include <QStyleOptionGraphicsItem>
 
 class BusyIndicator : public QQuickItem
