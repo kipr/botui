@@ -5,11 +5,7 @@
 
 #include <QTimer>
 
-#ifdef WALLABY
-#include <wallaby/config.hpp>
-#else
-#include <kovan/config.hpp>
-#endif
+#include <kipr/config.h>
 
 namespace Camera
 {

@@ -2,17 +2,23 @@ project(botui)
 
 option(qt6 "use Qt6 instead of Qt5" ON)
 
-option(wallaby "Use the Wallaby controller" ON)
+option(wombat "Use the Wombat controller" ON)
 
 cmake_minimum_required(VERSION 2.8.11)
 
-if (wallaby)
-  add_definitions(-DWALLABY)
-  set(DEVICE_DIR ${CMAKE_SOURCE_DIR}/devices/wallaby)
-  find_package(OpenCV REQUIRED)
-else()
-  set(DEVICE_DIR ${CMAKE_SOURCE_DIR}/devices/kovan)
+#if (wallaby)
+ # add_definitions(-DWALLABY)
+  #set(DEVICE_DIR ${CMAKE_SOURCE_DIR}/devices/wallaby)
+  #find_package(OpenCV REQUIRED)
+#else()
+ # set(DEVICE_DIR ${CMAKE_SOURCE_DIR}/devices/kovan)
   
+#endif()
+
+if(wombat)
+	add_definitions(-DWOMBAT)
+	set(DEVICE_DIR ${CMAKE_SOURCE_DIR}/devices/wombat)
+	find_package(OpenCV REQUIRED)
 endif()
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/deploy)
@@ -22,6 +28,7 @@ set(CMAKE_USE_WIN32_THREADS_INIT 0)
 set(CMAKE_USE_PTHREADS_INIT 1)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 set(INCLUDE ${CMAKE_SOURCE_DIR}/include/botui)
+set(WOMBAT ${DEVICES}/kipr)
 set(RC ${CMAKE_SOURCE_DIR}/rc)
 set(SRC ${CMAKE_SOURCE_DIR}/src)
 set(UI ${CMAKE_SOURCE_DIR}/ui)
@@ -117,12 +124,10 @@ IF(qt6)
 
 ENDIF()
 target_link_libraries(botui pcompiler z opencv_core opencv_highgui opencv_imgproc ${OPENSSL_LIBRARIES})
-IF(wallaby)
-  target_link_libraries(botui wallaby)
-ELSEIF(wombat)
+
+
+IF(wombat)
   target_link_libraries(botui kipr)
-ELSE()
-  target_link_libraries(botui kovan)
 ENDIF()
 
 if(qt6)

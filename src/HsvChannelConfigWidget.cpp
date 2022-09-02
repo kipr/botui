@@ -5,11 +5,7 @@
 #include "RootController.h"
 #include "CameraInputManager.h"
 
-#ifdef WALLABY
-#include <wallaby/camera.hpp>
-#else
-#include <kovan/camera.hpp>
-#endif
+#include <kipr/camera/camera.h>
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>

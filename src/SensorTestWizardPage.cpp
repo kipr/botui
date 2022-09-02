@@ -4,13 +4,7 @@
 #include <QTimer>
 
 
-#ifdef WALLABY
-#include <wallaby/general.h>
-#include <wallaby/analog.h>
-#else
-#include <kovan/general.h>
-#include <kovan/analog.h>
-#endif
+#include <kipr/analog/analog.h>
 
 SensorTestWizardPage::SensorTestWizardPage(QWidget *parent)
 	: QWizardPage(parent),

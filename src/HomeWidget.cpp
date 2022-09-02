@@ -78,7 +78,7 @@ void HomeWidget::about()
 
 void HomeWidget::shutDown()
 {
-#ifdef WALLABY
+#ifdef WOMBAT
   if(QMessageBox::question(this, "Shut Down?", "After system halted, slide power switch off or disconnect battery.\n\nContinue?", QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
     return;
   

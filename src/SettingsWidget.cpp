@@ -12,7 +12,7 @@
 #include "ChannelConfigurationsWidget.h"
 #include "LanguageWidget.h"
 #include "AdvancedSettingsWidget.h"
-#include "WallabyUpdateWidget.h"
+#include "WombatUpdateWidget.h"
 #include "CameraSettingsWidget.h"
 #include "BackupWidget.h"
 
@@ -69,7 +69,7 @@ void SettingsWidget::language()
 
 void SettingsWidget::update()
 {
-  WallabyUpdateWidget *const updateWidget = new WallabyUpdateWidget(device());
+  WombatUpdateWidget *const updateWidget = new WombatUpdateWidget(device());
   RootController::ref().presentWidget(updateWidget);
   updateWidget->refresh();
 }

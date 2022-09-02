@@ -5,7 +5,7 @@
 
 class AbstractTextButton;
 
-namespace Wallaby
+namespace Wombat
 {
 
   class ButtonProvider : public ::ButtonProvider

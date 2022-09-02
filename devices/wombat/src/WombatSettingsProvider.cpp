@@ -1,8 +1,8 @@
-#include "WallabySettingsProvider.h"
+#include "WombatSettingsProvider.h"
 
 #include <QDir>
 #include <QDataStream>
-Wallaby::SettingsProvider::SettingsProvider(QObject *parent)
+Wombat::SettingsProvider::SettingsProvider(QObject *parent)
   : ::SettingsProvider(parent),
   m_settingsFile(QDir::homePath() + "/botui_settings", this)
 {
@@ -12,22 +12,22 @@ Wallaby::SettingsProvider::SettingsProvider(QObject *parent)
   m_settingsFile.close();
 }
 
-Wallaby::SettingsProvider::~SettingsProvider()
+Wombat::SettingsProvider::~SettingsProvider()
 {
   sync();
 }
 
-void Wallaby::SettingsProvider::setValue(const QString& key, const QVariant& value)
+void Wombat::SettingsProvider::setValue(const QString& key, const QVariant& value)
 {
   m_settings[key] = value;
 }
 
-QVariant Wallaby::SettingsProvider::value(const QString& key, const QVariant& _default) const
+QVariant Wombat::SettingsProvider::value(const QString& key, const QVariant& _default) const
 {
   return m_settings.value(key, _default);
 }
 
-void Wallaby::SettingsProvider::sync()
+void Wombat::SettingsProvider::sync()
 {
   if(!m_settingsFile.open(QIODevice::WriteOnly)) return;
   QDataStream stream(&m_settingsFile);

@@ -1,32 +1,31 @@
-#include "WallabyButtonProvider.h"
+#include "WombatButtonProvider.h"
 
-#include <wallaby/button.hpp>
-#include <wallaby/general.h>
+#include <kipr/button/button.hpp>
 
 #include <QDebug>
 
-Wallaby::ButtonProvider::ButtonProvider(QObject *parent)
+Wombat::ButtonProvider::ButtonProvider(QObject *parent)
   : ::ButtonProvider(parent),
   m_shown(false)
 {
 }
 
-Wallaby::ButtonProvider::~ButtonProvider()
+Wombat::ButtonProvider::~ButtonProvider()
 {
 }
 
-bool Wallaby::ButtonProvider::isExtraShown() const
+bool Wombat::ButtonProvider::isExtraShown() const
 {
   return ExtraButtons::isShown();
 }
 
-QString Wallaby::ButtonProvider::text(const ButtonProvider::ButtonId& id) const
+QString Wombat::ButtonProvider::text(const ButtonProvider::ButtonId& id) const
 {
   AbstractTextButton *button = lookup(id);
   return button ? QString::fromUtf8(button->text()) : QString();
 }
 
-bool Wallaby::ButtonProvider::setPressed(const ButtonProvider::ButtonId& id, bool pressed) const
+bool Wombat::ButtonProvider::setPressed(const ButtonProvider::ButtonId& id, bool pressed) const
 {
   AbstractTextButton *button = lookup(id);
   if(!button) return false;
@@ -38,7 +37,7 @@ bool Wallaby::ButtonProvider::setPressed(const ButtonProvider::ButtonId& id, boo
   return true;
 }
 
-void Wallaby::ButtonProvider::reset()
+void Wombat::ButtonProvider::reset()
 {
   ExtraButtons::hide();
   publish();
@@ -46,7 +45,7 @@ void Wallaby::ButtonProvider::reset()
   emit extraShownChanged(false);
 }
 
-void Wallaby::ButtonProvider::refresh()
+void Wombat::ButtonProvider::refresh()
 {
   publish();
   if(m_shown != ExtraButtons::isShown()) {
@@ -56,7 +55,7 @@ void Wallaby::ButtonProvider::refresh()
   }
 }
 
-AbstractTextButton *Wallaby::ButtonProvider::lookup(const ButtonProvider::ButtonId& id) const
+AbstractTextButton *Wombat::ButtonProvider::lookup(const ButtonProvider::ButtonId& id) const
 {
   switch(id) {
     case ButtonProvider::A: return &Button::A;

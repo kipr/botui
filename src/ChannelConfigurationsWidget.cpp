@@ -14,14 +14,7 @@
 #include <QDir>
 #include <QDebug>
 
-#ifdef WALLABY
-#include <wallaby/camera.hpp>
-#include <wallaby/config.hpp>
-#else
-#include <kovan/camera.hpp>
-#include <kovan/config.hpp>
-#endif
-
+#include <kipr/camera/camera.h>
 class ConfigItemDelegate : public QItemDelegate
 {
 public:

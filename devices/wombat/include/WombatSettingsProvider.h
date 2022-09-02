@@ -9,7 +9,7 @@
 #include <QMap>
 #include <QFile>
 
-namespace Wallaby
+namespace Wombat
 {
   class SettingsProvider : public ::SettingsProvider
   {

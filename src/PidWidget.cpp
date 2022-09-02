@@ -4,13 +4,7 @@
 #include "ArrayHelpers.h"
 #include "NumpadDialog.h"
 
-#ifdef WALLABY
-#include <wallaby/motors.h>
-#include <wallaby/general.h>
-#else
-#include <kovan/motors.h>
-#include <kovan/general.h>
-#endif
+#include <kipr/motor/motor.h>
 
 #include <QTimer>
 #include <QDebug>

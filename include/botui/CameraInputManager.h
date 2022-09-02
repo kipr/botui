@@ -5,11 +5,7 @@
 #include <QTimer>
 #include "Singleton.h"
 
-#ifdef WALLABY
-#include <wallaby/camera.hpp>
-#else
-#include <kovan/camera.hpp>
-#endif
+#include <kipr/camera/camera.h>
 
 class CameraInputManager : public QObject, public Singleton<CameraInputManager>
 {

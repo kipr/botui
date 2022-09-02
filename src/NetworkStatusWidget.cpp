@@ -12,7 +12,7 @@
 #include <QDebug>
 
 
-#ifdef WALLABY
+#ifdef WOMBAT
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
@@ -25,7 +25,7 @@
 
 void setWiFiStatusLED(bool on)
 {
-#ifdef WALLABY
+#ifdef WOMBAT
 	std::fstream fs;
 	fs.open("/sys/class/leds/botball:D11:blue/brightness", std::fstream::out);
 
@@ -54,7 +54,7 @@ NetworkStatusWidget::NetworkStatusWidget(QWidget *parent)
 	updateTimer->start(10000);
 }
 
-#ifdef WALLABY
+#ifdef WOMBAT
 
 bool NetworkStatusWidget::isNetworkUp(const std::string networkName)
 {
@@ -96,7 +96,7 @@ void NetworkStatusWidget::paintEvent(QPaintEvent *event)
 	static const QColor red = QColor(250, 100, 100);
 	// static const QColor orange = QColor(250, 127, 0);
 
-#ifdef WALLABY
+#ifdef WOMBAT
 	const bool off = isNetworkUp("wlan0") == false;
 	QColor color = off ? red : green;
 	setWiFiStatusLED(!off);
@@ -121,7 +121,7 @@ void NetworkStatusWidget::paintEvent(QPaintEvent *event)
 		return;
 	}
 
-#ifdef WALLABY
+#ifdef WOMBAT
 	const float percentage = 100.0f;
 #else	
 	const float percentage = NetworkManager::ref().active().strength() / 100.0;

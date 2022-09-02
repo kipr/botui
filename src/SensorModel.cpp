@@ -1,22 +1,13 @@
 #include "SensorModel.h"
 
-#ifdef WALLABY
-#include <kipr/analog.hpp>
-#include <kipr/digital.hpp>
-#include <kipr/accel.hpp>
-#include <kipr/gyro.hpp>
-#include <kipr/magneto.hpp>
-#include <kipr/sensor_logic.hpp>
-#include <kipr/general.h>
-#include <kipr/button.h>
-#include <kipr/button.hpp>
-#else
-#include <kovan/analog.hpp>
-#include <kovan/digital.hpp>
-#include <kovan/accel.hpp>
-#include <kovan/sensor_logic.hpp>
-#include <kovan/general.h>
-#endif
+#include <kipr/analog/analog.hpp>
+#include <kipr/digital/digital.hpp>
+#include <kipr/accel/accel.hpp>
+#include <kipr/gyro/gyro.hpp>
+#include <kipr/magneto/magneto.hpp>
+#include <kipr/sensor/logic.hpp>
+#include <kipr/button/button.h>
+#include <kipr/button/button.hpp>
 
 
 #include <math.h>

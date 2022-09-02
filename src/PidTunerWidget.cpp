@@ -4,14 +4,7 @@
 #include "NumpadDialog.h"
 #include <QDebug>
 
-
-#ifdef WALLABY
-#include <wallaby/motors.h>
-#include <wallaby/general.h>
-#else
-#include <kovan/motors.h>
-#include <kovan/general.h>
-#endif
+#include <kipr/motor/motor.h>
 
 #include <cmath>
 

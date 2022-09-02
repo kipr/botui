@@ -5,7 +5,7 @@
 
 #include <QString>
 
-namespace Wallaby
+namespace Wombat
 {
   class BatteryLevelProvider : public ::BatteryLevelProvider
   {

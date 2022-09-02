@@ -3,11 +3,7 @@
 #include <QDebug>
 #include <sstream>
 
-#ifdef WALLABY
-#include <wallaby/camera.hpp>
-#else
-#include <kovan/camera.hpp>
-#endif
+#include <kipr/camera/camera.h>
 
 CameraWidget::CameraWidget(QWidget *parent)
   : CvWidget(parent),

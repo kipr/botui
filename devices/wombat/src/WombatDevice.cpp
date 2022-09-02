@@ -1,11 +1,11 @@
-#include "WallabyDevice.h"
+#include "WombatDevice.h"
 
-#include "WallabyBatteryProvider.h"
-#include "WallabySettingsProvider.h"
-#include "WallabyButtonProvider.h"
+#include "WombatBatteryProvider.h"
+#include "WombatSettingsProvider.h"
+#include "WombatButtonProvider.h"
 #include "KissCompileProvider.h"
 
-#include <wallaby/wallaby.hpp>
+#include <kipr/wombat.h>
 
 #ifdef ENABLE_DBUS_SUPPORT
 #include <QDBusConnection>
@@ -38,11 +38,11 @@ QString getVersionNum()
 	return line;
 }
 
-Wallaby::Device::Device()
+Wombat::Device::Device()
   : m_compileProvider(new KissCompileProvider(this)),
-  m_batteryLevelProvider(new Wallaby::BatteryLevelProvider()),
-  m_settingsProvider(new Wallaby::SettingsProvider()),
-  m_buttonProvider(new Wallaby::ButtonProvider()),
+  m_batteryLevelProvider(new Wombat::BatteryLevelProvider()),
+  m_settingsProvider(new Wombat::SettingsProvider()),
+  m_buttonProvider(new Wombat::ButtonProvider()),
   m_version(getVersionNum()),
   m_id(getId()),
   m_serial(getSerial())
@@ -60,7 +60,7 @@ Wallaby::Device::Device()
   settingsChanged();
 }
 
-Wallaby::Device::~Device()
+Wombat::Device::~Device()
 {
   if(m_timerId > 0)
     killTimer(m_timerId);
@@ -69,27 +69,27 @@ Wallaby::Device::~Device()
   delete m_settingsProvider;
 }
 
-QString Wallaby::Device::name() const
+QString Wombat::Device::name() const
 {
   return tr("Wombat");
 }
 
-QString Wallaby::Device::version() const
+QString Wombat::Device::version() const
 {
   return m_version;
 }
 
-QString Wallaby::Device::id() const
+QString Wombat::Device::id() const
 {
   return m_id;
 }
 
-QString Wallaby::Device::serial() const
+QString Wombat::Device::serial() const
 {
   return m_serial;
 }
 
-bool Wallaby::Device::isTouchscreen() const
+bool Wombat::Device::isTouchscreen() const
 {
 #ifdef NOT_A_WALLABY
   return false;
@@ -98,35 +98,35 @@ bool Wallaby::Device::isTouchscreen() const
 #endif
 }
 
-CompileProvider *Wallaby::Device::compileProvider() const
+CompileProvider *Wombat::Device::compileProvider() const
 {
   return m_compileProvider;
 }
 
-BatteryLevelProvider *Wallaby::Device::batteryLevelProvider() const
+BatteryLevelProvider *Wombat::Device::batteryLevelProvider() const
 {
   return m_batteryLevelProvider;
 }
 
-SettingsProvider *Wallaby::Device::settingsProvider() const
+SettingsProvider *Wombat::Device::settingsProvider() const
 {
   return m_settingsProvider;
 }
 
-ButtonProvider *Wallaby::Device::buttonProvider() const
+ButtonProvider *Wombat::Device::buttonProvider() const
 {
   return m_buttonProvider;
 }
 
 // TODO: Device shouldn't be responsible for doing this
 // TODO: Connect setting provider's signal to a battery provider slot that will load settings
-void Wallaby::Device::settingsChanged()
+void Wombat::Device::settingsChanged()
 {
   const int type = m_settingsProvider->value("battery_type", 0).toInt();
   const float thresh = m_settingsProvider->value("battery_warning_thresh", 0.1f).toFloat();
   const bool enabled = m_settingsProvider->value("battery_warning_enabled", true).toBool();
   
-  Wallaby::BatteryLevelProvider *wblProvider = (Wallaby::BatteryLevelProvider *)m_batteryLevelProvider;
+  Wombat::BatteryLevelProvider *wblProvider = (Wombat::BatteryLevelProvider *)m_batteryLevelProvider;
   wblProvider->setBatteryType(type);
   wblProvider->setWarningThresh(thresh);
   
@@ -139,10 +139,10 @@ void Wallaby::Device::settingsChanged()
     m_timerId = startTimer(1000);
 }
 
-void Wallaby::Device::timerEvent(QTimerEvent *event)
+void Wombat::Device::timerEvent(QTimerEvent *event)
 {
   const float batteryLevel = m_batteryLevelProvider->batteryLevel();
-  const float warningThresh = ((Wallaby::BatteryLevelProvider *)m_batteryLevelProvider)->warningThresh();
+  const float warningThresh = ((Wombat::BatteryLevelProvider *)m_batteryLevelProvider)->warningThresh();
   
   static const double WAV_CYCLE_TIME = 5.0;
   static auto last_warn_time = std::chrono::system_clock::now();
@@ -159,7 +159,7 @@ void Wallaby::Device::timerEvent(QTimerEvent *event)
   }
 }
 
-QString Wallaby::Device::getId() const
+QString Wombat::Device::getId() const
 {
   const QFileInfo getIdScript("/usr/bin/wallaby_get_id.sh");
   if(!getIdScript.exists() || !getIdScript.isFile()) {
@@ -178,7 +178,7 @@ QString Wallaby::Device::getId() const
   }
 }
 
-QString Wallaby::Device::getSerial() const
+QString Wombat::Device::getSerial() const
   {
     const QFileInfo getIdScript("/usr/bin/wallaby_get_serial.sh");
     if(!getIdScript.exists() || !getIdScript.isFile()) {

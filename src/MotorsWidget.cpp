@@ -6,12 +6,7 @@
 #include "Device.h"
 #include "NumpadDialog.h"
 
-#ifdef WALLABY
-#include "wallaby/wallaby.h"
-#else
-#include "kovan/kovan.h"
-#endif
-
+#include <kipr/kipr.h>
 #include <QTimer>
 #include <QDebug>
 

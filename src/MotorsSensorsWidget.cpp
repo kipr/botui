@@ -26,7 +26,7 @@ MotorsSensorsWidget::MotorsSensorsWidget(Device *device, QWidget *parent)
 	connect(ui->pidTuner, SIGNAL(clicked()), SLOT(pidTuner()));
 	connect(ui->depth, SIGNAL(clicked()), SLOT(depth()));
 
-	// TODO: remove these once the widgets work on the Wallaby
+	// TODO: remove these once the widgets work on the Wombat
 	ui->pidTuner->setVisible(false);
 	ui->depth->setVisible(false);
 }

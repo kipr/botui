@@ -9,15 +9,15 @@
 
 namespace Ui
 {
-  class WallabyUpdateWidget;
+  class WombatUpdateWidget;
 }
 
-class WallabyUpdateWidget : public StandardWidget
+class WombatUpdateWidget : public StandardWidget
 {
 Q_OBJECT
 public:
-  WallabyUpdateWidget(Device *device, QWidget *parent = 0);
-  ~WallabyUpdateWidget();
+  WombatUpdateWidget(Device *device, QWidget *parent = 0);
+  ~WombatUpdateWidget();
   
 public slots:
   void update();
@@ -33,7 +33,7 @@ private:
   
   static const QString updateFileName;
   static const QDir mountDir;
-  Ui::WallabyUpdateWidget *ui;
+  Ui::WombatUpdateWidget *ui;
   QProcess *m_updateProc;
 };
 

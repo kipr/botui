@@ -1,11 +1,6 @@
 #include "Program.h"
 #include "SystemPrefix.h"
 
-#ifdef WALLABY
-#include <wallaby/general.h>
-#else
-#include <kovan/general.h>
-#endif
 
 #include <QDebug>
 #include <QThread>

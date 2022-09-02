@@ -3,7 +3,7 @@
 
 #include "Device.h"
 
-namespace Wallaby
+namespace Wombat
 {  
   class Device : public ::Device
   {
