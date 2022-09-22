@@ -4,6 +4,8 @@
 
 #include <QDebug>
 
+using namespace kipr::button;
+
 Wombat::ButtonProvider::ButtonProvider(QObject *parent)
   : ::ButtonProvider(parent),
   m_shown(false)
@@ -30,9 +32,7 @@ bool Wombat::ButtonProvider::setPressed(const ButtonProvider::ButtonId& id, bool
   AbstractTextButton *button = lookup(id);
   if(!button) return false;
   
-  publish();
   button->setPressed(pressed);
-  publish();
   
   return true;
 }
@@ -40,14 +40,12 @@ bool Wombat::ButtonProvider::setPressed(const ButtonProvider::ButtonId& id, bool
 void Wombat::ButtonProvider::reset()
 {
   ExtraButtons::hide();
-  publish();
   m_shown = false;
   emit extraShownChanged(false);
 }
 
 void Wombat::ButtonProvider::refresh()
 {
-  publish();
   if(m_shown != ExtraButtons::isShown()) {
     qDebug() << "Shown was dirty!";
     m_shown = ExtraButtons::isShown();
@@ -58,12 +56,12 @@ void Wombat::ButtonProvider::refresh()
 AbstractTextButton *Wombat::ButtonProvider::lookup(const ButtonProvider::ButtonId& id) const
 {
   switch(id) {
-    case ButtonProvider::A: return &Button::A;
-    case ButtonProvider::B: return &Button::B;
-    case ButtonProvider::C: return &Button::C;
-    case ButtonProvider::X: return &Button::X;
-    case ButtonProvider::Y: return &Button::Y;
-    case ButtonProvider::Z: return &Button::Z;
+    case ButtonProvider::A: return &kipr::button::A;
+    case ButtonProvider::B: return &kipr::button::B;
+    case ButtonProvider::C: return &kipr::button::C;
+    case ButtonProvider::X: return &kipr::button::X;
+    case ButtonProvider::Y: return &kipr::button::Y;
+    case ButtonProvider::Z: return &kipr::button::Z;
   }
   return 0;
 }

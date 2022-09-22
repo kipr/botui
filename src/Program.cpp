@@ -23,10 +23,6 @@ bool Program::start(const QString& path, const QStringList &arguments)
 	connect(m_process, SIGNAL(finished(int, QProcess::ExitStatus)), SIGNAL(finished(int, 		QProcess::ExitStatus)));
 	connect(m_process, SIGNAL(readyRead()), SIGNAL(readyRead()));
 	
-	set_auto_publish(true);
-	halt();
-	set_auto_publish(false);
-	
 	m_process->start(path, arguments);
 	if(!m_process->waitForStarted()) {
 		delete m_process;
@@ -47,14 +43,6 @@ void Program::stop()
 	// write(tr("Finished in %1 seconds").arg(msecs / 1000.0).toAscii());
 	delete m_process;
 	m_process = 0;
-	
-	set_auto_publish(true);
-	halt();
-  
-  // This is a hack. Make really sure it's halted.
-  halt();
-  
-  set_auto_publish(false);
 }
 
 bool Program::isRunning()

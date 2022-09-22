@@ -4,7 +4,9 @@
 #include <QObject>
 #include <QStandardItemModel>
 
-#include <kipr/config.h>
+#include <kipr/config/config.hpp>
+
+using namespace kipr::config;
 
 class CameraConfigModel : public QStandardItemModel
 {

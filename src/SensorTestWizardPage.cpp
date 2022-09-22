@@ -34,7 +34,6 @@ void SensorTestWizardPage::cleanupPage()
 
 void SensorTestWizardPage::update()
 {
-	publish();
 	ui->plot->push(m_plot, analog10(0));
 	ui->plot->inc();
 }

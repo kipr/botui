@@ -2,7 +2,8 @@
 
 #include "ui_CreateTestWizardPage.h"
 
-#include <kipr/create/create.h>
+#include <kipr/create/create.hpp>
+using namespace kipr::create;
 
 #include <QTimer>
 

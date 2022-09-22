@@ -3,6 +3,8 @@
 
 #include <kipr/battery/battery.hpp>
 
+using namespace kipr::battery;
+
 const float Wombat::BatteryLevelProvider::batteryLevel() const
 {
 

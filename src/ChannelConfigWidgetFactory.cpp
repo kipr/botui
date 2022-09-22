@@ -3,7 +3,7 @@
 #include "ChannelConfigWidget.h"
 #include "HsvChannelConfigWidget.h"
 
-#include <kipr/camera/camera.h>
+#include <kipr/camera/camera.hpp>
 ChannelConfigWidgetFactory::~ChannelConfigWidgetFactory()
 {
 }

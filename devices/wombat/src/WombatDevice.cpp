@@ -49,10 +49,6 @@ Wombat::Device::Device()
 {
   m_compileProvider->setBinariesPath("/wallaby/bin");
   connect(m_settingsProvider, SIGNAL(settingsChanged()), SLOT(settingsChanged()));
-#ifndef NOT_A_WALLABY
-  halt();
-#endif
-  set_auto_publish(0);
 
   m_timerId = startTimer(1000);
 

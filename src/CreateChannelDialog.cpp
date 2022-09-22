@@ -1,7 +1,8 @@
 #include "CreateChannelDialog.h"
 #include "ui_CreateChannelDialog.h"
 
-#include <kipr/camera/camera.h>
+#include <kipr/camera/camera.hpp>
+
 CreateChannelDialog::CreateChannelDialog(QWidget *parent)
 	: QDialog(parent),
 	ui(new Ui::CreateChannelDialog)
