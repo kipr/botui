@@ -5,9 +5,11 @@
 
 #include <QTimer>
 
-#include <kipr/config.h>
+#include <kipr/config/config.hpp>
 
-namespace Camera
+using namespace kipr::config;
+
+namespace kipr::camera
 {
 	class Device;
 }
@@ -36,7 +38,7 @@ private:
   void slowFrameRate();
   void fastFrameRate();
   
-  Camera::Device *m_camDevice;
+  kipr::camera::Device *m_camDevice;
   QTimer *m_timer;
   bool m_showBbox;
   int m_numBlobLabels;

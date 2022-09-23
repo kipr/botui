@@ -5,7 +5,8 @@
 #include "SystemUtils.h"
 #include "MenuBar.h"
 
-#include <kipr/config.h>
+#include <kipr/config/config.hpp>
+using namespace kipr::config;
 
 #include <QString>
 #include <QDebug>

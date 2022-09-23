@@ -8,6 +8,9 @@
 
 #include <kipr/kipr.h>
 
+#include "NumpadDialog.h"
+#include "MenuBar.h"
+
 #define A_KOVAN
 
 CombinedMotorWidget::CombinedMotorWidget(Device *device, QWidget *parent)
@@ -58,7 +61,7 @@ CombinedMotorWidget::CombinedMotorWidget(Device *device, QWidget *parent)
 		-1500, 1500, this));
 	
 	ao();
-
+}
 
 CombinedMotorWidget::~CombinedMotorWidget()
 {

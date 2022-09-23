@@ -65,5 +65,4 @@ void PidWidget::go()
 	int position = ui->position->text().toDouble();
 	qDebug() << position;
 	move_to_position(m_currentPort, position, ui->speed->value());
-	publish();
 }

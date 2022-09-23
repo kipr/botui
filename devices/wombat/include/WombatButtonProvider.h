@@ -3,7 +3,9 @@
 
 #include "ButtonProvider.h"
 
-class AbstractTextButton;
+namespace kipr::button {
+  class AbstractTextButton;
+}
 
 namespace Wombat
 {
@@ -23,7 +25,7 @@ namespace Wombat
     virtual void reset();
     virtual void refresh();
   private:
-    AbstractTextButton *lookup(const ButtonProvider::ButtonId& id) const;
+    kipr::button::AbstractTextButton *lookup(const ButtonProvider::ButtonId& id) const;
     
     bool m_shown;
   };

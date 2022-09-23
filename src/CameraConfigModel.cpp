@@ -1,6 +1,8 @@
 
 #include "CameraConfigModel.h"
 
+#include <kipr/camera/camera.hpp>
+
 #include <QStandardItem>
 #include <QDebug>
 
