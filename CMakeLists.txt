@@ -18,7 +18,6 @@ cmake_minimum_required(VERSION 2.8.11)
 if(wombat)
 	add_definitions(-DWOMBAT)
 	set(DEVICE_DIR ${CMAKE_SOURCE_DIR}/devices/wombat)
-	find_package(OpenCV REQUIRED)
 endif()
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/deploy)
@@ -123,7 +122,7 @@ IF(qt6)
 	target_link_libraries(botui Qt6::Core Qt6::Gui Qt6::Quick Qt6::QuickWidgets Qt6::Widgets)
 
 ENDIF()
-target_link_libraries(botui pcompiler z opencv_core opencv_highgui opencv_imgproc ${OPENSSL_LIBRARIES})
+target_link_libraries(botui pcompiler z ${OPENSSL_LIBRARIES})
 
 
 IF(wombat)
@@ -138,5 +137,3 @@ endif()
 
 install(TARGETS botui DESTINATION bin)
 install(FILES ${QM_FILES} DESTINATION "/etc/botui/locale")
-
-message( STATUS "OpenCV Include Dir: " ${OpenCV_INCLUDE_DIRS} )
