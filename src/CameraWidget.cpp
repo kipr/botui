@@ -9,7 +9,7 @@
 #include <kipr/camera/object.hpp>
 
 CameraWidget::CameraWidget(QWidget *parent)
-  : CvWidget(parent),
+  : CameraImageWidget(parent),
   m_camDevice(new kipr::camera::Device()),
   m_timer(new QTimer(this))
 {  
@@ -149,5 +149,5 @@ void CameraWidget::slowFrameRate()
 
 void CameraWidget::fastFrameRate()
 {
-  this->setFrameRate(10);
+  this->setFrameRate(1);
 }

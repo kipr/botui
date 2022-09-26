@@ -658,13 +658,13 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>CvWidget</name>
+    <name>CameraImageWidget</name>
     <message>
         <source>Failed to fetch image</source>
         <translation type="obsolete">获取图像失败</translation>
     </message>
     <message>
-        <location filename="src/CvWidget.cpp" line="63"/>
+        <location filename="src/CameraImageWidget.cpp" line="63"/>
         <source>No image available. Check camera connection.</source>
         <translation>无可用图像,请检查摄像头连接</translation>
     </message>

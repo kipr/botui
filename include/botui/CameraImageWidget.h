@@ -1,5 +1,5 @@
-#ifndef _CVWIDGET_H_
-#define _CVWIDGET_H_
+#ifndef _CAMERAIMAGEWIDGET_H_
+#define _CAMERAIMAGEWIDGET_H_
 
 #include <QImage>
 #include <QWidget>
@@ -7,13 +7,13 @@
 
 #include <kipr/camera/camera.hpp>
 
-class CvWidget : public QWidget
+class CameraImageWidget : public QWidget
 {
 Q_OBJECT
 Q_PROPERTY(bool invalid READ invalid WRITE setInvalid)
 public:
-	CvWidget(QWidget *parent = 0);
-	~CvWidget();
+	CameraImageWidget(QWidget *parent = 0);
+	~CameraImageWidget();
 	
 	void setInvalid(bool invalid);
 	const bool& invalid() const;

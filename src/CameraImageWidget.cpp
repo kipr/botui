@@ -1,31 +1,31 @@
-#include "CvWidget.h"
+#include "CameraImageWidget.h"
 
 #include <QPainter>
 #include <QDebug>
 #include <QMouseEvent>
 
-CvWidget::CvWidget(QWidget *parent)
+CameraImageWidget::CameraImageWidget(QWidget *parent)
 	: QWidget(parent),
 	m_invalid(true)
 {
 }
 
-CvWidget::~CvWidget()
+CameraImageWidget::~CameraImageWidget()
 {
 
 }
 
-void CvWidget::setInvalid(bool invalid)
+void CameraImageWidget::setInvalid(bool invalid)
 {
 	m_invalid = invalid;
 }
 
-const bool& CvWidget::invalid() const
+const bool& CameraImageWidget::invalid() const
 {
 	return m_invalid;
 }
 
-void CvWidget::updateImage(const kipr::camera::Image &image)
+void CameraImageWidget::updateImage(const kipr::camera::Image &image)
 {
 	m_mutex.lock();
 	m_invalid = image.isEmpty();
@@ -41,14 +41,14 @@ void CvWidget::updateImage(const kipr::camera::Image &image)
 	m_mutex.unlock();
 }
 
-void CvWidget::resizeEvent(QResizeEvent *event)
+void CameraImageWidget::resizeEvent(QResizeEvent *event)
 {
 	if (!m_invalid) this->prepareImageForPainting();
 
 	QWidget::resizeEvent(event);
 }
 
-void CvWidget::paintEvent(QPaintEvent *event)
+void CameraImageWidget::paintEvent(QPaintEvent *event)
 {
 	QPainter painter(this);
 	
@@ -66,7 +66,7 @@ void CvWidget::paintEvent(QPaintEvent *event)
 		m_resizedImage.width() - 1, m_resizedImage.height() - 1);
 }
 
-void CvWidget::mousePressEvent(QMouseEvent *event)
+void CameraImageWidget::mousePressEvent(QMouseEvent *event)
 {
 	if(m_invalid) return;
 	const QPointF &pos = event->pos();
@@ -74,12 +74,12 @@ void CvWidget::mousePressEvent(QMouseEvent *event)
 		pos.y() / height() * m_image.getHeight());
 }
 
-void CvWidget::postProcessImage(QImage &image)
+void CameraImageWidget::postProcessImage(QImage &image)
 {
-	// No-op for CvWidget, but subclasses can override it to augment the displayed image
+	// No-op for CameraImageWidget, but subclasses can override it to augment the displayed image
 }
 
-void CvWidget::prepareImageForPainting()
+void CameraImageWidget::prepareImageForPainting()
 {
 	QImage::Format format;
 	switch (m_image.getType()) {
