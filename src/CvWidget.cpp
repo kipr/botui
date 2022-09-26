@@ -3,12 +3,10 @@
 #include <QPainter>
 #include <QDebug>
 #include <QMouseEvent>
-#include <opencv2/highgui/highgui.hpp>
 
 CvWidget::CvWidget(QWidget *parent)
 	: QWidget(parent),
-	m_invalid(true),
-	m_data(0)
+	m_invalid(true)
 {
 }
 
@@ -27,29 +25,26 @@ const bool& CvWidget::invalid() const
 	return m_invalid;
 }
 
-void CvWidget::updateImage(const cv::Mat &image)
+void CvWidget::updateImage(const kipr::camera::Image &image)
 {
 	m_mutex.lock();
-	m_invalid = image.empty();
+	m_invalid = image.isEmpty();
+
 	if(m_invalid) {
-		m_image = cv::Mat();
-		update();
-		m_mutex.unlock();
-		return;
+		m_image = kipr::camera::Image();
+	} else {
+		m_image = image;
+		this->prepareImageForPainting();
 	}
-#if CV_VERSION_EPOCH == 3
-  cv::cvtColor(image, m_image, cv::COLOR_BGR2RGB);
-#else
-	cv::cvtColor(image, m_image, cv::COLOR_BGR2RGB);
-#endif
-	scaleImage();
+
 	update();
 	m_mutex.unlock();
 }
 
 void CvWidget::resizeEvent(QResizeEvent *event)
 {
-	scaleImage();
+	if (!m_invalid) this->prepareImageForPainting();
+
 	QWidget::resizeEvent(event);
 }
 
@@ -57,13 +52,14 @@ void CvWidget::paintEvent(QPaintEvent *event)
 {
 	QPainter painter(this);
 	
-	if(m_invalid || m_image.empty()) {
+	if(m_invalid || m_resizedImage.isNull()) {
 		painter.fillRect(0, 0, width() - 1, height() - 1, Qt::transparent);
 		painter.drawText(QRect(0, 0, width(), height()),
 			tr("No image available. Check camera connection."),
 			QTextOption(Qt::AlignAbsolute | Qt::AlignHCenter | Qt::AlignVCenter));
 		return;
 	}
+
 	painter.drawImage(width() / 2 - m_resizedImage.width() / 2, height() / 2 - m_resizedImage.height() / 2, m_resizedImage,
 		0, 0, m_resizedImage.width(), m_resizedImage.height());
 	painter.drawRect(width() / 2 - m_resizedImage.width() / 2, height() / 2 - m_resizedImage.height() / 2,
@@ -74,21 +70,36 @@ void CvWidget::mousePressEvent(QMouseEvent *event)
 {
 	if(m_invalid) return;
 	const QPointF &pos = event->pos();
-	emit pressed(m_image, pos.x() / width() * m_image.cols,
-		pos.y() / height() * m_image.rows);
+	emit pressed(m_image, pos.x() / width() * m_image.getWidth(),
+		pos.y() / height() * m_image.getHeight());
 }
 
-void CvWidget::scaleImage()
+void CvWidget::postProcessImage(QImage &image)
 {
-	if(m_invalid || m_image.empty()) {
-		qDebug() << "Can't scale an empty image";
+	// No-op for CvWidget, but subclasses can override it to augment the displayed image
+}
+
+void CvWidget::prepareImageForPainting()
+{
+	QImage::Format format;
+	switch (m_image.getType()) {
+	case kipr::camera::Image::Type::Rgb888:
+		format = QImage::Format_RGB888;
+		break;
+	case kipr::camera::Image::Type::Bgr888:
+		format = QImage::Format_BGR888;
+		break;
+	case kipr::camera::Image::Type::Grey8:
+		format = QImage::Format_Grayscale8;
+		break;
+	default:
+		qDebug() << "Unsupported image format";
+		m_resizedImage = QImage();
 		return;
 	}
-	
-	cv::Mat resized;
-	cv::resize(m_image, resized, cv::Size(width(), height()));
-	delete m_data;
-	m_data = new unsigned char[resized.rows * resized.cols * resized.elemSize()];
-	memcpy(m_data, resized.ptr(), resized.rows * resized.cols * resized.elemSize());
-	m_resizedImage = QImage(m_data, resized.cols, resized.rows, resized.step, QImage::Format_RGB888);
+
+	QImage originalImage(m_image.getData(), m_image.getWidth(), m_image.getHeight(), m_image.getStride(), format);
+	this->postProcessImage(originalImage);
+
+	m_resizedImage = originalImage.scaled(width(), height(), Qt::KeepAspectRatio);
 }

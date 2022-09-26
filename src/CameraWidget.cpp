@@ -1,13 +1,16 @@
 #include "CameraWidget.h"
 
+#include <QPainter>
 #include <QDebug>
 #include <sstream>
 
-#include <kipr/camera/camera.h>
+#include <kipr/camera/camera.hpp>
+#include <kipr/camera/channel.hpp>
+#include <kipr/camera/object.hpp>
 
 CameraWidget::CameraWidget(QWidget *parent)
   : CvWidget(parent),
-  m_camDevice(new Camera::Device()),
+  m_camDevice(new kipr::camera::Device()),
   m_timer(new QTimer(this))
 {  
   connect(m_timer, SIGNAL(timeout()), SLOT(update()));
@@ -70,58 +73,61 @@ void CameraWidget::update()
   
   if(!isVisible()) return;
   
-  cv::Mat image;
+  kipr::camera::Image image;
   if(!m_camDevice->update()) {
     // Update failed, so close camera and lower frame rate
     m_camDevice->close();
     this->slowFrameRate();
-  }
-  else {
+  } else {
     qDebug() << "Camera updated!";
     image = m_camDevice->rawImage();
-    // If we need to draw additional things...
-    if(m_showBbox || m_numBlobLabels > 0) {
-      int h = 0;
-      const static int hStep = 137; // Golden angle
+  }
+
+  this->updateImage(image);
+}
+
+void CameraWidget::postProcessImage(QImage &image)
+{
+	if(image.isNull()) return;
+
+  // If there's nothing additional to draw...
+  if (!m_showBbox && m_numBlobLabels <= 0) return;
+
+  QPainter painter(&image);
+
+  int h = 0;
+  const static int hStep = 137; // Golden angle
+  
+  // Iterate over all channels
+  std::vector<kipr::camera::Channel *>::const_iterator it = m_camDevice->channels().begin();
+  for(; it != m_camDevice->channels().end(); ++it, h += hStep) {
+    const QColor rectColor = QColor::fromHsv(h % 360, 255, 255);
+    QPen pen(rectColor, 2);
+    painter.setPen(pen);
+
+    // Iterate over all objects for this channel
+    const kipr::camera::ObjectVector *objs = (*it)->objects();
+    for(int objNum = 0; objNum < objs->size(); ++objNum) {
+      const kipr::camera::Object &obj = objs->at(objNum);
       
-      // Iterate over all channels
-      Camera::ChannelPtrVector::const_iterator it = m_camDevice->channels().begin();
-      for(; it != m_camDevice->channels().end(); ++it, h += hStep) {
-        const QColor rectColor = QColor::fromHsv(h % 360, 255, 255);
-        
-        // Iterate over all objects for this channel
-        const Camera::ObjectVector *objs = (*it)->objects();
-        for(int objNum = 0; objNum < objs->size(); ++objNum) {
-          const Camera::Object &obj = objs->at(objNum);
-          
-          // If needed, draw bbox
-          if(m_showBbox) {
-            cv::rectangle(image, cv::Rect(obj.boundingBox().x(), obj.boundingBox().y(),
-              obj.boundingBox().width(), obj.boundingBox().height()),
-              cv::Scalar(rectColor.red(), rectColor.blue(), rectColor.blue()), 2);
-          }
-          
-          // If needed, draw blob labels
-          if(m_numBlobLabels > objNum) {
-            std::ostringstream stm;
-            stm << objNum;
-            const std::string &numStr = stm.str();
-            const int fontFace = cv::FONT_HERSHEY_SCRIPT_SIMPLEX;
-            const double fontScale = 0.4;
-            const int thickness = 1;
-            int baseline = 0;
-            cv::Size textSize = cv::getTextSize(numStr, fontFace, fontScale, thickness, &baseline);
-            baseline += thickness;
-            cv::Point textOrg(obj.boundingBox().x() + obj.boundingBox().width()/2 - textSize.width/2,
-                              obj.boundingBox().y() + obj.boundingBox().height()/2 + textSize.height/2);
-            cv::putText(image, numStr, textOrg, fontFace, fontScale, cv::Scalar::all(255), thickness, 8);
-          }
-        }
+      // If needed, draw bbox
+      if(m_showBbox) {
+        painter.drawRect(obj.boundingBox().x(), obj.boundingBox().y(), obj.boundingBox().width(), obj.boundingBox().height());
+      }
+      
+      // If needed, draw blob labels
+      if(m_numBlobLabels > objNum) {
+        const qreal textRectSize = 32767.0;
+        QRectF textRect(
+          obj.boundingBox().x() + obj.boundingBox().width()/2 - textRectSize/2.0,
+          obj.boundingBox().y() + obj.boundingBox().height()/2 - textRectSize + textRectSize/2.0,
+          textRectSize,
+          textRectSize);
+
+        painter.drawText(textRect, Qt::AlignHCenter | Qt::AlignVCenter, QString::number(objNum));
       }
     }
   }
-  
-  this->updateImage(image);
 }
 
 void CameraWidget::setFrameRate(const unsigned frameRate)

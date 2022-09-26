@@ -32,6 +32,9 @@ public:
   
 public slots:
   void update();
+
+protected:
+  void postProcessImage(QImage &image) override;
   
 private:
   void setFrameRate(const unsigned frameRate);

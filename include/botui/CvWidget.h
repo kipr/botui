@@ -4,7 +4,8 @@
 #include <QImage>
 #include <QWidget>
 #include <QMutex>
-#include <opencv4/opencv2/opencv.hpp>
+
+#include <kipr/camera/camera.hpp>
 
 class CvWidget : public QWidget
 {
@@ -18,22 +19,22 @@ public:
 	const bool& invalid() const;
 	
 public slots:
-	void updateImage(const cv::Mat &image);
+	void updateImage(const kipr::camera::Image &image);
 	
 signals:
-	void pressed(const cv::Mat &image, const int &x, const int &y);
+	void pressed(const kipr::camera::Image &image, const int &x, const int &y);
 	
 protected:
 	virtual void resizeEvent(QResizeEvent *event);
 	virtual void paintEvent(QPaintEvent *event);
 	virtual void mousePressEvent(QMouseEvent *event);
+	virtual void postProcessImage(QImage &image);
 	
 private:
-	void scaleImage();
+	void prepareImageForPainting();
 	
 	bool m_invalid;
-	cv::Mat m_image;
-	unsigned char *m_data;
+	kipr::camera::Image m_image;
 	QImage m_resizedImage;
 	mutable QMutex m_mutex;
 };
