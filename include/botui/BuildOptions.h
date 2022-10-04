@@ -7,6 +7,4 @@
 #define ENABLE_DBUS_SUPPORT
 #endif
 
-#define ENABLE_OPENCV_SUPPORT
-
 #endif

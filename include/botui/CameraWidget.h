@@ -1,7 +1,7 @@
 #ifndef _CAMERAWIDGET_H_
 #define _CAMERAWIDGET_H_
 
-#include "CvWidget.h"
+#include "CameraImageWidget.h"
 
 #include <QTimer>
 
@@ -14,7 +14,7 @@ namespace kipr::camera
 	class Device;
 }
 
-class CameraWidget : public CvWidget
+class CameraWidget : public CameraImageWidget
 {
 Q_OBJECT
 public:
@@ -32,6 +32,9 @@ public:
   
 public slots:
   void update();
+
+protected:
+  void postProcessImage(QImage &image) override;
   
 private:
   void setFrameRate(const unsigned frameRate);

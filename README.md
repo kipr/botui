@@ -11,7 +11,6 @@ Requirements
 ============
 * [pcompiler ](https://github.com/kipr/pcompiler)
 * CMake 2.6.0 or later
-* OpenCV
 * [Qt >= 4.7.4](https://www.qt.io/download-qt-installer)
 
 
