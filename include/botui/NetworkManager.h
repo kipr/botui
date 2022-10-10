@@ -10,6 +10,7 @@
 #include "NetworkManagerConnection.h"
 
 #include <QObject>
+
 #include <QDBusObjectPath>
 
 class NMNetworkManager;

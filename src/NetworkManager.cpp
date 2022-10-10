@@ -64,6 +64,7 @@
 #define NM_SERVICE "org.freedesktop.NetworkManager"
 #define NM_OBJECT "/org/freedesktop/NetworkManager"
 
+
 NetworkManager::~NetworkManager()
 {
 	

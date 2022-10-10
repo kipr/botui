@@ -1,0 +1,10 @@
+-I/home/erin/Desktop/qt6Upgrade/botui
+-I/home/erin/Desktop/qt6Upgrade/botui/src
+-I/home/erin/Desktop/qt6Upgrade/botui/dbus/include
+-I/home/erin/Desktop/qt6Upgrade/botui/dbus
+-I/home/erin/Desktop/qt6Upgrade/botui/devices/wombat/include
+-I/home/erin/Desktop/qt6Upgrade/botui/include/botui
+-DWOMBAT
+-o
+/home/erin/Desktop/qt6Upgrade/botui/dbus/wiredinterface.moc
+/home/erin/Desktop/qt6Upgrade/botui/dbus/wiredinterface.h

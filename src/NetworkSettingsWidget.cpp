@@ -30,19 +30,20 @@ NetworkSettingsWidget::NetworkSettingsWidget(Device *device, QWidget *parent)
 	enableCoolOffTimer->setSingleShot(true);
 	QObject::connect(enableCoolOffTimer, SIGNAL(timeout()), SLOT(enableAPControls()));
 	
-	ui->turnOn->setVisible(false);
-	ui->turnOff->setVisible(false);
+	// ui->turnOn->setVisible(false);
+	// ui->turnOff->setVisible(false);
 
 	QObject::connect(ui->connect, SIGNAL(clicked()), SLOT(connect()));
 	QObject::connect(ui->manage, SIGNAL(clicked()), SLOT(manage()));
 
 	//QObject::connect(ui->turnOn, SIGNAL(clicked()), SLOT(disableAPControlsTemporarily()));
 	//QObject::connect(ui->turnOff, SIGNAL(clicked()), SLOT(disableAPControlsTemporarily()));
+	
 	//NetworkManager::ref().connect(ui->turnOn, SIGNAL(clicked()), SLOT(enableAP())); //SLOT(turnOn()));
 	//NetworkManager::ref().connect(ui->turnOff, SIGNAL(clicked()), SLOT(disableAP())); //SLOT(turnOff()));
 
-	QObject::connect(ui->turnOn, SIGNAL(clicked()), SLOT(enableAP()));
-	QObject::connect(ui->turnOff, SIGNAL(clicked()), SLOT(disableAP()));
+	// QObject::connect(ui->turnOn, SIGNAL(clicked()), SLOT(enableAP()));
+	// QObject::connect(ui->turnOff, SIGNAL(clicked()), SLOT(disableAP()));
 	QObject::connect(ui->tournamentMode, SIGNAL(clicked()), SLOT(TournamentMode()));
 
 
@@ -63,7 +64,7 @@ NetworkSettingsWidget::NetworkSettingsWidget(Device *device, QWidget *parent)
 	updateInformation();
 }
 //Tournament mode code
-void NetworkSettingsWidget::TournamentMode(){
+void NetworkSettingsWidget::TournamentMode(){ //Turns on Tournament Mode
 	system("sudo iwconfig wlan0 txpower 1");
 	QMessageBox msgBox;
 	msgBox.setText("Tournament Mode activated");
@@ -76,12 +77,12 @@ NetworkSettingsWidget::~NetworkSettingsWidget()
 	delete enableCoolOffTimer;
 }
 
-void NetworkSettingsWidget::connect()
+void NetworkSettingsWidget::connect() //Connects to network
 {
 	RootController::ref().presentWidget(new ConnectWidget(device()));
 }
 
-void NetworkSettingsWidget::manage()
+void NetworkSettingsWidget::manage() //Forget or add network to history
 {
 	RootController::ref().presentWidget(new ManageNetworksWidget(device()));
 }
@@ -90,34 +91,34 @@ void NetworkSettingsWidget::enableAP()
 {
 	disableAPControlsTemporarily();
 	NetworkManager::ref().enableAP();
-	ui->turnOn->hide();
-	ui->turnOff->show();
+	// ui->turnOn->hide();
+	// ui->turnOff->show();
 }
 
 void NetworkSettingsWidget::disableAP()
 {
 	disableAPControlsTemporarily();
 	NetworkManager::ref().disableAP();
-	ui->turnOn->show();
-	ui->turnOff->hide();
+	// ui->turnOn->show();
+	// ui->turnOff->hide();
 }
 
 void NetworkSettingsWidget::enableAPControls()
 {
-	ui->turnOn->setEnabled(true);
-	ui->turnOff->setEnabled(true);
+	// ui->turnOn->setEnabled(true);
+	// ui->turnOff->setEnabled(true);
 }
 
 void NetworkSettingsWidget::disableAPControls()
 {
-	ui->turnOn->setEnabled(false);
-	ui->turnOff->setEnabled(false);
+	// ui->turnOn->setEnabled(false);
+	// ui->turnOff->setEnabled(false);
 }
 
 void NetworkSettingsWidget::disableAPControlsTemporarily()
 {
-	ui->turnOn->setEnabled(false);
-	ui->turnOff->setEnabled(false);
+	// ui->turnOn->setEnabled(false);
+	// ui->turnOff->setEnabled(false);
 
 	enableCoolOffTimer->start(20000);
 }
@@ -126,8 +127,8 @@ void NetworkSettingsWidget::updateInformation()
 {
 	const bool on = NetworkStatusWidget::isNetworkUp(); //NetworkManager::ref().isOn();
 	ui->state->setText(on ? tr("ON") : tr("OFF"));
-	ui->turnOn->setVisible(!on);
-	ui->turnOff->setVisible(on);
+	// ui->turnOn->setVisible(!on);
+	// ui->turnOff->setVisible(on);
 	ui->connect->setEnabled(on);
 
 	const QString id = device()->id();

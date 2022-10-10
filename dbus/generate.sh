@@ -9,28 +9,28 @@ generate()
 }
 
 echo "Generating NetworkManager class..."
-generate NMNetworkManager nm-manager
+generate NMNetworkManager org.freedesktop.NetworkManager.xml
 
 echo "Generating Device class..."
-generate NMDevice nm-device
+generate NMDevice org.freedesktop.NetworkManager.Device.xml  
 
 echo "Generating DeviceEthernet class..."
-generate NMDeviceEthernet nm-device-ethernet
+generate NMDeviceEthernet org.freedesktop.NetworkManager.Device.Wired.xml 
 
 echo "Generating DeviceWifi class..."
-generate NMDeviceWifi nm-device-wifi
+generate NMDeviceWifi org.freedesktop.NetworkManager.Device.WifiP2P.xml
 
 echo "Generating Settings class..."
-generate NMSettings nm-settings
+generate NMSettings org.freedesktop.NetworkManager.Settings.xml
 
 echo "Generating SettingsConnection class..."
-generate NMSettingsConnection nm-settings-connection
+generate NMSettingsConnection org.freedesktop.NetworkManager.Settings.Connection.xml
 
 echo "Generating SecretAgent class..."
-generate NMSecretAgent nm-secret-agent
+generate NMSecretAgent org.freedesktop.NetworkManager.SecretAgent.xml
 
 echo "Generating AccessPoint class..."
-generate NMAccessPoint nm-access-point
+generate NMAccessPoint org.freedesktop.NetworkManager.AccessPoint.xml
 
 echo "Generating Serial class..."
 generate Serial org.kipr.Serial

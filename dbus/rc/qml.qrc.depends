@@ -1,0 +1,7 @@
+<RCC>
+  <qresource prefix="/">
+    <file>qml/loading.qml</file>
+    <file>qml/lock.qml</file>
+    <file>qml/50-screenlock.png</file>
+  </qresource>
+</RCC>

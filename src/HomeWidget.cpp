@@ -33,7 +33,7 @@ HomeWidget::HomeWidget(Device *device, QWidget *parent)
 	connect(ui->settings, SIGNAL(clicked()), SLOT(settings()));
 
 	// TODO: fix fileManager and then remove this line
-	ui->fileManager->setVisible(false);
+	ui->fileManager->setVisible(true);
 
 	//QAction *lock = menuBar()->addAction(UiStandards::lockString());
 	// connect(lock, SIGNAL(triggered()), SLOT(lock()));

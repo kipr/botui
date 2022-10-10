@@ -59,6 +59,6 @@ int main(int argc, char* argv[])
 	//GuiSettingsWidget::updateStyle(&device);
   
 	RootController::ref().presentWidget(new HomeWidget(&device));
-
+  
 	return app.exec();
 }

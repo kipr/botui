@@ -1,0 +1,8 @@
+/home/erin/Desktop/qt6Upgrade/botui/dbus/CMakeFiles/botui.dir
+/home/erin/Desktop/qt6Upgrade/botui/dbus/CMakeFiles/edit_cache.dir
+/home/erin/Desktop/qt6Upgrade/botui/dbus/CMakeFiles/rebuild_cache.dir
+/home/erin/Desktop/qt6Upgrade/botui/dbus/CMakeFiles/list_install_components.dir
+/home/erin/Desktop/qt6Upgrade/botui/dbus/CMakeFiles/install.dir
+/home/erin/Desktop/qt6Upgrade/botui/dbus/CMakeFiles/install/local.dir
+/home/erin/Desktop/qt6Upgrade/botui/dbus/CMakeFiles/install/strip.dir
+/home/erin/Desktop/qt6Upgrade/botui/dbus/CMakeFiles/botui_autogen.dir
