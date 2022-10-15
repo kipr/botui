@@ -2,7 +2,7 @@
 <node name="/">
   <!--
       org.freedesktop.NetworkManager.Device:
-      @short_description: Device.
+      @short_description: Device
 
   -->
   <interface name="org.freedesktop.NetworkManager.Device">
@@ -26,16 +26,6 @@
         to obtain the true (non-UTF-8) string.
     -->
     <property name="Udi" type="s" access="read"/>
-
-    <!--
-        Path:
-
-        The path of the device as exposed by the udev property ID_PATH.
-
-        Note that non-UTF-8 characters are backslash escaped. Use g_strcompress()
-        to obtain the true (non-UTF-8) string.
-    -->
-    <property name="Path" type="s" access="read"/>
 
     <!--
         Interface:
@@ -100,7 +90,7 @@
         Ip4Address:
 
         DEPRECATED; use the 'Addresses' property of the 'Ip4Config' object
-        instead. This property always returns 0.0.0.0 (numeric 0) as address.
+        instead.
     -->
     <property name="Ip4Address" type="u" access="read"/>
 
@@ -120,7 +110,9 @@
 
         Returns: A tuple of  <link linkend="NMDeviceState">NMDeviceState</link> and  <link linkend="NMDeviceStateReason">NMDeviceStateReason</link>.
     -->
-    <property name="StateReason" type="(uu)" access="read"/>
+    <property name="StateReason" type="(uu)" access="read">
+      <annotation name="org.qtproject.QtDBus.QtTypeName" value="std::tuple&lt;unsigned int, unsigned int&gt;"/>
+    </property>
 
     <!--
         ActiveConnection:
@@ -256,8 +248,9 @@
         names to variant boxed values.
     -->
     <property name="LldpNeighbors" type="aa{sv}" access="read">
-    	<annotation name="org.qtproject.QtDBus.QtTypeName" value="QList<QMap<QString, QVariant>>"/>
+      <annotation name="org.qtproject.QtDBus.QtTypeName" value="QList&lt;QVariantMap&gt;"/>
     </property>
+
     <!--
         Real:
 
@@ -269,9 +262,10 @@
 
     <!--
         Ip4Connectivity:
-        @since: 1.16
 
         The result of the last IPv4 connectivity check.
+
+        Since: 1.16
 
         Returns: <link linkend="NMConnectivityState">NMConnectivityState</link>
     -->
@@ -279,9 +273,10 @@
 
     <!--
         Ip6Connectivity:
-        @since: 1.16
 
         The result of the last IPv6 connectivity check.
+
+        Since: 1.16
 
         Returns: <link linkend="NMConnectivityState">NMConnectivityState</link>
     -->
@@ -289,39 +284,18 @@
 
     <!--
         InterfaceFlags:
-        @since: 1.22
 
         The flags of the network interface. See
         <link linkend="NMDeviceInterfaceFlags">NMDeviceInterfaceFlags</link> for
         the currently defined flags.
+
+        Since: 1.22
     -->
     <property name="InterfaceFlags" type="u" access="read"/>
 
     <!--
-        HwAddress:
-        @since: 1.24
-
-        The hardware address of the device.
-
-        This replaces the other 'HwAddress' properties on the device-specific D-Bus interfaces.
-    -->
-    <property name="HwAddress" type="s" access="read"/>
-
-    <!--
-        Ports:
-        @since: 1.34
-
-        The port devices of the controller device.
-
-        Array of object paths representing devices which are currently set as
-        port of this device. This replaces the 'Slaves' properties on the
-        device-specific D-Bus interfaces.
-    -->
-    <property name="Ports" type="ao" access="read"/>
-
-    <!--
         Reapply:
-        @connection: The optional connection settings that will be reapplied on the device. If empty, the currently active settings-connection will be used. The connection cannot arbitrarily differ from the current applied-connection otherwise the call will fail. Only certain changes are supported, like adding or removing IP addresses.
+        @connection: The optional connection settings that will be reapplied on the device. If empty, the currently active settings-connection will be used. The connection cannot arbitrarly differ from the current applied-connection otherwise the call will fail. Only certain changes are supported, like adding or removing IP addresses.
         @version_id: If non-zero, the current version id of the applied-connection must match. The current version id can be retrieved via GetAppliedConnection. This optional argument allows to catch concurrent modifications between the GetAppliedConnection call and Reapply.
         @flags: Flags which would modify the behavior of the Reapply call. There are no flags defined currently and the users should use the value of 0.
 
@@ -347,6 +321,7 @@
         them different.
     -->
     <method name="Reapply">
+      <annotation name="org.qtproject.QtDBus.QtTypeName.In0" value="QMap&lt;QString, QVariantMap&gt;"/>
       <arg name="connection" type="a{sa{sv}}" direction="in"/>
       <arg name="version_id" type="t" direction="in"/>
       <arg name="flags" type="u" direction="in"/>
@@ -367,6 +342,7 @@
         activating a device or when calling Reapply.
     -->
     <method name="GetAppliedConnection">
+      <annotation name="org.qtproject.QtDBus.QtTypeName.Out0" value="QMap&lt;QString, QVariantMap&gt;"/>
       <arg name="flags" type="u" direction="in"/>
       <arg name="connection" type="a{sa{sv}}" direction="out"/>
       <arg name="version_id" type="t" direction="out"/>
@@ -400,6 +376,5 @@
       <arg name="old_state" type="u"/>
       <arg name="reason" type="u"/>
     </signal>
-
   </interface>
 </node>

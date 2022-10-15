@@ -20,8 +20,8 @@
 #include <QDebug>
 
 NetworkSettingsWidget::NetworkSettingsWidget(Device *device, QWidget *parent)
-	: StandardWidget(device, parent),
-	ui(new Ui::NetworkSettingsWidget)
+	: StandardWidget(device, parent)
+	, ui(new Ui::NetworkSettingsWidget)
 {
 	ui->setupUi(this);
 	performStandardSetup(tr("Network Settings"));
@@ -63,8 +63,9 @@ NetworkSettingsWidget::NetworkSettingsWidget(Device *device, QWidget *parent)
 
 	updateInformation();
 }
-//Tournament mode code
-void NetworkSettingsWidget::TournamentMode(){ //Turns on Tournament Mode
+
+void NetworkSettingsWidget::TournamentMode()
+{
 	system("sudo iwconfig wlan0 txpower 1");
 	QMessageBox msgBox;
 	msgBox.setText("Tournament Mode activated");

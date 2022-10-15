@@ -13,9 +13,9 @@
 
 #include <QDBusObjectPath>
 
-class NMNetworkManager;
-class NMDevice;
-class NMDeviceWifi;
+class OrgFreedesktopNetworkManagerInterface;
+class OrgFreedesktopNetworkManagerDeviceInterface;
+class OrgFreedesktopNetworkManagerDeviceWirelessInterface;
 
 class NetworkManager : public QObject, public Singleton<NetworkManager>
 {
@@ -86,9 +86,9 @@ private:
 	
 	NetworkList m_accessPoints;
 	
-	NMNetworkManager *m_nm;
-	NMDevice *m_device;
-	NMDeviceWifi *m_wifi;
+	OrgFreedesktopNetworkManagerInterface *m_nm;
+	OrgFreedesktopNetworkManagerDeviceInterface *m_device;
+	OrgFreedesktopNetworkManagerDeviceWirelessInterface *m_wifi;
 };
 
 #endif
