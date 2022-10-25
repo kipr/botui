@@ -2,7 +2,7 @@
 <node name="/">
   <!--
       org.freedesktop.NetworkManager.AccessPoint:
-      @short_description: Wi-Fi Access Point.
+      @short_description: Wi-Fi Access Point
 
   -->
   <interface name="org.freedesktop.NetworkManager.AccessPoint">
@@ -95,5 +95,15 @@
     -->
     <property name="LastSeen" type="i" access="read"/>
 
+    <!--
+        PropertiesChanged:
+        @properties: A dictionary mapping property names to variant boxed values
+
+        DEPRECATED. Use the standard "PropertiesChanged" signal from "org.freedesktop.DBus.Properties" instead which exists since version NetworkManager 1.2.0.
+    -->
+    <signal name="PropertiesChanged">
+      <annotation name="org.qtproject.QtDBus.QtTypeName.Out0" value="QVariantMap"/>
+      <arg name="properties" type="a{sv}"/>
+    </signal>
   </interface>
 </node>

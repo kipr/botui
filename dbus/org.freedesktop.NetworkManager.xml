@@ -2,7 +2,7 @@
 <node name="/org/freedesktop/NetworkManager">
   <!--
       org.freedesktop.NetworkManager:
-      @short_description: Connection Manager.
+      @short_description: Connection Manager
 
   -->
   <interface name="org.freedesktop.NetworkManager">
@@ -10,7 +10,7 @@
 
     <!--
         Reload:
-        @flags: Optional flags to specify which parts shall be reloaded.
+        @flags: optional flags to specify which parts shall be reloaded.
 
         Reload NetworkManager's configuration and perform certain updates, like flushing a cache or
         rewriting external state to disk. This is similar to sending SIGHUP to NetworkManager but it
@@ -104,11 +104,13 @@
         See also AddAndActivateConnection2.
     -->
     <method name="AddAndActivateConnection">
+      <annotation name="org.qtproject.QtDBus.QtTypeName.In0" value="QMap&lt;QString, QVariantMap&gt;"/>
       <arg name="connection" type="a{sa{sv}}" direction="in"/>
       <arg name="device" type="o" direction="in"/>
       <arg name="specific_object" type="o" direction="in"/>
       <arg name="path" type="o" direction="out"/>
       <arg name="active_connection" type="o" direction="out"/>
+      
     </method>
 
     <!--
@@ -119,7 +121,8 @@
         @options: Further options for the method call.
         @path: Object path of the new connection that was just added.
         @active_connection: The path of the active connection object representing this active connection.
-        @result: A dictionary of additional output arguments for future extension. Currently, not additional output arguments are supported.
+        @result: a dictionary of additional output arguments for future extension. Currently not additional
+          output arguments are supported.
 
         Adds a new connection using the given details (if any) as a template
         (automatically filling in missing settings with the capabilities of the
@@ -130,9 +133,12 @@
         parameters. At this time the following options are supported:
 
          * persist: A string value of either "disk" (default), "memory" or "volatile". If "memory" is passed, the connection will not be saved to disk. If "volatile" is passed, the connection will not be saved to disk and will be destroyed when disconnected.
-         * bind-activation: Bind the activation lifetime. Set to "dbus-client" to automatically disconnect when the requesting process disappears from the bus. The default of "none" means the connection is kept activated normally.
+         * bind-activation: Bind the activation lifetime. Set to "dbus-name" to automatically disconnect when the requesting process disappears from the bus. The default of "none" means the connection is kept activated normally.
     -->
     <method name="AddAndActivateConnection2">
+      <annotation name="org.qtproject.QtDBus.QtTypeName.In0" value="QMap&lt;QString, QVariantMap&gt;"/>
+      <annotation name="org.qtproject.QtDBus.QtTypeName.In3" value="QVariantMap"/>
+      <annotation name="org.qtproject.QtDBus.QtTypeName.Out2" value="QVariantMap"/>
       <arg name="connection" type="a{sa{sv}}" direction="in"/>
       <arg name="device" type="o" direction="in"/>
       <arg name="specific_object" type="o" direction="in"/>
@@ -188,6 +194,7 @@
         Wi-Fi, WWAN, and WiMAX state, etc.
     -->
     <method name="GetPermissions">
+      <annotation name="org.qtproject.QtDBus.QtTypeName.Out0" value="QMap&lt;QString, QString&gt;"/>
       <arg name="permissions" type="a{ss}" direction="out"/>
     </method>
 
@@ -280,25 +287,26 @@
         Rollback a checkpoint before the timeout is reached.
     -->
     <method name="CheckpointRollback">
+      <annotation name="org.qtproject.QtDBus.QtTypeName.Out0" value="QMap&lt;QString, unsigned int&gt;"/>
       <arg name="checkpoint" type="o" direction="in"/>
       <arg name="result" type="a{su}" direction="out" />
     </method>
 
     <!--
         CheckpointAdjustRollbackTimeout:
-        @checkpoint: The checkpoint to be rolled back.
-        @add_timeout: Number of seconds from <emphasis>now</emphasis> in which the timeout will expire. Set to 0 to disable the timeout.
-        @since: 1.12
+        @add_timeout: number of seconds from ~now~ in which the
+          timeout will expire. Set to 0 to disable the timeout.
+          Note that the added seconds start counting from now,
+          not "Created" timestamp or the previous expiration
+          time. Note that the "Created" property of the checkpoint
+          will stay unchanged by this call. However, the "RollbackTimeout"
+          will be recalculated to give the approximate new expiration time.
+          The new "RollbackTimeout" property will be approximate up to
+          one second precision, which is the accuracy of the property.
 
         Reset the timeout for rollback for the checkpoint.
 
-        Note that the added seconds start counting from now,
-        not "Created" timestamp or the previous expiration
-        time. Note that the "Created" property of the checkpoint
-        will stay unchanged by this call. However, the "RollbackTimeout"
-        will be recalculated to give the approximate new expiration time.
-        The new "RollbackTimeout" property will be approximate up to
-        one second precision, which is the accuracy of the property.
+        Since: 1.12
     -->
     <method name="CheckpointAdjustRollbackTimeout">
       <arg name="checkpoint" type="o" direction="in"/>
@@ -385,16 +393,6 @@
     <property name="WimaxHardwareEnabled" type="b" access="read"/>
 
     <!--
-        RadioFlags:
-        @since: 1.38
-
-        Flags related to radio devices. See <link
-        linkend="NMRadioFlags">NMRadioFlags</link> for the list of flags
-        supported.
-    -->
-    <property name="RadioFlags" type="u" access="read"/>
-
-    <!--
         ActiveConnections:
 
         List of active connection object paths.
@@ -464,8 +462,10 @@
         defined capability numbers. The array is guaranteed to
         be sorted in ascending order without duplicates.
     -->
-    <property name="Capabilities" type="au" access="read"/>
-        <annotation name="org.qtproject.QtDBus.QtTypeName" value="Variant(QList)"/>
+    <property name="Capabilities" type="au" access="read">
+      <annotation name="org.qtproject.QtDBus.QtTypeName" value="QList&lt;unsigned int&gt;"/>
+    </property>
+
     <!--
         State:
 
@@ -532,7 +532,7 @@
         ConnectivityCheckEnabled:
 
         Indicates whether connectivity checking is enabled.  This
-        property can also be written to disable connectivity
+        property can also be written to to disable connectivity
         checking (as a privacy control panel might want to do).
     -->
     <property name="ConnectivityCheckEnabled" type="b" access="readwrite"/>
@@ -556,7 +556,20 @@
         a string array of DNS servers, "options" is a string array of
         domain-specific options.
     -->
-    <property name="GlobalDnsConfiguration" type="a{sv}" access="readwrite"/>
+    <property name="GlobalDnsConfiguration" type="a{sv}" access="readwrite">
+      <annotation name="org.qtproject.QtDBus.QtTypeName" value="QVariantMap"/>
+    </property>
+
+    <!--
+        PropertiesChanged:
+        @properties: The changed properties.
+
+        DEPRECATED. Use the standard "PropertiesChanged" signal from "org.freedesktop.DBus.Properties" instead which exists since version NetworkManager 1.2.0.
+    -->
+    <signal name="PropertiesChanged">
+      <annotation name="org.qtproject.QtDBus.QtTypeName.Out0" value="QVariantMap"/>
+      <arg name="properties" type="a{sv}"/>
+    </signal>
 
     <!--
         DeviceAdded:
@@ -577,6 +590,5 @@
     <signal name="DeviceRemoved">
       <arg name="device_path" type="o"/>
     </signal>
-
   </interface>
 </node>

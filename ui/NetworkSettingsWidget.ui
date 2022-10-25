@@ -13,71 +13,13 @@
   <property name="windowTitle">
    <string>Network Settings</string>
   </property>
-  <widget class="QPushButton" name="manage">
-   <property name="geometry">
-    <rect>
-     <x>8</x>
-     <y>94</y>
-     <width>234</width>
-     <height>80</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>0</width>
-     <height>80</height>
-    </size>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>33</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>Manage...</string>
-   </property>
-   <property name="icon">
-    <iconset resource="../rc/icons.qrc">
-     <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/wrench.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/wrench.svg</iconset>
-   </property>
-   <property name="iconSize">
-    <size>
-     <width>30</width>
-     <height>30</height>
-    </size>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="tournamentMode">
-   <property name="geometry">
-    <rect>
-     <x>8</x>
-     <y>180</y>
-     <width>378</width>
-     <height>80</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>0</width>
-     <height>80</height>
-    </size>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>33</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>Tournament Mode</string>
-   </property>
-  </widget>
   <widget class="QGroupBox" name="NetworkInfo">
    <property name="geometry">
     <rect>
-     <x>432</x>
-     <y>10</y>
-     <width>361</width>
-     <height>461</height>
+     <x>390</x>
+     <y>30</y>
+     <width>398</width>
+     <height>411</height>
     </rect>
    </property>
    <property name="font">
@@ -277,12 +219,58 @@
     </item>
    </layout>
   </widget>
-  <widget class="QPushButton" name="connect">
+  <widget class="QPushButton" name="tournamentMode">
    <property name="geometry">
     <rect>
      <x>8</x>
-     <y>8</y>
-     <width>294</width>
+     <y>270</y>
+     <width>378</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>80</height>
+    </size>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>33</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Tournament Mode</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="clientToggle">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>419</y>
+     <width>108</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <property name="text">
+    <string>Client Mode</string>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">buttonGroup</string>
+   </attribute>
+  </widget>
+  <widget class="QPushButton" name="connect">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>8</x>
+     <y>89</y>
+     <width>381</width>
      <height>80</height>
     </rect>
    </property>
@@ -310,86 +298,80 @@
      <height>30</height>
     </size>
    </property>
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
   </widget>
-  <widget class="QCheckBox" name="checkBox_2">
+  <widget class="QCheckBox" name="APtoggle">
    <property name="geometry">
     <rect>
-     <x>8</x>
-     <y>280</y>
-     <width>200</width>
-     <height>50</height>
+     <x>9</x>
+     <y>448</y>
+     <width>87</width>
+     <height>23</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">QCheckBox::indicator{
-	width: 50px;
-	height: 50px;
-}
-
-QCheckBox::indicator:checked{
-	image:url(&quot;../images/toggle.png&quot;);
-}
-
-QCheckBox::indicator:unchecked{
-	image:url(&quot;../images/toggleOff.png&quot;);
-}</string>
-   </property>
-   <property name="text">
-    <string>Wifi Off</string>
-   </property>
-  </widget>
-  <widget class="QCheckBox" name="checkBox_3">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>340</y>
-     <width>200</width>
-     <height>50</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QCheckBox::indicator{
-	width: 50px;
-	height: 50px;
-}
-
-QCheckBox::indicator:checked{
-	image:url(&quot;../images/toggle.png&quot;);
-}
-
-QCheckBox::indicator:unchecked{
-	image:url(&quot;../images/toggleOff.png&quot;);
-}</string>
+    <string notr="true"/>
    </property>
    <property name="text">
     <string>AP Mode</string>
    </property>
+   <attribute name="buttonGroup">
+    <string notr="true">buttonGroup</string>
+   </attribute>
   </widget>
-  <widget class="QCheckBox" name="checkBox_4">
+  <widget class="QCheckBox" name="wifiToggle">
    <property name="geometry">
     <rect>
-     <x>8</x>
-     <y>380</y>
-     <width>200</width>
-     <height>50</height>
+     <x>9</x>
+     <y>390</y>
+     <width>101</width>
+     <height>23</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">QCheckBox::indicator{
-	width: 50px;
-	height: 50px;
-}
-
-QCheckBox::indicator:checked{
-	image:url(&quot;../images/toggle.png&quot;);
-}
-
-QCheckBox::indicator:unchecked{
-	image:url(&quot;../images/toggleOff.png&quot;);
-}</string>
+    <string notr="true"/>
    </property>
    <property name="text">
-    <string>Client Mode</string>
+    <string>Wifi Power</string>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="manage">
+   <property name="geometry">
+    <rect>
+     <x>8</x>
+     <y>180</y>
+     <width>381</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>80</height>
+    </size>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>33</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Manage...</string>
+   </property>
+   <property name="icon">
+    <iconset resource="../rc/icons.qrc">
+     <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/wrench.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/wrench.svg</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>30</width>
+     <height>30</height>
+    </size>
    </property>
   </widget>
  </widget>
@@ -397,4 +379,7 @@ QCheckBox::indicator:unchecked{
   <include location="../rc/icons.qrc"/>
  </resources>
  <connections/>
+ <buttongroups>
+  <buttongroup name="buttonGroup"/>
+ </buttongroups>
 </ui>
