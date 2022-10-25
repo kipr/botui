@@ -356,10 +356,11 @@ NetworkManager::NetworkManager()
   connect(m_wifi, SIGNAL(AccessPointRemoved(QDBusObjectPath)),
           SLOT(nmAccessPointRemoved(QDBusObjectPath)));
 
-  if (isPersistentOn())
-    turnOn();
-  else
-    turnOff();
+  //if (isPersistentOn())
+    //turnOn();
+  //else
+    //turnOff();
+  turnOn();
 
   requestScan();
 }

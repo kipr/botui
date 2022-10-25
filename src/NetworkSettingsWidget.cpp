@@ -38,18 +38,18 @@ NetworkSettingsWidget::NetworkSettingsWidget(Device *device, QWidget *parent)
 
 	//QObject::connect(ui->turnOn, SIGNAL(clicked()), SLOT(disableAPControlsTemporarily()));
 	//QObject::connect(ui->turnOff, SIGNAL(clicked()), SLOT(disableAPControlsTemporarily()));
-	
 	//NetworkManager::ref().connect(ui->turnOn, SIGNAL(clicked()), SLOT(enableAP())); //SLOT(turnOn()));
 	//NetworkManager::ref().connect(ui->turnOff, SIGNAL(clicked()), SLOT(disableAP())); //SLOT(turnOff()));
 
 	// QObject::connect(ui->turnOn, SIGNAL(clicked()), SLOT(enableAP()));
 	// QObject::connect(ui->turnOff, SIGNAL(clicked()), SLOT(disableAP()));
 	QObject::connect(ui->tournamentMode, SIGNAL(clicked()), SLOT(TournamentMode()));
-
+	 
+	// NetworkManager::ref().connect(ui->wifiToggle, SIGNAL(toggled(bool)), SLOT(turnOff()));
 
 	// TODO: put back after we support client mode WiFi
-	ui->connect->setVisible(false);
-	ui->manage->setVisible(false);
+	ui->connect->setVisible(true);
+	ui->manage->setVisible(true);
 	ui->security->setVisible(false);
 	ui->securityLabel->setVisible(false);
 	
@@ -126,10 +126,16 @@ void NetworkSettingsWidget::disableAPControlsTemporarily()
 
 void NetworkSettingsWidget::updateInformation()
 {
-	const bool on = NetworkStatusWidget::isNetworkUp(); //NetworkManager::ref().isOn();
+	const bool on = NetworkManager::ref().isOn(); //NetworkStatusWidget::isNetworkUp();
 	ui->state->setText(on ? tr("ON") : tr("OFF"));
-	// ui->turnOn->setVisible(!on);
-	// ui->turnOff->setVisible(on);
+
+	if(on == true){
+		NetworkManager::ref().connect(ui->wifiToggle, SIGNAL(toggled(bool)), SLOT(turnOff()));
+	}
+	else if(on == false){
+		NetworkManager::ref().connect(ui->wifiToggle, SIGNAL(toggled(bool)), SLOT(turnOn()));
+	}
+
 	ui->connect->setEnabled(on);
 
 	const QString id = device()->id();
