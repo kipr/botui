@@ -1,5 +1,3 @@
-#ifdef QT_DBUS_LIB
-
 #ifndef _CONNECTWIDGET_H_
 #define _CONNECTWIDGET_H_
 
@@ -7,7 +5,6 @@
 #include "StandardWidget.h"
 #include <QObject>
 #include <QItemSelection>
-#include "ConnectWidget.moc"
 namespace Ui
 {
 	class ConnectWidget;
@@ -17,7 +14,7 @@ class NetworkItemModel;
 
 class ConnectWidget : public StandardWidget
 {
-
+Q_OBJECT
 public:
 	ConnectWidget(Device *device, QWidget *parent = 0);
 	~ConnectWidget();
@@ -32,7 +29,5 @@ private:
 	Ui::ConnectWidget *ui;
 	NetworkItemModel *m_model;
 };
-
-#endif
 
 #endif
