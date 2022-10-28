@@ -32,7 +32,7 @@ NetworkSettingsWidget::NetworkSettingsWidget(Device *device, QWidget *parent)
 	
 	// ui->turnOn->setVisible(false);
 	// ui->turnOff->setVisible(false);
-
+	ui->connect->setEnabled(false);
 	QObject::connect(ui->connect, SIGNAL(clicked()), SLOT(connect()));
 	QObject::connect(ui->manage, SIGNAL(clicked()), SLOT(manage()));
 
@@ -44,8 +44,7 @@ NetworkSettingsWidget::NetworkSettingsWidget(Device *device, QWidget *parent)
 	// QObject::connect(ui->turnOn, SIGNAL(clicked()), SLOT(enableAP()));
 	// QObject::connect(ui->turnOff, SIGNAL(clicked()), SLOT(disableAP()));
 	QObject::connect(ui->tournamentMode, SIGNAL(clicked()), SLOT(TournamentMode()));
-	 
-	// NetworkManager::ref().connect(ui->wifiToggle, SIGNAL(toggled(bool)), SLOT(turnOff()));
+	NetworkManager::ref().connect(ui->connectionMode, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
 
 	// TODO: put back after we support client mode WiFi
 	ui->connect->setVisible(true);
@@ -70,6 +69,15 @@ void NetworkSettingsWidget::TournamentMode()
 	QMessageBox msgBox;
 	msgBox.setText("Tournament Mode activated");
 	msgBox.exec();
+}
+
+void NetworkSettingsWidget::indexChanged(int index)
+{
+	
+	
+	if(index == 0){ui->connect->setEnabled(false);} //AP mode
+	else if(index == 1){NetworkManager::ref().turnOn();ui->connect->setEnabled(true);} //Wifi on (client mode)
+	else if(index == 2){NetworkManager::ref().turnOff();ui->connect->setEnabled(false);} //Wifi off
 }
 
 NetworkSettingsWidget::~NetworkSettingsWidget()
@@ -126,17 +134,11 @@ void NetworkSettingsWidget::disableAPControlsTemporarily()
 
 void NetworkSettingsWidget::updateInformation()
 {
-	const bool on = NetworkManager::ref().isOn(); //NetworkStatusWidget::isNetworkUp();
+	const bool on = NetworkManager::ref().isOn(); //
 	ui->state->setText(on ? tr("ON") : tr("OFF"));
 
-	if(on == true){
-		NetworkManager::ref().connect(ui->wifiToggle, SIGNAL(toggled(bool)), SLOT(turnOff()));
-	}
-	else if(on == false){
-		NetworkManager::ref().connect(ui->wifiToggle, SIGNAL(toggled(bool)), SLOT(turnOn()));
-	}
 
-	ui->connect->setEnabled(on);
+	
 
 	const QString id = device()->id();
 	const QString serial = device()->serial();

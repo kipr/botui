@@ -243,25 +243,6 @@
     <string>Tournament Mode</string>
    </property>
   </widget>
-  <widget class="QCheckBox" name="clientToggle">
-   <property name="geometry">
-    <rect>
-     <x>9</x>
-     <y>419</y>
-     <width>108</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true"/>
-   </property>
-   <property name="text">
-    <string>Client Mode</string>
-   </property>
-   <attribute name="buttonGroup">
-    <string notr="true">buttonGroup</string>
-   </attribute>
-  </widget>
   <widget class="QPushButton" name="connect">
    <property name="enabled">
     <bool>true</bool>
@@ -270,7 +251,7 @@
     <rect>
      <x>8</x>
      <y>89</y>
-     <width>381</width>
+     <width>378</width>
      <height>80</height>
     </rect>
    </property>
@@ -302,50 +283,12 @@
     <bool>false</bool>
    </property>
   </widget>
-  <widget class="QCheckBox" name="APtoggle">
-   <property name="geometry">
-    <rect>
-     <x>9</x>
-     <y>448</y>
-     <width>87</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true"/>
-   </property>
-   <property name="text">
-    <string>AP Mode</string>
-   </property>
-   <attribute name="buttonGroup">
-    <string notr="true">buttonGroup</string>
-   </attribute>
-  </widget>
-  <widget class="QCheckBox" name="wifiToggle">
-   <property name="geometry">
-    <rect>
-     <x>9</x>
-     <y>390</y>
-     <width>101</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true"/>
-   </property>
-   <property name="text">
-    <string>Wifi Power</string>
-   </property>
-   <property name="checked">
-    <bool>true</bool>
-   </property>
-  </widget>
   <widget class="QPushButton" name="manage">
    <property name="geometry">
     <rect>
      <x>8</x>
      <y>180</y>
-     <width>381</width>
+     <width>378</width>
      <height>80</height>
     </rect>
    </property>
@@ -374,11 +317,72 @@
     </size>
    </property>
   </widget>
+  <widget class="QComboBox" name="connectionMode">
+   <property name="geometry">
+    <rect>
+     <x>8</x>
+     <y>360</y>
+     <width>378</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="currentText">
+    <string extracomment="Connection Mode">AP Mode</string>
+   </property>
+   <property name="maxVisibleItems">
+    <number>3</number>
+   </property>
+   <item>
+    <property name="text">
+     <string>AP Mode</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Client Mode</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Wifi Off</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QLabel" name="connectionModeLabel">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>430</y>
+     <width>67</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>AP Mode</string>
+   </property>
+  </widget>
  </widget>
  <resources>
   <include location="../rc/icons.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>connectionMode</sender>
+   <signal>currentTextChanged(QString)</signal>
+   <receiver>connectionModeLabel</receiver>
+   <slot>setText(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>75</x>
+     <y>389</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>56</x>
+     <y>433</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
  <buttongroups>
   <buttongroup name="buttonGroup"/>
  </buttongroups>

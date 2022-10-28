@@ -335,6 +335,7 @@ NetworkManager::NetworkManager()
   }
 
   qDebug() << "Wifi device found.";
+  qDebug() << wifiPath.path();
 
   m_device = new OrgFreedesktopNetworkManagerDeviceInterface(
     NM_SERVICE,
@@ -365,6 +366,10 @@ NetworkManager::NetworkManager()
   requestScan();
 }
 
+// void NetworkManager::connectToWifi()
+// {
+  
+// }
 void NetworkManager::nmAccessPointAdded(const QDBusObjectPath &accessPoint)
 {
   Network network = createAccessPoint(accessPoint);

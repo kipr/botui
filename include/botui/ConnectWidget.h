@@ -3,10 +3,11 @@
 #ifndef _CONNECTWIDGET_H_
 #define _CONNECTWIDGET_H_
 
+#include "Options.h"
 #include "StandardWidget.h"
-
+#include <QObject>
 #include <QItemSelection>
-
+#include "ConnectWidget.moc"
 namespace Ui
 {
 	class ConnectWidget;
