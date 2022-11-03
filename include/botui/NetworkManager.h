@@ -85,6 +85,7 @@ private:
 	Network createAccessPoint(const QDBusObjectPath &accessPoint) const;
 	
 	NetworkList m_accessPoints;
+	QDBusObjectPath devicePath;
 	
 	OrgFreedesktopNetworkManagerInterface *m_nm;
 	OrgFreedesktopNetworkManagerDeviceInterface *m_device;

@@ -11,6 +11,7 @@
 
 typedef QMap<QString, QVariant> StringVariantMap;
 typedef QMap<QString, StringVariantMap> Connection;
+//Connection = QMap<QString, QMap<QString,QVariant>>
 Q_DECLARE_METATYPE(StringVariantMap);
 Q_DECLARE_METATYPE(Connection);
 

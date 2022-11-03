@@ -1,3 +1,5 @@
+
+
 #ifndef _CONNECTWIDGET_H_
 #define _CONNECTWIDGET_H_
 
@@ -14,7 +16,7 @@ class NetworkItemModel;
 
 class ConnectWidget : public StandardWidget
 {
-Q_OBJECT
+
 public:
 	ConnectWidget(Device *device, QWidget *parent = 0);
 	~ConnectWidget();
@@ -29,5 +31,7 @@ private:
 	Ui::ConnectWidget *ui;
 	NetworkItemModel *m_model;
 };
+
+#endif
 
 #endif

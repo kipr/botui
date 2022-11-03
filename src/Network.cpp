@@ -7,6 +7,16 @@ Network::Network()
 	
 }
 
+void Network::setAPPath(const QString& path) 
+{
+	m_apPath = path;
+}
+
+const QString& Network::apPath() const
+{
+	return m_apPath;
+}
+
 void Network::setSsid(const QString& ssid)
 {
 	m_ssid = ssid;

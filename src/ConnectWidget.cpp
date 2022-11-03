@@ -1,3 +1,5 @@
+
+
 #include "ConnectWidget.h"
 #include "ui_ConnectWidget.h"
 #include "MenuBar.h"
@@ -15,6 +17,7 @@ ConnectWidget::ConnectWidget(Device *device, QWidget *parent)
 	ui(new Ui::ConnectWidget),
 	m_model(new NetworkItemModel(this))
 {
+	
 	ui->setupUi(this);
 	performStandardSetup(tr("Connect"));
 	
@@ -66,3 +69,4 @@ void ConnectWidget::selectionChanged(const QItemSelection &selection)
 {
 	ui->connect->setEnabled(selection.indexes().size());
 }
+

@@ -125,7 +125,23 @@ void NetworkManager::addNetwork(const Network &network)
     NM_OBJECT "/Settings",
     QDBusConnection::systemBus()
   );
+  qDebug() << network;
+  Network foundNetwork;
+
+  //Iterate through known Access Points to find desired network to add
+  foreach( const Network &nw, accessPoints() )
+  {
+    if(nw.ssid() == network.ssid()){
+      //qDebug() << "AP Path: " << nw.apPath();
+     foundNetwork = nw;
+     break;
+    }
+   
+  }
+  
+  
   settings.AddConnection(connection);
+  m_nm->ActivateConnection(QDBusObjectPath("/"), devicePath,QDBusObjectPath(foundNetwork.apPath()));
   emit networkAdded(network);
 }
 
@@ -350,6 +366,10 @@ NetworkManager::NetworkManager()
     this
   );
 
+  devicePath = QDBusObjectPath(m_device->path());
+  qDebug() << "Device Path:" <<devicePath.path();
+
+
   connect(m_device, SIGNAL(StateChanged(uint, uint, uint)),
           SLOT(stateChangedBouncer(uint, uint)));
   connect(m_wifi, SIGNAL(AccessPointAdded(QDBusObjectPath)),
@@ -434,6 +454,7 @@ Network NetworkManager::createAccessPoint(const QDBusObjectPath &accessPoint) co
   // SSID
   newNetwork.setSsid(accessPointObject.ssid());
   newNetwork.setStrength(accessPointObject.strength());
+  newNetwork.setAPPath(accessPoint.path());
 
   // Security
   const uint securityMode = accessPointObject.wpaFlags();

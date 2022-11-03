@@ -22,6 +22,9 @@ public:
 	};
 	
 	Network();
+
+	void setAPPath(const QString& path);
+	const QString& apPath() const;
 	
 	void setSsid(const QString& ssid);
 	const QString& ssid() const;
@@ -47,6 +50,7 @@ private:
 	QString m_password;
 	Mode m_mode;
 	double m_strength;
+	QString m_apPath;
 };
 
 typedef QList<Network> NetworkList;
