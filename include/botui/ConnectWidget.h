@@ -16,7 +16,7 @@ class NetworkItemModel;
 
 class ConnectWidget : public StandardWidget
 {
-
+Q_OBJECT
 public:
 	ConnectWidget(Device *device, QWidget *parent = 0);
 	~ConnectWidget();
@@ -34,4 +34,4 @@ private:
 
 #endif
 
-#endif
+

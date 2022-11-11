@@ -17,8 +17,9 @@ public:
 	
 	enum Mode {
 		Unknown = 0,
+		AdHoc,
 		Infrastructure,
-		AdHoc
+		AP
 	};
 	
 	Network();

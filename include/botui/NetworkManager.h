@@ -56,6 +56,8 @@ public:
 	NetworkList accessPoints() const;
 	
 	QString ipAddress() const;
+
+	Connection createAPConfig() const ;
 	
 public slots:
 	bool turnOn();

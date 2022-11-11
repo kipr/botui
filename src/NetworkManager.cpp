@@ -58,7 +58,8 @@
 #define NM_802_11_MODE_ADHOC 1
 // Coordinated network with one or more central controllers.
 #define NM_802_11_MODE_INFRA 2
-
+//AP Mode
+#define NM_802_11_MODE_AP 3
 #define NM_SERVICE "org.freedesktop.NetworkManager"
 #define NM_OBJECT "/org/freedesktop/NetworkManager"
 
@@ -73,75 +74,96 @@ void NetworkManager::addNetwork(const Network &network)
 {
   // Yes, yes... this is a hard coded mess.
   // Maybe this should be generalized in the future.
+  qDebug() << "Network Mode: " << network.mode();                   
+  if(network.mode() == Network::Infrastructure){
+      Connection connection;
+    connection["ipv4"]["method"] = "auto";
+    connection["ipv6"]["method"] = "auto";
 
-  Connection connection;
-  connection["ipv4"]["method"] = "auto";
-  connection["ipv6"]["method"] = "auto";
+    // For now we only handle wifi
+    connection["connection"]["type"] = "802-11-wireless";
+    connection["connection"]["uuid"] = QUuid::createUuid().toString().remove('{').remove('}');
+    // File name is just the SSID for now
+    connection["connection"]["id"] = network.ssid();
 
-  // For now we only handle wifi
-  connection["connection"]["type"] = "802-11-wireless";
-  connection["connection"]["uuid"] = QUuid::createUuid().toString().remove('{').remove('}');
-  // File name is just the SSID for now
-  connection["connection"]["id"] = network.ssid();
+    // SSID
+    connection[NM_802_11_WIRELESS_KEY]["ssid"] = network.ssid().toLatin1();
 
-  // SSID
-  connection[NM_802_11_WIRELESS_KEY]["ssid"] = network.ssid().toLatin1();
-
-  // Network Mode (adhoc or infrastructure)
-  switch (network.mode())
-  {
-  case Network::Infrastructure:
-    connection[NM_802_11_WIRELESS_KEY]["mode"] = "infrastructure";
-    break;
-  case Network::AdHoc:
-    connection[NM_802_11_WIRELESS_KEY]["mode"] = "adhoc";
-    break;
-  default:
-    break;
-  }
-
-  const static QString securityTypes[] = {
-      "none",
-      "wep",
-      "ieee8021x",
-      "wpa-psk",
-      "wpa-epa"};
-
-  if (network.security() != Network::None)
-  {
-    connection[NM_802_11_SECURITY_KEY]["key-mgmt"] = securityTypes[network.security()];
-    // WEP uses this key
-    connection[NM_802_11_SECURITY_KEY]["password"] = network.password();
-    // WPA uses this one
-    connection[NM_802_11_SECURITY_KEY]["psk"] = network.password();
-
-    // Finally, tell our configuration about the security
-    connection[NM_802_11_WIRELESS_KEY]["security"] = NM_802_11_SECURITY_KEY;
-  }
-
-  // Send our config via dbus to NetworkManager
-  OrgFreedesktopNetworkManagerSettingsInterface settings(
-    NM_SERVICE,
-    NM_OBJECT "/Settings",
-    QDBusConnection::systemBus()
-  );
-  qDebug() << network;
-  Network foundNetwork;
-
-  //Iterate through known Access Points to find desired network to add
-  foreach( const Network &nw, accessPoints() )
-  {
-    if(nw.ssid() == network.ssid()){
-      //qDebug() << "AP Path: " << nw.apPath();
-     foundNetwork = nw;
-     break;
+    // Network Mode (adhoc or infrastructure)
+    switch (network.mode())
+    {
+    case Network::Infrastructure:
+      connection[NM_802_11_WIRELESS_KEY]["mode"] = "infrastructure";
+      break;
+    case Network::AdHoc:
+      connection[NM_802_11_WIRELESS_KEY]["mode"] = "adhoc";
+      break;
+    case Network::AP:
+      connection[NM_802_11_WIRELESS_KEY]["mode"] = "ap";
+      break;
+    default:
+      break;
     }
-   
+
+    const static QString securityTypes[] = {
+        "none",
+        "wep",
+        "ieee8021x",
+        "wpa-psk",
+        "wpa-epa"};
+
+    if (network.security() != Network::None)
+    {
+      connection[NM_802_11_SECURITY_KEY]["key-mgmt"] = securityTypes[network.security()];
+      // WEP uses this key
+      connection[NM_802_11_SECURITY_KEY]["password"] = network.password();
+      // WPA uses this one
+      connection[NM_802_11_SECURITY_KEY]["psk"] = network.password();
+
+      // Finally, tell our configuration about the security
+      connection[NM_802_11_WIRELESS_KEY]["security"] = NM_802_11_SECURITY_KEY;
+    }
+
+    // Send our config via dbus to NetworkManager
+    OrgFreedesktopNetworkManagerSettingsInterface settings(
+      NM_SERVICE,
+      NM_OBJECT "/Settings",
+      QDBusConnection::systemBus()
+    );
+    qDebug() <<"Given Network: " << network<< "with AP path: " << network.apPath();
+    Network foundNetwork;
+
+    //Iterate through known Access Points to find desired network to add
+    foreach( const Network &nw, accessPoints() )
+    {
+      if(nw.ssid() == network.ssid()){
+        //qDebug() << "AP Path: " << nw.apPath();
+      foundNetwork = nw;
+      qDebug() << "Found network: " <<  foundNetwork << "with path: " << foundNetwork.apPath();
+      //QDBusObjectPath sett = settings.AddConnection(connection);
+      //qDebug() << "Sett: " << sett.path();
+      m_nm->AddAndActivateConnection(connection, devicePath,QDBusObjectPath(foundNetwork.apPath()));
+    
+      break;
+      }
+    
+    }
+  
   }
   
   
-  settings.AddConnection(connection);
-  m_nm->ActivateConnection(QDBusObjectPath("/"), devicePath,QDBusObjectPath(foundNetwork.apPath()));
+   //qDebug() << "Add Network AddConnection Path: " << sett.path();
+//  if (network.mode() == Network::AP){
+//     qDebug() << "AP Connection Config: " << connection;
+//     // QDBusObjectPath apPathConn = settings.AddConnection(connection);
+//     // qDebug() << apPathConn.path();
+//     m_nm->ActivateConnection( QDBusObjectPath("/"), devicePath,QDBusObjectPath("/"));
+//     return;
+//  }
+
+  
+ // m_nm->ActivateConnection(sett, devicePath,QDBusObjectPath(foundNetwork.apPath()));
+  //m_nm->ActivateConnection(sett, devicePath,QDBusObjectPath(foundNetwork.apPath()));
   emit networkAdded(network);
 }
 
@@ -196,6 +218,7 @@ NetworkList NetworkManager::networks() const
     );
 
     Connection details = conn.GetSettings().value();
+    qDebug() << details;
     // This connection is not a wifi one. Skip.
     if (!details.contains("802-11-wireless")) continue;
 
@@ -245,9 +268,87 @@ bool NetworkManager::enableAP()
   int ret = system("sudo /usr/bin/python /usr/bin/wifi_configurator.py &");
   return (ret == 0);
 #endif
+  devicePath = QDBusObjectPath(m_device->path());
+  qDebug() << "AP Device Path:" <<devicePath.path();
+  createAPConfig();
+   OrgFreedesktopNetworkManagerSettingsInterface settings(
+    NM_SERVICE,
+    NM_OBJECT "/Settings",
+    QDBusConnection::systemBus()
+  );
+  QList<QDBusObjectPath> connections = settings.ListConnections();
+
+  qDebug() << "Settings File Names: ";
+  foreach(const QDBusObjectPath &objectPath, connections){
+    qDebug() << objectPath.path();
+  
+    OrgFreedesktopNetworkManagerSettingsConnectionInterface apConn(
+      NM_SERVICE,
+       objectPath.path(),
+      QDBusConnection::systemBus()
+    );
+    Connection con = apConn.GetSettings().value();
+   //qDebug() << "New Connection: " << con;
+    // if(con["802-11-wireless"]["mode"].toString() == "ap"){
+    //   qDebug() << "Found Hotspot config: " << apConn.path();
+    //   // Network apNetwork = networkFromConnection(con);
+    //   // addNetwork(apNetwork);
+    //   QDBusObjectPath apPathConn = settings.AddConnection(con);
+    //   qDebug() << apPathConn.path();
+    //   m_nm->ActivateConnection( apPathConn, devicePath,QDBusObjectPath("/"));
+    
+    // }
+  }
+  //qDebug() << "File Name: " << apConn.filename();
+  
+  //settings.AddConnection(con);
+  
+  //qDebug() << "New Connection: " << con;
+
   return true;
 }
 
+Connection NetworkManager::createAPConfig() const
+{ 
+  qDebug() << "Adding AP Config...";
+  Connection apConfig;
+  apConfig["ipv4"]["method"] = "shared";
+  apConfig["ipv6"]["method"] = "auto";
+  apConfig["connection"]["type"] = "802-11-wireless";
+  apConfig["connection"]["uuid"] = QUuid::createUuid().toString().remove('{').remove('}');
+  // File name is just the SSID for now
+  apConfig["connection"]["id"] = "APName";
+
+  // SSID
+  apConfig["802-11-wireless"]["ssid"] = "APName";
+  apConfig["802-11-wireless"]["mode"] = "ap";
+  //  const static QString securityTypes[] = {
+  //     "none",
+  //     "wep",
+  //     "ieee8021x",
+  //     "wpa-psk",
+  //     "wpa-epa"};
+
+  apConfig["802-11-wireless-security"]["key-mgmt"] = "wpa-psk";
+    // WEP uses this key
+  apConfig["802-11-wireless-security"]["password"] = "kipr4609";
+  // WPA uses this one
+  apConfig["802-11-wireless-security"]["psk"] = "kipr4609";
+
+  // Finally, tell our configuration about the security
+  apConfig["802-11-wireless-security"]["security"] = "802-11-wireless-security";
+
+  // Send our config via dbus to NetworkManager
+  // OrgFreedesktopNetworkManagerSettingsInterface settings(
+  //   NM_SERVICE,
+  //   NM_OBJECT "/Settings",
+  //   QDBusConnection::systemBus()
+  // );
+  // QDBusObjectPath set = settings.AddConnection(apConfig);
+  // settings.ReloadConnections();
+  // qDebug() << set.path();
+  return apConfig;
+}
 bool NetworkManager::disableAP()
 {
 #ifdef WALLABY
@@ -280,20 +381,35 @@ Network NetworkManager::active() const
 {
   if (!m_wifi)
     return Network();
-  return createAccessPoint(m_wifi->activeAccessPoint());
+return createAccessPoint(m_wifi->activeAccessPoint());
 }
 
 NetworkList NetworkManager::accessPoints() const
 {
   if (!m_wifi)
     return NetworkList();
-  QList<QDBusObjectPath> aps = m_wifi->GetAccessPoints().value();
+  QList<QDBusObjectPath> aps = m_wifi->GetAccessPoints();
   NetworkList networks;
+  QList<Network> netList; 
+  QList<QByteArray> netSSID;
   foreach (const QDBusObjectPath &ap, aps)
-  {
-    networks << createAccessPoint(ap);
+  { 
+    //qDebug() << ap.path();
+    Network newNet = createAccessPoint(ap);
+    netList << newNet;
   }
-
+  foreach(const Network &nw, netList){
+    
+    if((netSSID.contains(nw.ssid().toLatin1()))){
+      //qDebug() << nw.ssid().toLatin1() << " already contained";
+      continue;
+    }
+    else {
+      netSSID.append(nw.ssid().toLatin1());
+      networks << nw;
+    }
+    
+  }
   return networks;
 }
 
@@ -325,7 +441,19 @@ NetworkManager::NetworkManager()
   // Register our metatype with dbus
   qDBusRegisterMetaType<Connection>();
   qDBusRegisterMetaType<StringVariantMap>();
-
+  OrgFreedesktopNetworkManagerSettingsInterface settings(
+    NM_SERVICE,
+    NM_OBJECT "/Settings",
+    QDBusConnection::systemBus()
+  );
+  
+  Connection defaultAPConfig = createAPConfig();
+  qDebug() << "Default AP: " << defaultAPConfig;
+  
+  Network APN = networkFromConnection(defaultAPConfig);
+  qDebug() << "Network AP: " << APN;
+  //addNetwork(APN);
+  
   QDBusPendingReply<QList<QDBusObjectPath>> reply = m_nm->GetDevices();
 
   if (reply.isError())
@@ -365,11 +493,10 @@ NetworkManager::NetworkManager()
     QDBusConnection::systemBus(),
     this
   );
-
   devicePath = QDBusObjectPath(m_device->path());
   qDebug() << "Device Path:" <<devicePath.path();
-
-
+  qDebug() << "M_Wifi: " << m_wifi;
+  
   connect(m_device, SIGNAL(StateChanged(uint, uint, uint)),
           SLOT(stateChangedBouncer(uint, uint)));
   connect(m_wifi, SIGNAL(AccessPointAdded(QDBusObjectPath)),
@@ -377,6 +504,7 @@ NetworkManager::NetworkManager()
   connect(m_wifi, SIGNAL(AccessPointRemoved(QDBusObjectPath)),
           SLOT(nmAccessPointRemoved(QDBusObjectPath)));
 
+  //qDebug() << m_device->GetAppliedConnection(0).value();
   //if (isPersistentOn())
     //turnOn();
   //else
@@ -384,6 +512,11 @@ NetworkManager::NetworkManager()
   turnOn();
 
   requestScan();
+
+ 
+  foreach(const Network &nw, accessPoints()){
+    qDebug() << nw;
+  }
 }
 
 // void NetworkManager::connectToWifi()
@@ -393,7 +526,7 @@ NetworkManager::NetworkManager()
 void NetworkManager::nmAccessPointAdded(const QDBusObjectPath &accessPoint)
 {
   Network network = createAccessPoint(accessPoint);
-  qDebug() << "Access Point Added: " << network;
+  qDebug() << "Access Point Added: " << network << "with path:" << network.apPath();
 
   emit accessPointAdded(network);
   // m_accessPoints.append(network);
@@ -428,6 +561,7 @@ Network NetworkManager::networkFromConnection(const Connection &connection) cons
   QMap<QString, Network::Mode> modeMap;
   modeMap["infrastructure"] = Network::Infrastructure;
   modeMap["adhoc"] = Network::AdHoc;
+  modeMap["ap"] = Network::AP;
 
   Network network;
   network.setSsid(connection["802-11-wireless"]["ssid"].toString());
@@ -486,6 +620,9 @@ Network NetworkManager::createAccessPoint(const QDBusObjectPath &accessPoint) co
     break;
   case NM_802_11_MODE_INFRA:
     newNetwork.setMode(Network::Infrastructure);
+    break;
+  case NM_802_11_MODE_AP:
+    newNetwork.setMode(Network::AP);
     break;
   default:
     newNetwork.setMode(Network::Unknown);

@@ -93,7 +93,7 @@ bool operator==(const Network &lhs, const Network &rhs)
 QDebug operator<<(QDebug dbg, const Network &network)
 {
 	dbg.nospace() << network.ssid() << "("
-		<< (network.mode() == Network::AdHoc ? "ad-hoc" : "infrastructure")
+		<< (network.mode() == Network::AP ? "ap" : "infrastructure")
 		<< ")" << " with ";
 	
 	switch(network.security()) {

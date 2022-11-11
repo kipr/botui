@@ -48,7 +48,7 @@ private:
 	
 };
 
-#include "ConnectWidget.moc"
+
 #endif
 
 #endif

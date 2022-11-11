@@ -75,9 +75,13 @@ void NetworkSettingsWidget::indexChanged(int index)
 {
 	
 	
-	if(index == 0){ui->connect->setEnabled(false);} //AP mode
-	else if(index == 1){NetworkManager::ref().turnOn();ui->connect->setEnabled(true);} //Wifi on (client mode)
-	else if(index == 2){NetworkManager::ref().turnOff();ui->connect->setEnabled(false);} //Wifi off
+	if(index == 1)//AP mode
+	{
+		ui->connect->setEnabled(false);
+		NetworkManager::ref().enableAP();
+	} 
+	else if(index == 2){NetworkManager::ref().turnOn();ui->connect->setEnabled(true);} //Wifi on (client mode)
+	else if(index == 3){NetworkManager::ref().turnOff();ui->connect->setEnabled(false);} //Wifi off
 }
 
 NetworkSettingsWidget::~NetworkSettingsWidget()

@@ -270,7 +270,7 @@
     <string>Connect to...</string>
    </property>
    <property name="icon">
-    <iconset resource="../rc/icons.qrc">
+    <iconset>
      <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/wifi.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/wifi.svg</iconset>
    </property>
    <property name="iconSize">
@@ -307,7 +307,7 @@
     <string>Manage...</string>
    </property>
    <property name="icon">
-    <iconset resource="../rc/icons.qrc">
+    <iconset>
      <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/wrench.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/wrench.svg</iconset>
    </property>
    <property name="iconSize">
@@ -327,11 +327,16 @@
     </rect>
    </property>
    <property name="currentText">
-    <string extracomment="Connection Mode">AP Mode</string>
+    <string extracomment="Connection Mode">Select Mode</string>
    </property>
    <property name="maxVisibleItems">
     <number>3</number>
    </property>
+   <item>
+    <property name="text">
+     <string>Select Mode</string>
+    </property>
+   </item>
    <item>
     <property name="text">
      <string>AP Mode</string>
@@ -383,7 +388,4 @@
    </hints>
   </connection>
  </connections>
- <buttongroups>
-  <buttongroup name="buttonGroup"/>
- </buttongroups>
 </ui>
