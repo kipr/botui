@@ -131,6 +131,7 @@ void NetworkManager::addNetwork(const Network &network)
       QDBusConnection::systemBus()
     );
     qDebug() <<"Given Network: " << network<< "with AP path: " << network.apPath();
+     qDebug() <<"Given Network: " << network<< "with config path: " << connection;
     Network foundNetwork;
 
     //Iterate through known Access Points to find desired network to add
@@ -140,8 +141,6 @@ void NetworkManager::addNetwork(const Network &network)
         //qDebug() << "AP Path: " << nw.apPath();
       foundNetwork = nw;
       qDebug() << "Found network: " <<  foundNetwork << "with path: " << foundNetwork.apPath();
-      //QDBusObjectPath sett = settings.AddConnection(connection);
-      //qDebug() << "Sett: " << sett.path();
       m_nm->AddAndActivateConnection(connection, devicePath,QDBusObjectPath(foundNetwork.apPath()));
     
       break;
@@ -152,14 +151,47 @@ void NetworkManager::addNetwork(const Network &network)
   }
   
   
-   //qDebug() << "Add Network AddConnection Path: " << sett.path();
-//  if (network.mode() == Network::AP){
-//     qDebug() << "AP Connection Config: " << connection;
-//     // QDBusObjectPath apPathConn = settings.AddConnection(connection);
-//     // qDebug() << apPathConn.path();
-//     m_nm->ActivateConnection( QDBusObjectPath("/"), devicePath,QDBusObjectPath("/"));
-//     return;
-//  }
+   
+  if (network.mode() == Network::AP){
+     // Send our config via dbus to NetworkManager
+    OrgFreedesktopNetworkManagerSettingsInterface settings(
+      NM_SERVICE,
+      NM_OBJECT "/Settings",
+      QDBusConnection::systemBus()
+    );
+    Connection apCon = createAPConfig();
+    qDebug() << "AP Connection Config: " << apCon;
+    bool APExist;
+    QDBusObjectPath apPathConn;
+    QList<QDBusObjectPath> connections = settings.ListConnections();
+
+    qDebug() << "Settings Connections: ";
+    Q_FOREACH(const QDBusObjectPath &connectionPath, connections){
+      qDebug() << connectionPath.path();
+      OrgFreedesktopNetworkManagerSettingsConnectionInterface apSettInt(
+      NM_SERVICE,
+       connectionPath.path(),
+      QDBusConnection::systemBus()
+      );
+
+      Connection detail = apSettInt.GetSettings().value();
+      if(detail["connection"]["id"] == "APName"){
+        APExist = true;
+        qDebug() << "AP Path Connection already exists";
+        break; 
+      }
+      
+    
+    }
+    qDebug() << "APExist = " << APExist;
+    if (APExist == false){
+        apPathConn = settings.AddConnection(apCon);
+        qDebug() << "AP Path" << apPathConn.path();
+    }
+  
+    //m_nm->ActivateConnection(apPathConn, devicePath,QDBusObjectPath("/"));
+    return;
+  }
 
   
  // m_nm->ActivateConnection(sett, devicePath,QDBusObjectPath(foundNetwork.apPath()));
@@ -264,46 +296,11 @@ void NetworkManager::turnOff()
 
 bool NetworkManager::enableAP()
 {
-#ifdef WALLABY
-  int ret = system("sudo /usr/bin/python /usr/bin/wifi_configurator.py &");
-  return (ret == 0);
-#endif
-  devicePath = QDBusObjectPath(m_device->path());
-  qDebug() << "AP Device Path:" <<devicePath.path();
-  createAPConfig();
-   OrgFreedesktopNetworkManagerSettingsInterface settings(
-    NM_SERVICE,
-    NM_OBJECT "/Settings",
-    QDBusConnection::systemBus()
-  );
-  QList<QDBusObjectPath> connections = settings.ListConnections();
+  #ifdef WALLABY
+    int ret = system("sudo /usr/bin/python /usr/bin/wifi_configurator.py &");
+    return (ret == 0);
+  #endif
 
-  qDebug() << "Settings File Names: ";
-  foreach(const QDBusObjectPath &objectPath, connections){
-    qDebug() << objectPath.path();
-  
-    OrgFreedesktopNetworkManagerSettingsConnectionInterface apConn(
-      NM_SERVICE,
-       objectPath.path(),
-      QDBusConnection::systemBus()
-    );
-    Connection con = apConn.GetSettings().value();
-   //qDebug() << "New Connection: " << con;
-    // if(con["802-11-wireless"]["mode"].toString() == "ap"){
-    //   qDebug() << "Found Hotspot config: " << apConn.path();
-    //   // Network apNetwork = networkFromConnection(con);
-    //   // addNetwork(apNetwork);
-    //   QDBusObjectPath apPathConn = settings.AddConnection(con);
-    //   qDebug() << apPathConn.path();
-    //   m_nm->ActivateConnection( apPathConn, devicePath,QDBusObjectPath("/"));
-    
-    // }
-  }
-  //qDebug() << "File Name: " << apConn.filename();
-  
-  //settings.AddConnection(con);
-  
-  //qDebug() << "New Connection: " << con;
 
   return true;
 }
@@ -320,8 +317,9 @@ Connection NetworkManager::createAPConfig() const
   apConfig["connection"]["id"] = "APName";
 
   // SSID
-  apConfig["802-11-wireless"]["ssid"] = "APName";
-  apConfig["802-11-wireless"]["mode"] = "ap";
+  QByteArray tempCont;
+  apConfig[NM_802_11_WIRELESS_KEY]["ssid"] = tempCont.append("APName");
+  apConfig[NM_802_11_WIRELESS_KEY]["mode"] = "ap";
   //  const static QString securityTypes[] = {
   //     "none",
   //     "wep",
@@ -329,24 +327,15 @@ Connection NetworkManager::createAPConfig() const
   //     "wpa-psk",
   //     "wpa-epa"};
 
-  apConfig["802-11-wireless-security"]["key-mgmt"] = "wpa-psk";
-    // WEP uses this key
-  apConfig["802-11-wireless-security"]["password"] = "kipr4609";
-  // WPA uses this one
-  apConfig["802-11-wireless-security"]["psk"] = "kipr4609";
+  // apConfig[NM_802_11_SECURITY_KEY]["key-mgmt"] = "wpa-psk";
+  //   // WEP uses this key
+  // apConfig[NM_802_11_SECURITY_KEY]["password"] = "kipr4609";
+  // // WPA uses this one
+  // apConfig[NM_802_11_SECURITY_KEY]["psk"] = "kipr4609";
 
-  // Finally, tell our configuration about the security
-  apConfig["802-11-wireless-security"]["security"] = "802-11-wireless-security";
+  // // Finally, tell our configuration about the security
+  // apConfig[NM_802_11_WIRELESS_KEY]["security"] = NM_802_11_SECURITY_KEY;
 
-  // Send our config via dbus to NetworkManager
-  // OrgFreedesktopNetworkManagerSettingsInterface settings(
-  //   NM_SERVICE,
-  //   NM_OBJECT "/Settings",
-  //   QDBusConnection::systemBus()
-  // );
-  // QDBusObjectPath set = settings.AddConnection(apConfig);
-  // settings.ReloadConnections();
-  // qDebug() << set.path();
   return apConfig;
 }
 bool NetworkManager::disableAP()
@@ -447,13 +436,13 @@ NetworkManager::NetworkManager()
     QDBusConnection::systemBus()
   );
   
+  
   Connection defaultAPConfig = createAPConfig();
-  qDebug() << "Default AP: " << defaultAPConfig;
-  
+  //QDBusObjectPath sett =  settings.AddConnection(defaultAPConfig);
   Network APN = networkFromConnection(defaultAPConfig);
-  qDebug() << "Network AP: " << APN;
-  //addNetwork(APN);
-  
+  //qDebug() << "Network AP: " << sett.path();
+  addNetwork(APN);
+  //enableAP();
   QDBusPendingReply<QList<QDBusObjectPath>> reply = m_nm->GetDevices();
 
   if (reply.isError())
