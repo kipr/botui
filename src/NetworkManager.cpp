@@ -58,7 +58,7 @@
 #define NM_802_11_MODE_ADHOC 1
 // Coordinated network with one or more central controllers.
 #define NM_802_11_MODE_INFRA 2
-//AP Mode
+// AP Mode
 #define NM_802_11_MODE_AP 3
 #define NM_SERVICE "org.freedesktop.NetworkManager"
 #define NM_OBJECT "/org/freedesktop/NetworkManager"
@@ -74,9 +74,10 @@ void NetworkManager::addNetwork(const Network &network)
 {
   // Yes, yes... this is a hard coded mess.
   // Maybe this should be generalized in the future.
-  qDebug() << "Network Mode: " << network.mode();                   
-  if(network.mode() == Network::Infrastructure){
-      Connection connection;
+  qDebug() << "Network Mode: " << network.mode();
+  if (network.mode() == Network::Infrastructure)
+  {
+    Connection connection;
     connection["ipv4"]["method"] = "auto";
     connection["ipv6"]["method"] = "auto";
 
@@ -126,95 +127,101 @@ void NetworkManager::addNetwork(const Network &network)
 
     // Send our config via dbus to NetworkManager
     OrgFreedesktopNetworkManagerSettingsInterface settings(
-      NM_SERVICE,
-      NM_OBJECT "/Settings",
-      QDBusConnection::systemBus()
-    );
-    qDebug() <<"Given Network: " << network<< "with AP path: " << network.apPath();
-     qDebug() <<"Given Network: " << network<< "with config path: " << connection;
+        NM_SERVICE,
+        NM_OBJECT "/Settings",
+        QDBusConnection::systemBus());
+    qDebug() << "Given Network: " << network << "with AP path: " << network.apPath();
+    qDebug() << "Given Network: " << network << "with config path: " << connection;
     Network foundNetwork;
 
-    //Iterate through known Access Points to find desired network to add
-    foreach( const Network &nw, accessPoints() )
+    // Iterate through known Access Points to find desired network to add
+    foreach (const Network &nw, accessPoints())
     {
-      if(nw.ssid() == network.ssid()){
-        //qDebug() << "AP Path: " << nw.apPath();
-      foundNetwork = nw;
-      qDebug() << "Found network: " <<  foundNetwork << "with path: " << foundNetwork.apPath();
-      m_nm->AddAndActivateConnection(connection, devicePath,QDBusObjectPath(foundNetwork.apPath()));
-    
-      break;
+      if (nw.ssid() == network.ssid())
+      {
+        // qDebug() << "AP Path: " << nw.apPath();
+        foundNetwork = nw;
+        qDebug() << "Found network: " << foundNetwork << "with path: " << foundNetwork.apPath();
+        m_nm->AddAndActivateConnection(connection, devicePath, QDBusObjectPath(foundNetwork.apPath()));
+
+        break;
       }
-    
     }
-  
   }
-  
-  
-   
-  if (network.mode() == Network::AP){
-     // Send our config via dbus to NetworkManager
+
+  if (network.mode() == Network::AP)
+  {
+    // Send our config via dbus to NetworkManager
     OrgFreedesktopNetworkManagerSettingsInterface settings(
-      NM_SERVICE,
-      NM_OBJECT "/Settings",
-      QDBusConnection::systemBus()
-    );
-    Connection apCon = createAPConfig();
-    qDebug() << "AP Connection Config: " << apCon;
+        NM_SERVICE,
+        NM_OBJECT "/Settings",
+        QDBusConnection::systemBus());
+
     bool APExist;
+    QString APuuid;
     QDBusObjectPath apPathConn;
+    Connection apCon;
     QList<QDBusObjectPath> connections = settings.ListConnections();
 
     qDebug() << "Settings Connections: ";
-    Q_FOREACH(const QDBusObjectPath &connectionPath, connections){
+    Q_FOREACH (const QDBusObjectPath &connectionPath, connections)
+    {
       qDebug() << connectionPath.path();
       OrgFreedesktopNetworkManagerSettingsConnectionInterface apSettInt(
-      NM_SERVICE,
-       connectionPath.path(),
-      QDBusConnection::systemBus()
-      );
+          NM_SERVICE,
+          connectionPath.path(),
+          QDBusConnection::systemBus());
 
       Connection detail = apSettInt.GetSettings().value();
-      if(detail["connection"]["id"] == "APName"){
+      if (detail["connection"]["id"] == "APName")
+      {
         APExist = true;
+        apPathConn = connectionPath;
+        APuuid = detail["connection"]["uuid"].toString();
         qDebug() << "AP Path Connection already exists";
-        break; 
+        break;
       }
-      
-    
     }
     qDebug() << "APExist = " << APExist;
-    if (APExist == false){
-        apPathConn = settings.AddConnection(apCon);
-        qDebug() << "AP Path" << apPathConn.path();
+    qDebug() << "UUID = " << APuuid;
+    apCon = createAPConfig();
+    if (APExist == false)
+    { // if AP Config in Settings doesn't exist already
+
+      qDebug() << "AP Connection Config: " << apCon;
+      QDBusObjectPath apPathConn = settings.AddConnection(apCon);
+
+      qDebug() << "AP Path" << apPathConn.path();
+      m_nm->ActivateConnection(apPathConn, devicePath, QDBusObjectPath("/"));
     }
-  
-    //m_nm->ActivateConnection(apPathConn, devicePath,QDBusObjectPath("/"));
-    return;
+    else
+    { // if AP Config in Settings DOES exist already
+      // apPathConn = settings.GetConnectionByUuid(APuuid);
+      qDebug() << "AP Path" << apPathConn.path();
+      // apPathConn = settings.AddConnection(apCon);
+      m_nm->ActivateConnection(settings.GetConnectionByUuid(APuuid), devicePath, QDBusObjectPath("/"));
+    }
+
+    // return;
   }
 
-  
- // m_nm->ActivateConnection(sett, devicePath,QDBusObjectPath(foundNetwork.apPath()));
-  //m_nm->ActivateConnection(sett, devicePath,QDBusObjectPath(foundNetwork.apPath()));
   emit networkAdded(network);
 }
 
 void NetworkManager::forgetNetwork(const Network &network)
 {
   OrgFreedesktopNetworkManagerSettingsInterface settings(
-    NM_SERVICE,
-    NM_OBJECT "/Settings",
-    QDBusConnection::systemBus()
-  );
+      NM_SERVICE,
+      NM_OBJECT "/Settings",
+      QDBusConnection::systemBus());
   QList<QDBusObjectPath> connections = settings.ListConnections();
 
   Q_FOREACH (const QDBusObjectPath &connectionPath, connections)
   {
     OrgFreedesktopNetworkManagerSettingsConnectionInterface conn(
-      NM_SERVICE,
-      connectionPath.path(),
-      QDBusConnection::systemBus()
-    );
+        NM_SERVICE,
+        connectionPath.path(),
+        QDBusConnection::systemBus());
 
     Connection details = conn.GetSettings().value();
 
@@ -235,24 +242,23 @@ NetworkList NetworkManager::networks() const
 {
   NetworkList networks;
   OrgFreedesktopNetworkManagerSettingsInterface settings(
-    NM_SERVICE,
-    NM_OBJECT "/Settings",
-    QDBusConnection::systemBus()
-  );
+      NM_SERVICE,
+      NM_OBJECT "/Settings",
+      QDBusConnection::systemBus());
   QList<QDBusObjectPath> connections = settings.ListConnections();
 
   Q_FOREACH (const QDBusObjectPath &connectionPath, connections)
   {
     OrgFreedesktopNetworkManagerSettingsConnectionInterface conn(
-      NM_SERVICE,
-      connectionPath.path(),
-      QDBusConnection::systemBus()
-    );
+        NM_SERVICE,
+        connectionPath.path(),
+        QDBusConnection::systemBus());
 
     Connection details = conn.GetSettings().value();
     qDebug() << details;
     // This connection is not a wifi one. Skip.
-    if (!details.contains("802-11-wireless")) continue;
+    if (!details.contains("802-11-wireless"))
+      continue;
 
     networks << networkFromConnection(details);
   }
@@ -296,18 +302,17 @@ void NetworkManager::turnOff()
 
 bool NetworkManager::enableAP()
 {
-  #ifdef WALLABY
-    int ret = system("sudo /usr/bin/python /usr/bin/wifi_configurator.py &");
-    return (ret == 0);
-  #endif
-
+#ifdef WALLABY
+  int ret = system("sudo /usr/bin/python /usr/bin/wifi_configurator.py &");
+  return (ret == 0);
+#endif
 
   return true;
 }
 
 Connection NetworkManager::createAPConfig() const
-{ 
-  qDebug() << "Adding AP Config...";
+{
+  qDebug() << "Creating AP Config...";
   Connection apConfig;
   apConfig["ipv4"]["method"] = "shared";
   apConfig["ipv6"]["method"] = "auto";
@@ -315,11 +320,21 @@ Connection NetworkManager::createAPConfig() const
   apConfig["connection"]["uuid"] = QUuid::createUuid().toString().remove('{').remove('}');
   // File name is just the SSID for now
   apConfig["connection"]["id"] = "APName";
+  apConfig["connection"]["autoconnect"] = false;
 
   // SSID
   QByteArray tempCont;
+  QStringList qSList = {"ccmp"};
+  QStringList qProtoList = {"rsn"};
   apConfig[NM_802_11_WIRELESS_KEY]["ssid"] = tempCont.append("APName");
   apConfig[NM_802_11_WIRELESS_KEY]["mode"] = "ap";
+
+  apConfig[NM_802_11_WIRELESS_KEY]["security"] = NM_802_11_SECURITY_KEY;
+
+  apConfig[NM_802_11_SECURITY_KEY]["group"] = qSList;
+  apConfig[NM_802_11_SECURITY_KEY]["key-mgmt"] = "wpa-psk";
+  apConfig[NM_802_11_SECURITY_KEY]["pairwise"] = qSList;
+  apConfig[NM_802_11_SECURITY_KEY]["proto"] = qProtoList;
   //  const static QString securityTypes[] = {
   //     "none",
   //     "wep",
@@ -327,14 +342,12 @@ Connection NetworkManager::createAPConfig() const
   //     "wpa-psk",
   //     "wpa-epa"};
 
-  // apConfig[NM_802_11_SECURITY_KEY]["key-mgmt"] = "wpa-psk";
   //   // WEP uses this key
   // apConfig[NM_802_11_SECURITY_KEY]["password"] = "kipr4609";
   // // WPA uses this one
   // apConfig[NM_802_11_SECURITY_KEY]["psk"] = "kipr4609";
 
   // // Finally, tell our configuration about the security
-  // apConfig[NM_802_11_WIRELESS_KEY]["security"] = NM_802_11_SECURITY_KEY;
 
   return apConfig;
 }
@@ -370,7 +383,7 @@ Network NetworkManager::active() const
 {
   if (!m_wifi)
     return Network();
-return createAccessPoint(m_wifi->activeAccessPoint());
+  return createAccessPoint(m_wifi->activeAccessPoint());
 }
 
 NetworkList NetworkManager::accessPoints() const
@@ -379,25 +392,27 @@ NetworkList NetworkManager::accessPoints() const
     return NetworkList();
   QList<QDBusObjectPath> aps = m_wifi->GetAccessPoints();
   NetworkList networks;
-  QList<Network> netList; 
+  QList<Network> netList;
   QList<QByteArray> netSSID;
   foreach (const QDBusObjectPath &ap, aps)
-  { 
-    //qDebug() << ap.path();
+  {
+    // qDebug() << ap.path();
     Network newNet = createAccessPoint(ap);
     netList << newNet;
   }
-  foreach(const Network &nw, netList){
-    
-    if((netSSID.contains(nw.ssid().toLatin1()))){
-      //qDebug() << nw.ssid().toLatin1() << " already contained";
+  foreach (const Network &nw, netList)
+  {
+
+    if ((netSSID.contains(nw.ssid().toLatin1())))
+    {
+      // qDebug() << nw.ssid().toLatin1() << " already contained";
       continue;
     }
-    else {
+    else
+    {
       netSSID.append(nw.ssid().toLatin1());
       networks << nw;
     }
-    
   }
   return networks;
 }
@@ -418,31 +433,25 @@ QString NetworkManager::ipAddress() const
 }
 
 NetworkManager::NetworkManager()
-  : m_nm(new OrgFreedesktopNetworkManagerInterface(
-    NM_SERVICE,
-    NM_OBJECT,
-    QDBusConnection::systemBus(),
-    this
-  ))
-  , m_device(0)
-  , m_wifi(0)
+    : m_nm(new OrgFreedesktopNetworkManagerInterface(
+          NM_SERVICE,
+          NM_OBJECT,
+          QDBusConnection::systemBus(),
+          this)),
+      m_device(0), m_wifi(0)
 {
   // Register our metatype with dbus
   qDBusRegisterMetaType<Connection>();
   qDBusRegisterMetaType<StringVariantMap>();
   OrgFreedesktopNetworkManagerSettingsInterface settings(
-    NM_SERVICE,
-    NM_OBJECT "/Settings",
-    QDBusConnection::systemBus()
-  );
-  
-  
+      NM_SERVICE,
+      NM_OBJECT "/Settings",
+      QDBusConnection::systemBus());
+
   Connection defaultAPConfig = createAPConfig();
-  //QDBusObjectPath sett =  settings.AddConnection(defaultAPConfig);
   Network APN = networkFromConnection(defaultAPConfig);
-  //qDebug() << "Network AP: " << sett.path();
   addNetwork(APN);
-  //enableAP();
+  // enableAP();
   QDBusPendingReply<QList<QDBusObjectPath>> reply = m_nm->GetDevices();
 
   if (reply.isError())
@@ -453,10 +462,9 @@ NetworkManager::NetworkManager()
   foreach (const QDBusObjectPath &objectPath, objectPaths)
   {
     OrgFreedesktopNetworkManagerDeviceInterface device(
-      NM_SERVICE,
-      objectPath.path(),
-      QDBusConnection::systemBus()
-    );
+        NM_SERVICE,
+        objectPath.path(),
+        QDBusConnection::systemBus());
     if (device.deviceType() == NM_DEVICE_TYPE_WIFI)
       wifiPath = objectPath;
   }
@@ -471,21 +479,19 @@ NetworkManager::NetworkManager()
   qDebug() << wifiPath.path();
 
   m_device = new OrgFreedesktopNetworkManagerDeviceInterface(
-    NM_SERVICE,
-    wifiPath.path(),
-    QDBusConnection::systemBus(),
-    this
-  );
+      NM_SERVICE,
+      wifiPath.path(),
+      QDBusConnection::systemBus(),
+      this);
   m_wifi = new OrgFreedesktopNetworkManagerDeviceWirelessInterface(
-    NM_SERVICE,
-    wifiPath.path(),
-    QDBusConnection::systemBus(),
-    this
-  );
+      NM_SERVICE,
+      wifiPath.path(),
+      QDBusConnection::systemBus(),
+      this);
   devicePath = QDBusObjectPath(m_device->path());
-  qDebug() << "Device Path:" <<devicePath.path();
+  qDebug() << "Device Path:" << devicePath.path();
   qDebug() << "M_Wifi: " << m_wifi;
-  
+
   connect(m_device, SIGNAL(StateChanged(uint, uint, uint)),
           SLOT(stateChangedBouncer(uint, uint)));
   connect(m_wifi, SIGNAL(AccessPointAdded(QDBusObjectPath)),
@@ -493,24 +499,24 @@ NetworkManager::NetworkManager()
   connect(m_wifi, SIGNAL(AccessPointRemoved(QDBusObjectPath)),
           SLOT(nmAccessPointRemoved(QDBusObjectPath)));
 
-  //qDebug() << m_device->GetAppliedConnection(0).value();
-  //if (isPersistentOn())
-    //turnOn();
-  //else
-    //turnOff();
+  // qDebug() << m_device->GetAppliedConnection(0).value();
+  // if (isPersistentOn())
+  // turnOn();
+  // else
+  // turnOff();
   turnOn();
 
   requestScan();
 
- 
-  foreach(const Network &nw, accessPoints()){
+  foreach (const Network &nw, accessPoints())
+  {
     qDebug() << nw;
   }
 }
 
 // void NetworkManager::connectToWifi()
 // {
-  
+
 // }
 void NetworkManager::nmAccessPointAdded(const QDBusObjectPath &accessPoint)
 {
@@ -568,10 +574,9 @@ Network NetworkManager::networkFromConnection(const Connection &connection) cons
 Network NetworkManager::createAccessPoint(const QDBusObjectPath &accessPoint) const
 {
   OrgFreedesktopNetworkManagerAccessPointInterface accessPointObject(
-    NM_SERVICE,
-    accessPoint.path(),
-    QDBusConnection::systemBus()
-  );
+      NM_SERVICE,
+      accessPoint.path(),
+      QDBusConnection::systemBus());
 
   Network newNetwork;
   // SSID
