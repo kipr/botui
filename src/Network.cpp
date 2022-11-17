@@ -4,57 +4,62 @@
 
 Network::Network()
 {
-	
 }
 
-void Network::setAPPath(const QString& path) 
+void Network::setAPPath(const QString &path)
 {
 	m_apPath = path;
 }
 
-const QString& Network::apPath() const
+const QString &Network::apPath() const
 {
 	return m_apPath;
 }
 
-void Network::setSsid(const QString& ssid)
+void Network::setSsid(const QString &ssid)
 {
 	m_ssid = ssid;
 }
 
-const QString& Network::ssid() const
+const QString &Network::ssid() const
 {
 	return m_ssid;
 }
 
-void Network::setSecurity(const Network::Security& security)
+void Network::setSecurity(const Network::Security &security)
 {
 	m_security = security;
 }
 
-const Network::Security& Network::security() const
+const Network::Security &Network::security() const
 {
 	return m_security;
 }
 
 QString Network::securityString() const
 {
-	switch(m_security) {
-	case Network::None: return "None";
-	case Network::Wep: return "WEP";
-	case Network::DynamicWep: return "Dynamic WEP";
-	case Network::Wpa: return "WPA";
-	case Network::WpaEnterprise: return "WPA Enterprise";
+	switch (m_security)
+	{
+	case Network::None:
+		return "None";
+	case Network::Wep:
+		return "WEP";
+	case Network::DynamicWep:
+		return "Dynamic WEP";
+	case Network::Wpa:
+		return "WPA";
+	case Network::WpaEnterprise:
+		return "WPA Enterprise";
 	}
 	return "Unknown";
 }
 
-void Network::setPassword(const QString& password)
+void Network::setPassword(const QString &password)
 {
 	m_password = password;
 }
 
-const QString& Network::password() const
+const QString &Network::password() const
 {
 	return m_password;
 }
@@ -81,7 +86,8 @@ const double &Network::strength() const
 
 bool Network::isComplete() const
 {
-	if(m_security == Network::None) return true;
+	if (m_security == Network::None)
+		return true;
 	return !m_password.isEmpty();
 }
 
@@ -93,10 +99,12 @@ bool operator==(const Network &lhs, const Network &rhs)
 QDebug operator<<(QDebug dbg, const Network &network)
 {
 	dbg.nospace() << network.ssid() << "("
-		<< (network.mode() == Network::AP ? "ap" : "infrastructure")
-		<< ")" << " with ";
-	
-	switch(network.security()) {
+				  << (network.mode() == Network::AP ? "ap" : "infrastructure")
+				  << ")"
+				  << " with ";
+
+	switch (network.security())
+	{
 	case Network::None:
 		dbg.nospace() << "no security";
 		return dbg.space();

@@ -177,29 +177,30 @@ void NetworkManager::addNetwork(const Network &network)
       {
         APExist = true;
         apPathConn = connectionPath;
-        APuuid = detail["connection"]["uuid"].toString();
+        //APuuid = detail["connection"]["uuid"].toString();
         qDebug() << "AP Path Connection already exists";
         break;
       }
     }
-    qDebug() << "APExist = " << APExist;
-    qDebug() << "UUID = " << APuuid;
+
     apCon = createAPConfig();
+
     if (APExist == false)
     { // if AP Config in Settings doesn't exist already
 
-      qDebug() << "AP Connection Config: " << apCon;
-      QDBusObjectPath apPathConn = settings.AddConnection(apCon);
+      if (m_device->activeConnection().path() != "")
+      {
+        QDBusObjectPath curCon = m_device->activeConnection();
+        m_nm->DeactivateConnection(curCon);
+      }
 
-      qDebug() << "AP Path" << apPathConn.path();
-      m_nm->ActivateConnection(apPathConn, devicePath, QDBusObjectPath("/"));
+      apPathConn = settings.AddConnection(apCon); // auto activates
+
+      QDBusObjectPath activeAccess = m_wifi->activeAccessPoint(); // active AP connection
     }
     else
     { // if AP Config in Settings DOES exist already
-      // apPathConn = settings.GetConnectionByUuid(APuuid);
-      qDebug() << "AP Path" << apPathConn.path();
-      // apPathConn = settings.AddConnection(apCon);
-      m_nm->ActivateConnection(settings.GetConnectionByUuid(APuuid), devicePath, QDBusObjectPath("/"));
+      m_nm->ActivateConnection(apPathConn, devicePath, QDBusObjectPath("/"));
     }
 
     // return;
@@ -255,7 +256,7 @@ NetworkList NetworkManager::networks() const
         QDBusConnection::systemBus());
 
     Connection details = conn.GetSettings().value();
-    qDebug() << details;
+
     // This connection is not a wifi one. Skip.
     if (!details.contains("802-11-wireless"))
       continue;
@@ -306,7 +307,20 @@ bool NetworkManager::enableAP()
   int ret = system("sudo /usr/bin/python /usr/bin/wifi_configurator.py &");
   return (ret == 0);
 #endif
+  Connection defaultAPConfig = createAPConfig();
+  Network APN = networkFromConnection(defaultAPConfig);
+  addNetwork(APN);
+  return true;
+}
 
+bool NetworkManager::disableAP()
+{
+#ifdef WALLABY
+  int ret = system("sudo ifconfig wlan0 down");
+  return (ret == 0);
+#endif
+  QDBusObjectPath curCon = m_device->activeConnection();
+  m_nm->DeactivateConnection(curCon);
   return true;
 }
 
@@ -320,8 +334,8 @@ Connection NetworkManager::createAPConfig() const
   apConfig["connection"]["uuid"] = QUuid::createUuid().toString().remove('{').remove('}');
   // File name is just the SSID for now
   apConfig["connection"]["id"] = "APName";
-  apConfig["connection"]["autoconnect"] = false;
-
+  // apConfig["connection"]["autoconnect"] = false;
+  apConfig["connection"]["interface-name"] = "wlo1";
   // SSID
   QByteArray tempCont;
   QStringList qSList = {"ccmp"};
@@ -345,19 +359,9 @@ Connection NetworkManager::createAPConfig() const
   //   // WEP uses this key
   // apConfig[NM_802_11_SECURITY_KEY]["password"] = "kipr4609";
   // // WPA uses this one
-  // apConfig[NM_802_11_SECURITY_KEY]["psk"] = "kipr4609";
-
-  // // Finally, tell our configuration about the security
+  apConfig[NM_802_11_SECURITY_KEY]["psk"] = "kipr4609";
 
   return apConfig;
-}
-bool NetworkManager::disableAP()
-{
-#ifdef WALLABY
-  int ret = system("sudo ifconfig wlan0 down");
-  return (ret == 0);
-#endif
-  return true;
 }
 
 bool NetworkManager::isOn() const
@@ -390,13 +394,12 @@ NetworkList NetworkManager::accessPoints() const
 {
   if (!m_wifi)
     return NetworkList();
-  QList<QDBusObjectPath> aps = m_wifi->GetAccessPoints();
+  QList<QDBusObjectPath> aps = m_wifi->GetAllAccessPoints();
   NetworkList networks;
   QList<Network> netList;
   QList<QByteArray> netSSID;
   foreach (const QDBusObjectPath &ap, aps)
   {
-    // qDebug() << ap.path();
     Network newNet = createAccessPoint(ap);
     netList << newNet;
   }
@@ -448,10 +451,6 @@ NetworkManager::NetworkManager()
       NM_OBJECT "/Settings",
       QDBusConnection::systemBus());
 
-  Connection defaultAPConfig = createAPConfig();
-  Network APN = networkFromConnection(defaultAPConfig);
-  addNetwork(APN);
-  // enableAP();
   QDBusPendingReply<QList<QDBusObjectPath>> reply = m_nm->GetDevices();
 
   if (reply.isError())
@@ -508,16 +507,12 @@ NetworkManager::NetworkManager()
 
   requestScan();
 
-  foreach (const Network &nw, accessPoints())
-  {
-    qDebug() << nw;
-  }
+  // foreach (const Network &nw, accessPoints())
+  // {
+  //   qDebug() << nw;
+  // }
 }
 
-// void NetworkManager::connectToWifi()
-// {
-
-// }
 void NetworkManager::nmAccessPointAdded(const QDBusObjectPath &accessPoint)
 {
   Network network = createAccessPoint(accessPoint);
