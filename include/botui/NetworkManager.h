@@ -57,6 +57,8 @@ public:
 	
 	QString ipAddress() const;
 
+	QString ip4Address() const;
+
 	Connection createAPConfig() const ;
 	
 public slots:

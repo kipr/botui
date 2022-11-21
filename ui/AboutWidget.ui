@@ -167,6 +167,12 @@
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QGroupBox" name="groupBox_2">
+       <property name="maximumSize">
+        <size>
+         <width>389</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="baseSize">
         <size>
          <width>0</width>
@@ -181,8 +187,8 @@
        <property name="title">
         <string>Developers</string>
        </property>
-       <layout class="QFormLayout" name="formLayout">
-        <item row="0" column="0">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
          <widget class="QLabel" name="label">
           <property name="font">
            <font>
@@ -194,7 +200,7 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="0">
+        <item>
          <widget class="QLabel" name="label_7">
           <property name="font">
            <font>
@@ -206,7 +212,7 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="0">
+        <item>
          <widget class="QLabel" name="label_2">
           <property name="font">
            <font>
@@ -218,21 +224,21 @@
           </property>
          </widget>
         </item>
-        <item row="3" column="0">
+        <item>
          <widget class="QLabel" name="label_6">
           <property name="text">
            <string>Prithviraj Kadiyala</string>
           </property>
          </widget>
         </item>
-        <item row="4" column="0">
+        <item>
          <widget class="QLabel" name="label_9">
           <property name="text">
            <string>Zachary Sasser</string>
           </property>
          </widget>
         </item>
-        <item row="5" column="0">
+        <item>
          <widget class="QLabel" name="label_10">
           <property name="text">
            <string>Erin Harrington</string>

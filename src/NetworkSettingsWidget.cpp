@@ -31,16 +31,17 @@ NetworkSettingsWidget::NetworkSettingsWidget(Device *device, QWidget *parent)
 
 	// ui->turnOn->setVisible(false);
 	// ui->turnOff->setVisible(false);
-	ui->connect->setEnabled(false);
-	QObject::connect(ui->connect, SIGNAL(clicked()), SLOT(connect()));
-	QObject::connect(ui->manage, SIGNAL(clicked()), SLOT(manage()));
+	ui->ConnectButton->setEnabled(false);
+	//ui->ConnectButton->setIcon(QPixmap(":/tango/network-wireless-encrypted.svg"));
+	QObject::connect(ui->ConnectButton, SIGNAL(clicked()), SLOT(connect()));
+	QObject::connect(ui->ManageButton, SIGNAL(clicked()), SLOT(manage()));
 
-	QObject::connect(ui->tournamentMode, SIGNAL(clicked()), SLOT(TournamentMode()));
-	NetworkManager::ref().connect(ui->connectionMode, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
+	QObject::connect(ui->TournamentModeButton, SIGNAL(clicked()), SLOT(TournamentMode()));
+	NetworkManager::ref().connect(ui->connectionModeSelect, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
 
 	// TODO: put back after we support client mode WiFi
-	ui->connect->setVisible(true);
-	ui->manage->setVisible(true);
+	ui->ConnectButton->setVisible(true);
+	ui->ManageButton->setVisible(true);
 	ui->security->setVisible(false);
 	ui->securityLabel->setVisible(false);
 
@@ -68,19 +69,19 @@ void NetworkSettingsWidget::indexChanged(int index)
 
 	if (index == 1) // AP mode
 	{
-		ui->connect->setEnabled(false);
+		ui->ConnectButton->setEnabled(false);
 		NetworkManager::ref().enableAP();
 	}
 	else if (index == 2) // Wifi on (client mode)
 	{
 		NetworkManager::ref().disableAP();
 		NetworkManager::ref().turnOn();
-		ui->connect->setEnabled(true);
+		ui->ConnectButton->setEnabled(true);
 	}
 	else if (index == 3) // Wifi off
 	{
 		NetworkManager::ref().turnOff();
-		ui->connect->setEnabled(false);
+		ui->ConnectButton->setEnabled(false);
 	}
 }
 

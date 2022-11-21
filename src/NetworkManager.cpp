@@ -8,6 +8,7 @@
 #include "org_freedesktop_NetworkManager_Device_Wireless.h"
 #include "org_freedesktop_NetworkManager_Settings.h"
 #include "org_freedesktop_NetworkManager_Settings_Connection.h"
+#include "org_freedesktop_NetworkManager_IP4Config.h"
 
 #include <stdio.h>
 
@@ -177,7 +178,7 @@ void NetworkManager::addNetwork(const Network &network)
       {
         APExist = true;
         apPathConn = connectionPath;
-        //APuuid = detail["connection"]["uuid"].toString();
+        // APuuid = detail["connection"]["uuid"].toString();
         qDebug() << "AP Path Connection already exists";
         break;
       }
@@ -435,6 +436,21 @@ QString NetworkManager::ipAddress() const
   return ret;
 }
 
+QString NetworkManager::ip4Address() const
+{
+  QString ipAddr;
+  QDBusObjectPath ip4Con = m_device->ip4Config(); // ip4Address path
+  qDebug() << "IP4 Config path: " << ip4Con.path();
+  OrgFreedesktopNetworkManagerIP4ConfigInterface ip4Object(
+      NM_SERVICE,
+      ip4Con.path(),
+      QDBusConnection::systemBus());
+
+  QList<QMap<QString,QVariant>> ip4conf = ip4Object.addressData();
+  ipAddr = ip4conf.value(0).value("address").toString();
+  return ipAddr;
+}
+
 NetworkManager::NetworkManager()
     : m_nm(new OrgFreedesktopNetworkManagerInterface(
           NM_SERVICE,
@@ -446,11 +462,12 @@ NetworkManager::NetworkManager()
   // Register our metatype with dbus
   qDBusRegisterMetaType<Connection>();
   qDBusRegisterMetaType<StringVariantMap>();
+  qDBusRegisterMetaType<ListStringVariantMap>();
   OrgFreedesktopNetworkManagerSettingsInterface settings(
       NM_SERVICE,
       NM_OBJECT "/Settings",
       QDBusConnection::systemBus());
-
+  
   QDBusPendingReply<QList<QDBusObjectPath>> reply = m_nm->GetDevices();
 
   if (reply.isError())

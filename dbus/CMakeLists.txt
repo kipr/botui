@@ -6,6 +6,7 @@ set(NETWORK_MANAGER_INTERFACES
   org.freedesktop.NetworkManager.Settings.Connection
   org.freedesktop.NetworkManager.Settings
   org.freedesktop.NetworkManager.AccessPoint
+  org.freedesktop.NetworkManager.IP4Config
   org.freedesktop.NetworkManager
 )
 

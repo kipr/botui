@@ -127,7 +127,7 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/wifi.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/wifi.svg</iconset>
+           <normaloff>:/icons/apple-tiny.svg</normaloff>:/icons/apple-tiny.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
