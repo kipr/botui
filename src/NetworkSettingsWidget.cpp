@@ -25,14 +25,12 @@ NetworkSettingsWidget::NetworkSettingsWidget(Device *device, QWidget *parent)
 	ui->setupUi(this);
 	performStandardSetup(tr("Network Settings"));
 
+	
 	enableCoolOffTimer = new QTimer(this);
 	enableCoolOffTimer->setSingleShot(true);
 	QObject::connect(enableCoolOffTimer, SIGNAL(timeout()), SLOT(enableAPControls()));
 
-	// ui->turnOn->setVisible(false);
-	// ui->turnOff->setVisible(false);
 	ui->ConnectButton->setEnabled(false);
-	//ui->ConnectButton->setIcon(QPixmap(":/tango/network-wireless-encrypted.svg"));
 	QObject::connect(ui->ConnectButton, SIGNAL(clicked()), SLOT(connect()));
 	QObject::connect(ui->ManageButton, SIGNAL(clicked()), SLOT(manage()));
 
@@ -101,42 +99,6 @@ void NetworkSettingsWidget::manage() // Forget or add network to history
 	RootController::ref().presentWidget(new ManageNetworksWidget(device()));
 }
 
-void NetworkSettingsWidget::enableAP()
-{
-	disableAPControlsTemporarily();
-	NetworkManager::ref().enableAP();
-	// ui->turnOn->hide();
-	// ui->turnOff->show();
-}
-
-void NetworkSettingsWidget::disableAP()
-{
-	disableAPControlsTemporarily();
-	NetworkManager::ref().disableAP();
-	// ui->turnOn->show();
-	// ui->turnOff->hide();
-}
-
-void NetworkSettingsWidget::enableAPControls()
-{
-	// ui->turnOn->setEnabled(true);
-	// ui->turnOff->setEnabled(true);
-}
-
-void NetworkSettingsWidget::disableAPControls()
-{
-	// ui->turnOn->setEnabled(false);
-	// ui->turnOff->setEnabled(false);
-}
-
-void NetworkSettingsWidget::disableAPControlsTemporarily()
-{
-	// ui->turnOn->setEnabled(false);
-	// ui->turnOff->setEnabled(false);
-
-	enableCoolOffTimer->start(20000);
-}
-
 void NetworkSettingsWidget::updateInformation()
 {
 	const bool on = NetworkManager::ref().isOn(); //
@@ -144,19 +106,28 @@ void NetworkSettingsWidget::updateInformation()
 
 	const QString id = device()->id();
 	const QString serial = device()->serial();
-	if (!id.isEmpty())
-	{
-		const QString password = SystemUtils::sha256(id).left(6) + "00";
-		const QString ssid = serial + "-wombat";
-		ui->ssid->setText(ssid);
-		ui->password->setText(password);
-	}
+	// if (!id.isEmpty())
+	// {
+	// 	const QString password = SystemUtils::sha256(id).left(6) + "00";
+	// 	const QString ssid = serial + "-wombat";
+	// 	ui->ssid->setText(ssid);
+	// 	ui->password->setText(password);
+	// }
 
+	if (NetworkManager::ref().isActiveConnectionOn() == true) // if there's an active connection
+	{
+		if (ui->connectionModeSelect->currentText() == "Client Mode") // if Wombat in client mode
+		{
+			ui->ssid->setText(NetworkManager::ref().currentActiveConnectionName());
+			ui->ip->setText(NetworkManager::ref().ip4Address());
+		
+		}
+	}
 	Network active = NetworkManager::ref().active();
 	// ui->ssid->setText(active.ssid());
 	ui->security->setText(active.securityString());
-	const QString ip = NetworkManager::ref().ipAddress();
-	ui->ip->setText(ip.isEmpty() ? tr("No IP") : ip);
+	// const QString ip = NetworkManager::ref().ipAddress();
+	// ui->ip->setText(ip.isEmpty() ? tr("No IP") : ip);
 }
 
 void NetworkSettingsWidget::stateChanged(const NetworkManager::State &newState, const NetworkManager::State &oldState)

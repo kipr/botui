@@ -29,7 +29,7 @@ AdvancedSettingsWidget::AdvancedSettingsWidget(Device *device, QWidget *parent)
   #else
   ui->network->setEnabled(true);
   #endif
-
+  
 	connect(ui->network, SIGNAL(clicked()), SLOT(network()));
         connect(ui->factory, SIGNAL(clicked()), SLOT(factory()));
 	connect(ui->gui, SIGNAL(clicked()), SLOT(gui()));
@@ -45,7 +45,7 @@ AdvancedSettingsWidget::~AdvancedSettingsWidget()
 void AdvancedSettingsWidget::network()
 {
 #ifdef NETWORK_ENABLED
-  RootController::ref().presentWidget(new NetworkSettingsWidget(device()));
+ RootController::ref().getNetworkSettingsWidget();
 
 #endif
 }

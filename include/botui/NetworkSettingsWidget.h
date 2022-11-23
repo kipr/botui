@@ -30,11 +30,7 @@ public slots:
 	void connect();
 	void manage();
 	void updateInformation();
-	void enableAP();
-	void disableAP();
-	void enableAPControls();
-	void disableAPControls();
-	void disableAPControlsTemporarily();
+
 
 	
 private slots:

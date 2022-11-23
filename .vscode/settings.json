@@ -2,6 +2,11 @@
     "C_Cpp.errorSquiggles": "Disabled",
     "files.associations": {
         "chrono": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "*.tcc": "cpp",
+        "list": "cpp",
+        "array": "cpp",
+        "string_view": "cpp",
+        "string": "cpp"
     }
 }

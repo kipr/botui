@@ -60,6 +60,10 @@ public:
 	QString ip4Address() const;
 
 	Connection createAPConfig() const ;
+
+	QString currentActiveConnectionName() const;
+
+	bool isActiveConnectionOn() const;
 	
 public slots:
 	bool turnOn();

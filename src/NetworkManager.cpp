@@ -8,6 +8,7 @@
 #include "org_freedesktop_NetworkManager_Device_Wireless.h"
 #include "org_freedesktop_NetworkManager_Settings.h"
 #include "org_freedesktop_NetworkManager_Settings_Connection.h"
+#include "org_freedesktop_NetworkManager_Connection_Active.h"
 #include "org_freedesktop_NetworkManager_IP4Config.h"
 
 #include <stdio.h>
@@ -391,6 +392,28 @@ Network NetworkManager::active() const
   return createAccessPoint(m_wifi->activeAccessPoint());
 }
 
+bool NetworkManager::isActiveConnectionOn() const
+{
+  bool activeConnOn;
+  if (m_device->activeConnection().path() != "/") // if there is an Active Connection path (i.e. not "/")
+  {
+    activeConnOn = true;
+  }
+  return activeConnOn;
+}
+
+QString NetworkManager::currentActiveConnectionName() const
+{
+  QDBusObjectPath activePath = m_device->activeConnection(); // Device's current active connection
+
+  OrgFreedesktopNetworkManagerConnectionActiveInterface activeConnObj(
+      NM_SERVICE,
+      activePath.path(),
+      QDBusConnection::systemBus());
+
+  return activeConnObj.id();
+}
+
 NetworkList NetworkManager::accessPoints() const
 {
   if (!m_wifi)
@@ -446,7 +469,7 @@ QString NetworkManager::ip4Address() const
       ip4Con.path(),
       QDBusConnection::systemBus());
 
-  QList<QMap<QString,QVariant>> ip4conf = ip4Object.addressData();
+  QList<QMap<QString, QVariant>> ip4conf = ip4Object.addressData();
   ipAddr = ip4conf.value(0).value("address").toString();
   return ipAddr;
 }
@@ -467,7 +490,7 @@ NetworkManager::NetworkManager()
       NM_SERVICE,
       NM_OBJECT "/Settings",
       QDBusConnection::systemBus());
-  
+
   QDBusPendingReply<QList<QDBusObjectPath>> reply = m_nm->GetDevices();
 
   if (reply.isError())

@@ -12,7 +12,7 @@
 #include "KovanSerialBridge.h"
 #include "CursorManager.h"
 #include "SettingsProvider.h"
-
+#include "NetworkSettingsWidget.h"
 #include <QApplication>
 #include <QDir>
 
@@ -57,8 +57,11 @@ int main(int argc, char* argv[])
   const bool fullscreen = settings && settings->value("fullscreen", true).toBool();
   RootController::ref().setFullscreen(fullscreen);
 	//GuiSettingsWidget::updateStyle(&device);
-  
+	
 	RootController::ref().presentWidget(new HomeWidget(&device));
+  NetworkSettingsWidget *networkWidget = new NetworkSettingsWidget(&device);
   
+  RootController::ref().addNetworkSettingsStack(networkWidget);
+  RootController::ref().printStack();
 	return app.exec();
 }

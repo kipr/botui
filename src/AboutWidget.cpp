@@ -12,7 +12,8 @@ AboutWidget::AboutWidget(Device *device, QWidget *parent)
       ui(new Ui::AboutWidget)
 {
   ui->setupUi(this);
-
+// Setup the UI
+  performStandardSetup(tr("About"));
   // Version Number
   ui->version->setText("Version 27.0 (Quark)");
 
@@ -21,11 +22,6 @@ AboutWidget::AboutWidget(Device *device, QWidget *parent)
   // Display Serial Number
   const QString serial = device->serial();
   ui->deviceName->setText("Wombat-" + serial);
-
-
-  //QDBusObjectPath ip4Config = m_device.ip4Config();
-  qDebug() << "IP Address: " << NetworkManager::ref().ip4Address();
-
 
   // Check if eth0 is active (/sys/class/net/eth0/carrier will output 1 if eth0 is active and 0 if it is not)
   QProcess proc;
@@ -62,8 +58,7 @@ AboutWidget::AboutWidget(Device *device, QWidget *parent)
     ui->ssid->setText(ssid);
     ui->password->setText(password);
   }
-  // Setup the UI
-  performStandardSetup(tr("About"));
+  
 }
 
 AboutWidget::~AboutWidget()
