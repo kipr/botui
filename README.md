@@ -12,7 +12,7 @@ Requirements
 * [pcompiler ](https://github.com/kipr/pcompiler)
 * CMake 2.6.0 or later
 * [Qt >= 4.7.4](https://www.qt.io/download-qt-installer)
-
+* Note: for Qt6, the apt packages needed are `qt6-base qt6-declarative libqt6svg6-dev`
 
 Installation
 =======
