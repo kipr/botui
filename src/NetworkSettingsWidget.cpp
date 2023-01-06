@@ -25,7 +25,6 @@ NetworkSettingsWidget::NetworkSettingsWidget(Device *device, QWidget *parent)
 	ui->setupUi(this);
 	performStandardSetup(tr("Network Settings"));
 
-	
 	enableCoolOffTimer = new QTimer(this);
 	enableCoolOffTimer->setSingleShot(true);
 	QObject::connect(enableCoolOffTimer, SIGNAL(timeout()), SLOT(enableAPControls()));
@@ -120,7 +119,6 @@ void NetworkSettingsWidget::updateInformation()
 		{
 			ui->ssid->setText(NetworkManager::ref().currentActiveConnectionName());
 			ui->ip->setText(NetworkManager::ref().ip4Address());
-		
 		}
 	}
 	Network active = NetworkManager::ref().active();

@@ -18,6 +18,14 @@ cmake_minimum_required(VERSION 2.8.11)
 if(wombat)
 	add_definitions(-DWOMBAT)
 	set(DEVICE_DIR ${CMAKE_SOURCE_DIR}/devices/wombat)
+
+	# eliot stuff
+	include_directories(/home/eliot/Documents/GitHub/libkar/out/include)
+	include_directories(/home/eliot/Documents/GitHub/pcompiler/out/include)
+	include_directories(/home/eliot/rpi-sysroot/usr/local/include)
+	link_directories(/home/eliot/Documents/GitHub/libkar/out/lib)
+	link_directories(/home/eliot/Documents/GitHub/pcompiler/out/lib)
+	link_directories(/home/eliot/rpi-sysroot/usr/local/lib)
 endif()
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/deploy)
@@ -110,9 +118,9 @@ target_link_libraries(botui
 	${OPENSSL_LIBRARIES}
 )
 
-IF(wombat)
-  target_link_libraries(botui kipr)
-ENDIF()
+
+target_link_libraries(botui kipr)
+
 
 target_link_libraries(botui ${QT_LIBRARIES})
 

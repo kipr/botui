@@ -7,6 +7,13 @@
         "list": "cpp",
         "array": "cpp",
         "string_view": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "hash_map": "cpp",
+        "deque": "cpp",
+        "unordered_map": "cpp",
+        "vector": "cpp",
+        "initializer_list": "cpp",
+        "functional": "cpp",
+        "utility": "cpp"
     }
 }

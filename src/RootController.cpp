@@ -34,30 +34,6 @@ int RootController::presentDialog(QDialog *dialog)
 	return ret;
 }
 
-void RootController::findNetworkSettingsWidget() const
-{
-}
-
-void RootController::addNetworkSettingsStack(NetworkSettingsWidget *networkWidget)
-{
-	m_stack.push(networkWidget);
-}
-
-void RootController::getNetworkSettingsWidget()
-{
-	QWidget *prev = m_stack.size() ? m_stack.top() : 0;
-	printStack();
-	foreach (QWidget *widge, m_stack)
-	{
-
-		if (widge->objectName() == "NetworkSettingsWidget")
-		{
-			constrain(widge);
-			widge->move(prev->pos());
-			present(widge);
-		}
-	}
-}
 void RootController::printStack()
 {
 	foreach (QWidget *widge, m_stack)
@@ -90,37 +66,27 @@ void RootController::dismissWidget()
 	// QWidget *widget = m_stack.pop();
 
 	QWidget *widget = m_stack.top(); // reference to top of stack
-	
-	if (widget->objectName() == "NetworkSettingsWidget")
-	{
-		widget->hide();
-	}
-	else
-	{
-		widget = m_stack.pop();
-		qDebug() << "Trying to dismiss Widget: " << widget->objectName();
-		QWidget *next = m_stack.size() ? m_stack.top() : 0;
-		qDebug() << "Next Widget is:" << next->objectName();
-		if (next)
-			next->move(widget->pos());
 
-		if(next->objectName() != "NetworkSettingsWidget")
-		{
-			present(next);
-		}
+	widget = m_stack.pop();
+	qDebug() << "Trying to dismiss Widget: " << widget->objectName();
+	QWidget *next = m_stack.size() ? m_stack.top() : 0;
+	qDebug() << "Next Widget is:" << next->objectName();
+	if (next)
+		next->move(widget->pos());
 
-		widget->hide();
-		if (m_ownership.value(widget))
-			widget->deleteLater();
-		m_ownership.remove(widget);
-	}
+	present(next);
+
+	widget->hide();
+	if (m_ownership.value(widget))
+		widget->deleteLater();
+	m_ownership.remove(widget);
 }
 
 void RootController::dismissAllWidgets()
 {
 	if (!m_dismissable)
 		return;
-	while (m_stack.size() > 2) //Remaining: HomeWidget and NetworkSettingsWidget
+	while (m_stack.size() > 1) // Remaining: HomeWidget
 		dismissWidget();
 	printStack();
 	present(m_stack.at(0));

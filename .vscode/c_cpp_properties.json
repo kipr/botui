@@ -4,7 +4,7 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/usr/include/x86_64-linux-gnu/qt6/QtDBus"
+                "/home/eliot/qt-pinoexample/include"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
