@@ -65,6 +65,10 @@
 #define NM_SERVICE "org.freedesktop.NetworkManager"
 #define NM_OBJECT "/org/freedesktop/NetworkManager"
 
+#define AP_NAME "COOLNAME"
+#define AP_SSID QByteArray("COOL_SSID")
+#define AP_PASSWORD "COOLPASSWORD"
+
 NetworkManager::~NetworkManager()
 {
 }
@@ -159,7 +163,7 @@ void NetworkManager::addNetwork(const Network &network)
         NM_OBJECT "/Settings",
         QDBusConnection::systemBus());
 
-    bool APExist;
+    bool APExist = false;
     QString APuuid;
     QDBusObjectPath apPathConn;
     Connection apCon;
@@ -168,40 +172,52 @@ void NetworkManager::addNetwork(const Network &network)
     qDebug() << "Settings Connections: ";
     Q_FOREACH (const QDBusObjectPath &connectionPath, connections)
     {
-      qDebug() << connectionPath.path();
       OrgFreedesktopNetworkManagerSettingsConnectionInterface apSettInt(
           NM_SERVICE,
           connectionPath.path(),
           QDBusConnection::systemBus());
 
       Connection detail = apSettInt.GetSettings().value();
-      if (detail["connection"]["id"] == "APName")
+      qDebug() << connectionPath.path() << " : " << detail["connection"]["id"];
+      if (detail["connection"]["id"] == AP_NAME)
       {
         APExist = true;
         apPathConn = connectionPath;
         // APuuid = detail["connection"]["uuid"].toString();
-        qDebug() << "AP Path Connection already exists";
+        qDebug() << "AP Path Connection " << AP_NAME << " already exists";
         break;
       }
     }
 
-    apCon = createAPConfig();
+    // deactivate current connection if there is one,
+    // necessary in order to start an AP on the wifi device
+    if (m_device->activeConnection().path() != "")
+    {
+      QDBusObjectPath curCon = m_device->activeConnection();
+      m_nm->DeactivateConnection(curCon);
+    }
 
-    if (APExist == false)
+    // start the AP
+    if (!APExist)
     { // if AP Config in Settings doesn't exist already
+      qDebug() << "AP Config doesn't exist";
 
-      if (m_device->activeConnection().path() != "")
+      apCon = createAPConfig();
+      QDBusPendingReply<QDBusObjectPath> reply = settings.AddConnection(apCon);
+      reply.waitForFinished();
+      if (reply.isError())
       {
-        QDBusObjectPath curCon = m_device->activeConnection();
-        m_nm->DeactivateConnection(curCon);
+        qDebug() << "ERROR!!!" << thing.error();
       }
 
-      apPathConn = settings.AddConnection(apCon); // auto activates
+      // m_nm->AddAndActivateConnection(apCon, devicePath, QDBusObjectPath("/Settings/21"));
 
       QDBusObjectPath activeAccess = m_wifi->activeAccessPoint(); // active AP connection
+      qDebug() << "so now after making it, activeAccess point is " << activeAccess.path();
     }
     else
     { // if AP Config in Settings DOES exist already
+      qDebug() << "exists already with connection" << apPathConn.path() << " device path " << devicePath.path() << "and specific object of /";
       m_nm->ActivateConnection(apPathConn, devicePath, QDBusObjectPath("/"));
     }
 
@@ -329,40 +345,30 @@ bool NetworkManager::disableAP()
 Connection NetworkManager::createAPConfig() const
 {
   qDebug() << "Creating AP Config...";
+
+  // new way based off of https://unix.stackexchange.com/questions/234552/create-wireless-access-point-and-share-internet-connection-with-nmcli/310699#310699
+  // nmcli connection add type wifi ifname WIFI_DEVICE_NAME con-name CONNECTION_NAME autoconnect no ssid HOTSPOT_SSID
+  // nmcli connection modify CONNECTION_NAME 802-11-wireless.mode ap 802-11-wireless.band bg ipv4.method shared
+  // nmcli connection modify CONNECTION_NAME wifi-sec.key-mgmt wpa-psk wifi-sec.psk PASSWORD
+  // nmcli connection up CONNECTION_NAME
+  // nmcli connection show CONNECTION_NAME # this gets the details that we try to emulate
   Connection apConfig;
+  // connection settings
+  apConfig["connection"]["id"] = AP_NAME;
+  apConfig["connection"]["uuid"] = QUuid::createUuid().toString().remove('{').remove('}');
+  apConfig["connection"]["type"] = NM_802_11_WIRELESS_KEY;
+  apConfig["connection"]["interface-name"] = "wlp3s0"; // name of wifi device, varies per machine
+  apConfig["connection"]["autoconnect"] = true;
+  // 802-11-wireless settings
+  apConfig[NM_802_11_WIRELESS_KEY]["ssid"] = AP_SSID;
+  apConfig[NM_802_11_WIRELESS_KEY]["mode"] = "ap";
+  apConfig[NM_802_11_WIRELESS_KEY]["band"] = "bg";
+  // 802-11-wireless-security settings
+  apConfig[NM_802_11_SECURITY_KEY]["key-mgmt"] = "wpa-psk";
+  apConfig[NM_802_11_SECURITY_KEY]["psk"] = AP_PASSWORD;
+  // ip settings
   apConfig["ipv4"]["method"] = "shared";
   apConfig["ipv6"]["method"] = "auto";
-  apConfig["connection"]["type"] = "802-11-wireless";
-  apConfig["connection"]["uuid"] = QUuid::createUuid().toString().remove('{').remove('}');
-  // File name is just the SSID for now
-  apConfig["connection"]["id"] = "APName";
-  // apConfig["connection"]["autoconnect"] = false;
-  apConfig["connection"]["interface-name"] = "wlo1";
-  // SSID
-  QByteArray tempCont;
-  QStringList qSList = {"ccmp"};
-  QStringList qProtoList = {"rsn"};
-  apConfig[NM_802_11_WIRELESS_KEY]["ssid"] = tempCont.append("APName");
-  apConfig[NM_802_11_WIRELESS_KEY]["mode"] = "ap";
-
-  apConfig[NM_802_11_WIRELESS_KEY]["security"] = NM_802_11_SECURITY_KEY;
-
-  apConfig[NM_802_11_SECURITY_KEY]["group"] = qSList;
-  apConfig[NM_802_11_SECURITY_KEY]["key-mgmt"] = "wpa-psk";
-  apConfig[NM_802_11_SECURITY_KEY]["pairwise"] = qSList;
-  apConfig[NM_802_11_SECURITY_KEY]["proto"] = qProtoList;
-  //  const static QString securityTypes[] = {
-  //     "none",
-  //     "wep",
-  //     "ieee8021x",
-  //     "wpa-psk",
-  //     "wpa-epa"};
-
-  //   // WEP uses this key
-  // apConfig[NM_802_11_SECURITY_KEY]["password"] = "kipr4609";
-  // // WPA uses this one
-  apConfig[NM_802_11_SECURITY_KEY]["psk"] = "kipr4609";
-
   return apConfig;
 }
 
@@ -580,6 +586,7 @@ void NetworkManager::stateChangedBouncer(uint newState, uint oldState)
 
 Network NetworkManager::networkFromConnection(const Connection &connection) const
 {
+  // setup variables
   // TODO: It would be nice to make this static somewhere
   QMap<QString, Network::Security> securityMap;
   securityMap["none"] = Network::None;
@@ -593,6 +600,7 @@ Network NetworkManager::networkFromConnection(const Connection &connection) cons
   modeMap["adhoc"] = Network::AdHoc;
   modeMap["ap"] = Network::AP;
 
+  // setup the network
   Network network;
   network.setSsid(connection["802-11-wireless"]["ssid"].toString());
   network.setMode(modeMap[connection["802-11-wireless"]["mode"].toString()]);
