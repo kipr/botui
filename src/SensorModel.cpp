@@ -50,7 +50,7 @@ private:
 		case SensorModel::AccelX: return QObject::tr("Accelerometer X");
 		case SensorModel::AccelY: return QObject::tr("Accelerometer Y");
 		case SensorModel::AccelZ: return QObject::tr("Accelerometer Z");
-#ifdef WALLABY
+#ifdef WOMBAT
 		case SensorModel::GyroX: return QObject::tr("Gyrometer X");
 		case SensorModel::GyroY: return QObject::tr("Gyrometer Y");
 		case SensorModel::GyroZ: return QObject::tr("Gyrometer Z");
@@ -161,7 +161,7 @@ void SensorModel::update()
 
 void SensorModel::populate()
 {
-#ifdef WALLABY
+#ifdef WOMBAT
 	for(unsigned int i = 0; i < 6; ++i) populateAnalog(i);
 	for(unsigned int i = 0; i < 10; ++i) populateDigital(i);
 #else
@@ -169,7 +169,7 @@ void SensorModel::populate()
 	for(unsigned int i = 0; i < 16; ++i) populateDigital(i);
 #endif
 	populateAccel();
-#ifdef WALLABY
+#ifdef WOMBAT
 	populateGyro();
 	populateMagneto();
 	populateButtons();
@@ -186,7 +186,7 @@ void SensorModel::populateAnalog(const unsigned char port)
 
 void SensorModel::populateDigital(const unsigned char port)
 {
-#ifdef WALLABY
+#ifdef WOMBAT
 	appendRow(QList<QStandardItem *>()
 		<< new SensorNameItem(SensorModel::Digital, port)
 		<< new SensorValueItem<bool>(new kipr::digital::Digital(port), true));
@@ -210,7 +210,7 @@ void SensorModel::populateAccel()
 		<< new SensorValueItem<short>(new kipr::accel::AccelZ(), true));
 }
 
-#ifdef WALLABY
+#ifdef WOMBAT
 void SensorModel::populateGyro()
 {
 	appendRow(QList<QStandardItem *>()

@@ -3,7 +3,7 @@
 #include <QPainter>
 #include <QDebug>
 
-#ifdef WALLABY
+#ifdef WOMBAT
 #include <wallaby/depth_image.hpp>
 #else
 #include <kovan/depth_image.hpp>

@@ -2,7 +2,7 @@
 #include "DepthSensorWidget.h"
 #include "ui_DepthSensorWidget.h"
 
-#ifdef WALLABY
+#ifdef WOMBAT
 #include <wallaby/depth_driver.hpp>
 #else
 #include <kovan/depth_driver.hpp>

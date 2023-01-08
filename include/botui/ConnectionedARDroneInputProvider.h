@@ -1,7 +1,7 @@
 #ifndef _CONNECTIONEDARDRONEINPUTPROVIDER_H_
 #define _CONNECTIONEDARDRONEINPUTPROVIDER_H_
 /* FIXME
-#ifdef WALLABY
+#ifdef WOMBAT
 #include <wallaby/ardrone.hpp>
 #else
 #include <kovan/ardrone.hpp>
