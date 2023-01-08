@@ -68,6 +68,7 @@
 #define AP_NAME "COOL_NAME"
 #define AP_SSID QByteArray("COOL_SSID")
 #define AP_PASSWORD "COOL_PASSWORD"
+#define WIFI_DEVICE "wlp3s0" // on wombat, this is wlan0
 
 NetworkManager::~NetworkManager()
 {
@@ -88,7 +89,7 @@ void NetworkManager::addNetwork(const Network &network)
     connection["ipv6"]["method"] = "auto";
 
     // For now we only handle wifi
-    connection["connection"]["type"] = "802-11-wireless";
+    connection["connection"]["type"] = NM_802_11_WIRELESS_KEY;
     connection["connection"]["uuid"] = QUuid::createUuid().toString().remove('{').remove('}');
     // File name is just the SSID for now
     connection["connection"]["id"] = network.ssid();
@@ -210,15 +211,18 @@ void NetworkManager::addNetwork(const Network &network)
         qDebug() << "ERROR!!!" << reply.error();
       }
 
-      // m_nm->AddAndActivateConnection(apCon, devicePath, QDBusObjectPath("/Settings/21"));
-
       QDBusObjectPath activeAccess = m_wifi->activeAccessPoint(); // active AP connection
       qDebug() << "so now after making it, activeAccess point is " << activeAccess.path();
     }
     else
     { // if AP Config in Settings DOES exist already
       qDebug() << "exists already with connection" << apPathConn.path() << " device path " << devicePath.path() << "and specific object of /";
-      m_nm->ActivateConnection(apPathConn, devicePath, QDBusObjectPath("/"));
+      QDBusPendingReply<QDBusObjectPath> reply = m_nm->ActivateConnection(apPathConn, devicePath, QDBusObjectPath("/"));
+      reply.waitForFinished();
+      if (reply.isError())
+      {
+        qDebug() << "ERROR second:: " << reply.error();
+      }
     }
 
     // return;
@@ -245,10 +249,10 @@ void NetworkManager::forgetNetwork(const Network &network)
     Connection details = conn.GetSettings().value();
 
     // This connection is not a wifi one. Skip.
-    if (!details.contains("802-11-wireless"))
+    if (!details.contains(NM_802_11_WIRELESS_KEY))
       continue;
 
-    if (network.ssid() == details["802-11-wireless"]["ssid"].toString())
+    if (network.ssid() == details[NM_802_11_WIRELESS_KEY]["ssid"].toString())
     {
       conn.Delete();
     }
@@ -276,7 +280,7 @@ NetworkList NetworkManager::networks() const
     Connection details = conn.GetSettings().value();
 
     // This connection is not a wifi one. Skip.
-    if (!details.contains("802-11-wireless"))
+    if (!details.contains(NM_802_11_WIRELESS_KEY))
       continue;
 
     networks << networkFromConnection(details);
@@ -357,7 +361,7 @@ Connection NetworkManager::createAPConfig() const
   apConfig["connection"]["id"] = AP_NAME;
   apConfig["connection"]["uuid"] = QUuid::createUuid().toString().remove('{').remove('}');
   apConfig["connection"]["type"] = NM_802_11_WIRELESS_KEY;
-  apConfig["connection"]["interface-name"] = "wlp3s0"; // name of wifi device, varies per machine
+  apConfig["connection"]["interface-name"] = WIFI_DEVICE; // name of wifi device, varies per machine
   apConfig["connection"]["autoconnect"] = true;
   // 802-11-wireless settings
   apConfig[NM_802_11_WIRELESS_KEY]["ssid"] = AP_SSID;
@@ -408,16 +412,9 @@ bool NetworkManager::isActiveConnectionOn() const
   return activeConnOn;
 }
 
-QString NetworkManager::currentActiveConnectionName() const
+bool NetworkManager::isActiveConnectionAP() const
 {
-  QDBusObjectPath activePath = m_device->activeConnection(); // Device's current active connection
-
-  OrgFreedesktopNetworkManagerConnectionActiveInterface activeConnObj(
-      NM_SERVICE,
-      activePath.path(),
-      QDBusConnection::systemBus());
-
-  return activeConnObj.id();
+  return isActiveConnectionOn() && active().ssid() == AP_SSID; // not using mode because it detects active AP as mode 2
 }
 
 NetworkList NetworkManager::accessPoints() const
@@ -455,7 +452,7 @@ QString NetworkManager::ipAddress() const
   int fd = socket(AF_INET, SOCK_DGRAM, 0);
   ifreq ifr;
   ifr.ifr_addr.sa_family = AF_INET;
-  strncpy(ifr.ifr_name, "wlan0", IFNAMSIZ - 1);
+  strncpy(ifr.ifr_name, WIFI_DEVICE, IFNAMSIZ - 1);
   QString ret = "";
   if (!ioctl(fd, SIOCGIFADDR, &ifr))
   {
@@ -602,15 +599,15 @@ Network NetworkManager::networkFromConnection(const Connection &connection) cons
 
   // setup the network
   Network network;
-  network.setSsid(connection["802-11-wireless"]["ssid"].toString());
-  network.setMode(modeMap[connection["802-11-wireless"]["mode"].toString()]);
-  qDebug() << "Connection" << connection["802-11-wireless"]["ssid"].toString()
-           << connection["802-11-wireless-security"]["security"].toString();
-  network.setSecurity(securityMap[connection["802-11-wireless-security"]["security"].toString()]);
+  network.setSsid(connection[NM_802_11_WIRELESS_KEY]["ssid"].toString());
+  network.setMode(modeMap[connection[NM_802_11_WIRELESS_KEY]["mode"].toString()]);
+  qDebug() << "Connection" << connection[NM_802_11_WIRELESS_KEY]["ssid"].toString()
+           << connection[NM_802_11_SECURITY_KEY]["security"].toString();
+  network.setSecurity(securityMap[connection[NM_802_11_SECURITY_KEY]["security"].toString()]);
   // Technically, password only applies to WEP connections. We always store both password
   // and psk, however, so it is a somewhat safe assumption to only try the password
   // entry.
-  network.setPassword(connection["802-11-wireless"]["password"].toString());
+  network.setPassword(connection[NM_802_11_WIRELESS_KEY]["password"].toString());
   return network;
 }
 

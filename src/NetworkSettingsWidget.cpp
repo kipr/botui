@@ -50,7 +50,41 @@ NetworkSettingsWidget::NetworkSettingsWidget(Device *device, QWidget *parent)
 	QObject::connect(updateTimer, SIGNAL(timeout()), SLOT(updateInformation()));
 	updateTimer->start(10000);
 
+	setupConnectionModeSelect();
 	updateInformation();
+}
+
+void NetworkSettingsWidget::setupConnectionModeSelect()
+{
+	firstTimeSetup = true;
+	const bool on = NetworkManager::ref().isOn();
+	if (!on)
+	{
+		ui->ConnectButton->setEnabled(false);
+		ui->connectionModeSelect->setCurrentIndex(3); // no wifi
+	}
+	else if (NetworkManager::ref().isActiveConnectionOn())
+	{
+		if (NetworkManager::ref().isActiveConnectionAP())
+		{
+			ui->ConnectButton->setEnabled(false);
+			ui->connectionModeSelect->setCurrentIndex(1); // ap mode
+		}
+		else
+		{
+			ui->ConnectButton->setEnabled(true);
+			ui->connectionModeSelect->setCurrentIndex(2); // some other client mode
+		}
+	}
+	else
+	{
+		// case where wifi is on but it isn't connected to anything yet
+		// happens in client mode
+		ui->ConnectButton->setEnabled(true);
+		ui->connectionModeSelect->setCurrentIndex(2);
+	}
+
+	firstTimeSetup = false;
 }
 
 void NetworkSettingsWidget::TournamentMode()
@@ -63,10 +97,13 @@ void NetworkSettingsWidget::TournamentMode()
 
 void NetworkSettingsWidget::indexChanged(int index)
 {
-
+	if (firstTimeSetup)
+		return;
+	qDebug() << "going to change stuff in index changed";
 	if (index == 1) // AP mode
 	{
 		ui->ConnectButton->setEnabled(false);
+		NetworkManager::ref().turnOn(); // turn on before enabling AP in case wifi was off before
 		NetworkManager::ref().enableAP();
 	}
 	else if (index == 2) // Wifi on (client mode)
@@ -103,6 +140,12 @@ void NetworkSettingsWidget::updateInformation()
 	const bool on = NetworkManager::ref().isOn(); //
 	ui->state->setText(on ? tr("ON") : tr("OFF"));
 
+	// clear old values
+	ui->ssid->setText("");
+	ui->ip->setText("");
+	ui->security->setText("");
+	ui->password->setText("");
+
 	const QString id = device()->id();
 	const QString serial = device()->serial();
 	// if (!id.isEmpty())
@@ -113,19 +156,16 @@ void NetworkSettingsWidget::updateInformation()
 	// 	ui->password->setText(password);
 	// }
 
-	if (NetworkManager::ref().isActiveConnectionOn() == true) // if there's an active connection
+	if (NetworkManager::ref().isActiveConnectionOn()) // if there's an active connection
 	{
-		if (ui->connectionModeSelect->currentText() == "Client Mode") // if Wombat in client mode
-		{
-			ui->ssid->setText(NetworkManager::ref().currentActiveConnectionName());
-			ui->ip->setText(NetworkManager::ref().ip4Address());
-		}
+		Network active = NetworkManager::ref().active();
+		ui->ssid->setText(active.ssid());
+		ui->ip->setText(NetworkManager::ref().ip4Address());
+		ui->security->setText(active.securityString());
+
+		qDebug() << "apparently password is " << active.password();
+		ui->password->setText(active.password());
 	}
-	Network active = NetworkManager::ref().active();
-	// ui->ssid->setText(active.ssid());
-	ui->security->setText(active.securityString());
-	// const QString ip = NetworkManager::ref().ipAddress();
-	// ui->ip->setText(ip.isEmpty() ? tr("No IP") : ip);
 }
 
 void NetworkSettingsWidget::stateChanged(const NetworkManager::State &newState, const NetworkManager::State &oldState)
