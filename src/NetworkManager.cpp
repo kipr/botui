@@ -325,10 +325,6 @@ void NetworkManager::turnOff()
 
 bool NetworkManager::enableAP()
 {
-#ifdef WALLABY
-  int ret = system("sudo /usr/bin/python /usr/bin/wifi_configurator.py &");
-  return (ret == 0);
-#endif
   Connection defaultAPConfig = createAPConfig();
   Network APN = networkFromConnection(defaultAPConfig);
   addNetwork(APN);
@@ -337,10 +333,6 @@ bool NetworkManager::enableAP()
 
 bool NetworkManager::disableAP()
 {
-#ifdef WALLABY
-  int ret = system("sudo ifconfig wlan0 down");
-  return (ret == 0);
-#endif
   QDBusObjectPath curCon = m_device->activeConnection();
   m_nm->DeactivateConnection(curCon);
   return true;
