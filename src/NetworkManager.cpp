@@ -65,9 +65,9 @@
 #define NM_SERVICE "org.freedesktop.NetworkManager"
 #define NM_OBJECT "/org/freedesktop/NetworkManager"
 
-#define AP_NAME "COOLNAME"
+#define AP_NAME "COOL_NAME"
 #define AP_SSID QByteArray("COOL_SSID")
-#define AP_PASSWORD "COOLPASSWORD"
+#define AP_PASSWORD "COOL_PASSWORD"
 
 NetworkManager::~NetworkManager()
 {
@@ -207,7 +207,7 @@ void NetworkManager::addNetwork(const Network &network)
       reply.waitForFinished();
       if (reply.isError())
       {
-        qDebug() << "ERROR!!!" << thing.error();
+        qDebug() << "ERROR!!!" << reply.error();
       }
 
       // m_nm->AddAndActivateConnection(apCon, devicePath, QDBusObjectPath("/Settings/21"));
