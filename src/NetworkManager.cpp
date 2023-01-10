@@ -67,13 +67,16 @@
 #define NM_OBJECT "/org/freedesktop/NetworkManager"
 
 #ifndef WOMBAT
-#define WIFI_DEVICE "wlp3s0" // varies per pc
+#define WIFI_DEVICE "wlp3s0" // varies per pc, almost always need to change this on different computers
+#define AP_NAME "COOL_NETWORK"
+#define AP_SSID QByteArray("COOL_NETWORK")
+#define AP_PASSWORD "COOL_PASSWORD"
 #else
 #define WIFI_DEVICE "wlan0" // always wlan0 for raspberry pi
-#endif
 #define AP_NAME m_dev->serial() + "-wombat"
 #define AP_SSID (m_dev->serial() + "-wombat").toUtf8()
 #define AP_PASSWORD SystemUtils::sha256(m_dev->id()).left(6) + "00"
+#endif
 
 NetworkManager::~NetworkManager()
 {
