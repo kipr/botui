@@ -1,6 +1,7 @@
 #include "Options.h"
 
 #include "NetworkManager.h"
+#include "Device.h"
 
 #include "org_freedesktop_NetworkManager.h"
 #include "org_freedesktop_NetworkManager_AccessPoint.h"
@@ -65,10 +66,14 @@
 #define NM_SERVICE "org.freedesktop.NetworkManager"
 #define NM_OBJECT "/org/freedesktop/NetworkManager"
 
-#define AP_NAME "COOL_NAME"
-#define AP_SSID QByteArray("COOL_SSID")
-#define AP_PASSWORD "COOL_PASSWORD"
-#define WIFI_DEVICE "wlp3s0" // on wombat, this is wlan0
+#ifndef WOMBAT
+#define WIFI_DEVICE "wlp3s0" // varies per pc
+#else
+#define WIFI_DEVICE "wlan0" // always wlan0 for raspberry pi
+#endif
+#define AP_NAME m_dev->serial() + "-wombat"
+#define AP_SSID (m_dev->serial() + "-wombat").toUtf8()
+#define AP_PASSWORD SystemUtils::sha256(m_dev->id()).left(6) + "00"
 
 NetworkManager::~NetworkManager()
 {
@@ -393,6 +398,43 @@ Network NetworkManager::active() const
     return Network();
   return createAccessPoint(m_wifi->activeAccessPoint());
 }
+QString NetworkManager::activeConnectionPassword() const
+{
+  if (!isActiveConnectionOn())
+  {
+    return "";
+  }
+  OrgFreedesktopNetworkManagerSettingsInterface settings(
+      NM_SERVICE,
+      NM_OBJECT "/Settings",
+      QDBusConnection::systemBus());
+  QList<QDBusObjectPath> connections = settings.ListConnections();
+
+  Q_FOREACH (const QDBusObjectPath &connectionPath, connections)
+  {
+    OrgFreedesktopNetworkManagerSettingsConnectionInterface conn(
+        NM_SERVICE,
+        connectionPath.path(),
+        QDBusConnection::systemBus());
+
+    Connection details = conn.GetSettings().value();
+
+    if (details["802-11-wireless"]["ssid"].toString() == active().ssid())
+    {
+      QDBusPendingReply<Connection> reply = conn.GetSecrets("802-11-wireless-security");
+      reply.waitForFinished();
+      if (reply.isError()) // might happen for wired connections
+      {
+        qDebug() << "reply error " << reply.error();
+      }
+      else
+      {
+        return reply.value()["802-11-wireless-security"]["psk"].toString();
+      }
+    }
+  }
+  return "";
+}
 
 bool NetworkManager::isActiveConnectionOn() const
 {
@@ -406,7 +448,9 @@ bool NetworkManager::isActiveConnectionOn() const
 
 bool NetworkManager::isActiveConnectionAP() const
 {
-  return isActiveConnectionOn() && active().ssid() == AP_SSID; // not using mode because it detects active AP as mode 2
+  // not using mode because it detects active AP as mode 2
+  // instead, checking if ssid is equal
+  return isActiveConnectionOn() && active().ssid() == AP_NAME;
 }
 
 NetworkList NetworkManager::accessPoints() const
@@ -469,13 +513,18 @@ QString NetworkManager::ip4Address() const
   return ipAddr;
 }
 
+void NetworkManager::init(const Device *dev)
+{
+  m_dev = dev;
+}
+
 NetworkManager::NetworkManager()
     : m_nm(new OrgFreedesktopNetworkManagerInterface(
           NM_SERVICE,
           NM_OBJECT,
           QDBusConnection::systemBus(),
           this)),
-      m_device(0), m_wifi(0)
+      m_device(0), m_wifi(0), m_dev(nullptr)
 {
   // Register our metatype with dbus
   qDBusRegisterMetaType<Connection>();

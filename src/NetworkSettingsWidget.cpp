@@ -146,16 +146,6 @@ void NetworkSettingsWidget::updateInformation()
 	ui->security->setText("");
 	ui->password->setText("");
 
-	const QString id = device()->id();
-	const QString serial = device()->serial();
-	// if (!id.isEmpty())
-	// {
-	// 	const QString password = SystemUtils::sha256(id).left(6) + "00";
-	// 	const QString ssid = serial + "-wombat";
-	// 	ui->ssid->setText(ssid);
-	// 	ui->password->setText(password);
-	// }
-
 	if (NetworkManager::ref().isActiveConnectionOn()) // if there's an active connection
 	{
 		Network active = NetworkManager::ref().active();
@@ -163,8 +153,8 @@ void NetworkSettingsWidget::updateInformation()
 		ui->ip->setText(NetworkManager::ref().ip4Address());
 		ui->security->setText(active.securityString());
 
-		qDebug() << "apparently password is " << active.password();
-		ui->password->setText(active.password());
+		QString password = NetworkManager::ref().activeConnectionPassword();
+		ui->password->setText(password);
 	}
 }
 

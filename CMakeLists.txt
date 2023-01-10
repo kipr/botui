@@ -18,14 +18,6 @@ cmake_minimum_required(VERSION 2.8.11)
 if(wombat)
 	add_definitions(-DWOMBAT)
 	set(DEVICE_DIR ${CMAKE_SOURCE_DIR}/devices/wombat)
-
-	# eliot stuff
-	include_directories(/home/eliot/Documents/GitHub/libkar/out/include)
-	include_directories(/home/eliot/Documents/GitHub/pcompiler/out/include)
-	include_directories(/home/eliot/rpi-sysroot/usr/local/include)
-	link_directories(/home/eliot/Documents/GitHub/libkar/out/lib)
-	link_directories(/home/eliot/Documents/GitHub/pcompiler/out/lib)
-	link_directories(/home/eliot/rpi-sysroot/usr/local/lib)
 endif()
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/deploy)

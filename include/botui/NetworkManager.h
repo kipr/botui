@@ -2,6 +2,8 @@
 #define _NETWORKMANAGER_H_
 
 #include "Options.h"
+#include "Device.h"
+#include "SystemUtils.h"
 
 #ifdef NETWORK_ENABLED
 
@@ -40,12 +42,14 @@ public:
 
 	NetworkManager();
 	~NetworkManager();
+	void init(const Device *device);
 
 	void addNetwork(const Network &network);
 	void forgetNetwork(const Network &network);
 	NetworkList networks() const;
 
 	Network active() const;
+	QString activeConnectionPassword() const;
 
 	void requestScan();
 
@@ -57,7 +61,6 @@ public:
 	NetworkList accessPoints() const;
 
 	QString ipAddress() const;
-
 	QString ip4Address() const;
 
 	Connection createAPConfig() const;
@@ -97,6 +100,8 @@ private:
 	OrgFreedesktopNetworkManagerInterface *m_nm;
 	OrgFreedesktopNetworkManagerDeviceInterface *m_device;
 	OrgFreedesktopNetworkManagerDeviceWirelessInterface *m_wifi;
+
+	const Device *m_dev;
 };
 
 #endif
