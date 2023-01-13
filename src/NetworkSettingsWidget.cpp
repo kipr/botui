@@ -64,20 +64,22 @@ void NetworkSettingsWidget::TournamentMode()
 
 void NetworkSettingsWidget::indexChanged(int index)
 {
+	NetworkManager::ref().turnOn();
 
 	if (index == 1) // AP mode
 	{
-		ui->ConnectButton->setEnabled(false);
+		
 		NetworkManager::ref().enableAP();
+		ui->ConnectButton->setEnabled(false);
+		
 	}
 	else if (index == 2) // Wifi on (client mode)
 	{
 		NetworkManager::ref().disableAP();
-		NetworkManager::ref().turnOn();
 		ui->ConnectButton->setEnabled(true);
 	}
 	else if (index == 3) // Wifi off
-	{
+	{	
 		NetworkManager::ref().turnOff();
 		ui->ConnectButton->setEnabled(false);
 	}
@@ -102,7 +104,8 @@ void NetworkSettingsWidget::manage() // Forget or add network to history
 void NetworkSettingsWidget::updateInformation()
 {
 	const bool on = NetworkManager::ref().isOn(); //
-	ui->state->setText(on ? tr("ON") : tr("OFF"));
+	ui->ssid->setText(NetworkManager::ref().currentActiveConnectionName());
+	ui->ip->setText(NetworkManager::ref().ip4Address());
 
 	const QString id = device()->id();
 	const QString serial = device()->serial();
@@ -118,11 +121,23 @@ void NetworkSettingsWidget::updateInformation()
 	{
 		if (ui->connectionModeSelect->currentText() == "Client Mode") // if Wombat in client mode
 		{
+			ui->state->setText(on ? tr("ON") : tr("OFF"));
 			ui->ssid->setText(NetworkManager::ref().currentActiveConnectionName());
 			ui->ip->setText(NetworkManager::ref().ip4Address());
 		
 		}
+		if(ui->connectionModeSelect->currentText() == "AP Mode"){ //if Wombat is in AP Mode
+			ui->ssid->setText(NetworkManager::ref().currentActiveConnectionName());
+			ui->ip->setText(NetworkManager::ref().ip4Address());
+		}
+		
 	}
+	if(ui->connectionModeSelect->currentText() == "Wifi Off"){
+			ui->state->setText("OFF");
+			ui->ssid->setText(" ");
+			ui->ip->setText(" ");
+			
+		}
 	Network active = NetworkManager::ref().active();
 	// ui->ssid->setText(active.ssid());
 	ui->security->setText(active.securityString());

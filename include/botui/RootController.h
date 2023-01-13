@@ -52,11 +52,9 @@ public slots:
 
 	void dismissWidget();
 	void dismissAllWidgets();
-	void findNetworkSettingsWidget() const;
-	void addNetworkSettingsStack(NetworkSettingsWidget *networkWidget) ;
+
 	void minimize();
-	void printStack();
-	void getNetworkSettingsWidget();
+
 
 private:
 	void constrain(QWidget *widget);

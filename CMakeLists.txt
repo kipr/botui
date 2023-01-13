@@ -44,7 +44,7 @@ include_directories(
 
 
   
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Network Quick QuickWidgets QuickControls2 SvgWidgets)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Network Quick QuickWidgets QuickControls2)
  
 
 
@@ -103,7 +103,6 @@ target_link_libraries(botui
 	Qt6::QuickWidgets
 	Qt6::Widgets
 	Qt6::QuickControls2
-	Qt6::SvgWidgets
 	network_manager_dbus
 	pcompiler
 	z

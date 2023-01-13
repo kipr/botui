@@ -7,6 +7,10 @@
         "list": "cpp",
         "array": "cpp",
         "string_view": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "bitset": "cpp",
+        "initializer_list": "cpp",
+        "utility": "cpp",
+        "functional": "cpp"
     }
 }

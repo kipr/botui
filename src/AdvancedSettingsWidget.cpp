@@ -45,7 +45,7 @@ AdvancedSettingsWidget::~AdvancedSettingsWidget()
 void AdvancedSettingsWidget::network()
 {
 #ifdef NETWORK_ENABLED
- RootController::ref().getNetworkSettingsWidget();
+RootController::ref().presentWidget(new NetworkSettingsWidget(device()));
 
 #endif
 }

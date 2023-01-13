@@ -64,6 +64,7 @@ public:
 	QString currentActiveConnectionName() const;
 
 	bool isActiveConnectionOn() const;
+
 	
 public slots:
 	bool turnOn();

@@ -59,9 +59,6 @@ int main(int argc, char* argv[])
 	//GuiSettingsWidget::updateStyle(&device);
 	
 	RootController::ref().presentWidget(new HomeWidget(&device));
-  NetworkSettingsWidget *networkWidget = new NetworkSettingsWidget(&device);
-  
-  RootController::ref().addNetworkSettingsStack(networkWidget);
-  RootController::ref().printStack();
+
 	return app.exec();
 }
