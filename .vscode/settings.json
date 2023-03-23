@@ -15,5 +15,11 @@
         "initializer_list": "cpp",
         "functional": "cpp",
         "utility": "cpp"
-    }
+    },
+    "cmake.cmakePath": "/home/eliot/Downloads/cmake-3.25.1-linux-x86_64/bin/cmake",
+    "cmake.buildDirectory": "${workspaceFolder}/build2",
+    "cmake.generator": "Ninja",
+    "cmake.configureArgs": [
+        "-Dwombat=ON"
+    ]
 }

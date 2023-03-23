@@ -9,8 +9,5 @@
 
 namespace botui
 {
-
-	const QString pathToKISS = "/home/root/Documents/KISS/";
-
+	const QString pathToKISS = "/home/pi/Documents/KISS/";
 }
-

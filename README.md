@@ -25,7 +25,8 @@ cmake ..
 make -j4
 sudo make install
 ```
-
+Note: for custom installations, edit `pathToKISS` in `Config.cpp` in order to have the file manager
+work correctly.
 License
 =======
 

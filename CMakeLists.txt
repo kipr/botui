@@ -6,18 +6,17 @@ option(RELEASE "Enable release mode" OFF)
 
 cmake_minimum_required(VERSION 2.8.11)
 
-#if (wallaby)
- # add_definitions(-DWALLABY)
-  #set(DEVICE_DIR ${CMAKE_SOURCE_DIR}/devices/wallaby)
-  #find_package(OpenCV REQUIRED)
-#else()
- # set(DEVICE_DIR ${CMAKE_SOURCE_DIR}/devices/kovan)
-  
-#endif()
+#need to add this in order to get "WombatBatteryProvider.h"
+set(DEVICE_DIR ${CMAKE_SOURCE_DIR}/devices/wombat)
+add_definitions(-DWOMBAT)
 
-if(wombat)
-	add_definitions(-DWOMBAT)
-	set(DEVICE_DIR ${CMAKE_SOURCE_DIR}/devices/wombat)
+if(${wombat})
+	# toolchain file that includes cross compile utilities
+	# for Qt6 and lib/include directories for cross compiling
+	include(crosstoolchain.cmake)  
+else()
+	# toolchain file that includes Qt6 utilities
+	include(localtoolchain.cmake)
 endif()
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/deploy)
@@ -112,6 +111,7 @@ target_link_libraries(botui
 
 
 target_link_libraries(botui kipr)
+target_link_libraries(botui kar)
 
 
 target_link_libraries(botui ${QT_LIBRARIES})
