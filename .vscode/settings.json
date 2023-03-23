@@ -14,12 +14,15 @@
         "vector": "cpp",
         "initializer_list": "cpp",
         "functional": "cpp",
-        "utility": "cpp"
+        "utility": "cpp",
+        "type_traits": "cpp",
+        "atomic": "cpp",
+        "typeinfo": "cpp"
     },
     "cmake.cmakePath": "/home/eliot/Downloads/cmake-3.25.1-linux-x86_64/bin/cmake",
-    "cmake.buildDirectory": "${workspaceFolder}/build2",
+    "cmake.buildDirectory": "${workspaceFolder}/build",
     "cmake.generator": "Ninja",
     "cmake.configureArgs": [
-        "-Dwombat=ON"
+        "-Dwombat=OFF"
     ]
 }
