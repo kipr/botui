@@ -985,6 +985,7 @@
         <file>icons/webcam_delete.png</file>
         <file>icons/webcam_error.png</file>
         <file>icons/webcam.png</file>
+        <file>icons/wifi.png</file>
         <file>icons/world_add.png</file>
         <file>icons/world_delete.png</file>
         <file>icons/world_edit.png</file>
@@ -992,6 +993,7 @@
         <file>icons/world_link.png</file>
         <file>icons/world.png</file>
         <file>icons/wrench_orange.png</file>
+        <file>icons/wrench1.png</file>
         <file>icons/wrench.png</file>
         <file>icons/xhtml_add.png</file>
         <file>icons/xhtml_delete.png</file>

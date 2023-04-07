@@ -14,7 +14,10 @@ Q_OBJECT
 public:
   CameraSettingsWidget(Device *device, QWidget *const parent = 0);
   ~CameraSettingsWidget();
-  
+
+public slots:
+        void minus();
+        void plus();
 private:
   Ui::CameraSettingsWidget *ui;
 };

@@ -11,9 +11,8 @@ Requirements
 ============
 * [pcompiler ](https://github.com/kipr/pcompiler)
 * CMake 2.6.0 or later
-* OpenCV
 * [Qt >= 4.7.4](https://www.qt.io/download-qt-installer)
-
+* Note: for Qt6, the apt packages needed are `qt6-base-dev qt6-declarative libqt6svg6-dev`
 
 Installation
 =======
@@ -26,7 +25,8 @@ cmake ..
 make -j4
 sudo make install
 ```
-
+Note: for custom installations, edit `pathToKISS` in `Config.cpp` in order to have the file manager
+work correctly.
 License
 =======
 

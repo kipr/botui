@@ -3,7 +3,7 @@
 
 #include "ChannelConfigWidget.h"
 
-#include <opencv2/core/core.hpp>
+#include <kipr/camera/image.hpp>
 
 namespace Ui
 {
@@ -29,7 +29,7 @@ private slots:
 	
 	void visualChanged();
 	
-	void imagePressed(const cv::Mat &image, const int &x, const int &y);
+	void imagePressed(const kipr::camera::Image &image, const int &x, const int &y);
 	
 	void done();
 	

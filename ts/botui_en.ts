@@ -525,9 +525,9 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>CvWidget</name>
+    <name>CameraImageWidget</name>
     <message>
-        <location filename="src/CvWidget.cpp" line="63"/>
+        <location filename="src/CameraImageWidget.cpp" line="63"/>
         <source>Failed to fetch image</source>
         <translation></translation>
     </message>

@@ -2,18 +2,21 @@
 
 #include "Device.h"
 #include "CompileProvider.h"
+#include <QDir>
 
-ConcurrentCompile::ConcurrentCompile(const QString &name, const kiss::KarPtr &archive, Device *device)
-	: m_name(name),
-	m_archive(archive),
-	m_device(device)
+ConcurrentCompile::ConcurrentCompile(const QFileInfo &file, const kiss::KarPtr &archive, Device *device)
+	: m_file(file),
+	  m_archive(archive),
+	  m_device(device)
 {
 }
 
 void ConcurrentCompile::run()
 {
-	emit compileStarted(m_name, this);
-	m_output = m_device->compileProvider()->compile(m_name, m_archive);
+	emit compileStarted(m_file.baseName(), this);
+	QDir directory = m_file.absoluteDir();
+	directory.cdUp();
+	m_output = m_device->compileProvider()->compile(m_file.baseName(), m_archive, directory.absolutePath());
 	emit compileFinished(m_output, this);
 }
 

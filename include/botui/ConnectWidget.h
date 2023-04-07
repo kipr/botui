@@ -1,12 +1,12 @@
-#ifdef QT_DBUS_LIB
+
 
 #ifndef _CONNECTWIDGET_H_
 #define _CONNECTWIDGET_H_
 
+#include "Options.h"
 #include "StandardWidget.h"
-
+#include <QObject>
 #include <QItemSelection>
-
 namespace Ui
 {
 	class ConnectWidget;
@@ -34,4 +34,4 @@ private:
 
 #endif
 
-#endif
+

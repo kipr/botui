@@ -2,6 +2,7 @@
 #define _BATTERYWIDGET_H_
 
 #include <QWidget>
+#include <BatteryLevelProvider.h>
 
 class BatteryLevelProvider;
 

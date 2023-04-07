@@ -1,22 +1,20 @@
 #ifndef _CAMERAWIDGET_H_
 #define _CAMERAWIDGET_H_
 
-#include "CvWidget.h"
+#include "CameraImageWidget.h"
 
 #include <QTimer>
 
-#ifdef WALLABY
-#include <wallaby/config.hpp>
-#else
-#include <kovan/config.hpp>
-#endif
+#include <kipr/config/config.hpp>
 
-namespace Camera
+using namespace kipr::config;
+
+namespace kipr::camera
 {
 	class Device;
 }
 
-class CameraWidget : public CvWidget
+class CameraWidget : public CameraImageWidget
 {
 Q_OBJECT
 public:
@@ -34,13 +32,16 @@ public:
   
 public slots:
   void update();
+
+protected:
+  void postProcessImage(QImage &image) override;
   
 private:
   void setFrameRate(const unsigned frameRate);
   void slowFrameRate();
   void fastFrameRate();
   
-  Camera::Device *m_camDevice;
+  kipr::camera::Device *m_camDevice;
   QTimer *m_timer;
   bool m_showBbox;
   int m_numBlobLabels;

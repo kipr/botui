@@ -14,13 +14,8 @@
 #include <QDir>
 #include <QDebug>
 
-#ifdef WALLABY
-#include <wallaby/camera.hpp>
-#include <wallaby/config.hpp>
-#else
-#include <kovan/camera.hpp>
-#include <kovan/config.hpp>
-#endif
+#include <kipr/camera/camera.hpp>
+#include <kipr/config/config.hpp>
 
 class ConfigItemDelegate : public QItemDelegate
 {
@@ -126,7 +121,7 @@ void ChannelConfigurationsWidget::default_()
 	QModelIndex index = selection.indexes()[0];
 	m_defaultPath = m_model->filePath(index);
 	ui->default_->setEnabled(false);
-	Camera::ConfigPath::setDefaultConfigPath(m_model->fileInfo(index).baseName().toStdString());
+	kipr::camera::ConfigPath::setDefaultConfigPath(m_model->fileInfo(index).baseName().toStdString());
 	ui->configs->repaint();
 
 	RootController::ref().dismissWidget();
@@ -137,8 +132,8 @@ void ChannelConfigurationsWidget::add()
 {
 	KeyboardDialog keyboard(tr("Create New Configuration"));
 	RootController::ref().presentDialog(&keyboard);
-	Config blank;
-	std::string savePath = Camera::ConfigPath::path(keyboard.input().toStdString());
+	kipr::config::Config blank;
+	std::string savePath = kipr::camera::ConfigPath::path(keyboard.input().toStdString());
 	QString qSavePath = QString::fromStdString(savePath);
 	if(!blank.save(savePath)) {
 		qWarning() << "Error saving" << qSavePath;
@@ -147,7 +142,7 @@ void ChannelConfigurationsWidget::add()
 	
 	// Select it and set as default if it's the first one
 	QDir saves = QDir(QFileInfo(qSavePath).path(), "*." + QString::fromStdString(
-		Camera::ConfigPath::extension()));
+		kipr::camera::ConfigPath::extension()));
 	if(saves.entryList(QDir::Files).size() == 1) {
 		QModelIndex index = m_model->index(qSavePath);
 		ui->configs->selectionModel()->select(index, QItemSelectionModel::Select);

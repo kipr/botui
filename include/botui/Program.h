@@ -4,7 +4,7 @@
 #include <QString>
 #include <QStringList>
 #include <QProcess>
-#include <QTime>
+#include <QElapsedTimer>
 
 class Program : public QObject
 {
@@ -31,7 +31,7 @@ private:
 	Program(const Program& rhs);
 	
 	QProcess *m_process;
-	QTime m_time;
+	QElapsedTimer m_time;
 };
 
 #endif

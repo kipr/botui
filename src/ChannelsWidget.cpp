@@ -15,11 +15,10 @@
 #include <QPainter>
 #include <QDebug>
 
-#ifdef WALLABY
-#include <wallaby/camera.hpp>
-#else
-#include <kovan/camera.hpp>
-#endif
+#include <kipr/camera/camera.hpp>
+#include <kipr/config/config.hpp>
+
+using namespace kipr::config;
 
 class ChannelItemDelegate : public QItemDelegate
 {

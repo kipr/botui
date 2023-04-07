@@ -2,6 +2,7 @@
 #define _LINEEDIT_H_
 
 #include <QLineEdit>
+#include <InputProviderDialog.h>
 
 class InputProviderDialog;
 

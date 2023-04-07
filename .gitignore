@@ -3,3 +3,8 @@ build
 deploy
 lib
 obj-arm-linux-gnueabihf
+.vscode
+out
+crosstoolchain.cmake
+localtoolchain.cmake
+build2

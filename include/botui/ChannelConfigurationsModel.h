@@ -2,7 +2,7 @@
 #define _CHANNELCONFIGURATIONSMODEL_H_
 
 #include <QFileSystemModel>
-
+#include <QFileIconProvider>
 class ChannelConfigurationsModel : public QFileSystemModel
 {
 Q_OBJECT

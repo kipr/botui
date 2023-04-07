@@ -5,14 +5,7 @@
 #include "RootController.h"
 #include "CameraInputManager.h"
 
-#ifdef WALLABY
-#include <wallaby/camera.hpp>
-#else
-#include <kovan/camera.hpp>
-#endif
-
-#include <opencv2/core/core.hpp>
-#include <opencv2/highgui/highgui.hpp>
+#include <kipr/camera/camera.h>
 
 #include <QDebug>
 
@@ -46,7 +39,7 @@ HsvChannelConfigWidget::HsvChannelConfigWidget(const QModelIndex &index, QWidget
 	connect(ui->visual, SIGNAL(minChanged(QColor)), SLOT(visualChanged()));
 	connect(ui->visual, SIGNAL(maxChanged(QColor)), SLOT(visualChanged()));
 	
-	connect(ui->camera, SIGNAL(pressed(cv::Mat, int, int)), SLOT(imagePressed(cv::Mat, int, int)));
+	connect(ui->camera, SIGNAL(pressed(kipr::camera::Image, int, int)), SLOT(imagePressed(kipr::camera::Image, int, int)));
 	
 	connect(ui->done, SIGNAL(clicked()), SLOT(done()));
 	
@@ -184,11 +177,34 @@ void HsvChannelConfigWidget::visualChanged()
 	blockChildSignals(false);
 }
 
-void HsvChannelConfigWidget::imagePressed(const cv::Mat &image, const int &x, const int &y)
+void HsvChannelConfigWidget::imagePressed(const kipr::camera::Image &image, const int &x, const int &y)
 {
-  // This is RGB, not BGR
-	cv::Vec3b data = image.at<cv::Vec3b>(y, x);
-	const QColor c(data[0], data[1], data[2]);
+	unsigned char r;
+	unsigned char g;
+	unsigned char b;
+
+	switch (image.getType()) {
+	case kipr::camera::Image::Type::Bgr888: {
+		const unsigned char *const data = image.getData() + y * image.getStride() + x * 3;
+		r = data[2];
+		g = data[1];
+		b = data[0];
+		break;
+	}
+	case kipr::camera::Image::Type::Rgb888: {
+		const unsigned char *const data = image.getData() + y * image.getStride() + x * 3;
+		r = data[0];
+		g = data[1];
+		b = data[2];
+		break;
+	}
+	default: {
+		qWarning() << "Unsupported image format";
+		return;
+	}
+	}
+	
+	const QColor c(r, g, b);
 	
 	int th = (c.hue() / 2 + 5) % 180;
 	int ts = c.saturation() + 40;

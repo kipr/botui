@@ -1,4 +1,4 @@
-#ifdef QT_DBUS_LIB
+
 
 #include "ConnectWidget.h"
 #include "ui_ConnectWidget.h"
@@ -10,19 +10,21 @@
 #include "OtherNetworkWidget.h"
 #include "Device.h"
 #include <QDebug>
+#include "Options.h"
 
 ConnectWidget::ConnectWidget(Device *device, QWidget *parent)
 	: StandardWidget(device, parent),
 	ui(new Ui::ConnectWidget),
 	m_model(new NetworkItemModel(this))
 {
+	
 	ui->setupUi(this);
 	performStandardSetup(tr("Connect"));
 	
 	m_model->setNetworks(NetworkManager::ref().accessPoints());
 	
 	ui->networks->setModel(m_model);
-	
+	ui->connect->setEnabled(true);
 	m_model->connect(&NetworkManager::ref(), SIGNAL(accessPointAdded(Network)),
 		SLOT(addNetwork(Network)));
 	m_model->connect(&NetworkManager::ref(), SIGNAL(accessPointRemoved(Network)),
@@ -35,6 +37,7 @@ ConnectWidget::ConnectWidget(Device *device, QWidget *parent)
 		SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
 		SLOT(selectionChanged(QItemSelection)));
 	selectionChanged(QItemSelection());
+
 }
 
 ConnectWidget::~ConnectWidget()
@@ -67,4 +70,3 @@ void ConnectWidget::selectionChanged(const QItemSelection &selection)
 	ui->connect->setEnabled(selection.indexes().size());
 }
 
-#endif
