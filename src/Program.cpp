@@ -1,7 +1,6 @@
 #include "Program.h"
 #include "SystemPrefix.h"
 
-
 #include <QDebug>
 #include <QThread>
 
@@ -10,21 +9,26 @@ Program::~Program()
 	stop();
 }
 
-bool Program::start(const QString& path, const QStringList &arguments)
+bool Program::start(const QString &program, const QString &workingDirectory, const QStringList &arguments)
 {
-	if(path.isEmpty()) return false;
+	if (program.isEmpty())
+		return false;
 	stop();
 	m_process = new QProcess(this);
-        QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-        const QString libPath = env.value("LD_LIBRARY_PATH");
-        env.insert("LD_LIBRARY_PATH", (libPath.isEmpty() ? "" : libPath + ":") + SystemPrefix::ref().rootManager()->libDirectoryPaths().join(":"));
-        m_process->setProcessEnvironment(env);
+	QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+	const QString libPath = env.value("LD_LIBRARY_PATH");
+	env.insert("LD_LIBRARY_PATH", (libPath.isEmpty() ? "" : libPath + ":") + SystemPrefix::ref().rootManager()->libDirectoryPaths().join(":"));
+	m_process->setProcessEnvironment(env);
 	m_process->setProcessChannelMode(QProcess::MergedChannels);
-	connect(m_process, SIGNAL(finished(int, QProcess::ExitStatus)), SIGNAL(finished(int, 		QProcess::ExitStatus)));
+	connect(m_process, SIGNAL(finished(int, QProcess::ExitStatus)), SIGNAL(finished(int, QProcess::ExitStatus)));
 	connect(m_process, SIGNAL(readyRead()), SIGNAL(readyRead()));
-	
-	m_process->start(path, arguments);
-	if(!m_process->waitForStarted()) {
+
+	if (!workingDirectory.isEmpty())
+		m_process->setWorkingDirectory(workingDirectory);
+
+	m_process->start(program, arguments);
+	if (!m_process->waitForStarted())
+	{
 		delete m_process;
 		m_process = 0;
 		return false;
@@ -36,11 +40,13 @@ bool Program::start(const QString& path, const QStringList &arguments)
 
 void Program::stop()
 {
-	if(!m_process) return;
+	if (!m_process)
+		return;
 	m_process->terminate();
-	if(!m_process->waitForFinished(2000)) m_process->kill();
-	//unused: const int msecs = m_time.elapsed();
-	// write(tr("Finished in %1 seconds").arg(msecs / 1000.0).toAscii());
+	if (!m_process->waitForFinished(2000))
+		m_process->kill();
+	// unused: const int msecs = m_time.elapsed();
+	//  write(tr("Finished in %1 seconds").arg(msecs / 1000.0).toAscii());
 	delete m_process;
 	m_process = 0;
 }
@@ -67,4 +73,4 @@ Program::Program()
 	m_time.start();
 }
 
-Program::Program(const Program&) {}
+Program::Program(const Program &) {}
