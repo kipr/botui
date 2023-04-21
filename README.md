@@ -21,7 +21,7 @@ git clone https://github.com/kipr/botui
 cd botui
 mkdir build
 cd build
-cmake ..
+cmake .. or /home/<container name>/qt-raspi/bin/qt-cmake -Ddocker_cross=ON .. (for docker cross compilation)
 make -j4
 sudo make install
 ```
