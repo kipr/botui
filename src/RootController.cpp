@@ -34,39 +34,48 @@ int RootController::presentDialog(QDialog *dialog)
 	return ret;
 }
 
-
 void RootController::presentWidget(QWidget *widget, bool owns)
 {
-		for(int i = 0; i < m_stack.size(); ++i) {
-		if(m_stack.at(i) == widget) m_stack.remove(i);
+	for (int i = 0; i < m_stack.size(); ++i)
+	{
+		if (m_stack.at(i) == widget)
+			m_stack.remove(i);
 	}
 	m_ownership[widget] = owns;
 	QWidget *prev = m_stack.size() ? m_stack.top() : 0;
-	m_stack.push(widget);
+	
 	constrain(widget);
-	if(prev) widget->move(prev->pos());
+	if (prev)
+		widget->move(prev->pos());
 	present(widget);
-	if(prev) prev->hide();
+	if (prev)
+		prev->hide();
+	m_stack.push(widget);
 }
 
 void RootController::dismissWidget()
 {
-	if(!m_dismissable) return;
+	if (!m_dismissable)
+		return;
 	QWidget *widget = m_stack.pop();
 	QWidget *next = m_stack.size() ? m_stack.top() : 0;
-	if(next) next->move(widget->pos());
+	if (next)
+		next->move(widget->pos());
 
 	present(next);
 
 	widget->hide();
-	if(m_ownership.value(widget)) widget->deleteLater();
+	if (m_ownership.value(widget))
+		widget->deleteLater();
 	m_ownership.remove(widget);
 }
 
 void RootController::dismissAllWidgets()
 {
-	if(!m_dismissable) return;
-	while(m_stack.size() > 1) dismissWidget();
+	if (!m_dismissable)
+		return;
+	while (m_stack.size() > 1)
+		dismissWidget();
 }
 
 void RootController::minimize()
