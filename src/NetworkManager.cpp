@@ -443,10 +443,10 @@ Connection NetworkManager::createAPConfig() const //Creates a default APName con
 
   DEFAULT_AP[NM_802_11_WIRELESS_KEY]["security"] = NM_802_11_SECURITY_KEY;
 
-  DEFAULT_AP[NM_802_11_SECURITY_KEY]["group"] = qSList;
+  //DEFAULT_AP[NM_802_11_SECURITY_KEY]["group"] = qSList;
   DEFAULT_AP[NM_802_11_SECURITY_KEY]["key-mgmt"] = "wpa-psk";
-  DEFAULT_AP[NM_802_11_SECURITY_KEY]["pairwise"] = qSList;
-  DEFAULT_AP[NM_802_11_SECURITY_KEY]["proto"] = qProtoList;
+ //DEFAULT_AP[NM_802_11_SECURITY_KEY]["pairwise"] = qSList;
+  //DEFAULT_AP[NM_802_11_SECURITY_KEY]["proto"] = qProtoList;
 
   DEFAULT_AP[NM_802_11_SECURITY_KEY]["psk"] = "kipr4609";
 
