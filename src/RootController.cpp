@@ -34,27 +34,30 @@ int RootController::presentDialog(QDialog *dialog)
 	return ret;
 }
 
-void RootController::printStack()
-{
-	foreach (QWidget *widge, m_stack)
-	{
-		qDebug() << widge << " Name: " << widge->objectName();
-	}
-}
 void RootController::presentWidget(QWidget *widget, bool owns)
 {
-	for (int i = 0; i < m_stack.size(); ++i)
+	foreach (QWidget *wid, m_stack)
 	{
-		if (m_stack.at(i) == widget)
-			m_stack.remove(i);
+		qDebug() << "Current Stack BEFORE push: " << wid << " Current Stack Size: " << m_stack.size();
 	}
+	// for (int i = 1; i < m_stack.size(); ++i)
+	// {
+
+	// 	if (m_stack.at(i) == widget)
+	// 		m_stack.remove(i);
+	// }
 	m_ownership[widget] = owns;
 	QWidget *prev = m_stack.size() ? m_stack.top() : 0;
 	m_stack.push(widget);
-	constrain(widget); // constrain size of widget
+	constrain(widget);
 	if (prev)
 		widget->move(prev->pos());
 	present(widget);
+
+	foreach (QWidget *wid, m_stack)
+	{
+		qDebug() << "Currently presenting: " << wid;
+	}
 	if (prev)
 		prev->hide();
 }
@@ -63,14 +66,8 @@ void RootController::dismissWidget()
 {
 	if (!m_dismissable)
 		return;
-	// QWidget *widget = m_stack.pop();
-
-	QWidget *widget = m_stack.top(); // reference to top of stack
-
-	widget = m_stack.pop();
-	qDebug() << "Trying to dismiss Widget: " << widget->objectName();
+	QWidget *widget = m_stack.pop();
 	QWidget *next = m_stack.size() ? m_stack.top() : 0;
-	qDebug() << "Next Widget is:" << next->objectName();
 	if (next)
 		next->move(widget->pos());
 
@@ -88,8 +85,6 @@ void RootController::dismissAllWidgets()
 		return;
 	while (m_stack.size() > 1) // Remaining: HomeWidget
 		dismissWidget();
-	printStack();
-	present(m_stack.at(0));
 }
 
 void RootController::minimize()

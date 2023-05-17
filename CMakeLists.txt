@@ -3,6 +3,7 @@ project(botui)
 option(wombat "Use the Wombat controller" ON)
 option(DEBUG "Enable debug mode" OFF)
 option(RELEASE "Enable release mode" OFF)
+option(docker_cross "Cross compile option for docker container" OFF)
 
 cmake_minimum_required(VERSION 2.8.11)
 
@@ -17,6 +18,16 @@ if(${wombat})
 else()
 	# toolchain file that includes Qt6 utilities
 	include(localtoolchain.cmake)
+endif()
+
+if(docker_cross)
+	set(LIBKAR_ROOT ${CMAKE_SOURCE_DIR}/../libkar)
+	set(PCOMPILER_ROOT ${CMAKE_SOURCE_DIR}/../pcompiler)
+	set(LIBKIPR_ROOT ${CMAKE_SOURCE_DIR}/../libwallaby)
+	link_directories("${LIBKAR_ROOT}/lib")
+	link_directories("${PCOMPILER_ROOT}/lib")
+	link_directories("${LIBKIPR_ROOT}/build")
+	include_directories(/usr/local/include)
 endif()
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/deploy)
@@ -43,7 +54,7 @@ include_directories(
 
 
   
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Network Quick QuickWidgets QuickControls2 SvgWidgets)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Network Quick QuickWidgets QuickControls2)
  
 
 
@@ -102,7 +113,6 @@ target_link_libraries(botui
 	Qt6::QuickWidgets
 	Qt6::Widgets
 	Qt6::QuickControls2
-	Qt6::SvgWidgets
 	network_manager_dbus
 	pcompiler
 	z
@@ -119,3 +129,10 @@ target_link_libraries(botui ${QT_LIBRARIES})
 
 install(TARGETS botui DESTINATION bin)
 install(FILES ${QM_FILES} DESTINATION "/etc/botui/locale")
+
+set(CPACK_PACKAGE_NAME botui)
+set(CPACK_GENERATOR "DEB")
+set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE arm64)
+set(CPACK_DEBIAN_PACKAGE_MAINTAINER "KISS Institute for Practical Robotics")
+set(CPACK_PACKAGING_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
+include(CPack)

@@ -60,6 +60,5 @@ int main(int argc, char *argv[])
 
   RootController::ref().presentWidget(new HomeWidget(&device));
 
-  RootController::ref().printStack();
   return app.exec();
 }

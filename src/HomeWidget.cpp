@@ -74,7 +74,7 @@ void HomeWidget::settings()
 void HomeWidget::about()
 {
 	RootController::ref().presentWidget(new AboutWidget(device()));
-	RootController::ref().printStack();
+	
 }
 
 void HomeWidget::shutDown()

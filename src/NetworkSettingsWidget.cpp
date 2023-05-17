@@ -97,10 +97,10 @@ void NetworkSettingsWidget::TournamentMode()
 
 void NetworkSettingsWidget::indexChanged(int index)
 {
+
 	if (firstTimeSetup)
 		return;
 	qDebug() << "going to change stuff in index changed";
-	if (index == 1) // AP mode
 	{
 		ui->ConnectButton->setEnabled(false);
 		NetworkManager::ref().turnOn(); // turn on before enabling AP in case wifi was off before
@@ -109,7 +109,6 @@ void NetworkSettingsWidget::indexChanged(int index)
 	else if (index == 2) // Wifi on (client mode)
 	{
 		NetworkManager::ref().disableAP();
-		NetworkManager::ref().turnOn();
 		ui->ConnectButton->setEnabled(true);
 	}
 	else if (index == 3) // Wifi off
@@ -138,7 +137,8 @@ void NetworkSettingsWidget::manage() // Forget or add network to history
 void NetworkSettingsWidget::updateInformation()
 {
 	const bool on = NetworkManager::ref().isOn(); //
-	ui->state->setText(on ? tr("ON") : tr("OFF"));
+	ui->ssid->setText(NetworkManager::ref().currentActiveConnectionName());
+	ui->ip->setText(NetworkManager::ref().ip4Address());
 
 	// clear old values
 	ui->ssid->setText("");
