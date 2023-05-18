@@ -332,22 +332,14 @@ void NetworkManager::turnOff()
 
 bool NetworkManager::enableAP()
 {
+  m_nm->DeactivateConnection(m_device->activeConnection()).waitForFinished();
   if (DEFAULT_AP[NM_802_11_WIRELESS_KEY]["mode"] != "ap") // If DEFAULT_AP configuration doesn't exist yet
   {
     qDebug() << "in first thing";
     createAPConfig();
-    Network APN = networkFromConnection(DEFAULT_AP);
-
-    addNetwork(APN);
   }
-  else // If DEFAULT_AP configuration exists already
-  {
-    m_nm->DeactivateConnection(m_device->activeConnection());
-    QDBusPendingReply<QDBusObjectPath, QDBusObjectPath> reply = m_nm->AddAndActivateConnection(DEFAULT_AP, devicePath, QDBusObjectPath("/"));
-    reply.waitForFinished();
-    AP_PATH = reply.value();
-    qDebug() << "AP path is now " << AP_PATH.path();
-  }
+  Network APN = networkFromConnection(DEFAULT_AP);
+  addNetwork(APN);
   return true;
 }
 
