@@ -101,6 +101,7 @@ void NetworkSettingsWidget::indexChanged(int index)
 	if (firstTimeSetup)
 		return;
 	qDebug() << "going to change stuff in index changed";
+	if (index == 1) // Wifi on (AP mode)
 	{
 		ui->ConnectButton->setEnabled(false);
 		NetworkManager::ref().turnOn(); // turn on before enabling AP in case wifi was off before
@@ -137,8 +138,6 @@ void NetworkSettingsWidget::manage() // Forget or add network to history
 void NetworkSettingsWidget::updateInformation()
 {
 	const bool on = NetworkManager::ref().isOn(); //
-	ui->ssid->setText(NetworkManager::ref().currentActiveConnectionName());
-	ui->ip->setText(NetworkManager::ref().ip4Address());
 
 	// clear old values
 	ui->ssid->setText("");

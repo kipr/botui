@@ -69,7 +69,7 @@ QDBusObjectPath AP_PATH;
 Connection DEFAULT_AP;
 
 #ifndef WOMBAT
-#define WIFI_DEVICE "wlp3s0" // varies per pc, almost always need to change this on different computers
+#define WIFI_DEVICE "wlp2s0" // varies per pc, almost always need to change this on different computers
 #define AP_NAME "COOL_NETWORK"
 #define AP_SSID QByteArray("COOL_NETWORK")
 #define AP_PASSWORD "COOL_PASSWORD"
@@ -103,14 +103,6 @@ void NetworkManager::addNetwork(const Network &network)
     connection["connection"]["uuid"] = QUuid::createUuid().toString().remove('{').remove('}');
     // File name is just the SSID for now
     connection["connection"]["id"] = network.ssid();
-    if (network.ssid().toLatin1() != "APName")
-    {
-      connection["connection"]["autoconnect-priority"] = 100;
-    }
-    else
-    {
-      connection["connection"]["autoconnect-priority"] = -900;
-    }
 
     // SSID
     connection[NM_802_11_WIRELESS_KEY]["ssid"] = network.ssid().toLatin1();
@@ -197,6 +189,11 @@ void NetworkManager::addNetwork(const Network &network)
           QDBusConnection::systemBus());
 
       QDBusPendingReply<QMap<QString, QMap<QString, QVariant>>> secr = apSettInt.GetSecrets("802-11-wireless-security.psk");
+      secr.waitForFinished();
+      if (secr.isError())
+      {
+        qDebug() << "Errored while getting secrets: " << secr.error();
+      }
       QMap<QString, QMap<QString, QVariant>> secrReply = secr.value();
 
       qDebug() << "AP Secrets:" << secrReply.values();
@@ -222,13 +219,19 @@ void NetworkManager::addNetwork(const Network &network)
       }
 
       AP_PATH = settings.AddConnection(DEFAULT_AP);
-      m_nm->ActivateConnection(AP_PATH, devicePath, QDBusObjectPath("/"));
     }
     else
     { // if AP Config in Settings DOES exist already
       AP_PATH = apPathConn;
       qDebug() << "AP_PATH (does exist) = " << AP_PATH.path();
-      m_nm->ActivateConnection(AP_PATH, devicePath, QDBusObjectPath("/"));
+    }
+
+    // activate it
+    QDBusPendingReply<QDBusObjectPath> reply = m_nm->ActivateConnection(AP_PATH, devicePath, QDBusObjectPath("/"));
+    reply.waitForFinished();
+    if (reply.isError())
+    {
+      qDebug() << "ERROR second:: " << reply.error();
     }
   }
 
@@ -331,6 +334,7 @@ bool NetworkManager::enableAP()
 {
   if (DEFAULT_AP[NM_802_11_WIRELESS_KEY]["mode"] != "ap") // If DEFAULT_AP configuration doesn't exist yet
   {
+    qDebug() << "in first thing";
     createAPConfig();
     Network APN = networkFromConnection(DEFAULT_AP);
 
@@ -342,6 +346,7 @@ bool NetworkManager::enableAP()
     QDBusPendingReply<QDBusObjectPath, QDBusObjectPath> reply = m_nm->AddAndActivateConnection(DEFAULT_AP, devicePath, QDBusObjectPath("/"));
     reply.waitForFinished();
     AP_PATH = reply.value();
+    qDebug() << "AP path is now " << AP_PATH.path();
   }
   return true;
 }
@@ -349,78 +354,12 @@ bool NetworkManager::enableAP()
 bool NetworkManager::disableAP()
 {
   QDBusObjectPath curCon = m_device->activeConnection();
-
-  m_nm->DeactivateConnection(AP_PATH);                   // Deactivates AP path
-  m_nm->DeactivateConnection(curCon);                    // Deactivates current connection
-  const char apDec[] = {65, 80, 78, 97, 109, 101};       // Array containing "APName" in chars
-  QByteArray apArray(QByteArray::fromRawData(apDec, 6)); // Creates QByteArray from chars
-
-  NetworkList currentNetworks = accessPoints(); // Get all networks
-
-  /*
-  This foreach iterates over each known network to check if the network ssid matches
-  APName
-  */
-  foreach (const Network &net, currentNetworks)
+  QDBusPendingReply<> reply = m_nm->DeactivateConnection(curCon);
+  reply.waitForFinished();
+  if (reply.isError())
   {
-
-    OrgFreedesktopNetworkManagerAccessPointInterface accessPointObject(
-        NM_SERVICE,
-        net.apPath(),
-        QDBusConnection::systemBus());
-
-    int compare;
-
-    QByteArray apSsid(QByteArray::fromRawData(accessPointObject.ssid(), 6));
-    compare = memcmp(apSsid, apArray, 6);
-    if (compare == 0)
-    {
-      forgetNetwork(net); // Forget network if network is APName
-    }
+    qDebug() << "Errored while disabling AP: " << reply.error();
   }
-
-  sleep(1);
-
-  NetworkList nets = networks(); // Gets all known networks
-
-  OrgFreedesktopNetworkManagerSettingsConnectionInterface conn(
-      NM_SERVICE,
-      AP_PATH.path(),
-      QDBusConnection::systemBus());
-
-  OrgFreedesktopNetworkManagerSettingsInterface settings(
-      NM_SERVICE,
-      NM_OBJECT "/Settings",
-      QDBusConnection::systemBus());
-
-  conn.Delete(); // Deletes APName connection
-
-  /*Connection deleted due to NM trying to make another access point and autoconnects*/
-
-  QDBusObjectPath selectedNet;
-  QList<QDBusObjectPath> listedConnections = settings.ListConnections(); // All settings connections known
-
-  /*
-  Foreach iterates over known networks, compares to all networks, grabs the matching
-  access point object path and activates the connection
-  */
-  foreach (const QDBusObjectPath &settingPath, listedConnections)
-  {
-
-    OrgFreedesktopNetworkManagerSettingsConnectionInterface conn(
-        NM_SERVICE,
-        settingPath.path(),
-        QDBusConnection::systemBus());
-
-    Connection details = conn.GetSettings().value();
-
-    if (details["connection"]["id"] == nets[0].ssid())
-    {
-      selectedNet = settingPath;
-    }
-  }
-  m_nm->ActivateConnection(selectedNet, devicePath, QDBusObjectPath("/"));
-
   return true;
 }
 
@@ -434,15 +373,13 @@ Connection NetworkManager::createAPConfig() const // Creates a default APName co
   // nmcli connection modify CONNECTION_NAME wifi-sec.key-mgmt wpa-psk wifi-sec.psk PASSWORD
   // nmcli connection up CONNECTION_NAME
   // nmcli connection show CONNECTION_NAME # this gets the details that we try to emulate
-  Connection apConfig;
   DEFAULT_AP["ipv4"]["method"] = "shared";
   DEFAULT_AP["ipv6"]["method"] = "auto";
   DEFAULT_AP["connection"]["type"] = "802-11-wireless";
   DEFAULT_AP["connection"]["uuid"] = QUuid::createUuid().toString().remove('{').remove('}');
   // File name is just the SSID for now
   DEFAULT_AP["connection"]["id"] = AP_NAME;
-  apConfig["connection"]["autoconnect"] = false;
-  DEFAULT_AP["connection"]["autoconnect-priority"] = -900;
+  DEFAULT_AP["connection"]["autoconnect"] = true;
   DEFAULT_AP["connection"]["interface-name"] = WIFI_DEVICE;
   // SSID
   DEFAULT_AP[NM_802_11_WIRELESS_KEY]["ssid"] = AP_SSID;
