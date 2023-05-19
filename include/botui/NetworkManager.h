@@ -14,6 +14,7 @@
 #include <QObject>
 
 #include <QDBusObjectPath>
+#include <QDBusReply>
 
 class OrgFreedesktopNetworkManagerInterface;
 class OrgFreedesktopNetworkManagerDeviceInterface;
@@ -93,6 +94,40 @@ private slots:
 private:
 	Network networkFromConnection(const Connection &connection) const;
 	Network createAccessPoint(const QDBusObjectPath &accessPoint) const;
+
+	/**
+	 * @brief Get the Password of a specific network
+	 *
+	 * @param ssid the ssid of the network
+	 * @return QString the password, if available, else ""
+	 */
+	QString getPassword(QString ssid) const;
+
+	/**
+	 * @brief Get the Reply object
+	 * @throws QDBusError - if the reply errored
+	 *
+	 * @param reply - the reply to wait for
+	 * @param where - if errors, where did it error
+	 */
+	void getReply(QDBusPendingReply<> &reply, const QString where = "getting reply") const;
+
+	/**
+	 * @brief Get the Reply object
+	 * @throws QDBusError - if the reply errored
+	 *
+	 * @tparam Value
+	 * @tparam Other
+	 * @param reply the reply to wait for
+	 * @param where if errors, where did it error
+	 * @return Value the returned value
+	 */
+	template <typename Value, typename... Other>
+	Value getReply(QDBusPendingReply<Value, Other...> &reply, const QString where = "getting reply") const
+	{
+		getReply(reinterpret_cast<QDBusPendingReply<> &>(reply), where);
+		return reply.value();
+	}
 
 	NetworkList m_accessPoints;
 	QDBusObjectPath devicePath;

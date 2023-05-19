@@ -188,7 +188,7 @@ void NetworkManager::addNetwork(const Network &network)
           connectionPath.path(),
           QDBusConnection::systemBus());
 
-      QDBusPendingReply<QMap<QString, QMap<QString, QVariant>>> secr = apSettInt.GetSecrets("802-11-wireless-security.psk");
+      QDBusPendingReply<QMap<QString, QMap<QString, QVariant>>> secr = apSettInt.GetSecrets("psk");
       secr.waitForFinished();
       if (secr.isError())
       {
@@ -218,7 +218,8 @@ void NetworkManager::addNetwork(const Network &network)
         m_nm->DeactivateConnection(curCon);
       }
 
-      AP_PATH = settings.AddConnection(DEFAULT_AP);
+      QDBusPendingReply<QDBusObjectPath> reply = settings.AddConnection(DEFAULT_AP);
+      AP_PATH = getReply(reply, "adding AP");
     }
     else
     { // if AP Config in Settings DOES exist already
@@ -228,11 +229,7 @@ void NetworkManager::addNetwork(const Network &network)
 
     // activate it
     QDBusPendingReply<QDBusObjectPath> reply = m_nm->ActivateConnection(AP_PATH, devicePath, QDBusObjectPath("/"));
-    reply.waitForFinished();
-    if (reply.isError())
-    {
-      qDebug() << "ERROR second:: " << reply.error();
-    }
+    getReply(reply, "activating AP");
   }
 
   emit networkAdded(network);
@@ -302,10 +299,8 @@ void NetworkManager::requestScan()
     return;
   qDebug() << "Requesting scan";
   QDBusPendingReply<> reply = m_wifi->RequestScan(StringVariantMap());
-  reply.waitForFinished();
-  if (!reply.isError())
-    return;
-  qWarning() << "NetworkManager::requestScan" << reply.error().message();
+
+  getReply(reply, "NetworkManager::requestScan");
 }
 
 #define NETWORK_MANAGER_GROUP "NetworkManager"
@@ -347,11 +342,7 @@ bool NetworkManager::disableAP()
 {
   QDBusObjectPath curCon = m_device->activeConnection();
   QDBusPendingReply<> reply = m_nm->DeactivateConnection(curCon);
-  reply.waitForFinished();
-  if (reply.isError())
-  {
-    qDebug() << "Errored while disabling AP: " << reply.error();
-  }
+  getReply(reply, "disabling AP");
   return true;
 }
 
@@ -420,36 +411,7 @@ QString NetworkManager::activeConnectionPassword() const
   {
     return "";
   }
-  OrgFreedesktopNetworkManagerSettingsInterface settings(
-      NM_SERVICE,
-      NM_OBJECT "/Settings",
-      QDBusConnection::systemBus());
-  QList<QDBusObjectPath> connections = settings.ListConnections();
-
-  Q_FOREACH (const QDBusObjectPath &connectionPath, connections)
-  {
-    OrgFreedesktopNetworkManagerSettingsConnectionInterface conn(
-        NM_SERVICE,
-        connectionPath.path(),
-        QDBusConnection::systemBus());
-
-    Connection details = conn.GetSettings().value();
-
-    if (details["802-11-wireless"]["ssid"].toString() == active().ssid())
-    {
-      QDBusPendingReply<Connection> reply = conn.GetSecrets("802-11-wireless-security");
-      reply.waitForFinished();
-      if (reply.isError()) // might happen for wired connections
-      {
-        qDebug() << "reply error " << reply.error();
-      }
-      else
-      {
-        return reply.value()["802-11-wireless-security"]["psk"].toString();
-      }
-    }
-  }
-  return "";
+  return getPassword(active().ssid());
 }
 
 bool NetworkManager::isActiveConnectionOn() const
@@ -721,4 +683,47 @@ Network NetworkManager::createAccessPoint(const QDBusObjectPath &accessPoint) co
   }
 
   return newNetwork;
+}
+
+QString NetworkManager::getPassword(QString ssid) const
+{
+  OrgFreedesktopNetworkManagerSettingsInterface settings(
+      NM_SERVICE,
+      NM_OBJECT "/Settings",
+      QDBusConnection::systemBus());
+  QList<QDBusObjectPath> connections = settings.ListConnections();
+
+  Q_FOREACH (const QDBusObjectPath &connectionPath, connections)
+  {
+    OrgFreedesktopNetworkManagerSettingsConnectionInterface conn(
+        NM_SERVICE,
+        connectionPath.path(),
+        QDBusConnection::systemBus());
+
+    Connection details = conn.GetSettings().value();
+
+    if (details[NM_802_11_WIRELESS_KEY]["ssid"].toString() == ssid)
+    {
+      QDBusPendingReply<Connection> reply = conn.GetSecrets(NM_802_11_SECURITY_KEY);
+      try
+      {
+        return getReply(reply, "getting password")[NM_802_11_SECURITY_KEY]["psk"].toString();
+      }
+      catch (QDBusError &e)
+      {
+        return "";
+      }
+    }
+  }
+  return "";
+}
+
+void NetworkManager::getReply(QDBusPendingReply<> &reply, const QString where) const
+{
+  reply.waitForFinished();
+  if (reply.isError())
+  {
+    qDebug() << "ERROR in " << where << ":" << reply.error();
+    throw reply.error();
+  }
 }

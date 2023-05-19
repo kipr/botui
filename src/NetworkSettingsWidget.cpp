@@ -89,10 +89,7 @@ void NetworkSettingsWidget::setupConnectionModeSelect()
 
 void NetworkSettingsWidget::TournamentMode()
 {
-	system("sudo iwconfig wlan0 txpower 1");
-	QMessageBox msgBox;
-	msgBox.setText("Tournament Mode activated");
-	msgBox.exec();
+	ui->connectionModeSelect->setCurrentIndex(3); // tournament mode = turn off wifi
 }
 
 void NetworkSettingsWidget::indexChanged(int index)
@@ -137,8 +134,6 @@ void NetworkSettingsWidget::manage() // Forget or add network to history
 
 void NetworkSettingsWidget::updateInformation()
 {
-	const bool on = NetworkManager::ref().isOn(); //
-
 	// clear old values
 	ui->ssid->setText("");
 	ui->ip->setText("");
