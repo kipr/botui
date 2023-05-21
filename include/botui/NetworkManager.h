@@ -92,6 +92,14 @@ private slots:
 	void stateChangedBouncer(uint newState, uint oldState);
 
 private:
+	/**
+	 * @brief Activates the given connection, and adds it if it
+	 * wasn't already in system connections
+	 *
+	 * @return QDBusObjectPath the dbus path corresponding to the connection
+	 */
+	QDBusObjectPath activateConnection(const Connection &connection);
+
 	Network networkFromConnection(const Connection &connection) const;
 	Network createAccessPoint(const QDBusObjectPath &accessPoint) const;
 
@@ -138,8 +146,8 @@ private:
 	 * @brief Get the Reply object
 	 * @throws QDBusError - if the reply errored
 	 *
-	 * @tparam Value
-	 * @tparam Other
+	 * @tparam Value - return type
+	 * @tparam Other - any additional types
 	 * @param reply the reply to wait for
 	 * @param where if errors, where did it error
 	 * @return Value the returned value

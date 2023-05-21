@@ -89,12 +89,17 @@ NetworkManager::~NetworkManager()
 
 void NetworkManager::addNetwork(const Network &network)
 {
-  // Yes, yes... this is a hard coded mess.
-  // Maybe this should be generalized in the future.
-  qDebug() << "Network Mode: " << network.mode();
-  if (network.mode() == Network::Infrastructure)
+  // deactivate current connection (necessary to properly add/activate new connection)
+  if (isActiveConnectionOn())
   {
-    Connection connection;
+    QDBusObjectPath curCon = m_device->activeConnection();
+    m_nm->DeactivateConnection(curCon);
+  }
+
+  qDebug() << "Network Mode: " << network.mode();
+  if (network.mode() == Network::Infrastructure) // create the connection from the network
+  {
+    Connection connection; // connection that will be activated
     connection["ipv4"]["method"] = "auto";
     connection["ipv6"]["method"] = "auto";
 
@@ -142,60 +147,14 @@ void NetworkManager::addNetwork(const Network &network)
       connection[NM_802_11_WIRELESS_KEY]["security"] = NM_802_11_SECURITY_KEY;
     }
 
-    // Send our config via dbus to NetworkManager
-    OrgFreedesktopNetworkManagerSettingsInterface settings(
-        NM_SERVICE,
-        NM_OBJECT "/Settings",
-        QDBusConnection::systemBus());
-    qDebug() << "Given Network: " << network << "with AP path: " << network.apPath();
-    qDebug() << "Given Network: " << network << "with config path: " << connection;
-    Network foundNetwork;
-
-    // Iterate through known Access Points to find desired network to add
-    foreach (const Network &nw, accessPoints())
-    {
-      if (nw.ssid() == network.ssid())
-      {
-        // qDebug() << "AP Path: " << nw.apPath();
-        foundNetwork = nw;
-        qDebug() << "Found network: " << foundNetwork << "with path: " << foundNetwork.apPath();
-        m_nm->AddAndActivateConnection(connection, devicePath, QDBusObjectPath(foundNetwork.apPath()));
-
-        break;
-      }
-    }
+    // activate the connection we've created
+    activateConnection(connection);
   }
 
   if (network.mode() == Network::AP)
   {
-    // get the connection and path
-    QPair<Connection, QDBusObjectPath> pair = getConnection(AP_NAME);
-    if (!pair.first.isEmpty()) // the connection existed already
-    {
-      AP_PATH = pair.second;
-      qDebug() << "AP Path Connection " << AP_NAME << " already exists";
-    }
-    else // if AP Config in Settings doesn't exist already
-    {
-      // deactivate current connection
-      if (m_device->activeConnection().path() != "")
-      {
-        QDBusObjectPath curCon = m_device->activeConnection();
-        m_nm->DeactivateConnection(curCon);
-      }
-
-      // add access point to connections
-      OrgFreedesktopNetworkManagerSettingsInterface settings(
-          NM_SERVICE,
-          NM_OBJECT "/Settings",
-          QDBusConnection::systemBus());
-      QDBusPendingReply<QDBusObjectPath> reply = settings.AddConnection(DEFAULT_AP);
-      AP_PATH = getReply(reply, "adding AP");
-    }
-
-    // activate it
-    QDBusPendingReply<QDBusObjectPath> reply = m_nm->ActivateConnection(AP_PATH, devicePath, QDBusObjectPath("/"));
-    getReply(reply, "activating AP");
+    // activate DEFAULT_AP
+    AP_PATH = activateConnection(DEFAULT_AP);
   }
 
   emit networkAdded(network);
@@ -542,6 +501,28 @@ void NetworkManager::stateChangedBouncer(uint newState, uint oldState)
   emit stateChanged(networkStateNew, networkStateOld);
 }
 
+QDBusObjectPath NetworkManager::activateConnection(const Connection &connection)
+{
+  QDBusObjectPath connectionPath;
+  QPair<Connection, QDBusObjectPath> pair = getConnection(connection[NM_802_11_WIRELESS_KEY]["ssid"].toString());
+  if (!pair.first.isEmpty()) // the connection existed already
+  {
+    connectionPath = pair.second;
+  }
+  else
+  {
+    // add access point to connections
+    OrgFreedesktopNetworkManagerSettingsInterface settings(
+        NM_SERVICE,
+        NM_OBJECT "/Settings",
+        QDBusConnection::systemBus());
+    QDBusPendingReply<QDBusObjectPath> reply = settings.AddConnection(connection);
+    connectionPath = getReply(reply, "adding connection to system connections");
+  }
+  m_nm->ActivateConnection(connectionPath, devicePath, connectionPath);
+  return connectionPath;
+}
+
 Network NetworkManager::networkFromConnection(const Connection &connection) const
 {
   // setup variables
@@ -568,7 +549,7 @@ Network NetworkManager::networkFromConnection(const Connection &connection) cons
   // Technically, password only applies to WEP connections. We always store both password
   // and psk, however, so it is a somewhat safe assumption to only try the password
   // entry.
-  network.setPassword(connection[NM_802_11_SECURITY_KEY]["psk"].toString());
+  network.setPassword(getPassword(network.ssid()));
   return network;
 }
 
@@ -586,24 +567,16 @@ Network NetworkManager::createAccessPoint(const QDBusObjectPath &accessPoint) co
   newNetwork.setAPPath(accessPoint.path());
 
   // Security
-  const uint securityMode = accessPointObject.wpaFlags();
-
-  // FIXME: How do we detect Wpa Enterprise?
-  // What about Dynamic WEP?
-  switch (securityMode)
+  // see https://developer-old.gnome.org/NetworkManager/stable/nm-dbus-types.html#NM80211ApFlags
+  const uint flags = accessPointObject.flags();
+  if (flags <= 4)
   {
-  case NM_802_11_AP_SEC_NONE:
+    newNetwork.setSecurity(static_cast<Network::Security>(flags));
+  }
+  else
+  {
+    // fallback is no security
     newNetwork.setSecurity(Network::None);
-    break;
-  case NM_802_11_AP_SEC_PAIR_WEP40:
-  case NM_802_11_AP_SEC_PAIR_WEP104:
-  case NM_802_11_AP_SEC_GROUP_WEP40:
-  case NM_802_11_AP_SEC_GROUP_WEP104:
-    newNetwork.setSecurity(Network::Wep);
-    break;
-  default:
-    newNetwork.setSecurity(Network::Wpa);
-    break;
   }
 
   // Mode
@@ -623,6 +596,10 @@ Network NetworkManager::createAccessPoint(const QDBusObjectPath &accessPoint) co
     newNetwork.setMode(Network::Unknown);
     break;
   }
+
+  // set password, if available. Note that this works even if the security is None because
+  // then the value returned will just be ""
+  newNetwork.setPassword(getPassword(newNetwork.ssid()));
 
   return newNetwork;
 }
