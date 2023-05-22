@@ -9,16 +9,16 @@ class Device;
 
 class KovanSerialBridge : public QObject, public Singleton<KovanSerialBridge>
 {
-	Q_OBJECT
+Q_OBJECT
 public:
 	KovanSerialBridge();
 
 	void init(Device *device);
-
+	
 private slots:
-	void newConnection();
-	void run(const QString &program);
-
+  void newConnection();
+	void run(const QString &path);
+	
 private:
 	Device *m_device;
 };
