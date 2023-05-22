@@ -1,247 +1,230 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
-  <class>ServosWidget</class>
-  <widget class="QWidget" name="ServosWidget">
-    <property name="geometry">
-      <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>800</width>
-        <height>480</height>
-      </rect>
-    </property>
-    <property name="windowTitle">
-      <string>Servos</string>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout_4">
-      <property name="leftMargin">
-        <number>6</number>
-      </property>
-      <property name="topMargin">
-        <number>6</number>
-      </property>
-      <property name="rightMargin">
-        <number>6</number>
-      </property>
-      <property name="bottomMargin">
+ <class>ServosWidget</class>
+ <widget class="QWidget" name="ServosWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>480</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Servos</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_4">
+   <property name="leftMargin">
+    <number>6</number>
+   </property>
+   <property name="topMargin">
+    <number>6</number>
+   </property>
+   <property name="rightMargin">
+    <number>6</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,0">
+       <property name="spacing">
         <number>0</number>
-      </property>
-      <item>
-        <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0">
-          <item>
-            <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,0">
-              <property name="spacing">
-                <number>10</number>
-              </property>
-              <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_1">
-                  <item>
-                    <widget class="TouchSlider" name="slider">
-                      <property name="font">
-                        <font>
-                          <pointsize>22</pointsize>
-                        </font>
-                      </property>
-                      <property name="orientation">
-                        <set>Qt::Vertical</set>
-                      </property>
-                      <property name="minimumSize">
-                        <size>
-                          <width>75</width>
-                          <height>300</height>
-                        </size>
-                      </property>
-                    </widget>
-                  </item>
-                </layout>
-              </item>
-              <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_2">
-                  <item>
-                    <widget class="LineEdit" name="number">
-                      <property name="font">
-                        <font>
-                          <pointsize>22</pointsize>
-                        </font>
-                      </property>
-                    </widget>
-                  </item>
-                </layout>
-              </item>
-            </layout>
-          </item>
-          <item>
-            <layout class="QVBoxLayout" name="verticalLayout">
-              <property name="spacing">
-                <number>6</number>
-              </property>
-              <item>
-                <widget class="QLabel" name="label">
-                  <property name="font">
-                    <font>
-                      <pointsize>33</pointsize>
-                    </font>
-                  </property>
-                  <property name="text">
-                    <string>Servos</string>
-                  </property>
-                  <property name="alignment">
-                    <set>Qt::AlignCenter</set>
-                  </property>
-                </widget>
-              </item>
-              <item>
-                <widget class="QPushButton" name="port_0">
-                  <property name="minimumSize">
-                    <size>
-                      <width>280</width>
-                      <height>0</height>
-                    </size>
-                  </property>
-                  <property name="font">
-                    <font>
-                      <pointsize>33</pointsize>
-                    </font>
-                  </property>
-                  <property name="text">
-                    <string>Port 0</string>
-                  </property>
-                  <property name="icon">
-                    <iconset resource="../rc/icons.qrc">
-                      <normaloff>:/icons/bullet_blue.png</normaloff>:/icons/bullet_blue.png</iconset>
-                  </property>
-                </widget>
-              </item>
-              <item>
-                <widget class="QPushButton" name="port_1">
-                  <property name="font">
-                    <font>
-                      <pointsize>33</pointsize>
-                    </font>
-                  </property>
-                  <property name="text">
-                    <string>Port 1</string>
-                  </property>
-                  <property name="icon">
-                    <iconset resource="../rc/icons.qrc">
-                      <normaloff>:/icons/bullet_yellow.png</normaloff>:/icons/bullet_yellow.png</iconset>
-                  </property>
-                </widget>
-              </item>
-              <item>
-                <widget class="QPushButton" name="port_2">
-                  <property name="font">
-                    <font>
-                      <pointsize>33</pointsize>
-                    </font>
-                  </property>
-                  <property name="text">
-                    <string>Port 2</string>
-                  </property>
-                  <property name="icon">
-                    <iconset resource="../rc/icons.qrc">
-                      <normaloff>:/icons/bullet_red.png</normaloff>:/icons/bullet_red.png</iconset>
-                  </property>
-                </widget>
-              </item>
-              <item>
-                <widget class="QPushButton" name="port_3">
-                  <property name="font">
-                    <font>
-                      <pointsize>33</pointsize>
-                    </font>
-                  </property>
-                  <property name="text">
-                    <string>Port 3</string>
-                  </property>
-                  <property name="icon">
-                    <iconset resource="../rc/icons.qrc">
-                      <normaloff>:/icons/bullet_green.png</normaloff>:/icons/bullet_green.png</iconset>
-                  </property>
-                </widget>
-              </item>
-              <item>
-                <spacer name="verticalSpacer">
-                  <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                    <size>
-                      <width>20</width>
-                      <height>40</height>
-                    </size>
-                  </property>
-                </spacer>
-              </item>
-              <item>
-                <widget class="QPushButton" name="enable">
-                  <property name="font">
-                    <font>
-                      <pointsize>33</pointsize>
-                    </font>
-                  </property>
-                  <property name="text">
-                    <string>Enable</string>
-                  </property>
-                  <property name="icon">
-                    <iconset resource="../rc/icons.qrc">
-                      <normaloff>
-                      :/icons/fontawesome/regular/icons/fontawesome/regular/play-circle.svg</normaloff>
-                      :/icons/fontawesome/regular/icons/fontawesome/regular/play-circle.svg</iconset>
-                  </property>
-                  <property name="iconSize">
-                    <size>
-                      <width>25</width>
-                      <height>25</height>
-                    </size>
-                  </property>
-                </widget>
-              </item>
-              <item>
-                <widget class="QPushButton" name="disable">
-                  <property name="font">
-                    <font>
-                      <pointsize>33</pointsize>
-                    </font>
-                  </property>
-                  <property name="text">
-                    <string>Disable</string>
-                  </property>
-                  <property name="icon">
-                    <iconset resource="../rc/icons.qrc">
-                      <normaloff>
-                      :/icons/fontawesome/regular/icons/fontawesome/regular/stop-circle.svg</normaloff>
-                      :/icons/fontawesome/regular/icons/fontawesome/regular/stop-circle.svg</iconset>
-                  </property>
-                  <property name="iconSize">
-                    <size>
-                      <width>25</width>
-                      <height>25</height>
-                    </size>
-                  </property>
-                </widget>
-              </item>
-            </layout>
-          </item>
+       </property>
+       <item>
+        <widget class="TouchDial" name="dial" native="true">
+         <property name="font">
+          <font>
+           <pointsize>22</pointsize>
+          </font>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="LineEdit" name="number">
+           <property name="font">
+            <font>
+             <pointsize>22</pointsize>
+            </font>
+           </property>
+          </widget>
+         </item>
         </layout>
-      </item>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="spacing">
+        <number>6</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Servos</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="port_0">
+         <property name="minimumSize">
+          <size>
+           <width>280</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Port 0</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../rc/icons.qrc">
+           <normaloff>:/icons/bullet_blue.png</normaloff>:/icons/bullet_blue.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="port_1">
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Port 1</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../rc/icons.qrc">
+           <normaloff>:/icons/bullet_yellow.png</normaloff>:/icons/bullet_yellow.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="port_2">
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Port 2</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../rc/icons.qrc">
+           <normaloff>:/icons/bullet_red.png</normaloff>:/icons/bullet_red.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="port_3">
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Port 3</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../rc/icons.qrc">
+           <normaloff>:/icons/bullet_green.png</normaloff>:/icons/bullet_green.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="enable">
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Enable</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../rc/icons.qrc">
+           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/play-circle.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/play-circle.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>25</width>
+           <height>25</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="disable">
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Disable</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../rc/icons.qrc">
+           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/stop-circle.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/stop-circle.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>25</width>
+           <height>25</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
     </layout>
-  </widget>
-  <customwidgets>
-    <customwidget>
-      <class>LineEdit</class>
-      <extends>QLineEdit</extends>
-      <header>LineEdit.h</header>
-    </customwidget>
-    <customwidget>
-      <class>TouchSlider</class>
-      <extends>QSlider</extends>
-      <header>TouchSlider.h</header>
-      <container>1</container>
-    </customwidget>
-  </customwidgets>
-  <resources>
-    <include location="../rc/icons.qrc" />
-  </resources>
-  <connections />
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>LineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>LineEdit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>TouchDial</class>
+   <extends>QWidget</extends>
+   <header>TouchDial.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="../rc/icons.qrc"/>
+ </resources>
+ <connections/>
 </ui>

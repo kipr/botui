@@ -12,23 +12,23 @@ class InputProviderDialog;
 
 class ServosWidget : public StandardWidget
 {
-	Q_OBJECT
+Q_OBJECT
 public:
 	ServosWidget(Device *device, QWidget *parent = 0);
 	~ServosWidget();
-
+	
 private slots:
-	void positionChanged(const int &value);
+	void positionChanged(const double &value);
 	void activeChanged();
-
+	
 	void enable();
 	void disable();
-
+	
 	void manualEntry(const QString &text);
-
 private:
 	Ui::ServosWidget *ui;
 	InputProviderDialog *m_provider;
 };
+
 
 #endif
