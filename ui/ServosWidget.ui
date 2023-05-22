@@ -37,12 +37,26 @@
                 <layout class="QHBoxLayout" name="horizontalLayout_1">
                   <item>
                     <widget class="TouchSlider" name="slider">
+                      <property name="font">
+                        <font>
+                          <pointsize>22</pointsize>
+                        </font>
+                      </property>
+                      <property name="orientation">
+                        <set>Qt::Vertical</set>
+                      </property>
+                      <property name="minimumSize">
+                        <size>
+                          <width>75</width>
+                          <height>300</height>
+                        </size>
+                      </property>
                     </widget>
                   </item>
                 </layout>
               </item>
               <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_3">
+                <layout class="QHBoxLayout" name="horizontalLayout_2">
                   <item>
                     <widget class="LineEdit" name="number">
                       <property name="font">
