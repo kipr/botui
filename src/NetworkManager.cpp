@@ -138,10 +138,21 @@ void NetworkManager::addNetwork(const Network &network)
     if (network.security() != Network::None)
     {
       connection[NM_802_11_SECURITY_KEY]["key-mgmt"] = securityTypes[network.security()];
-      // WEP uses this key
-      connection[NM_802_11_SECURITY_KEY]["password"] = network.password();
-      // WPA uses this one
-      connection[NM_802_11_SECURITY_KEY]["psk"] = network.password();
+      switch (network.security())
+      {
+      case Network::DynamicWep:
+      case Network::Wep:
+        // WEP uses this key
+        connection[NM_802_11_SECURITY_KEY]["password"] = network.password();
+        break;
+      case Network::Wpa:
+      case Network::WpaEnterprise:
+        // WPA uses this one
+        connection[NM_802_11_SECURITY_KEY]["psk"] = network.password();
+        break;
+      default: // if nothing, then nothing
+        break;
+      }
 
       // Finally, tell our configuration about the security
       connection[NM_802_11_WIRELESS_KEY]["security"] = NM_802_11_SECURITY_KEY;

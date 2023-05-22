@@ -1,11 +1,11 @@
-project(botui)
+cmake_minimum_required(VERSION 3.0)
+project(botui VERSION 27.2.1)
 
 option(wombat "Use the Wombat controller" ON)
 option(DEBUG "Enable debug mode" OFF)
 option(RELEASE "Enable release mode" OFF)
 option(docker_cross "Cross compile option for docker container" OFF)
 
-cmake_minimum_required(VERSION 2.8.11)
 
 #if (wallaby)
  # add_definitions(-DWALLABY)
