@@ -1,11 +1,11 @@
-project(botui)
+cmake_minimum_required(VERSION 3.0)
+project(botui VERSION 27.2)
 
 option(wombat "Use the Wombat controller" ON)
 option(DEBUG "Enable debug mode" OFF)
 option(RELEASE "Enable release mode" OFF)
 option(docker_cross "Cross compile option for docker container" OFF)
 
-cmake_minimum_required(VERSION 2.8.11)
 
 #need to add this in order to get "WombatBatteryProvider.h"
 set(DEVICE_DIR ${CMAKE_SOURCE_DIR}/devices/wombat)
