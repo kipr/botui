@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-project(botui VERSION 27.2)
+project(botui VERSION 27.2.1)
 
 option(wombat "Use the Wombat controller" ON)
 option(DEBUG "Enable debug mode" OFF)
