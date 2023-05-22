@@ -13,7 +13,6 @@
 #include "CompileHelpers.h"
 
 #include <QFileInfo>
-#include <QFile>
 #include <QThreadPool>
 
 #include <QDebug>
@@ -74,7 +73,7 @@ bool FileActionCompileSingle::act(const QString &path, Device *device) const
 	// Compile the program
 
 	LogDialog logger;
-	ConcurrentCompile compiler(input, archive, device);
+	ConcurrentCompile compiler(name, archive, device);
 	compiler.setAutoDelete(false);
 	compiler.setUserData(&logger);
 	connect(&compiler, SIGNAL(compileStarted(QString, ConcurrentCompile *)),

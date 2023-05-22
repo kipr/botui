@@ -2,7 +2,6 @@
 #define _CONCURRENTCOMPILE_H_
 
 #include <QObject>
-#include <QFileInfo>
 #include <QString>
 #include <QRunnable>
 
@@ -13,12 +12,12 @@ class Device;
 
 class ConcurrentCompile : public QObject, public QRunnable
 {
-	Q_OBJECT
+Q_OBJECT
 public:
-	ConcurrentCompile(const QFileInfo &file, const kiss::KarPtr &archive, Device *device);
-
+	ConcurrentCompile(const QString &name, const kiss::KarPtr &archive, Device *device);
+	
 	virtual void run();
-
+	
 	Q_PROPERTY(void *userData READ userData WRITE setUserData);
 	void setUserData(void *data);
 	void *userData() const;
@@ -34,7 +33,7 @@ signals:
 	void compileFinished(const Compiler::OutputList &output, ConcurrentCompile *self);
 
 private:
-	QFileInfo m_file;
+	QString m_name;
 	kiss::KarPtr m_archive;
 	Device *m_device;
 	void *m_userData;
