@@ -25,8 +25,7 @@ cmake .. or /home/<container name>/qt-raspi/bin/qt-cmake -Ddocker_cross=ON .. (f
 make -j4
 sudo make install
 ```
-Note: for custom installations, edit `pathToKISS` in `Config.cpp` in order to have the file manager
-work correctly.
+
 License
 =======
 

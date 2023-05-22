@@ -5,6 +5,5 @@ lib
 obj-arm-linux-gnueabihf
 .vscode
 out
-crosstoolchain.cmake
-localtoolchain.cmake
+toolchain.cmake
 build2
