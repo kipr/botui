@@ -103,12 +103,12 @@ double SensorsWidget::value(const int &i) const
 	double val = rawValue(i);
 
 #ifdef WOMBAT
-	if (i < 6) // analog readings
+	if (i < 6)
 		val = val / 2048.0 - 1.0;
-	else if (i < 10) // gmpc readings
+	else if (i < 10)
 		val = val / 32768.0;
-	else if (i < 19) // IMU readings
-		val = val / 32768.0;
+	else if (i < 19)
+		val = val / 2046.0;
 	else
 		val = 0.0;
 #else
