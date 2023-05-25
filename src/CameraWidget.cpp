@@ -61,12 +61,12 @@ void CameraWidget::update()
 {
   if(!m_camDevice->isOpen()) {
     // Camera isn't open, so try to open
-    if(!m_camDevice->open(0, LOW_RES, BLACK_2017)) {
+    if(!m_camDevice->open()) {
       // Camera not available; lower frame rate and quit
       this->slowFrameRate();
       return;
     }
-    this->setInvalid(false)
+    
     // Successfully opened camera; raise frame rate
     this->fastFrameRate();
   }
@@ -149,5 +149,5 @@ void CameraWidget::slowFrameRate()
 
 void CameraWidget::fastFrameRate()
 {
-  this->setFrameRate(60);
+  this->setFrameRate(1);
 }
