@@ -6,6 +6,8 @@ name: ClangFormat
 on:
   pull_request:
     branches: ["master"] 
+  push:
+    branches: ["master"]
 
 jobs:
   format:
@@ -25,8 +27,9 @@ jobs:
         run: |
           git config user.name "Clang Formatter Bot"
           git config user.email ""
-      - name: Push to GitHub
+      - name: Push to GitHub  
         run:  |
-          git commit -a -m "AutoFormat with clang-format"
+          git add -A
+          git diff --quiet HEAD || git commit -m "AutoFormat with clang-format" 
           git push origin HEAD:${{github.head_ref}}
           
