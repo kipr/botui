@@ -20,8 +20,8 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Format .cpp and .hpp files
         run:
-          clang-format -style=file:${{github.workspace}}/.clang-format -i \
-            $(find ${{github.workspace}} -name "*.h*") \
+          clang-format -style=file:${{github.workspace}}/.clang-format -i
+            $(find ${{github.workspace}} -name "*.h*")
             $(find ${{github.workspace}} -name "*.c*")
       - name: Setup git config
         run: |
