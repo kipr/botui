@@ -1,0 +1,21 @@
+# Setup
+Language: Cpp
+BasedOnStyle: LLVM
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+ColumnLimit: 80
+
+# MultiLine / Packing configuration
+PackConstructorInitializers: NextLine
+BinPackArguments: false
+BinPackParameters: false
+BreakBeforeBinaryOperators: None
+AllowShortIfStatementsOnASingleLine: true
+
+# Braces and wrapping styles
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterControlStatement: MultiLine
+  BeforeElse: true
+  BeforeCatch: true
