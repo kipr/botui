@@ -69,9 +69,7 @@ QDBusObjectPath AP_PATH;
 Connection DEFAULT_AP;
 
 #ifndef WOMBAT
-#define WIFI_DEVICE                                                            \
-    "wlp2s0" // varies per pc, almost always need to change this on different
-             // computers
+#define WIFI_DEVICE "wlp2s0" // varies per pc
 #define AP_NAME "COOL_NETWORK"
 #define AP_SSID QByteArray("COOL_NETWORK")
 #define AP_PASSWORD "COOL_PASSWORD"
@@ -173,7 +171,8 @@ void NetworkManager::forgetNetwork(const Network &network) {
     foreach (const ConnectionPathPair &pair, getAllConnections()) {
         // if the ssid's match, then delete it
         if (network.ssid() ==
-            pair.first[NM_802_11_WIRELESS_KEY]["ssid"].toString()) {
+            pair.first[NM_802_11_WIRELESS_KEY]["ssid"].toString())
+        {
             OrgFreedesktopNetworkManagerSettingsConnectionInterface conn(
                 NM_SERVICE, pair.second.path(), QDBusConnection::systemBus());
             conn.Delete();
