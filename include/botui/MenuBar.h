@@ -10,37 +10,32 @@ class StopButtonWidget;
 class Device;
 class Program;
 
-class MenuBar : public QWidget
-{
-Q_OBJECT
-Q_PROPERTY(QString title READ title WRITE setTitle)
-public:
-	MenuBar(Program *program, QWidget *parent = 0);
-	MenuBar(QWidget *parent = 0);
-	~MenuBar();
-	
-	void setTitle(const QString& title, const QPixmap& icon = QPixmap());
-	QString title() const;
-	
-	void addHomeAndBackButtons();
+class MenuBar : public QWidget {
+    Q_OBJECT
+    Q_PROPERTY(QString title READ title WRITE setTitle)
+  public:
+    MenuBar(Program *program, QWidget *parent = 0);
+    MenuBar(QWidget *parent = 0);
+    ~MenuBar();
 
-	void addAction(QAction *const action);
-	QAction *addAction(const QString &str);
+    void setTitle(const QString &title, const QPixmap &icon = QPixmap());
+    QString title() const;
 
-private:
-	void init();
+    void addHomeAndBackButtons();
 
-	void clear();
+    void addAction(QAction *const action);
+    QAction *addAction(const QString &str);
 
+  private:
+    void init();
 
-	
-	
-	QLabel *m_title;
-	Program *m_program;
-	StopButtonWidget *m_stopButton;
+    void clear();
 
-	QHBoxLayout *m_layout;
+    QLabel *m_title;
+    Program *m_program;
+    StopButtonWidget *m_stopButton;
+
+    QHBoxLayout *m_layout;
 };
 
 #endif
-

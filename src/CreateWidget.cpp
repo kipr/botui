@@ -1,17 +1,8 @@
 #include "CreateWidget.h"
 
 CreateWidget::CreateWidget(Device *device, QWidget *parent)
-	: StandardWidget(device, parent)
-{
-	
-}
+    : StandardWidget(device, parent) {}
 
-CreateWidget::~CreateWidget()
-{
-	
-}
+CreateWidget::~CreateWidget() {}
 
-void CreateWidget::drive()
-{
-	
-}
+void CreateWidget::drive() {}

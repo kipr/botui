@@ -3,13 +3,12 @@
 
 #include <QLabel>
 
-class TimeWidget : public QLabel
-{
-Q_OBJECT
-public:
-	TimeWidget(QWidget *parent = 0);
-private slots:
-	void updateTime();
+class TimeWidget : public QLabel {
+    Q_OBJECT
+  public:
+    TimeWidget(QWidget *parent = 0);
+  private slots:
+    void updateTime();
 };
 
 #endif

@@ -3,31 +3,29 @@
 
 #include <QWidget>
 
-namespace Ui
-{
-	class PairWidget;
+namespace Ui {
+class PairWidget;
 }
 
 class MenuBar;
 class StatusBar;
 class Device;
 
-class PairWidget : public QWidget
-{
-Q_OBJECT
-public:
-	PairWidget(Device *device, QWidget *parent = 0);
-	~PairWidget();
-	
-	void setPassword(const QString& password);
-	
-signals:
-	void cancel();
-	
-private:
-	Ui::PairWidget *ui;
-	Device *m_device;
-	MenuBar *m_menuBar;
+class PairWidget : public QWidget {
+    Q_OBJECT
+  public:
+    PairWidget(Device *device, QWidget *parent = 0);
+    ~PairWidget();
+
+    void setPassword(const QString &password);
+
+  signals:
+    void cancel();
+
+  private:
+    Ui::PairWidget *ui;
+    Device *m_device;
+    MenuBar *m_menuBar;
 };
 
 #endif

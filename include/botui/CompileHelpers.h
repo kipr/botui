@@ -3,10 +3,9 @@
 
 #include <QString>
 
-class CompileHelpers
-{
-public:
-	static QString postProcess(const QString &output);
+class CompileHelpers {
+  public:
+    static QString postProcess(const QString &output);
 };
 
 #endif

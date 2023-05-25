@@ -14,10 +14,10 @@ Q_OBJECT
 public:
   DepthSensorWidget(Device *device, QWidget *const parent = 0);
   ~DepthSensorWidget();
-  
+
 private slots:
   void update();
-  
+
 private:
   Ui::DepthSensorWidget *ui;
 };

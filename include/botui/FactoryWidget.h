@@ -3,34 +3,31 @@
 
 #include "StandardWidget.h"
 
-#include <QString>
-#include <QProcess>
 #include <QDir>
+#include <QProcess>
+#include <QString>
 
-namespace Ui
-{
-        class FactoryWidget;
+namespace Ui {
+class FactoryWidget;
 }
 
 class InputProviderDialog;
 
-class FactoryWidget : public StandardWidget
-{
-Q_OBJECT
-public:
-        FactoryWidget(Device *device, QWidget *parent = 0);
-        ~FactoryWidget();
+class FactoryWidget : public StandardWidget {
+    Q_OBJECT
+  public:
+    FactoryWidget(Device *device, QWidget *parent = 0);
+    ~FactoryWidget();
 
-public slots:
-        void confirm();
-        void reflash();
-        void experimental();
+  public slots:
+    void confirm();
+    void reflash();
+    void experimental();
 
-private:
-        Ui::FactoryWidget *ui;
-        InputProviderDialog *m_provider;
-        QProcess *m_consoleProc;
+  private:
+    Ui::FactoryWidget *ui;
+    InputProviderDialog *m_provider;
+    QProcess *m_consoleProc;
 };
-
 
 #endif

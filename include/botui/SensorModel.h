@@ -3,46 +3,44 @@
 
 #include <QStandardItemModel>
 
-class SensorModel : public QStandardItemModel
-{
-Q_OBJECT
-public:
-
-	enum SensorType {
-		Analog,
-		Digital,
-		AccelX,
-		AccelY,
-		AccelZ,
+class SensorModel : public QStandardItemModel {
+    Q_OBJECT
+  public:
+    enum SensorType {
+        Analog,
+        Digital,
+        AccelX,
+        AccelY,
+        AccelZ,
 #ifdef WOMBAT
-		GyroX,
-		GyroY,
-		GyroZ,
-		MagnetoX,
-		MagnetoY,
-		MagnetoZ,
-		Button,
+        GyroX,
+        GyroY,
+        GyroZ,
+        MagnetoX,
+        MagnetoY,
+        MagnetoZ,
+        Button,
 #endif
-		Other
-	};
-	
-	SensorModel(QObject *parent = 0);
-	~SensorModel();
+        Other
+    };
 
-	SensorModel::SensorType type(const QModelIndex &index) const;
+    SensorModel(QObject *parent = 0);
+    ~SensorModel();
 
-public slots:
-	void update();
-	
-private:
-	void populate();
-	void populateAnalog(const unsigned char port);
-	void populateDigital(const unsigned char port);
-	void populateAccel();
+    SensorModel::SensorType type(const QModelIndex &index) const;
+
+  public slots:
+    void update();
+
+  private:
+    void populate();
+    void populateAnalog(const unsigned char port);
+    void populateDigital(const unsigned char port);
+    void populateAccel();
 #ifdef WOMBAT
-	void populateGyro();
-	void populateMagneto();
-	void populateButtons();
+    void populateGyro();
+    void populateMagneto();
+    void populateButtons();
 #endif
 };
 

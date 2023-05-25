@@ -2,7 +2,4 @@
 
 #include <QDir>
 
-ConfigurationPaths::ConfigurationPaths()
-{
-
-}
+ConfigurationPaths::ConfigurationPaths() {}

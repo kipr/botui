@@ -4,19 +4,13 @@
 #include "RootController.h"
 
 NotYetImplementedDialog::NotYetImplementedDialog(QWidget *parent)
-	: QDialog(parent),
-	ui(new Ui::NotYetImplementedDialog)
-{
-	ui->setupUi(this);
+    : QDialog(parent), ui(new Ui::NotYetImplementedDialog) {
+    ui->setupUi(this);
 }
 
-NotYetImplementedDialog::~NotYetImplementedDialog()
-{
-	delete ui;
-}
+NotYetImplementedDialog::~NotYetImplementedDialog() { delete ui; }
 
-void NotYetImplementedDialog::nyi()
-{
-	NotYetImplementedDialog dlg;
-	RootController::ref().presentDialog(&dlg);
+void NotYetImplementedDialog::nyi() {
+    NotYetImplementedDialog dlg;
+    RootController::ref().presentDialog(&dlg);
 }

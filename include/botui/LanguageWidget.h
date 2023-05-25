@@ -3,23 +3,21 @@
 
 #include "StandardWidget.h"
 
-namespace Ui
-{
-  class LanguageWidget;
+namespace Ui {
+class LanguageWidget;
 }
 
-class LanguageWidget : public StandardWidget
-{
-Q_OBJECT
-public:
-  LanguageWidget(Device *device, QWidget *const parent = 0);
-  ~LanguageWidget();
-  
-private Q_SLOTS:
-  void currentIndexChanged(int index);
-  
-private:
-  Ui::LanguageWidget *ui;
+class LanguageWidget : public StandardWidget {
+    Q_OBJECT
+  public:
+    LanguageWidget(Device *device, QWidget *const parent = 0);
+    ~LanguageWidget();
+
+  private Q_SLOTS:
+    void currentIndexChanged(int index);
+
+  private:
+    Ui::LanguageWidget *ui;
 };
 
 #endif

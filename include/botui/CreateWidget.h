@@ -3,17 +3,16 @@
 
 #include "StandardWidget.h"
 
-class CreateWidget : public StandardWidget
-{
-Q_OBJECT
-public:
- 	CreateWidget(Device *device, QWidget *parent = 0);
-	~CreateWidget();
-	
-private slots:
-	void drive();
-	
-private:
+class CreateWidget : public StandardWidget {
+    Q_OBJECT
+  public:
+    CreateWidget(Device *device, QWidget *parent = 0);
+    ~CreateWidget();
+
+  private slots:
+    void drive();
+
+  private:
 };
 
 #endif

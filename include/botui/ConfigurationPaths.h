@@ -5,12 +5,9 @@
 
 #include <QString>
 
-class ConfigurationPaths : public Singleton<ConfigurationPaths>
-{
-public:
-	ConfigurationPaths();
-	
-
+class ConfigurationPaths : public Singleton<ConfigurationPaths> {
+  public:
+    ConfigurationPaths();
 };
 
 #endif

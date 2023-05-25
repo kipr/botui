@@ -3,11 +3,10 @@
 
 #include <QStandardItemModel>
 
-class CameraInputModel : public QStandardItemModel
-{
-public:
-	CameraInputModel(QObject *parent = 0);
-	~CameraInputModel();
+class CameraInputModel : public QStandardItemModel {
+  public:
+    CameraInputModel(QObject *parent = 0);
+    ~CameraInputModel();
 };
 
 #endif

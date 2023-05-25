@@ -3,24 +3,25 @@
 
 #include <QAbstractButton>
 
-class KeyButton : public QAbstractButton
-{
-Q_OBJECT
-public:
-	KeyButton(const QString& firstlabel, const QString& secondLabel, QWidget *parent = 0);
+class KeyButton : public QAbstractButton {
+    Q_OBJECT
+  public:
+    KeyButton(const QString &firstlabel,
+              const QString &secondLabel,
+              QWidget *parent = 0);
 
-	bool isSwitched() const;
+    bool isSwitched() const;
 
-public slots:
-	void switchLabel();
+  public slots:
+    void switchLabel();
 
-protected:
-	void paintEvent(QPaintEvent *);
+  protected:
+    void paintEvent(QPaintEvent *);
 
-private:
-	QString m_firstLabel;
-	QString m_secondLabel;
-	bool m_switched;
+  private:
+    QString m_firstLabel;
+    QString m_secondLabel;
+    bool m_switched;
 };
 
 #endif // KEYBUTTON_H

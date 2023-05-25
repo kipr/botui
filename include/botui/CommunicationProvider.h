@@ -6,20 +6,19 @@
 
 class Device;
 
-class CommunicationProvider : public QObject
-{
-Q_OBJECT
-public:
-	CommunicationProvider(Device *device);
-	virtual ~CommunicationProvider();
-	
-	void setDevice(Device *device);
-	Device *device() const;
-signals:
-	void programReceived(const kiss::KarPtr& archive);
-	
-private:
-	Device *m_device;
+class CommunicationProvider : public QObject {
+    Q_OBJECT
+  public:
+    CommunicationProvider(Device *device);
+    virtual ~CommunicationProvider();
+
+    void setDevice(Device *device);
+    Device *device() const;
+  signals:
+    void programReceived(const kiss::KarPtr &archive);
+
+  private:
+    Device *m_device;
 };
 
 #endif

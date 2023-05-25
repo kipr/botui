@@ -4,23 +4,20 @@
 #include "HsvChannelConfigWidget.h"
 
 #include <kipr/camera/camera.hpp>
-ChannelConfigWidgetFactory::~ChannelConfigWidgetFactory()
-{
+ChannelConfigWidgetFactory::~ChannelConfigWidgetFactory() {}
+
+bool ChannelConfigWidgetFactory::hasConfig(const QString &type) {
+    if (type == CAMERA_CHANNEL_TYPE_HSV_KEY) return true;
+
+    return false;
 }
 
-bool ChannelConfigWidgetFactory::hasConfig(const QString &type)
-{
-	if(type == CAMERA_CHANNEL_TYPE_HSV_KEY) return true;
-	
-	return false;
+ChannelConfigWidget *
+ChannelConfigWidgetFactory::create(const QModelIndex &index,
+                                   const QString &type) {
+    if (type == CAMERA_CHANNEL_TYPE_HSV_KEY)
+        return new HsvChannelConfigWidget(index);
+    return 0;
 }
 
-ChannelConfigWidget *ChannelConfigWidgetFactory::create(const QModelIndex &index, const QString &type)
-{
-	if(type == CAMERA_CHANNEL_TYPE_HSV_KEY) return new HsvChannelConfigWidget(index);
-	return 0;
-}
-
-ChannelConfigWidgetFactory::ChannelConfigWidgetFactory()
-{
-}
+ChannelConfigWidgetFactory::ChannelConfigWidgetFactory() {}
