@@ -1,7 +1,7 @@
 /* FIXME
 #include "DepthImageView.h"
-#include <QPainter>
 #include <QDebug>
+#include <QPainter>
 
 #ifdef WOMBAT
 #include <wallaby/depth_image.hpp>
@@ -42,21 +42,21 @@ void DepthImageView::setDepthImage(const DepthImage *const image)
   const uint32_t w = _image->width();
   const uint32_t h = _image->height();
   const uint32_t s = w * h;
-  
-  if(_backingImage.isNull() || w != _backingImage.width() || h != _backingImage.height()) {
-    _backingImage = QImage(w, h, QImage::Format_RGB32);
+
+  if(_backingImage.isNull() || w != _backingImage.width() || h !=
+_backingImage.height()) { _backingImage = QImage(w, h, QImage::Format_RGB32);
   }
-  
+
   for(uint32_t i = 0; i < s; ++i) {
     // 500 is theoretical min value for Xtion, subtract for hsv offset
     const int32_t v = (int32_t)_image->depthAt(i / w, i % w) - 500;
     const int32_t vf = qMax(qMin(330, (v * 330) >> 12), 0);
-    
+
     _backingImage.setPixel(i % w, i / w, s_lookupTable[vf]);
   }
-  
+
   _backing = QPixmap::fromImage(_backingImage).scaled(width(), height());
-  
+
   repaint();
 }
 
@@ -78,8 +78,9 @@ bool DepthImageView::isPleaseWait() const
 void DepthImageView::paintEvent(QPaintEvent *event)
 {
   QPainter p(this);
-  p.fillRect(0, 0, width(), height(), palette().color(QPalette::Active, QPalette::Window));
-  
+  p.fillRect(0, 0, width(), height(), palette().color(QPalette::Active,
+QPalette::Window));
+
   if(_pleaseWait) {
     p.drawText(0, 0, width(), height(), Qt::AlignHCenter | Qt::AlignVCenter,
       tr("Just a second..."));
@@ -90,7 +91,7 @@ void DepthImageView::paintEvent(QPaintEvent *event)
       tr("No depth sensor detected"));
     return;
   }
-  
+
   p.drawPixmap(0, 0, width(), height(), _backing);
 }
 */

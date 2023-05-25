@@ -10,9 +10,8 @@
 
 #include <QString>
 
-namespace botui
-{
-	extern const QString pathToKISS;
+namespace botui {
+extern const QString pathToKISS;
 }
 
 #endif /* CONFIG_H_ */

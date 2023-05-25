@@ -5,21 +5,21 @@
 
 namespace Ui
 {
-	class CameraInputSelectorWidget;
+    class CameraInputSelectorWidget;
 }
 
 class CameraInputSelectorWidget : public StandardWidget
 {
 Q_OBJECT
 public:
-	CameraInputSelectorWidget(Device *device, QWidget *parent = 0);
-	~CameraInputSelectorWidget();
-	
+    CameraInputSelectorWidget(Device *device, QWidget *parent = 0);
+    ~CameraInputSelectorWidget();
+
 private slots:
-	void sourceIndexChanged(const int index);
-	
+    void sourceIndexChanged(const int index);
+
 private:
-	Ui::CameraInputSelectorWidget *ui;
+    Ui::CameraInputSelectorWidget *ui;
 };
 */
 #endif

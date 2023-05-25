@@ -7,7 +7,6 @@
 
 #include "Config.h"
 
-namespace botui
-{
-	const QString pathToKISS = "/home/pi/Documents/KISS/";
+namespace botui {
+const QString pathToKISS = "/home/pi/Documents/KISS/";
 }

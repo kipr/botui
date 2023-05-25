@@ -3,26 +3,24 @@
 #include "KeyboardDialog.h"
 #include "LineEdit.h"
 
-#include "MotorTestWizardPage.h"
-#include "ServoTestWizardPage.h"
-#include "SensorTestWizardPage.h"
 #include "CreateTestWizardPage.h"
+#include "MotorTestWizardPage.h"
 #include "NetworkTestWizardPage.h"
+#include "SensorTestWizardPage.h"
+#include "ServoTestWizardPage.h"
 
-#include <QWizardPage>
 #include <QLabel>
 #include <QVBoxLayout>
+#include <QWizardPage>
 
 TestWizard::TestWizard(Device *device, QWidget *parent)
-	: QWizard(parent),
-	m_device(device)
-{
-	setWizardStyle(QWizard::ModernStyle);
-	addPage(new MotorTestWizardPage(this));
-	addPage(new ServoTestWizardPage(this));
-	addPage(new SensorTestWizardPage(this));
-	addPage(new CreateTestWizardPage(this));
+    : QWizard(parent), m_device(device) {
+    setWizardStyle(QWizard::ModernStyle);
+    addPage(new MotorTestWizardPage(this));
+    addPage(new ServoTestWizardPage(this));
+    addPage(new SensorTestWizardPage(this));
+    addPage(new CreateTestWizardPage(this));
 #ifdef NETWORK_ENABLED
-	addPage(new NetworkTestWizardPage(this));
+    addPage(new NetworkTestWizardPage(this));
 #endif
 }

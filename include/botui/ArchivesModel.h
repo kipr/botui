@@ -7,22 +7,21 @@
 class Device;
 class ArchivesModel;
 
-class ArchivesModel : public QStandardItemModel
-{
-Q_OBJECT
-public:
-	ArchivesModel(Device *device, QObject *parent = 0);
-	~ArchivesModel();
-	
-	QString name(const QModelIndex &index) const;
-	
-private slots:
-	void archiveChanged(const QString &name);
-	void archiveRemoved(const QString &name);
-	void refresh();
-	
-private:
-	Device *m_device;
+class ArchivesModel : public QStandardItemModel {
+    Q_OBJECT
+  public:
+    ArchivesModel(Device *device, QObject *parent = 0);
+    ~ArchivesModel();
+
+    QString name(const QModelIndex &index) const;
+
+  private slots:
+    void archiveChanged(const QString &name);
+    void archiveRemoved(const QString &name);
+    void refresh();
+
+  private:
+    Device *m_device;
 };
 
 #endif

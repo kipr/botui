@@ -8,8 +8,8 @@
 #include <kovan/depth_driver.hpp>
 #endif
 
-#include <QTimer>
 #include <QDebug>
+#include <QTimer>
 
 using namespace depth;
 
@@ -19,7 +19,7 @@ DepthSensorWidget::DepthSensorWidget(Device *device, QWidget *const parent)
 {
   ui->setupUi(this);
   performStandardSetup(tr("Depth Sensor"), false);
-  
+
   QTimer *timer = new QTimer(this);
   connect(timer, SIGNAL(timeout()), SLOT(update()));
   timer->start(50); // 20 Hz
@@ -47,7 +47,7 @@ void DepthSensorWidget::update()
       return;
     }
   }
-  
+
   ui->view->setDepthImage(driver.depthImage());
 }
 */

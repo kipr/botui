@@ -3,15 +3,13 @@
 
 #include <QString>
 
-class UiStandards
-{
-public:
-	static QString homeString();
-	static QString backString();
-	static QString cancelString();
-	static QString lockString();
-	static QString stopString();
-	
+class UiStandards {
+  public:
+    static QString homeString();
+    static QString backString();
+    static QString cancelString();
+    static QString lockString();
+    static QString stopString();
 };
 
 #endif

@@ -4,22 +4,19 @@
 #include "StandardWidget.h"
 #include <QProcess>
 
-namespace Ui
-{
-	class AboutWidget;
+namespace Ui {
+class AboutWidget;
 }
 
-class AboutWidget : public StandardWidget
-{
-Q_OBJECT
-public:
-	AboutWidget(Device *device, QWidget *parent = 0);
-	~AboutWidget();
-	
-private:
-	Ui::AboutWidget *ui;
-	QProcess proc;
-};
+class AboutWidget : public StandardWidget {
+    Q_OBJECT
+  public:
+    AboutWidget(Device *device, QWidget *parent = 0);
+    ~AboutWidget();
 
+  private:
+    Ui::AboutWidget *ui;
+    QProcess proc;
+};
 
 #endif
