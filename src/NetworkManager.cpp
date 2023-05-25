@@ -64,6 +64,7 @@
 #define NM_802_11_MODE_AP 3
 #define NM_SERVICE "org.freedesktop.NetworkManager"
 #define NM_OBJECT "/org/freedesktop/NetworkManager"
+#define WOMBAT_APNAME m_dev()->serial() + "-wombatAP"
 QDBusObjectPath AP_PATH;
 Connection DEFAULT_AP;
 
@@ -430,7 +431,7 @@ Connection NetworkManager::createAPConfig() const //Creates a default APName con
   DEFAULT_AP["connection"]["type"] = "802-11-wireless";
   DEFAULT_AP["connection"]["uuid"] = QUuid::createUuid().toString().remove('{').remove('}');
   // File name is just the SSID for now
-  DEFAULT_AP["connection"]["id"] = "APName";
+  DEFAULT_AP["connection"]["id"] = WOMBAT_APNAME;
   DEFAULT_AP["connection"]["autoconnect"] = false;
   DEFAULT_AP["connection"]["autoconnect-priority"] = -900;
   DEFAULT_AP["connection"]["interface-name"] = "wlo1";
