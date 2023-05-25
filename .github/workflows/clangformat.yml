@@ -33,5 +33,5 @@ jobs:
         run:  |
           git add -A
           git diff --quiet HEAD || git commit -m "AutoFormat with clang-format" 
-          git push origin HEAD:${{github.head_ref}}
+          git push origin HEAD:$(${{github.head_ref}} || ${{github.base_ref}})
           
