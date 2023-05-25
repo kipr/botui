@@ -6,8 +6,6 @@ name: ClangFormat
 on:
   pull_request:
     branches: ["master"] 
-  push:
-    branches: ["master"]
 
 jobs:
   format:
@@ -20,18 +18,15 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Format .cpp and .hpp files
         run:
-          clang-format ${{github.workspace}}/src/*.cpp ${{github.workspace}}/include/botui/*.h -style=file:${{github.workspace}}/.clang-format -i
+          clang-format -style=file:${{github.workspace}}/.clang-format -i \
+            $(find ${{github.workspace}} -name "*.h*") \
+            $(find ${{github.workspace}} -name "*.c*")
       - name: Setup git config
         run: |
           git config user.name "Clang Formatter Bot"
           git config user.email ""
       - name: Push to GitHub
         run:  |
-          echo ${{github.head_ref}}
-          echo ${{github.base_ref}}
-          echo ${{github.action_ref}}
-          echo ${{github.ref}}
-          echo ${{github.ref_name}}
           git commit -a -m "AutoFormat with clang-format"
           git push origin HEAD:${{github.head_ref}}
           
