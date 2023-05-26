@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
   CursorManager::ref().setDevice(&device);
 #ifdef QT_DBUS_LIB
   KovanSerialBridge::ref().init(&device);
-  NetworkManager::ref().init(&device);
+  NetworkManager::ref();
 #endif
 
   SettingsProvider *const settings = device.settingsProvider();
