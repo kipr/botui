@@ -36,16 +36,7 @@ int RootController::presentDialog(QDialog *dialog)
 
 void RootController::presentWidget(QWidget *widget, bool owns)
 {
-	foreach (QWidget *wid, m_stack)
-	{
-		qDebug() << "Current Stack BEFORE push: " << wid << " Current Stack Size: " << m_stack.size();
-	}
-	// for (int i = 1; i < m_stack.size(); ++i)
-	// {
 
-	// 	if (m_stack.at(i) == widget)
-	// 		m_stack.remove(i);
-	// }
 	m_ownership[widget] = owns;
 	QWidget *prev = m_stack.size() ? m_stack.top() : 0;
 	m_stack.push(widget);
@@ -53,11 +44,6 @@ void RootController::presentWidget(QWidget *widget, bool owns)
 	if (prev)
 		widget->move(prev->pos());
 	present(widget);
-
-	foreach (QWidget *wid, m_stack)
-	{
-		qDebug() << "Currently presenting: " << wid;
-	}
 	if (prev)
 		prev->hide();
 }

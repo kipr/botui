@@ -75,7 +75,7 @@ Connection DEFAULT_AP;
 #define AP_PASSWORD "COOL_PASSWORD"
 #else
 #define WIFI_DEVICE "wlan0" // always wlan0 for raspberry pi
-#define AP_NAME m_dev->serial() + "-wombat"
+#define AP_NAME m_dev->serial() + "-wombatAP"
 #define AP_SSID (m_dev->serial() + "-wombat").toUtf8()
 #define AP_PASSWORD SystemUtils::sha256(m_dev->id()).left(6) + "00"
 #endif
@@ -274,7 +274,8 @@ Connection NetworkManager::createAPConfig() const // Creates a default APName co
   DEFAULT_AP["connection"]["uuid"] = QUuid::createUuid().toString().remove('{').remove('}');
   // File name is just the SSID for now
   DEFAULT_AP["connection"]["id"] = AP_NAME;
-  DEFAULT_AP["connection"]["autoconnect"] = true;
+  DEFAULT_AP["connection"]["autoconnect"] = false;
+  DEFAULT_AP["connection"]["autoconnect-priority"] = -900;
   DEFAULT_AP["connection"]["interface-name"] = WIFI_DEVICE;
   // SSID
   DEFAULT_AP[NM_802_11_WIRELESS_KEY]["ssid"] = AP_SSID;
