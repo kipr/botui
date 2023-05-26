@@ -1,6 +1,7 @@
 #include "Options.h"
 
 #include "NetworkManager.h"
+#include "SystemUtils.h"
 
 #include "org_freedesktop_NetworkManager.h"
 #include "org_freedesktop_NetworkManager_AccessPoint.h"
@@ -67,6 +68,11 @@
 QDBusObjectPath AP_PATH;
 Connection DEFAULT_AP;
 
+#define WIFI_DEVICE "wlp2s0" // always wlan0 for raspberry pi
+#define AP_NAME m_dev->serial() + "-wombatAP"
+#define AP_SSID (AP_NAME).toUtf8()
+#define AP_PASSWORD SystemUtils::sha256(m_dev->id()).left(6) + "00"
+
 NetworkManager::~NetworkManager()
 {
 }
@@ -90,7 +96,7 @@ void NetworkManager::addNetwork(const Network &network)
     connection["connection"]["uuid"] = QUuid::createUuid().toString().remove('{').remove('}');
     // File name is just the SSID for now
     connection["connection"]["id"] = network.ssid();
-    if (network.ssid().toLatin1() != "APName")
+    if (network.ssid().toLatin1() != AP_SSID)
     {
       connection["connection"]["autoconnect-priority"] = 100;
     }
@@ -189,7 +195,7 @@ void NetworkManager::addNetwork(const Network &network)
 
       qDebug() << "AP Secrets:" << secrReply.values();
       Connection detail = apSettInt.GetSettings().value();
-      if (detail["connection"]["id"] == "APName")
+      if (detail["connection"]["id"] == AP_NAME)
       {
         APExist = true;
         apPathConn = connectionPath;
@@ -339,14 +345,13 @@ bool NetworkManager::enableAP()
 bool NetworkManager::disableAP()
 {
 
-  const char apDec[] = {65, 80, 78, 97, 109, 101};       // Array containing "APName" in chars
-  QByteArray apArray(QByteArray::fromRawData(apDec, 6)); // Creates QByteArray from chars
+  QByteArray apArray = AP_SSID;
 
   NetworkList currentNetworks = accessPoints(); // Get all networks
 
   /*
   This foreach iterates over each known network to check if the network ssid matches
-  APName
+  AP_SSID
   */
   foreach (const Network &net, currentNetworks)
   {
@@ -362,7 +367,7 @@ bool NetworkManager::disableAP()
     compare = memcmp(apSsid, apArray, 6);
     if (compare == 0)
     {
-      forgetNetwork(net); // Forget network if network is APName
+      forgetNetwork(net); // Forget network if network is AP_SSID
     }
   }
 
@@ -380,7 +385,7 @@ bool NetworkManager::disableAP()
       NM_OBJECT "/Settings",
       QDBusConnection::systemBus());
 
-  conn.Delete(); // Deletes APName connection
+  conn.Delete(); // Deletes AP_SSID connection
 
   /*Connection deleted due to NM trying to make another access point and autoconnects*/
 
@@ -411,7 +416,7 @@ bool NetworkManager::disableAP()
   return true;
 }
 
-Connection NetworkManager::createAPConfig() const // Creates a default APName configuration for settings
+Connection NetworkManager::createAPConfig() const // Creates a default AP_SSID configuration for settings
 {
   qDebug() << "Creating AP Config...";
   Connection apConfig;
@@ -420,25 +425,18 @@ Connection NetworkManager::createAPConfig() const // Creates a default APName co
   DEFAULT_AP["connection"]["type"] = "802-11-wireless";
   DEFAULT_AP["connection"]["uuid"] = QUuid::createUuid().toString().remove('{').remove('}');
   // File name is just the SSID for now
-  DEFAULT_AP["connection"]["id"] = "APName";
+  DEFAULT_AP["connection"]["id"] = AP_NAME;
   DEFAULT_AP["connection"]["autoconnect"] = false;
   DEFAULT_AP["connection"]["autoconnect-priority"] = -900;
-  DEFAULT_AP["connection"]["interface-name"] = "wlo1";
+  DEFAULT_AP["connection"]["interface-name"] = WIFI_DEVICE;
   // SSID
-  QByteArray tempCont;
-  QStringList qSList = {"ccmp"};
-  QStringList qProtoList = {"rsn"};
-  DEFAULT_AP[NM_802_11_WIRELESS_KEY]["ssid"] = tempCont.append("APName");
+  DEFAULT_AP[NM_802_11_WIRELESS_KEY]["ssid"] = AP_SSID;
   DEFAULT_AP[NM_802_11_WIRELESS_KEY]["mode"] = "ap";
 
   DEFAULT_AP[NM_802_11_WIRELESS_KEY]["security"] = NM_802_11_SECURITY_KEY;
 
-  // DEFAULT_AP[NM_802_11_SECURITY_KEY]["group"] = qSList;
   DEFAULT_AP[NM_802_11_SECURITY_KEY]["key-mgmt"] = "wpa-psk";
-  // DEFAULT_AP[NM_802_11_SECURITY_KEY]["pairwise"] = qSList;
-  // DEFAULT_AP[NM_802_11_SECURITY_KEY]["proto"] = qProtoList;
-
-  DEFAULT_AP[NM_802_11_SECURITY_KEY]["psk"] = "kipr4609";
+  DEFAULT_AP[NM_802_11_SECURITY_KEY]["psk"] = AP_PASSWORD;
 
   return DEFAULT_AP;
 }
@@ -550,13 +548,18 @@ QString NetworkManager::ip4Address() const
   return ipAddr;
 }
 
+void NetworkManager::init(const Device *device)
+{
+  m_dev = device;
+}
+
 NetworkManager::NetworkManager()
     : m_nm(new OrgFreedesktopNetworkManagerInterface(
           NM_SERVICE,
           NM_OBJECT,
           QDBusConnection::systemBus(),
           this)),
-      m_device(0), m_wifi(0)
+      m_device(0), m_wifi(0), m_dev(nullptr)
 {
 
   // Register our metatype with dbus
