@@ -402,7 +402,7 @@ NetworkManager::NetworkManager()
           NM_OBJECT,
           QDBusConnection::systemBus(),
           this)),
-      m_device(0), m_wifi(0), m_dev(nullptr)
+      m_device(0), m_wifi(0)
 {
 
   // Register our metatype with dbus

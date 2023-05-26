@@ -164,8 +164,6 @@ private:
 	OrgFreedesktopNetworkManagerInterface *m_nm;
 	OrgFreedesktopNetworkManagerDeviceInterface *m_device;
 	OrgFreedesktopNetworkManagerDeviceWirelessInterface *m_wifi;
-
-	const Device *m_dev;
 };
 
 #endif
