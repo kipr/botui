@@ -68,7 +68,7 @@
 QDBusObjectPath AP_PATH;
 Connection DEFAULT_AP;
 
-#define WIFI_DEVICE "wlp2s0" // always wlan0 for raspberry pi
+#define WIFI_DEVICE "wlan0" // always wlan0 for raspberry pi
 #define AP_NAME QString("APName")
 #define AP_SSID (AP_NAME).toUtf8()
 #define AP_PASSWORD "password"
