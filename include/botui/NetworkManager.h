@@ -43,7 +43,6 @@ public:
 
 	NetworkManager();
 	~NetworkManager();
-	void init(const Device *device);
 
 	void addNetwork(const Network &network);
 	void forgetNetwork(const Network &network);
