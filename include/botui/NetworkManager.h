@@ -43,6 +43,7 @@ public:
 
 	NetworkManager();
 	~NetworkManager();
+	void init(const Device *device);
 
 	void addNetwork(const Network &network);
 	void forgetNetwork(const Network &network);
@@ -164,6 +165,8 @@ private:
 	OrgFreedesktopNetworkManagerInterface *m_nm;
 	OrgFreedesktopNetworkManagerDeviceInterface *m_device;
 	OrgFreedesktopNetworkManagerDeviceWirelessInterface *m_wifi;
+
+	const Device *m_dev;
 };
 
 #endif
