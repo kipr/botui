@@ -1,7 +1,7 @@
 #include "Options.h"
 #include <QCoreApplication>
 #ifdef NETWORK_ENABLED
-
+#include "org_freedesktop_NetworkManager_Connection_Active.h"
 #include "NetworkSettingsWidget.h"
 #include "NetworkStatusWidget.h"
 #include "ui_NetworkSettingsWidget.h"
@@ -27,7 +27,6 @@ NetworkSettingsWidget::NetworkSettingsWidget(Device *device, QWidget *parent)
 
 	enableCoolOffTimer = new QTimer(this);
 	enableCoolOffTimer->setSingleShot(true);
-	QObject::connect(enableCoolOffTimer, SIGNAL(timeout()), SLOT(enableAPControls()));
 
 	ui->ConnectButton->setEnabled(false);
 	QObject::connect(ui->ConnectButton, SIGNAL(clicked()), SLOT(connect()));
@@ -106,6 +105,7 @@ void NetworkSettingsWidget::indexChanged(int index)
 	}
 	else if (index == 2) // Wifi on (client mode)
 	{
+		NetworkManager::ref().turnOn();
 		NetworkManager::ref().disableAP();
 		ui->ConnectButton->setEnabled(true);
 	}
