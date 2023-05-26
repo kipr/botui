@@ -273,18 +273,18 @@ Connection NetworkManager::createAPConfig() const // Creates a default APName co
   DEFAULT_AP["connection"]["type"] = "802-11-wireless";
   DEFAULT_AP["connection"]["uuid"] = QUuid::createUuid().toString().remove('{').remove('}');
   // File name is just the SSID for now
-  DEFAULT_AP["connection"]["id"] = "APName";
+  DEFAULT_AP["connection"]["id"] = AP_NAME;
   DEFAULT_AP["connection"]["autoconnect"] = false;
   DEFAULT_AP["connection"]["autoconnect-priority"] = -900;
-  DEFAULT_AP["connection"]["interface-name"] = "wlo1";
+  DEFAULT_AP["connection"]["interface-name"] = WIFI_DEVICE;
   // SSID
-  DEFAULT_AP[NM_802_11_WIRELESS_KEY]["ssid"] = QString("APName").toUtf8();
+  DEFAULT_AP[NM_802_11_WIRELESS_KEY]["ssid"] = AP_SSID;
   DEFAULT_AP[NM_802_11_WIRELESS_KEY]["mode"] = "ap";
   DEFAULT_AP[NM_802_11_WIRELESS_KEY]["band"] = "bg";
   DEFAULT_AP[NM_802_11_WIRELESS_KEY]["security"] = NM_802_11_SECURITY_KEY;
 
   DEFAULT_AP[NM_802_11_SECURITY_KEY]["key-mgmt"] = "wpa-psk";
-  DEFAULT_AP[NM_802_11_SECURITY_KEY]["psk"] = "password";
+  DEFAULT_AP[NM_802_11_SECURITY_KEY]["psk"] = AP_PASSWORD;
 
   // ip settings
   DEFAULT_AP["ipv4"]["method"] = "shared";
