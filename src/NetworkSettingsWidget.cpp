@@ -1,7 +1,7 @@
 #include "Options.h"
 #include <QCoreApplication>
 #ifdef NETWORK_ENABLED
-
+#include "org_freedesktop_NetworkManager_Connection_Active.h"
 #include "NetworkSettingsWidget.h"
 #include "NetworkStatusWidget.h"
 #include "ui_NetworkSettingsWidget.h"
@@ -25,10 +25,8 @@ NetworkSettingsWidget::NetworkSettingsWidget(Device *device, QWidget *parent)
 	ui->setupUi(this);
 	performStandardSetup(tr("Network Settings"));
 
-	
 	enableCoolOffTimer = new QTimer(this);
 	enableCoolOffTimer->setSingleShot(true);
-	QObject::connect(enableCoolOffTimer, SIGNAL(timeout()), SLOT(enableAPControls()));
 
 	ui->ConnectButton->setEnabled(false);
 	QObject::connect(ui->ConnectButton, SIGNAL(clicked()), SLOT(connect()));
@@ -68,18 +66,21 @@ void NetworkSettingsWidget::indexChanged(int index)
 
 	if (index == 1) // AP mode
 	{
-		
+
 		NetworkManager::ref().enableAP();
 		ui->ConnectButton->setEnabled(false);
-		
 	}
 	else if (index == 2) // Wifi on (client mode)
 	{
-		NetworkManager::ref().disableAP();
+		
+		if (NetworkManager::ref().currentActiveConnectionName() == "APName")
+		{
+			NetworkManager::ref().disableAP();
+		}
 		ui->ConnectButton->setEnabled(true);
 	}
 	else if (index == 3) // Wifi off
-	{	
+	{
 		NetworkManager::ref().turnOff();
 		ui->ConnectButton->setEnabled(false);
 	}
@@ -124,20 +125,19 @@ void NetworkSettingsWidget::updateInformation()
 			ui->state->setText(on ? tr("ON") : tr("OFF"));
 			ui->ssid->setText(NetworkManager::ref().currentActiveConnectionName());
 			ui->ip->setText(NetworkManager::ref().ip4Address());
-		
 		}
-		if(ui->connectionModeSelect->currentText() == "AP Mode"){ //if Wombat is in AP Mode
+		if (ui->connectionModeSelect->currentText() == "AP Mode")
+		{ // if Wombat is in AP Mode
 			ui->ssid->setText(NetworkManager::ref().currentActiveConnectionName());
 			ui->ip->setText(NetworkManager::ref().ip4Address());
 		}
-		
 	}
-	if(ui->connectionModeSelect->currentText() == "Wifi Off"){
-			ui->state->setText("OFF");
-			ui->ssid->setText(" ");
-			ui->ip->setText(" ");
-			
-		}
+	if (ui->connectionModeSelect->currentText() == "Wifi Off")
+	{
+		ui->state->setText("OFF");
+		ui->ssid->setText(" ");
+		ui->ip->setText(" ");
+	}
 	Network active = NetworkManager::ref().active();
 	// ui->ssid->setText(active.ssid());
 	ui->security->setText(active.securityString());
