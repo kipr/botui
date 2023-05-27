@@ -1,7 +1,7 @@
 #include "Options.h"
 
 #include "NetworkManager.h"
-#include "Device.h"
+#include "SystemUtils.h"
 
 #include "org_freedesktop_NetworkManager.h"
 #include "org_freedesktop_NetworkManager_AccessPoint.h"
@@ -69,9 +69,9 @@ QDBusObjectPath AP_PATH;
 Connection DEFAULT_AP;
 
 #define WIFI_DEVICE "wlan0" // always wlan0 for raspberry pi
-#define AP_NAME QString("APName")
+#define AP_NAME m_dev->serial() + "-wombatAP"
 #define AP_SSID (AP_NAME).toUtf8()
-#define AP_PASSWORD "password"
+#define AP_PASSWORD SystemUtils::sha256(m_dev->id()).left(6) + "00"
 
 NetworkManager::~NetworkManager()
 {
@@ -251,7 +251,7 @@ bool NetworkManager::disableAP()
   return true;
 }
 
-Connection NetworkManager::createAPConfig() const // Creates a default APName configuration for settings
+Connection NetworkManager::createAPConfig() const // Creates a default AP_SSID configuration for settings
 {
   qDebug() << "Creating AP Config...";
 
@@ -396,13 +396,18 @@ QString NetworkManager::ip4Address() const
   return ipAddr;
 }
 
+void NetworkManager::init(const Device *device)
+{
+  m_dev = device;
+}
+
 NetworkManager::NetworkManager()
     : m_nm(new OrgFreedesktopNetworkManagerInterface(
           NM_SERVICE,
           NM_OBJECT,
           QDBusConnection::systemBus(),
           this)),
-      m_device(0), m_wifi(0)
+      m_device(0), m_wifi(0), m_dev(nullptr)
 {
 
   // Register our metatype with dbus
