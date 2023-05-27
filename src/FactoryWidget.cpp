@@ -36,10 +36,6 @@ FactoryWidget::FactoryWidget(Device *device, QWidget *parent)
         connect(ui->confirm, SIGNAL(clicked()), SLOT(confirm()));
         connect(ui->reflash, SIGNAL(clicked()), SLOT(reflash()));
         connect(ui->experimental, SIGNAL(clicked()), SLOT(experimental()));
-
-
-
-
 }
 
 FactoryWidget::~FactoryWidget()
@@ -58,7 +54,7 @@ void FactoryWidget::confirm()
     m_consoleProc = new QProcess();
     m_consoleProc->setProcessChannelMode(QProcess::MergedChannels);
     ui->console->setProcess(m_consoleProc);
-    m_consoleProc->start("sh /home/pi/wallaby_set_serial.sh " + ui->serialOne->text() + " " + ui->serialTwo->text() + " " + ui->serialThree->text() + " " + ui->serialFour->text());
+    m_consoleProc->start("sh /home/kipr/wombat-os/flashFiles/wallaby_set_serial.sh " + ui->serialOne->text() + " " + ui->serialTwo->text() + " " + ui->serialThree->text() + " " + ui->serialFour->text());
 
     //Keep loading console until finished
     while(m_consoleProc->state() != QProcess::NotRunning){
@@ -102,7 +98,7 @@ void FactoryWidget::reflash()
 
     //Start QProcess
     ui->console->insertPlainText("Starting Flash, please wait until finished... \n");
-    m_consoleProc->setWorkingDirectory("/home/pi");
+    m_consoleProc->setWorkingDirectory("/home/kipr/wombat-os/flashFiles");
     m_consoleProc->start("sudo ./wallaby_flash");
 
     //Keep loading console until finished
@@ -138,7 +134,7 @@ void FactoryWidget::experimental()
 
     //Start QProcess
     ui->console->insertPlainText("Pulling latest beta software... \n");
-    m_consoleProc->setWorkingDirectory("/home/pi");
+    m_consoleProc->setWorkingDirectory("/home/kipr/wombat-os/flashFiles");
     m_consoleProc->start("sudo ./getExperimental.sh");
 
     //Keep loading console until finished
