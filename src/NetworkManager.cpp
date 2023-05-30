@@ -68,7 +68,7 @@
 QDBusObjectPath AP_PATH;
 Connection DEFAULT_AP;
 
-#define WIFI_DEVICE "wlan0" // always wlan0 for raspberry pi
+#define WIFI_DEVICE "wlo1" // always wlan0 for raspberry pi
 #define AP_NAME m_dev->serial() + "-wombatAP"
 #define AP_SSID (AP_NAME).toUtf8()
 #define AP_PASSWORD SystemUtils::sha256(m_dev->id()).left(6) + "00"
@@ -79,6 +79,7 @@ NetworkManager::~NetworkManager()
 
 #define NM_802_11_WIRELESS_KEY ("802-11-wireless")
 #define NM_802_11_SECURITY_KEY ("802-11-wireless-security")
+
 
 void NetworkManager::addNetwork(const Network &network)
 {
@@ -148,81 +149,33 @@ void NetworkManager::addNetwork(const Network &network)
         NM_SERVICE,
         NM_OBJECT "/Settings",
         QDBusConnection::systemBus());
-    qDebug() << "Given Network: " << network << "with AP path: " << network.apPath();
-    qDebug() << "Given Network: " << network << "with config path: " << connection;
-    Network foundNetwork;
 
-    // Iterate through known Access Points to find desired network to add
-    foreach (const Network &nw, accessPoints())
+    QDBusObjectPath selectedNet;
+    bool foundNetwork = false;
+    QList<QDBusObjectPath> listedConnections = settings.ListConnections(); // All settings connections known
+
+    foreach (const QDBusObjectPath &setConPath, listedConnections)
     {
-      if (nw.ssid() == network.ssid())
-      {
-        // qDebug() << "AP Path: " << nw.apPath();
-        foundNetwork = nw;
-        qDebug() << "Found network: " << foundNetwork << "with path: " << foundNetwork.apPath();
-        m_nm->AddAndActivateConnection(connection, devicePath, QDBusObjectPath(foundNetwork.apPath()));
-
-        break;
-      }
-    }
-  }
-
-  if (network.mode() == Network::AP)
-  {
-    // Send our config via dbus to NetworkManager
-    OrgFreedesktopNetworkManagerSettingsInterface settings(
-        NM_SERVICE,
-        NM_OBJECT "/Settings",
-        QDBusConnection::systemBus());
-
-    bool APExist = false;
-
-    QDBusObjectPath apPathConn;
-    Connection apCon;
-    QList<QDBusObjectPath> connections = settings.ListConnections();
-
-    qDebug() << "Settings Connections: ";
-    Q_FOREACH (const QDBusObjectPath &connectionPath, connections)
-    {
-      qDebug() << connectionPath.path();
-      OrgFreedesktopNetworkManagerSettingsConnectionInterface apSettInt(
+      OrgFreedesktopNetworkManagerSettingsConnectionInterface conn(
           NM_SERVICE,
-          connectionPath.path(),
+          setConPath.path(),
           QDBusConnection::systemBus());
 
-      QDBusPendingReply<QMap<QString, QMap<QString, QVariant>>> secr = apSettInt.GetSecrets("802-11-wireless-security.psk");
-      QMap<QString, QMap<QString, QVariant>> secrReply = secr.value();
-
-      qDebug() << "AP Secrets:" << secrReply.values();
-      Connection detail = apSettInt.GetSettings().value();
-      if (detail["connection"]["id"] == AP_NAME)
+      Connection details = conn.GetSettings().value();
+      if (details["connection"]["id"] == network.ssid())
       {
-        APExist = true;
-        apPathConn = connectionPath;
-
-        qDebug() << "AP Path Connection already exists";
-        break;
+        selectedNet = setConPath;
+        foundNetwork = true;
       }
     }
 
-    if (APExist == false)
-    { // if AP Config in Settings doesn't exist already
-
-      if (NetworkManager::ref().isActiveConnectionOn() == true)
-      {
-        QDBusObjectPath curCon = m_device->activeConnection();
-        m_nm->DeactivateConnection(curCon);
-      }
-
-      AP_PATH = settings.AddConnection(DEFAULT_AP);
-      m_nm->ActivateConnection(AP_PATH, devicePath, QDBusObjectPath("/"));
+    if(foundNetwork){
+      m_nm->ActivateConnection(selectedNet, devicePath, QDBusObjectPath("/"));
     }
-    else
-    { // if AP Config in Settings DOES exist already
-      AP_PATH = apPathConn;
-      qDebug() << "AP_PATH (does exist) = " << AP_PATH.path();
-      m_nm->ActivateConnection(AP_PATH, devicePath, QDBusObjectPath("/"));
+    else {
+      m_nm->AddAndActivateConnection(connection, devicePath, QDBusObjectPath(network.apPath()));
     }
+
   }
 
   emit networkAdded(network);
@@ -322,24 +275,55 @@ void NetworkManager::turnOff()
 
 bool NetworkManager::enableAP()
 {
-#ifdef WALLABY
-  int ret = system("sudo /usr/bin/python /usr/bin/wifi_configurator.py &");
-  return (ret == 0);
-#endif
-  if (DEFAULT_AP[NM_802_11_WIRELESS_KEY]["mode"] != "ap") // If DEFAULT_AP configuration doesn't exist yet
-  {
-    createAPConfig();
-    Network APN = networkFromConnection(DEFAULT_AP);
 
-    addNetwork(APN);
-  }
-  else // If DEFAULT_AP configuration exists already
+  QDBusObjectPath apPath = getAPSettingsObjectPath();
+  
+  if (apPath.path() != "") // AP Configuration already exists
   {
-    m_nm->DeactivateConnection(m_device->activeConnection());
-    AP_PATH = m_nm->AddAndActivateConnection(DEFAULT_AP, devicePath, QDBusObjectPath("/"));
-    sleep(1);
+     qDebug() << "AP Path Connection already exists";
+    if (NetworkManager::ref().isActiveConnectionOn() == true)
+    {
+      m_nm->DeactivateConnection(m_device->activeConnection()); // Deactivate current connection
+    }
+
+    m_nm->ActivateConnection(apPath, devicePath, QDBusObjectPath("/"));
   }
+  else
+  { // AP Configuration doesn't exist yet
+    createAPConfig();
+    sleep(3);
+    apPath = getAPSettingsObjectPath();
+    m_nm->ActivateConnection(apPath, devicePath, QDBusObjectPath("/"));
+  }
+
   return true;
+}
+
+QDBusObjectPath NetworkManager::getAPSettingsObjectPath() const 
+{
+  OrgFreedesktopNetworkManagerSettingsInterface settings(
+        NM_SERVICE,
+        NM_OBJECT "/Settings",
+        QDBusConnection::systemBus());
+
+  QList<QDBusObjectPath> listedConnections = settings.ListConnections(); // All settings connections known
+  QDBusObjectPath settingsPath;
+  foreach(const QDBusObjectPath &setConPath, listedConnections)
+  {
+     OrgFreedesktopNetworkManagerSettingsConnectionInterface conn(
+          NM_SERVICE,
+          setConPath.path(),
+          QDBusConnection::systemBus());
+
+      Connection details = conn.GetSettings().value();
+      if (details["connection"]["id"].value<QString>() == AP_NAME)
+      {
+        settingsPath = setConPath;
+        break;
+      }
+  }
+
+  return settingsPath;
 }
 
 bool NetworkManager::disableAP()
@@ -436,8 +420,15 @@ Connection NetworkManager::createAPConfig() const // Creates a default AP_SSID c
   DEFAULT_AP[NM_802_11_WIRELESS_KEY]["security"] = NM_802_11_SECURITY_KEY;
 
   DEFAULT_AP[NM_802_11_SECURITY_KEY]["key-mgmt"] = "wpa-psk";
-  DEFAULT_AP[NM_802_11_SECURITY_KEY]["psk"] = AP_PASSWORD;
+  // DEFAULT_AP[NM_802_11_SECURITY_KEY]["pairwise"] = qSList;
+  // DEFAULT_AP[NM_802_11_SECURITY_KEY]["proto"] = qProtoList;
 
+  DEFAULT_AP[NM_802_11_SECURITY_KEY]["psk"] = "kipr4609";
+  OrgFreedesktopNetworkManagerSettingsInterface settings(
+        NM_SERVICE,
+        NM_OBJECT "/Settings",
+        QDBusConnection::systemBus());
+  settings.AddConnection(DEFAULT_AP);
   return DEFAULT_AP;
 }
 
@@ -618,19 +609,11 @@ NetworkManager::NetworkManager()
   connect(m_wifi, SIGNAL(AccessPointRemoved(QDBusObjectPath)),
           SLOT(nmAccessPointRemoved(QDBusObjectPath)));
 
-  // qDebug() << m_device->GetAppliedConnection(0).value();
-  // if (isPersistentOn())
-  // turnOn();
-  // else
-  // turnOff();
   turnOn();
 
   requestScan();
 
-  // foreach (const Network &nw, accessPoints())
-  // {
-  //   qDebug() << nw;
-  // }
+
 }
 
 void NetworkManager::nmAccessPointAdded(const QDBusObjectPath &accessPoint)
@@ -639,7 +622,6 @@ void NetworkManager::nmAccessPointAdded(const QDBusObjectPath &accessPoint)
   qDebug() << "Access Point Added: " << network << "with path:" << network.apPath();
 
   emit accessPointAdded(network);
-  // m_accessPoints.append(network);
 }
 
 void NetworkManager::nmAccessPointRemoved(const QDBusObjectPath &accessPoint)
@@ -648,7 +630,6 @@ void NetworkManager::nmAccessPointRemoved(const QDBusObjectPath &accessPoint)
   qDebug() << "Access Point Removed: " << network;
 
   m_accessPoints.removeAll(network);
-  // emit accessPointRemoved(network);
 }
 
 void NetworkManager::stateChangedBouncer(uint newState, uint oldState)
