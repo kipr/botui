@@ -68,7 +68,7 @@
 QDBusObjectPath AP_PATH;
 Connection DEFAULT_AP;
 
-#define WIFI_DEVICE "wlan0" // always wlan0 for raspberry pi
+#define WIFI_DEVICE "wlo1" // always wlan0 for raspberry pi
 #define AP_NAME m_dev->serial() + "-wombatAP"
 #define AP_SSID (AP_NAME).toUtf8()
 #define AP_PASSWORD SystemUtils::sha256(m_dev->id()).left(6) + "00"
@@ -79,6 +79,7 @@ NetworkManager::~NetworkManager()
 
 #define NM_802_11_WIRELESS_KEY ("802-11-wireless")
 #define NM_802_11_SECURITY_KEY ("802-11-wireless-security")
+
 
 void NetworkManager::addNetwork(const Network &network)
 {
@@ -243,6 +244,33 @@ bool NetworkManager::enableAP()
   return true;
 }
 
+QDBusObjectPath NetworkManager::getAPSettingsObjectPath() const
+{
+  OrgFreedesktopNetworkManagerSettingsInterface settings(
+        NM_SERVICE,
+        NM_OBJECT "/Settings",
+        QDBusConnection::systemBus());
+
+  QList<QDBusObjectPath> listedConnections = settings.ListConnections(); // All settings connections known
+  QDBusObjectPath settingsPath;
+  foreach(const QDBusObjectPath &setConPath, listedConnections)
+  {
+     OrgFreedesktopNetworkManagerSettingsConnectionInterface conn(
+          NM_SERVICE,
+          setConPath.path(),
+          QDBusConnection::systemBus());
+
+      Connection details = conn.GetSettings().value();
+      if (details["connection"]["id"].value<QString>() == AP_NAME)
+      {
+        settingsPath = setConPath;
+        break;
+      }
+  }
+
+  return settingsPath;
+}
+
 bool NetworkManager::disableAP()
 {
   QDBusObjectPath curCon = m_device->activeConnection();
@@ -277,7 +305,8 @@ Connection NetworkManager::createAPConfig() const // Creates a default AP_SSID c
   DEFAULT_AP[NM_802_11_WIRELESS_KEY]["security"] = NM_802_11_SECURITY_KEY;
 
   DEFAULT_AP[NM_802_11_SECURITY_KEY]["key-mgmt"] = "wpa-psk";
-  DEFAULT_AP[NM_802_11_SECURITY_KEY]["psk"] = AP_PASSWORD;
+  // DEFAULT_AP[NM_802_11_SECURITY_KEY]["pairwise"] = qSList;
+  // DEFAULT_AP[NM_802_11_SECURITY_KEY]["proto"] = qProtoList;
 
   // ip settings
   DEFAULT_AP["ipv4"]["method"] = "shared";
@@ -466,19 +495,11 @@ NetworkManager::NetworkManager()
   connect(m_wifi, SIGNAL(AccessPointRemoved(QDBusObjectPath)),
           SLOT(nmAccessPointRemoved(QDBusObjectPath)));
 
-  // qDebug() << m_device->GetAppliedConnection(0).value();
-  // if (isPersistentOn())
-  // turnOn();
-  // else
-  // turnOff();
   turnOn();
 
   requestScan();
 
-  // foreach (const Network &nw, accessPoints())
-  // {
-  //   qDebug() << nw;
-  // }
+
 }
 
 void NetworkManager::nmAccessPointAdded(const QDBusObjectPath &accessPoint)
@@ -487,7 +508,6 @@ void NetworkManager::nmAccessPointAdded(const QDBusObjectPath &accessPoint)
   qDebug() << "Access Point Added: " << network << "with path:" << network.apPath();
 
   emit accessPointAdded(network);
-  // m_accessPoints.append(network);
 }
 
 void NetworkManager::nmAccessPointRemoved(const QDBusObjectPath &accessPoint)
@@ -496,7 +516,6 @@ void NetworkManager::nmAccessPointRemoved(const QDBusObjectPath &accessPoint)
   qDebug() << "Access Point Removed: " << network;
 
   m_accessPoints.removeAll(network);
-  // emit accessPointRemoved(network);
 }
 
 void NetworkManager::stateChangedBouncer(uint newState, uint oldState)

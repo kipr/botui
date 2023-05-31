@@ -20,7 +20,7 @@
 class OrgFreedesktopNetworkManagerInterface;
 class OrgFreedesktopNetworkManagerDeviceInterface;
 class OrgFreedesktopNetworkManagerDeviceWirelessInterface;
-
+class OrgFreedesktopNetworkManagerSettingsInterface;
 class NetworkManager : public QObject, public Singleton<NetworkManager>
 {
 	Q_OBJECT
@@ -67,6 +67,10 @@ public:
 	QString ip4Address() const;
 
 	Connection createAPConfig() const;
+
+	QString currentActiveConnectionName() const;
+
+	QDBusObjectPath getAPSettingsObjectPath() const;
 
 	bool isActiveConnectionOn() const;
 	bool isActiveConnectionAP() const;
