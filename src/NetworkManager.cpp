@@ -244,33 +244,6 @@ bool NetworkManager::enableAP()
   return true;
 }
 
-QDBusObjectPath NetworkManager::getAPSettingsObjectPath() const
-{
-  OrgFreedesktopNetworkManagerSettingsInterface settings(
-        NM_SERVICE,
-        NM_OBJECT "/Settings",
-        QDBusConnection::systemBus());
-
-  QList<QDBusObjectPath> listedConnections = settings.ListConnections(); // All settings connections known
-  QDBusObjectPath settingsPath;
-  foreach(const QDBusObjectPath &setConPath, listedConnections)
-  {
-     OrgFreedesktopNetworkManagerSettingsConnectionInterface conn(
-          NM_SERVICE,
-          setConPath.path(),
-          QDBusConnection::systemBus());
-
-      Connection details = conn.GetSettings().value();
-      if (details["connection"]["id"].value<QString>() == AP_NAME)
-      {
-        settingsPath = setConPath;
-        break;
-      }
-  }
-
-  return settingsPath;
-}
-
 bool NetworkManager::disableAP()
 {
   QDBusObjectPath curCon = m_device->activeConnection();

@@ -68,8 +68,6 @@ public:
 
 	Connection createAPConfig() const;
 
-	QString currentActiveConnectionName() const;
-
 	QDBusObjectPath getAPSettingsObjectPath() const;
 
 	bool isActiveConnectionOn() const;
