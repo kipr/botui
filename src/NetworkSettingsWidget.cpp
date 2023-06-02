@@ -55,8 +55,7 @@ NetworkSettingsWidget::NetworkSettingsWidget(Device *device, QWidget *parent)
 
 void NetworkSettingsWidget::TournamentMode()
 {
-	system("sudo iwconfig wlan0 txpower 1");
-	QMessageBox msgBox;
+	ui->connectionModeSelect->setCurrentIndex(3); // turn wifi off
 	msgBox.setText("Tournament Mode activated");
 	msgBox.exec();
 }
