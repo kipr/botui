@@ -460,12 +460,17 @@ Network NetworkManager::active() const
 
 bool NetworkManager::isActiveConnectionOn() const
 {
-  bool activeConnOn;
+  bool activeConnOn = false;
   if (m_device->activeConnection().path() != "/") // if there is an Active Connection path (i.e. not "/")
   {
     activeConnOn = true;
   }
   return activeConnOn;
+}
+
+bool NetworkManager::isActiveConnectionAP() const
+{
+  return isActiveConnectionOn() && active().ssid() == AP_NAME;
 }
 
 QString NetworkManager::currentActiveConnectionName() const
