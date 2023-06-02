@@ -784,17 +784,25 @@ QString NetworkManager::getPassword(QString ssid) const
     QPair<Connection, QDBusObjectPath> pair = getConnection(ssid);
 
     // if it was unable to find a matching connection, return an empty password
-    if (pair.first.isEmpty())
+    if (pair.first.isEmpty() || pair.first[NM_802_11_WIRELESS_KEY]["security"] != NM_802_11_SECURITY_KEY)
     {
         return "";
     }
-    else if (pair.first[NM_802_11_SECURITY_KEY][])
+    else
     {
         // get the secrets
         OrgFreedesktopNetworkManagerSettingsConnectionInterface conn(NM_SERVICE, pair.second.path(), QDBusConnection::systemBus());
 
         QDBusPendingReply<Connection> reply = conn.GetSecrets(NM_802_11_SECURITY_KEY);
-        return getReply(reply, "getting password")[NM_802_11_SECURITY_KEY]["psk"].toString();
+        Connection conSecrets = getReply(reply, "getting password");
+
+        // WEP family
+        if (pair.first[NM_802_11_SECURITY_KEY]["key-mgmt"].toString() == "wep" || pair.first[NM_802_11_SECURITY_KEY]["key-mgmt"].toString() == "ieee8021x")
+            return conSecrets[NM_802_11_SECURITY_KEY]["password"].toString();
+        // WPA family
+        else if (pair.first[NM_802_11_SECURITY_KEY]["key-mgmt"].toString() == "wpa-psk" || pair.first[NM_802_11_SECURITY_KEY]["key-mgmt"].toString() == "wpa-epa")
+            return conSecrets[NM_802_11_SECURITY_KEY]["psk"].toString();
+        return "";
     }
 }
 
