@@ -11,8 +11,6 @@
 #include "org_freedesktop_NetworkManager_Settings_Connection.h"
 #include "org_freedesktop_NetworkManager_Connection_Active.h"
 #include "org_freedesktop_NetworkManager_IP4Config.h"
-#include "org_freedesktop_NetworkManager_SecretAgent.h"
-#include "org_freedesktop_NetworkManager_AgentManager.h"
 
 #include <stdio.h>
 
@@ -70,7 +68,7 @@
 QDBusObjectPath AP_PATH;
 Connection DEFAULT_AP;
 
-#define WIFI_DEVICE "wlp3s0" // always wlan0 for raspberry pi
+#define WIFI_DEVICE "wlan0" // always wlan0 for raspberry pi
 #define AP_NAME m_dev->serial() + "-wombatAP"
 #define AP_SSID (AP_NAME).toUtf8()
 #define AP_PASSWORD SystemUtils::sha256(m_dev->id()).left(6) + "00"
@@ -219,78 +217,6 @@ QString NetworkManager::getAPName()
 {
   return AP_NAME;
 }
-
-// QString NetworkManager::getPassword(QString ssid) const
-// {
-//   // get connection and path
-//   QPair<Connection, QDBusObjectPath> pair = getConnection(ssid);
-
-//   // if it was unable to find a matching connection, return an empty password
-//   if (pair.first.isEmpty())
-//   {
-//     return "";
-//   }
-//   else
-//   {
-//     // get the secrets
-//     OrgFreedesktopNetworkManagerSettingsConnectionInterface conn(
-//         NM_SERVICE,
-//         pair.second.path(),
-//         QDBusConnection::systemBus());
-
-//     QDBusPendingReply<Connection> reply = conn.GetSecrets(NM_802_11_SECURITY_KEY);
-//     //return getReply(reply, "getting password")[NM_802_11_SECURITY_KEY]["psk"].toString();
-//   }
-// }
-// QList<QPair<Connection, QDBusObjectPath>> NetworkManager::getAllConnections() const
-// {
-//   QList<QPair<Connection, QDBusObjectPath>> ret;
-
-//   // iterate through all the paths and get the connections associated with them
-//   foreach (const QDBusObjectPath &connectionPath, getAllConnectionPaths())
-//   {
-//     // get the connection associated with the dbus path connection
-//     OrgFreedesktopNetworkManagerSettingsConnectionInterface conn(
-//         NM_SERVICE,
-//         connectionPath.path(),
-//         QDBusConnection::systemBus());
-//     Connection details = conn.GetSettings().value();
-
-//     // This connection is not a wifi one. Skip.
-//     if (!details.contains(NM_802_11_WIRELESS_KEY))
-//       continue;
-
-//     ret << qMakePair(details, connectionPath);
-//   }
-//   return ret;
-// }
-
-// QPair<Connection, QDBusObjectPath> NetworkManager::getConnection(QString ssid) const
-// {
-//   // loop through all the found dbus path connections
-//   using ConnectionPathPair = QPair<Connection, QDBusObjectPath>;
-//   foreach (const ConnectionPathPair &pair, getAllConnections())
-//   {
-//     // if ssid matches, return the connection and the path
-//     if (pair.first[NM_802_11_WIRELESS_KEY]["ssid"].toString() == ssid)
-//     {
-//       return pair;
-//     }
-//   }
-
-//   // unable to find the connection and path, so return empty ones
-//   return qMakePair(Connection(), QDBusObjectPath());
-// }
-
-// QList<QDBusObjectPath> NetworkManager::getAllConnectionPaths() const
-// {
-//   // initialize settings provider to get all dbus path connections
-//   OrgFreedesktopNetworkManagerSettingsInterface settings(
-//       NM_SERVICE,
-//       NM_OBJECT "/Settings",
-//       QDBusConnection::systemBus());
-//   return settings.ListConnections();
-// }
 
 NetworkList NetworkManager::networks() const
 {
