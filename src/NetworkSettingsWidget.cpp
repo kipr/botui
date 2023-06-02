@@ -72,7 +72,7 @@ void NetworkSettingsWidget::indexChanged(int index)
 	}
 	else if (index == 2) // Wifi on (client mode)
 	{
-		
+
 		if (NetworkManager::ref().currentActiveConnectionName() == "APName")
 		{
 			NetworkManager::ref().disableAP();
@@ -131,6 +131,7 @@ void NetworkSettingsWidget::updateInformation()
 			ui->ssid->setText(NetworkManager::ref().currentActiveConnectionName());
 			ui->ip->setText(NetworkManager::ref().ip4Address());
 		}
+		ui->password->setText(NetworkManager::ref().activeConnectionPassword());
 	}
 	if (ui->connectionModeSelect->currentText() == "Wifi Off")
 	{

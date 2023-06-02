@@ -16,13 +16,11 @@ cmake_minimum_required(VERSION 2.8.11)
   
 #endif()
 
-set(LIBKAR_ROOT ${CMAKE_SOURCE_DIR}/../libkar)
-set(PCOMPILER_ROOT ${CMAKE_SOURCE_DIR}/../pcompiler)
-set(LIBKIPR_ROOT ${CMAKE_SOURCE_DIR}/../libwallaby)
-if(wombat)
-	add_definitions(-DWOMBAT)
-	set(DEVICE_DIR ${CMAKE_SOURCE_DIR}/devices/wombat)
-endif()
+#set(LIBKAR_ROOT ${CMAKE_SOURCE_DIR}/../libkar)
+#set(PCOMPILER_ROOT ${CMAKE_SOURCE_DIR}/../pcompiler)
+#set(LIBKIPR_ROOT ${CMAKE_SOURCE_DIR}/../libwallaby)
+add_definitions(-DWOMBAT)
+set(DEVICE_DIR ${CMAKE_SOURCE_DIR}/devices/wombat)
 
 if(docker_cross)
 	link_directories("${LIBKAR_ROOT}/lib")
