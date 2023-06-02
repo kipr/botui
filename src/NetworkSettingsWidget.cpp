@@ -72,13 +72,14 @@ void NetworkSettingsWidget::indexChanged(int index)
 	}
 	else if (index == 2) // Wifi on (client mode)
 	{
-		
+
 		if (NetworkManager::ref().currentActiveConnectionName() == NetworkManager::ref().getAPName())
 		{
 			NetworkManager::ref().disableAP();
-			
 		}
+		
 		ui->ConnectButton->setEnabled(true);
+		ui->state->setText("ON");
 	}
 	else if (index == 3) // Wifi off
 	{
@@ -111,39 +112,37 @@ void NetworkSettingsWidget::updateInformation()
 
 	const QString id = device()->id();
 	const QString serial = device()->serial();
-	// if (!id.isEmpty())
-	// {
-	// 	const QString password = SystemUtils::sha256(id).left(6) + "00";
-	// 	const QString ssid = serial + "-wombat";
-	// 	ui->ssid->setText(ssid);
-	// 	ui->password->setText(password);
-	// }
 
 	if (NetworkManager::ref().isActiveConnectionOn() == true) // if there's an active connection
 	{
-		if (ui->connectionModeSelect->currentText() == "Client Mode") // if Wombat in client mode
+	
+
+		if (NetworkManager::ref().currentActiveConnectionName() != NetworkManager::ref().getAPName()) // if current mode isn't AP
 		{
+			ui->connectionModeSelect->setCurrentIndex(2);
 			ui->state->setText(on ? tr("ON") : tr("OFF"));
 			ui->ssid->setText(NetworkManager::ref().currentActiveConnectionName());
 			ui->ip->setText(NetworkManager::ref().ip4Address());
 		}
-		if (ui->connectionModeSelect->currentText() == "AP Mode")
-		{ // if Wombat is in AP Mode
+		else //if current mode is AP
+		{
+			ui->connectionModeSelect->setCurrentIndex(1);
+			ui->state->setText(on ? tr("ON") : tr("OFF"));
 			ui->ssid->setText(NetworkManager::ref().currentActiveConnectionName());
 			ui->ip->setText(NetworkManager::ref().ip4Address());
 		}
 	}
-	if (ui->connectionModeSelect->currentText() == "Wifi Off")
+	else if(!on) //wifi is off
 	{
+		ui->connectionModeSelect->setCurrentText("Wifi Off");
 		ui->state->setText("OFF");
 		ui->ssid->setText(" ");
 		ui->ip->setText(" ");
 	}
 	Network active = NetworkManager::ref().active();
-	// ui->ssid->setText(active.ssid());
+
 	ui->security->setText(active.securityString());
-	// const QString ip = NetworkManager::ref().ipAddress();
-	// ui->ip->setText(ip.isEmpty() ? tr("No IP") : ip);
+	
 }
 
 void NetworkSettingsWidget::stateChanged(const NetworkManager::State &newState, const NetworkManager::State &oldState)
