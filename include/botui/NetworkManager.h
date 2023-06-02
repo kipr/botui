@@ -13,6 +13,7 @@
 #include <QObject>
 
 #include <QDBusObjectPath>
+#include <QDBusReply>
 
 class OrgFreedesktopNetworkManagerInterface;
 class OrgFreedesktopNetworkManagerDeviceInterface;
@@ -72,6 +73,17 @@ public:
   bool isActiveConnectionOn() const;
   bool isActiveConnectionAP() const;
 
+	QString getPassword(QString ssid) const;
+
+	QPair<Connection, QDBusObjectPath> getConnection(QString ssid) const;
+
+	QList<QDBusObjectPath> getAllConnectionPaths() const;
+
+	void getReply(QDBusPendingReply<> &reply, const QString where, const bool throwError) const;
+
+	QList<QPair<Connection, QDBusObjectPath>> getAllConnections() const;
+
+	QString getAPName();
 public slots:
   bool turnOn();
   void turnOff();
