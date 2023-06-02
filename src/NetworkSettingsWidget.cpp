@@ -73,9 +73,10 @@ void NetworkSettingsWidget::indexChanged(int index)
 	else if (index == 2) // Wifi on (client mode)
 	{
 		
-		if (NetworkManager::ref().currentActiveConnectionName() == "APName")
+		if (NetworkManager::ref().currentActiveConnectionName() == NetworkManager::ref().getAPName())
 		{
 			NetworkManager::ref().disableAP();
+			
 		}
 		ui->ConnectButton->setEnabled(true);
 	}
