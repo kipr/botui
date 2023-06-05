@@ -77,7 +77,7 @@ void NetworkSettingsWidget::indexChanged(int index)
 		{
 			NetworkManager::ref().disableAP();
 		}
-
+		
 		ui->ConnectButton->setEnabled(true);
 		ui->state->setText("ON");
 	}
@@ -115,7 +115,7 @@ void NetworkSettingsWidget::updateInformation()
 
 	if (NetworkManager::ref().isActiveConnectionOn() == true) // if there's an active connection
 	{
-
+	
 
 		if (NetworkManager::ref().currentActiveConnectionName() != NetworkManager::ref().getAPName()) // if current mode isn't AP
 		{
@@ -143,7 +143,7 @@ void NetworkSettingsWidget::updateInformation()
 	Network active = NetworkManager::ref().active();
 
 	ui->security->setText(active.securityString());
-
+	
 }
 
 void NetworkSettingsWidget::stateChanged(const NetworkManager::State &newState, const NetworkManager::State &oldState)
