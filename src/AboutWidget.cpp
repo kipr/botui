@@ -46,6 +46,7 @@ AboutWidget::AboutWidget(Device *device, QWidget *parent)
   else
   {
     ui->WiFiaddr->setText(NetworkManager::ref().ip4Address());
+    ui->password->setText(NetworkManager::ref().activeConnectionPassword());
     ui->LANaddr->setText("0.0.0.0");
   }
 
