@@ -48,7 +48,7 @@ Connection DEFAULT_AP;
 #ifdef WOMBAT
 #define WIFI_DEVICE "wlan0" // always wlan0 for raspberry pi
 #else
-#define WIFI_DEVICE "wlo1" // wlo1 for KIPR dev machine
+#define WIFI_DEVICE "wlo1" // wlo1 for dev machine
 #endif
 
 #define AP_NAME m_dev->serial() + "-wombatAP"
