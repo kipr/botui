@@ -77,7 +77,7 @@ void NetworkSettingsWidget::indexChanged(int index)
 		{
 			NetworkManager::ref().disableAP();
 		}
-		
+
 		ui->ConnectButton->setEnabled(true);
 		ui->state->setText("ON");
 	}
@@ -113,9 +113,16 @@ void NetworkSettingsWidget::updateInformation()
 	const QString id = device()->id();
 	const QString serial = device()->serial();
 
-	if (NetworkManager::ref().isActiveConnectionOn() == true) // if there's an active connection
+	if (!on) // wifi is off
 	{
-	
+		ui->connectionModeSelect->setCurrentText("Wifi Off");
+		ui->state->setText("OFF");
+		ui->ssid->setText(" ");
+		ui->ip->setText(" ");
+		ui->password->setText(" ");
+	}
+	else if (NetworkManager::ref().isActiveConnectionOn() == true) // if there's an active connection
+	{
 
 		if (NetworkManager::ref().currentActiveConnectionName() != NetworkManager::ref().getAPName()) // if current mode isn't AP
 		{
@@ -124,7 +131,7 @@ void NetworkSettingsWidget::updateInformation()
 			ui->ssid->setText(NetworkManager::ref().currentActiveConnectionName());
 			ui->ip->setText(NetworkManager::ref().ip4Address());
 		}
-		else //if current mode is AP
+		else // if current mode is AP
 		{
 			ui->connectionModeSelect->setCurrentIndex(1);
 			ui->state->setText(on ? tr("ON") : tr("OFF"));
@@ -133,17 +140,10 @@ void NetworkSettingsWidget::updateInformation()
 		}
 		ui->password->setText(NetworkManager::ref().activeConnectionPassword());
 	}
-	else if(!on) //wifi is off
-	{
-		ui->connectionModeSelect->setCurrentText("Wifi Off");
-		ui->state->setText("OFF");
-		ui->ssid->setText(" ");
-		ui->ip->setText(" ");
-	}
+
 	Network active = NetworkManager::ref().active();
 
 	ui->security->setText(active.securityString());
-	
 }
 
 void NetworkSettingsWidget::stateChanged(const NetworkManager::State &newState, const NetworkManager::State &oldState)
