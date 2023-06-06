@@ -56,6 +56,7 @@ NetworkSettingsWidget::NetworkSettingsWidget(Device *device, QWidget *parent)
 void NetworkSettingsWidget::TournamentMode()
 {
 	ui->connectionModeSelect->setCurrentIndex(3); // turn wifi off
+	QMessageBox msgBox;
 	msgBox.setText("Tournament Mode activated");
 	msgBox.exec();
 }
@@ -128,6 +129,7 @@ void NetworkSettingsWidget::updateInformation()
 		ui->state->setText(tr("OFF"));
 		ui->ssid->setText(" ");
 		ui->ip->setText(" ");
+		ui->password->setText(" ");
 	}
 
 	Network active = NetworkManager::ref().active();
