@@ -11,8 +11,6 @@
 #include "org_freedesktop_NetworkManager_Settings_Connection.h"
 #include "org_freedesktop_NetworkManager_Connection_Active.h"
 #include "org_freedesktop_NetworkManager_IP4Config.h"
-#include "org_freedesktop_NetworkManager_SecretAgent.h"
-#include "org_freedesktop_NetworkManager_AgentManager.h"
 
 #include <stdio.h>
 
@@ -70,7 +68,7 @@
 QDBusObjectPath AP_PATH;
 Connection DEFAULT_AP;
 
-#define WIFI_DEVICE "wlo1" // always wlan0 for raspberry pi
+#define WIFI_DEVICE "wlan0" // always wlan0 for raspberry pi
 #define AP_NAME m_dev->serial() + "-wombatAP"
 #define AP_SSID (AP_NAME).toUtf8()
 #define AP_PASSWORD SystemUtils::sha256(m_dev->id()).left(6) + "00"
@@ -94,37 +92,15 @@ void NetworkManager::addNetwork(const Network &network)
     connection["ipv6"]["method"] = "auto";
 
     // For now we only handle wifi
-    connection["connection"]["type"] = "802-11-wireless";
+    connection["connection"]["type"] = NM_802_11_WIRELESS_KEY;
     connection["connection"]["uuid"] = QUuid::createUuid().toString().remove('{').remove('}');
     // File name is just the SSID for now
     connection["connection"]["id"] = network.ssid();
-    if (network.ssid().toLatin1() != AP_SSID)
-    {
-      connection["connection"]["autoconnect-priority"] = 100;
-    }
-    else
-    {
-      connection["connection"]["autoconnect-priority"] = -900;
-    }
 
     // SSID
     connection[NM_802_11_WIRELESS_KEY]["ssid"] = network.ssid().toLatin1();
 
-    // Network Mode (adhoc or infrastructure)
-    switch (network.mode())
-    {
-    case Network::Infrastructure:
-      connection[NM_802_11_WIRELESS_KEY]["mode"] = "infrastructure";
-      break;
-    case Network::AdHoc:
-      connection[NM_802_11_WIRELESS_KEY]["mode"] = "adhoc";
-      break;
-    case Network::AP:
-      connection[NM_802_11_WIRELESS_KEY]["mode"] = "ap";
-      break;
-    default:
-      break;
-    }
+    connection[NM_802_11_WIRELESS_KEY]["mode"] = "infrastructure";
 
     const static QString securityTypes[] = {
         "none",
@@ -138,71 +114,37 @@ void NetworkManager::addNetwork(const Network &network)
 
       qDebug() << "addNetwork password: " << network.password();
       connection[NM_802_11_SECURITY_KEY]["key-mgmt"] = securityTypes[network.security()];
-      // WEP uses this key
-      connection[NM_802_11_SECURITY_KEY]["password"] = network.password();
-      // WPA uses this one
-      connection[NM_802_11_SECURITY_KEY]["psk"] = network.password();
+      switch (network.security())
+      {
+      case Network::Wep:
+      case Network::DynamicWep:
+        // WEP uses this key
+        connection[NM_802_11_SECURITY_KEY]["password"] = network.password();
+        break;
+      case Network::Wpa:
+      case Network::WpaEnterprise:
+        // WPA uses this one
+        connection[NM_802_11_SECURITY_KEY]["psk"] = network.password();
+        break;
+      case Network::None:
+      default:
+        qDebug() << "this shouldn't happen";
+      }
 
       // Finally, tell our configuration about the security
       connection[NM_802_11_WIRELESS_KEY]["security"] = NM_802_11_SECURITY_KEY;
     }
 
-    // Send our config via dbus to NetworkManager
-    OrgFreedesktopNetworkManagerSettingsInterface settings(
-        NM_SERVICE,
-        NM_OBJECT "/Settings",
-        QDBusConnection::systemBus());
-
-    QDBusObjectPath selectedNet;
-    bool foundNetwork = false;
-    QList<QDBusObjectPath> listedConnections = settings.ListConnections(); // All settings connections known
-
-    foreach (const QDBusObjectPath &setConPath, listedConnections)
+    QPair<Connection, QDBusObjectPath> pair = getConnection(network.ssid());
+    if (!pair.first.empty()) // found a valid connection
     {
-      OrgFreedesktopNetworkManagerSettingsConnectionInterface conn(
-          NM_SERVICE,
-          setConPath.path(),
-          QDBusConnection::systemBus());
-
-      Connection details = conn.GetSettings().value();
-      if (details["connection"]["id"] == network.ssid())
-      {
-        selectedNet = setConPath;
-        foundNetwork = true;
-      }
+      QDBusPendingReply<QDBusObjectPath, QDBusObjectPath> reply = m_nm->ActivateConnection(pair.second, devicePath, QDBusObjectPath("/"));
+      getReply(reply);
     }
-
-    if (foundNetwork)
+    else // no connection found, have to add it
     {
-      OrgFreedesktopNetworkManagerSecretAgentInterface secretAgent(
-          NM_SERVICE,
-          NM_OBJECT "/SecretAgent",
-          QDBusConnection::systemBus());
-      OrgFreedesktopNetworkManagerAgentManagerInterface agentMan(
-          NM_SERVICE,
-          NM_OBJECT "/AgentManager",
-          QDBusConnection::systemBus());
-
-      agentMan.Register("manager");
-      secretAgent.SaveSecrets(connection, selectedNet);
-      // qDebug() << "Settings GetSecrets output: " << .toString();
-      QDBusPendingReply<Connection> reply = secretAgent.GetSecrets(connection, selectedNet, "psk", {"manager"}, 1);
-      qDebug() << "Get Secrets output: " << reply.value();
-
-      m_nm->ActivateConnection(selectedNet, devicePath, QDBusObjectPath("/"));
-    }
-    else
-    {
-      QDBusObjectPath newSettingsPath = settings.AddConnection(connection);
-      qDebug() << "New settings path: " << newSettingsPath.path();
-      OrgFreedesktopNetworkManagerSettingsConnectionInterface conn(
-          NM_SERVICE,
-          newSettingsPath.path(),
-          QDBusConnection::systemBus());
-
-      conn.Save();
-      // m_nm->ActivateConnection(newSettingsPath, devicePath, QDBusObjectPath("/"));
-      //  m_nm->AddAndActivateConnection(connection, devicePath, QDBusObjectPath(network.apPath()));
+      QDBusPendingReply<QDBusObjectPath, QDBusObjectPath> reply = m_nm->AddAndActivateConnection(connection, devicePath, QDBusObjectPath(network.apPath()));
+      getReply(reply);
     }
   }
 
@@ -211,13 +153,7 @@ void NetworkManager::addNetwork(const Network &network)
 
 void NetworkManager::forgetNetwork(const Network &network)
 {
-  OrgFreedesktopNetworkManagerSettingsInterface settings(
-      NM_SERVICE,
-      NM_OBJECT "/Settings",
-      QDBusConnection::systemBus());
-  QList<QDBusObjectPath> connections = settings.ListConnections();
-
-  Q_FOREACH (const QDBusObjectPath &connectionPath, connections)
+  Q_FOREACH (const QDBusObjectPath &connectionPath, getAllConnectionPaths())
   {
     OrgFreedesktopNetworkManagerSettingsConnectionInterface conn(
         NM_SERVICE,
@@ -227,10 +163,10 @@ void NetworkManager::forgetNetwork(const Network &network)
     Connection details = conn.GetSettings().value();
 
     // This connection is not a wifi one. Skip.
-    if (!details.contains("802-11-wireless"))
+    if (!details.contains(NM_802_11_WIRELESS_KEY))
       continue;
 
-    if (network.ssid() == details["802-11-wireless"]["ssid"].toString())
+    if (network.ssid() == details[NM_802_11_WIRELESS_KEY]["ssid"].toString())
     {
       conn.Delete();
     }
@@ -244,101 +180,13 @@ QString NetworkManager::getAPName()
   return AP_NAME;
 }
 
-// QString NetworkManager::getPassword(QString ssid) const
-// {
-//   // get connection and path
-//   QPair<Connection, QDBusObjectPath> pair = getConnection(ssid);
-
-//   // if it was unable to find a matching connection, return an empty password
-//   if (pair.first.isEmpty())
-//   {
-//     return "";
-//   }
-//   else
-//   {
-//     // get the secrets
-//     OrgFreedesktopNetworkManagerSettingsConnectionInterface conn(
-//         NM_SERVICE,
-//         pair.second.path(),
-//         QDBusConnection::systemBus());
-
-//     QDBusPendingReply<Connection> reply = conn.GetSecrets(NM_802_11_SECURITY_KEY);
-//     //return getReply(reply, "getting password")[NM_802_11_SECURITY_KEY]["psk"].toString();
-//   }
-// }
-// QList<QPair<Connection, QDBusObjectPath>> NetworkManager::getAllConnections() const
-// {
-//   QList<QPair<Connection, QDBusObjectPath>> ret;
-
-//   // iterate through all the paths and get the connections associated with them
-//   foreach (const QDBusObjectPath &connectionPath, getAllConnectionPaths())
-//   {
-//     // get the connection associated with the dbus path connection
-//     OrgFreedesktopNetworkManagerSettingsConnectionInterface conn(
-//         NM_SERVICE,
-//         connectionPath.path(),
-//         QDBusConnection::systemBus());
-//     Connection details = conn.GetSettings().value();
-
-//     // This connection is not a wifi one. Skip.
-//     if (!details.contains(NM_802_11_WIRELESS_KEY))
-//       continue;
-
-//     ret << qMakePair(details, connectionPath);
-//   }
-//   return ret;
-// }
-
-// QPair<Connection, QDBusObjectPath> NetworkManager::getConnection(QString ssid) const
-// {
-//   // loop through all the found dbus path connections
-//   using ConnectionPathPair = QPair<Connection, QDBusObjectPath>;
-//   foreach (const ConnectionPathPair &pair, getAllConnections())
-//   {
-//     // if ssid matches, return the connection and the path
-//     if (pair.first[NM_802_11_WIRELESS_KEY]["ssid"].toString() == ssid)
-//     {
-//       return pair;
-//     }
-//   }
-
-//   // unable to find the connection and path, so return empty ones
-//   return qMakePair(Connection(), QDBusObjectPath());
-// }
-
-// QList<QDBusObjectPath> NetworkManager::getAllConnectionPaths() const
-// {
-//   // initialize settings provider to get all dbus path connections
-//   OrgFreedesktopNetworkManagerSettingsInterface settings(
-//       NM_SERVICE,
-//       NM_OBJECT "/Settings",
-//       QDBusConnection::systemBus());
-//   return settings.ListConnections();
-// }
-
 NetworkList NetworkManager::networks() const
 {
   NetworkList networks;
-  OrgFreedesktopNetworkManagerSettingsInterface settings(
-      NM_SERVICE,
-      NM_OBJECT "/Settings",
-      QDBusConnection::systemBus());
-  QList<QDBusObjectPath> connections = settings.ListConnections();
-
-  Q_FOREACH (const QDBusObjectPath &connectionPath, connections)
+  using ConnectionPathPair = QPair<Connection, QDBusObjectPath>;
+  foreach (const ConnectionPathPair pair, getAllConnections())
   {
-    OrgFreedesktopNetworkManagerSettingsConnectionInterface conn(
-        NM_SERVICE,
-        connectionPath.path(),
-        QDBusConnection::systemBus());
-
-    Connection details = conn.GetSettings().value();
-
-    // This connection is not a wifi one. Skip.
-    if (!details.contains("802-11-wireless"))
-      continue;
-
-    networks << networkFromConnection(details);
+    networks << networkFromConnection(pair.first);
   }
 
   return networks;
@@ -406,45 +254,15 @@ bool NetworkManager::enableAP()
 
 QDBusObjectPath NetworkManager::getAPSettingsObjectPath() const
 {
-  OrgFreedesktopNetworkManagerSettingsInterface settings(
-      NM_SERVICE,
-      NM_OBJECT "/Settings",
-      QDBusConnection::systemBus());
-
-  QList<QDBusObjectPath> listedConnections = settings.ListConnections(); // All settings connections known
-  QDBusObjectPath settingsPath;
-  foreach (const QDBusObjectPath &setConPath, listedConnections)
-  {
-    OrgFreedesktopNetworkManagerSettingsConnectionInterface conn(
-        NM_SERVICE,
-        setConPath.path(),
-        QDBusConnection::systemBus());
-
-    Connection details = conn.GetSettings().value();
-    if (details["connection"]["id"].value<QString>() == AP_NAME)
-    {
-      settingsPath = setConPath;
-      break;
-    }
-  }
+  QDBusObjectPath settingsPath = getConnection(AP_NAME).second;
 
   return settingsPath;
 }
 
 bool NetworkManager::disableAP()
 {
-
-  OrgFreedesktopNetworkManagerSettingsInterface settings(
-      NM_SERVICE,
-      NM_OBJECT "/Settings",
-      QDBusConnection::systemBus());
-
-  QDBusObjectPath selectedNet;
-  QList<QDBusObjectPath> listedConnections = settings.ListConnections(); // All settings connections known
-
-  foreach (const QDBusObjectPath &settingPath, listedConnections)
+  foreach (const QDBusObjectPath &settingPath, getAllConnectionPaths())
   {
-
     OrgFreedesktopNetworkManagerSettingsConnectionInterface conn(
         NM_SERVICE,
         settingPath.path(),
@@ -466,7 +284,7 @@ Connection NetworkManager::createAPConfig() const // Creates a default AP_SSID c
   Connection apConfig;
   DEFAULT_AP["ipv4"]["method"] = "shared";
   DEFAULT_AP["ipv6"]["method"] = "auto";
-  DEFAULT_AP["connection"]["type"] = "802-11-wireless";
+  DEFAULT_AP["connection"]["type"] = NM_802_11_WIRELESS_KEY;
   DEFAULT_AP["connection"]["uuid"] = QUuid::createUuid().toString().remove('{').remove('}');
   // File name is just the SSID for now
   DEFAULT_AP["connection"]["id"] = AP_NAME;
@@ -516,6 +334,15 @@ Network NetworkManager::active() const
   if (!m_wifi)
     return Network();
   return createAccessPoint(m_wifi->activeAccessPoint());
+}
+
+QString NetworkManager::activeConnectionPassword() const
+{
+  if (!isActiveConnectionOn())
+  {
+    return "";
+  }
+  return getPassword(active().ssid());
 }
 
 bool NetworkManager::isActiveConnectionOn() const
@@ -713,15 +540,15 @@ Network NetworkManager::networkFromConnection(const Connection &connection) cons
   modeMap["ap"] = Network::AP;
 
   Network network;
-  network.setSsid(connection["802-11-wireless"]["ssid"].toString());
-  network.setMode(modeMap[connection["802-11-wireless"]["mode"].toString()]);
-  qDebug() << "Connection" << connection["802-11-wireless"]["ssid"].toString()
-           << connection["802-11-wireless-security"]["security"].toString();
-  network.setSecurity(securityMap[connection["802-11-wireless-security"]["security"].toString()]);
+  network.setSsid(connection[NM_802_11_WIRELESS_KEY]["ssid"].toString());
+  network.setMode(modeMap[connection[NM_802_11_WIRELESS_KEY]["mode"].toString()]);
+  qDebug() << "Connection" << connection[NM_802_11_WIRELESS_KEY]["ssid"].toString()
+           << connection[NM_802_11_SECURITY_KEY]["security"].toString();
+  network.setSecurity(securityMap[connection[NM_802_11_SECURITY_KEY]["security"].toString()]);
   // Technically, password only applies to WEP connections. We always store both password
   // and psk, however, so it is a somewhat safe assumption to only try the password
   // entry.
-  // network.setPassword(getPassword(network.ssid()));
+  network.setPassword(getPassword(network.ssid()));
   return network;
 }
 
@@ -739,25 +566,8 @@ Network NetworkManager::createAccessPoint(const QDBusObjectPath &accessPoint) co
   newNetwork.setAPPath(accessPoint.path());
 
   // Security
-  const uint securityMode = accessPointObject.wpaFlags();
-
-  // FIXME: How do we detect Wpa Enterprise?
-  // What about Dynamic WEP?
-  switch (securityMode)
-  {
-  case NM_802_11_AP_SEC_NONE:
-    newNetwork.setSecurity(Network::None);
-    break;
-  case NM_802_11_AP_SEC_PAIR_WEP40:
-  case NM_802_11_AP_SEC_PAIR_WEP104:
-  case NM_802_11_AP_SEC_GROUP_WEP40:
-  case NM_802_11_AP_SEC_GROUP_WEP104:
-    newNetwork.setSecurity(Network::Wep);
-    break;
-  default:
-    newNetwork.setSecurity(Network::Wpa);
-    break;
-  }
+  const uint securityMode = accessPointObject.flags();
+  newNetwork.setSecurity(static_cast<Network::Security>(securityMode));
 
   // Mode
   const uint mode = accessPointObject.mode();
@@ -779,9 +589,86 @@ Network NetworkManager::createAccessPoint(const QDBusObjectPath &accessPoint) co
 
   // set password, if available. Note that this works even if the security is None because
   // then the value returned will just be ""
-  // newNetwork.setPassword(getPassword(newNetwork.ssid()));
+  newNetwork.setPassword(getPassword(newNetwork.ssid()));
 
   return newNetwork;
+}
+
+QList<QDBusObjectPath> NetworkManager::getAllConnectionPaths() const
+{
+  // initialize settings provider to get all dbus path connections
+  OrgFreedesktopNetworkManagerSettingsInterface settings(
+      NM_SERVICE, NM_OBJECT "/Settings", QDBusConnection::systemBus());
+  return settings.ListConnections();
+}
+
+QList<QPair<Connection, QDBusObjectPath>>
+NetworkManager::getAllConnections() const
+{
+  QList<QPair<Connection, QDBusObjectPath>> ret;
+
+  // iterate through all the paths and get the connections associated with
+  // them
+  foreach (const QDBusObjectPath &connectionPath, getAllConnectionPaths())
+  {
+    // get the connection associated with the dbus path connection
+    OrgFreedesktopNetworkManagerSettingsConnectionInterface conn(
+        NM_SERVICE, connectionPath.path(), QDBusConnection::systemBus());
+    Connection details = conn.GetSettings().value();
+
+    // This connection is not a wifi one. Skip.
+    if (!details.contains(NM_802_11_WIRELESS_KEY))
+      continue;
+
+    ret << qMakePair(details, connectionPath);
+  }
+  return ret;
+}
+
+QPair<Connection, QDBusObjectPath>
+NetworkManager::getConnection(QString ssid) const
+{
+  // loop through all the found dbus path connections
+  using ConnectionPathPair = QPair<Connection, QDBusObjectPath>;
+  foreach (const ConnectionPathPair &pair, getAllConnections())
+  {
+    // if ssid matches, return the connection and the path
+    if (pair.first[NM_802_11_WIRELESS_KEY]["ssid"].toString() == ssid)
+    {
+      return pair;
+    }
+  }
+
+  // unable to find the connection and path, so return empty ones
+  return qMakePair(Connection(), QDBusObjectPath());
+}
+
+QString NetworkManager::getPassword(QString ssid) const
+{
+  // get connection and path
+  QPair<Connection, QDBusObjectPath> pair = getConnection(ssid);
+
+  // if it was unable to find a matching connection, return an empty password
+  if (pair.first.isEmpty() || pair.first[NM_802_11_WIRELESS_KEY]["security"] != NM_802_11_SECURITY_KEY)
+  {
+    return "";
+  }
+  else
+  {
+    // get the secrets
+    OrgFreedesktopNetworkManagerSettingsConnectionInterface conn(NM_SERVICE, pair.second.path(), QDBusConnection::systemBus());
+
+    QDBusPendingReply<Connection> reply = conn.GetSecrets(NM_802_11_SECURITY_KEY);
+    Connection conSecrets = getReply(reply, "getting password");
+
+    // WEP family
+    if (pair.first[NM_802_11_SECURITY_KEY]["key-mgmt"].toString() == "wep" || pair.first[NM_802_11_SECURITY_KEY]["key-mgmt"].toString() == "ieee8021x")
+      return conSecrets[NM_802_11_SECURITY_KEY]["password"].toString();
+    // WPA family
+    else if (pair.first[NM_802_11_SECURITY_KEY]["key-mgmt"].toString() == "wpa-psk" || pair.first[NM_802_11_SECURITY_KEY]["key-mgmt"].toString() == "wpa-epa")
+      return conSecrets[NM_802_11_SECURITY_KEY]["psk"].toString();
+    return "";
+  }
 }
 
 void NetworkManager::getReply(QDBusPendingReply<> &reply, const QString where, const bool throwError) const

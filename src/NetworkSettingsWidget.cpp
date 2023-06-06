@@ -131,6 +131,7 @@ void NetworkSettingsWidget::updateInformation()
 			ui->ssid->setText(NetworkManager::ref().currentActiveConnectionName());
 			ui->ip->setText(NetworkManager::ref().ip4Address());
 		}
+		ui->password->setText(NetworkManager::ref().activeConnectionPassword());
 	}
 	else if(!on) //wifi is off
 	{
