@@ -71,8 +71,10 @@ Connection DEFAULT_AP;
 #ifdef WOMBAT
 #define WIFI_DEVICE "wlan0" // always wlan0 for raspberry pi
 #endif
+#else
+#define WIFI_DEVICE "wlo1" // wlo1 for dev machine
+#endif
 
-#define WIFI_DEVICE "wlo1" // always wlan0 for raspberry pi
 #define AP_NAME m_dev->serial() + "-wombatAP"
 #define AP_SSID (AP_NAME).toUtf8()
 #define AP_PASSWORD SystemUtils::sha256(m_dev->id()).left(6) + "00"
