@@ -21,7 +21,8 @@ public:
 		Unknown = 0,
 		AdHoc,
 		Infrastructure,
-		AP
+		AP,
+		Mesh
 	};
 
 	Network();
