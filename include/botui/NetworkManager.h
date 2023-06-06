@@ -51,6 +51,8 @@ public:
 
   Network active() const;
 
+  QString activeConnectionPassword() const;
+
   void requestScan();
 
   bool isOn() const;
@@ -73,17 +75,7 @@ public:
   bool isActiveConnectionOn() const;
   bool isActiveConnectionAP() const;
 
-	QString getPassword(QString ssid) const;
-
-	QPair<Connection, QDBusObjectPath> getConnection(QString ssid) const;
-
-	QList<QDBusObjectPath> getAllConnectionPaths() const;
-
-	void getReply(QDBusPendingReply<> &reply, const QString where, const bool throwError) const;
-
-	QList<QPair<Connection, QDBusObjectPath>> getAllConnections() const;
-
-	QString getAPName();
+  QString getAPName();
 public slots:
   bool turnOn();
   void turnOff();
@@ -109,6 +101,62 @@ private slots:
 private:
   Network networkFromConnection(const Connection &connection) const;
   Network createAccessPoint(const QDBusObjectPath &accessPoint) const;
+
+  /**
+   * @brief Get all the Connection Paths
+   *
+   * @return QList<QDBusObjectPath>
+   */
+  QList<QDBusObjectPath> getAllConnectionPaths() const;
+
+  /**
+   * @brief Get a list of all the Connections and all their corresponding paths
+   *
+   * @return QList<QPair<Connection, QDBusObjectPath>> a list containing all the Connection/Path pairs
+   */
+  QList<QPair<Connection, QDBusObjectPath>> getAllConnections() const;
+
+  /**
+   * @brief Get the Connection Path object associated with the connection associated with the ssid
+   *
+   * @param ssid the ssid of the network
+   * @return QPair<Connection, QDBusObjectPath> the path, if available, else an empty path
+   */
+  QPair<Connection, QDBusObjectPath> getConnection(QString ssid) const;
+
+  /**
+   * @brief Get the Password of a specific network
+   *
+   * @param ssid the ssid of the network
+   * @return QString the password, if available, else ""
+   */
+  QString getPassword(QString ssid) const;
+
+  /**
+   * @brief Get the Reply object
+   * @throws QDBusError - if the reply errored
+   *
+   * @param reply - the reply to wait for
+   * @param where - if errors, where did it error
+   */
+  void getReply(QDBusPendingReply<> &reply, const QString where = "getting reply", const bool throwError = false) const;
+
+  /**
+   * @brief Get the Reply object
+   * @throws QDBusError - if the reply errored
+   *
+   * @tparam Value - return type
+   * @tparam Other - any additional types
+   * @param reply the reply to wait for
+   * @param where if errors, where did it error
+   * @return Value the returned value
+   */
+  template <typename Value, typename... Other>
+  Value getReply(QDBusPendingReply<Value, Other...> &reply, const QString where = "getting reply", const bool throwError = false) const
+  {
+    getReply(reinterpret_cast<QDBusPendingReply<> &>(reply), where, throwError);
+    return reply.value();
+  }
 
   NetworkList m_accessPoints;
   QDBusObjectPath devicePath;

@@ -120,6 +120,7 @@ void NetworkSettingsWidget::updateInformation()
 		ui->state->setText(tr("ON"));
 		ui->ssid->setText(NetworkManager::ref().currentActiveConnectionName());
 		ui->ip->setText(NetworkManager::ref().ip4Address());
+		ui->password->setText(NetworkManager::ref().activeConnectionPassword());
 	}
 	// if wifi device is off, say so
 	else
