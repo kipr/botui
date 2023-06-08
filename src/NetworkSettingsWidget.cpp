@@ -27,7 +27,7 @@ NetworkSettingsWidget::NetworkSettingsWidget(Device *device, QWidget *parent)
 
 	enableCoolOffTimer = new QTimer(this);
 	enableCoolOffTimer->setSingleShot(true);
-
+	ui->connectionModeSelect->setCurrentIndex(0);
 	ui->ConnectButton->setEnabled(false);
 	QObject::connect(ui->ConnectButton, SIGNAL(clicked()), SLOT(connect()));
 	QObject::connect(ui->ManageButton, SIGNAL(clicked()), SLOT(manage()));
@@ -64,13 +64,13 @@ void NetworkSettingsWidget::indexChanged(int index)
 {
 	NetworkManager::ref().turnOn();
 
-	if (index == 1) // AP mode
+	if (index == 0) // AP mode
 	{
 
 		NetworkManager::ref().enableAP();
 		ui->ConnectButton->setEnabled(false);
 	}
-	else if (index == 2) // Wifi on (client mode)
+	else if (index == 1) // Wifi on (client mode)
 	{
 
 		if (NetworkManager::ref().currentActiveConnectionName() == NetworkManager::ref().getAPName())
@@ -81,7 +81,7 @@ void NetworkSettingsWidget::indexChanged(int index)
 		ui->ConnectButton->setEnabled(true);
 		ui->state->setText("ON");
 	}
-	else if (index == 3) // Wifi off
+	else if (index == 2) // Wifi off
 	{
 		NetworkManager::ref().turnOff();
 		ui->ConnectButton->setEnabled(false);
@@ -126,14 +126,14 @@ void NetworkSettingsWidget::updateInformation()
 
 		if (NetworkManager::ref().currentActiveConnectionName() != NetworkManager::ref().getAPName()) // if current mode isn't AP
 		{
-			ui->connectionModeSelect->setCurrentIndex(2);
+			ui->connectionModeSelect->setCurrentIndex(1);
 			ui->state->setText(on ? tr("ON") : tr("OFF"));
 			ui->ssid->setText(NetworkManager::ref().currentActiveConnectionName());
 			ui->ip->setText(NetworkManager::ref().ip4Address());
 		}
 		else // if current mode is AP
 		{
-			ui->connectionModeSelect->setCurrentIndex(1);
+			ui->connectionModeSelect->setCurrentIndex(0);
 			ui->state->setText(on ? tr("ON") : tr("OFF"));
 			ui->ssid->setText(NetworkManager::ref().currentActiveConnectionName());
 			ui->ip->setText(NetworkManager::ref().ip4Address());

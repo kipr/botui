@@ -51,6 +51,7 @@ Connection DEFAULT_AP;
 #define WIFI_DEVICE "wlo1" // wlo1 for dev machine
 #endif
 
+
 #define AP_NAME m_dev->serial() + "-wombatAP"
 #define AP_SSID (AP_NAME).toUtf8()
 #define AP_PASSWORD SystemUtils::sha256(m_dev->id()).left(6) + "00"
@@ -267,7 +268,7 @@ bool NetworkManager::disableAP()
 Connection NetworkManager::createAPConfig() const // Creates a default AP_SSID configuration for settings
 {
   qDebug() << "Creating AP Config...";
-  Connection apConfig;
+
   DEFAULT_AP["ipv4"]["method"] = "shared";
   DEFAULT_AP["ipv6"]["method"] = "auto";
   DEFAULT_AP["connection"]["type"] = NM_802_11_WIRELESS_KEY;
@@ -284,8 +285,6 @@ Connection NetworkManager::createAPConfig() const // Creates a default AP_SSID c
   DEFAULT_AP[NM_802_11_WIRELESS_KEY]["security"] = NM_802_11_SECURITY_KEY;
 
   DEFAULT_AP[NM_802_11_SECURITY_KEY]["key-mgmt"] = "wpa-psk";
-  // DEFAULT_AP[NM_802_11_SECURITY_KEY]["pairwise"] = qSList;
-  // DEFAULT_AP[NM_802_11_SECURITY_KEY]["proto"] = qProtoList;
 
   DEFAULT_AP[NM_802_11_SECURITY_KEY]["psk"] = "kipr4609";
   OrgFreedesktopNetworkManagerSettingsInterface settings(
@@ -415,6 +414,7 @@ QString NetworkManager::ip4Address() const
 void NetworkManager::init(const Device *device)
 {
   m_dev = device;
+  enableAP();
 }
 
 NetworkManager::NetworkManager()
@@ -460,7 +460,7 @@ NetworkManager::NetworkManager()
 
   qDebug() << "Wifi device found.";
   qDebug() << wifiPath.path();
-
+  
   m_device = new OrgFreedesktopNetworkManagerDeviceInterface(
       NM_SERVICE,
       wifiPath.path(),

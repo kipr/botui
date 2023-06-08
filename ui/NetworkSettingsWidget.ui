@@ -116,16 +116,14 @@
         <item>
          <widget class="QComboBox" name="connectionModeSelect">
           <property name="currentText">
-           <string extracomment="Connection Mode">Select Mode</string>
+           <string extracomment="Connection Mode">AP Mode</string>
+          </property>
+          <property name="currentIndex">
+           <number>0</number>
           </property>
           <property name="maxVisibleItems">
-           <number>3</number>
+           <number>2</number>
           </property>
-          <item>
-           <property name="text">
-            <string>Select Mode</string>
-           </property>
-          </item>
           <item>
            <property name="text">
             <string>AP Mode</string>
