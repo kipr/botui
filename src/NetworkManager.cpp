@@ -260,6 +260,7 @@ bool NetworkManager::disableAP()
     if (details["connection"]["id"] == AP_NAME)
     {
       conn.Delete();
+      qDebug() << "Connection Deleted: " << details["connection"]["id"];
     }
   }
   return true;
