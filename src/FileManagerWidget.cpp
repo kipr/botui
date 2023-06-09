@@ -14,6 +14,9 @@
 #include <QFile>
 #include <QDebug>
 
+//#define HOME_PATH "/home/erin/Documents/KISS" //home programs folder for dev machine *CHANGE FOR YOUR SPECIFIC MACHINE*
+
+
 FileManagerWidget::FileManagerWidget(Device *device, QWidget *parent)
 	: QWidget(parent),
 	ui(new Ui::FileManagerWidget),
@@ -31,10 +34,6 @@ FileManagerWidget::FileManagerWidget(Device *device, QWidget *parent)
 	m_menuBar->addAction(ex);
 	m_menuBar->addAction(m_up);
 	
-	// TODO: Maybe not hardcode?
-	m_fs->setRootPath("/kovan");
-	
-	ui->files->setModel(m_fs);
 	home();
 	
 	connect(ui->open, SIGNAL(clicked()), SLOT(open()));
@@ -61,7 +60,7 @@ void FileManagerWidget::up()
 	QModelIndexList indexes = ui->files->selectionModel()->selection().indexes();
 	if(indexes.size() != 1) return;
 	const QModelIndex newIndex = m_fs->parent(ui->files->rootIndex());
-	if(!m_fs->filePath(newIndex).startsWith("/kovan")) return;
+	if(!m_fs->filePath(newIndex).startsWith(HOME_PATH)) return;
 	ui->files->setRootIndex(newIndex);
 	updateOptions();
 }
@@ -133,8 +132,18 @@ void FileManagerWidget::remove()
 
 void FileManagerWidget::home()
 {
-	ui->files->setRootIndex(m_fs->index(m_fs->rootPath()));
-	updateOptions();
+
+	QDir homeDir = QDir::homePath();
+	#ifdef WOMBAT
+	#define HOME_PATH "/home/kipr/Documents/KISS"
+	#endif
+	homeDir.setPath(HOME_PATH);
+	
+	ui->files->setModel(this->m_fs);
+	qDebug() << "homeDir.path(): " << homeDir.path();
+	m_fs->setRootPath(homeDir.path());
+	ui->files->setRootIndex(m_fs->index(homeDir.path()));
+	
 }
 
 void FileManagerWidget::selectionChanged(const QItemSelection &selected)
@@ -145,8 +154,7 @@ void FileManagerWidget::selectionChanged(const QItemSelection &selected)
 	const QString ext = QFileInfo(m_fs->filePath(index)).absoluteFilePath();
 	FileAction *action = FileActions::ref().action(ext);
 	ui->open->setEnabled(m_fs->isDir(index) || action);
-	if(action) ui->open->setText(action->name());
-	else ui->open->setText(tr("Open"));
+	ui->open->setText(tr("Open"));
 }
 
 void FileManagerWidget::updateOptions()
