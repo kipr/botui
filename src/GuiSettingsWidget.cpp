@@ -122,7 +122,7 @@ void GuiSettingsWidget::on_invert_screen_clicked(){
       return;
   
     QProcess process;
-    process.startDetached("/bin/sh", QStringList()<< "/home/pi/got2/Screen_settings/find.sh");
+    process.startDetached("/bin/sh", QStringList()<< "/home/kipr/wombat-os/configFiles/screen_settings/find.sh");
 }
 
 void GuiSettingsWidget::updateWidgets()
