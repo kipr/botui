@@ -287,7 +287,7 @@ Connection NetworkManager::createAPConfig() const // Creates a default AP_SSID c
 
   DEFAULT_AP[NM_802_11_SECURITY_KEY]["key-mgmt"] = "wpa-psk";
 
-  DEFAULT_AP[NM_802_11_SECURITY_KEY]["psk"] = "kipr4609";
+  DEFAULT_AP[NM_802_11_SECURITY_KEY]["psk"] = AP_PASSWORD;
   OrgFreedesktopNetworkManagerSettingsInterface settings(
       NM_SERVICE,
       NM_OBJECT "/Settings",
