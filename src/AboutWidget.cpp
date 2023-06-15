@@ -3,6 +3,7 @@
 #include "Device.h"
 #include "SystemUtils.h"
 #include "NetworkManager.h"
+#include "NetworkSettingsWidget.h"
 
 #include <QDebug>
 #include <QRegularExpression>
@@ -12,7 +13,7 @@ AboutWidget::AboutWidget(Device *device, QWidget *parent)
       ui(new Ui::AboutWidget)
 {
   ui->setupUi(this);
-// Setup the UI
+  // Setup the UI
   performStandardSetup(tr("About"));
   // Version Number
   ui->version->setText("Version 30.0");
@@ -45,6 +46,8 @@ AboutWidget::AboutWidget(Device *device, QWidget *parent)
   }
   else
   {
+
+    ui->ssid->setText(NetworkManager::ref().currentActiveConnectionName());
     ui->WiFiaddr->setText(NetworkManager::ref().ip4Address());
     ui->password->setText(NetworkManager::ref().activeConnectionPassword());
     ui->LANaddr->setText("0.0.0.0");
@@ -55,11 +58,10 @@ AboutWidget::AboutWidget(Device *device, QWidget *parent)
   if (!id.isEmpty())
   {
     const QString password = SystemUtils::sha256(id).left(6) + "00";
-    const QString ssid = device->serial() + "-wombat";
+    const QString ssid = device->serial() + "-wombatAP";
     ui->ssid->setText(ssid);
     ui->password->setText(password);
   }
-  
 }
 
 AboutWidget::~AboutWidget()
