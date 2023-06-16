@@ -58,8 +58,8 @@ AboutWidget::AboutWidget(Device *device, QWidget *parent)
   if (!id.isEmpty())
   {
     const QString password = SystemUtils::sha256(id).left(6) + "00";
-    const QString ssid = device->serial() + "-wombatAP";
-    ui->ssid->setText(ssid);
+    //const QString ssid = device->serial() + "-wombatAP";
+    //ui->ssid->setText(ssid);
     ui->password->setText(password);
   }
 }
