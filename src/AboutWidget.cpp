@@ -35,9 +35,11 @@ AboutWidget::AboutWidget(Device *device, QWidget *parent)
     myProcess->start("cat", arguments);
     myProcess->waitForFinished();
     QByteArray output = myProcess->readAllStandardOutput();
+  
     // If eth0 is active
-    if (output.at(0 == 1))
+    if (output.at(0) == '1')
     {
+      qDebug() << "ENTERED ETHER";
 
       // Pull network information
       QProcess *myProc = new QProcess(parent);
@@ -56,23 +58,13 @@ AboutWidget::AboutWidget(Device *device, QWidget *parent)
       ui->LANaddr->setText(list[0]);
     }
 
-    else // ethernet is not active
+    else if (output.at(0) == '0') // ethernet is not active
     {
-
+      qDebug() << "ENTERED NOT ETHER";
       ui->ssid->setText(NetworkManager::ref().currentActiveConnectionName());
       ui->WiFiaddr->setText(NetworkManager::ref().ip4Address());
       ui->password->setText(NetworkManager::ref().activeConnectionPassword());
       ui->LANaddr->setText("0.0.0.0");
-    }
-
-    // Old
-    const QString id = device->id();
-    if (!id.isEmpty())
-    {
-      const QString password = SystemUtils::sha256(id).left(6) + "00";
-      // const QString ssid = device->serial() + "-wombatAP";
-      // ui->ssid->setText(ssid);
-      // ui->password->setText(password);
     }
   }
   else
