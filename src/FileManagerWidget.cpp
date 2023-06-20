@@ -14,10 +14,10 @@
 #include <QFile>
 #include <QDebug>
 
-// #define HOME_PATH "/home/erin/Documents/KISS" //home programs folder for dev machine *CHANGE FOR YOUR SPECIFIC MACHINE*
-#ifdef WOMBAT
-#define HOME_PATH "/home/kipr/Documents/KISS"
-#endif
+ #define HOME_PATH "/home/erin/Documents/KISS" //home programs folder for dev machine *CHANGE FOR YOUR SPECIFIC MACHINE*
+// #ifdef WOMBAT
+// #define HOME_PATH "/home/kipr/Documents/KISS"
+// #endif
 
 FileManagerWidget::FileManagerWidget(Device *device, QWidget *parent)
 	: QWidget(parent),
@@ -154,6 +154,7 @@ void FileManagerWidget::home()
 	ui->files->setModel(this->m_fs);
 	qDebug() << "homeDir.path(): " << homeDir.path();
 	m_fs->setRootPath(homeDir.path());
+	m_fs->setFilter(QDir::Dirs|QDir::Drives|QDir::NoDotAndDotDot|QDir::AllDirs);
 	ui->files->setRootIndex(m_fs->index(homeDir.path()));
 }
 
