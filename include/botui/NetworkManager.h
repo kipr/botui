@@ -132,6 +132,14 @@ private:
   QString getPassword(QString ssid) const;
 
   /**
+   * @brief Get the username associated with a specific wpa-eap network
+   *
+   * @param ssid the ssid of the network
+   * @return QString the username, if available, else ""
+   */
+  QString getUsername(QString ssid) const;
+
+  /**
    * @brief Get the Reply object
    * @throws QDBusError - if the reply errored
    *

@@ -631,6 +631,12 @@ Network NetworkManager::createAccessPoint(const QDBusObjectPath &accessPoint) co
   // then the value returned will just be ""
   newNetwork.setPassword(getPassword(newNetwork.ssid()));
 
+  // if it is wpa, set the username (if available)
+  if (newNetwork.security() == Network::WpaEnterprise)
+  {
+    newNetwork.setUsername(getUsername(newNetwork.ssid()));
+  }
+
   return newNetwork;
 }
 
@@ -719,6 +725,13 @@ QString NetworkManager::getPassword(QString ssid) const
       return "";
     }
   }
+}
+
+QString NetworkManager::getUsername(QString ssid) const
+{
+  // get connection and path
+  QPair<Connection, QDBusObjectPath> pair = getConnection(ssid);
+  return pair.first[NM_802_1X_KEY]["id"];
 }
 
 void NetworkManager::getReply(QDBusPendingReply<> &reply, const QString where, const bool throwError) const
