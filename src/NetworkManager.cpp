@@ -704,7 +704,7 @@ QString NetworkManager::getPassword(QString ssid) const
     // get the secrets
     OrgFreedesktopNetworkManagerSettingsConnectionInterface conn(NM_SERVICE, pair.second.path(), QDBusConnection::systemBus());
 
-    //
+    // WPA-EAP cases
     if (pair.first[NM_802_11_SECURITY_KEY]["key-mgmt"].toString() == "wpa-eap")
     {
       QDBusPendingReply<Connection> reply = conn.GetSecrets(NM_802_1X_KEY);
