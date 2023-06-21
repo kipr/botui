@@ -51,7 +51,6 @@ Connection DEFAULT_AP;
 #define WIFI_DEVICE "wlo1" // wlo1 for dev machine
 #endif
 
-
 #define AP_NAME m_dev->serial() + "-wombatAP"
 #define AP_SSID (AP_NAME).toUtf8()
 #define AP_PASSWORD SystemUtils::sha256(m_dev->id()).left(6) + "00"
@@ -62,6 +61,7 @@ NetworkManager::~NetworkManager()
 
 #define NM_802_11_WIRELESS_KEY ("802-11-wireless")
 #define NM_802_11_SECURITY_KEY ("802-11-wireless-security")
+#define NM_802_1X_KEY ("802-1x")
 
 void NetworkManager::addNetwork(const Network &network)
 {
@@ -92,7 +92,7 @@ void NetworkManager::addNetwork(const Network &network)
         "none",
         "ieee8021x",
         "wpa-psk",
-        "wpa-epa"};
+        "wpa-eap"};
 
     if (network.security() != Network::None)
     {
@@ -109,9 +109,15 @@ void NetworkManager::addNetwork(const Network &network)
         connection[NM_802_11_SECURITY_KEY]["password"] = network.password();
         break;
       case Network::Wpa:
+        connection[NM_802_11_SECURITY_KEY]["psk"] = network.password();
+        break;
       case Network::WpaEnterprise:
         // WPA uses this one
-        connection[NM_802_11_SECURITY_KEY]["psk"] = network.password();
+        connection[NM_802_1X_KEY]["identity"] = network.username();
+        connection[NM_802_1X_KEY]["password"] = network.password();
+        connection[NM_802_1X_KEY]["eap"] = QList<QString>() << QString("peap");
+        connection[NM_802_1X_KEY]["phase2-auth"] = "mschapv2";
+        connection[NM_802_11_SECURITY_KEY]["auth-alg"] = "open";
         break;
       case Network::None:
       default:
@@ -126,12 +132,12 @@ void NetworkManager::addNetwork(const Network &network)
     if (!pair.first.empty()) // found a valid connection
     {
       QDBusPendingReply<QDBusObjectPath, QDBusObjectPath> reply = m_nm->ActivateConnection(pair.second, devicePath, QDBusObjectPath("/"));
-      getReply(reply);
+      getReply(reply, "activating connection");
     }
     else // no connection found, have to add it
     {
       QDBusPendingReply<QDBusObjectPath, QDBusObjectPath> reply = m_nm->AddAndActivateConnection(connection, devicePath, QDBusObjectPath(network.apPath()));
-      getReply(reply);
+      getReply(reply, "adding and activating connection");
     }
   }
 
@@ -461,7 +467,7 @@ NetworkManager::NetworkManager()
 
   qDebug() << "Wifi device found.";
   qDebug() << wifiPath.path();
-  
+
   m_device = new OrgFreedesktopNetworkManagerDeviceInterface(
       NM_SERVICE,
       wifiPath.path(),
@@ -519,7 +525,7 @@ Network NetworkManager::networkFromConnection(const Connection &connection) cons
   securityMap["wep"] = Network::Wep;
   securityMap["ieee8021x"] = Network::DynamicWep;
   securityMap["wpa-psk"] = Network::Wpa;
-  securityMap["wpa-epa"] = Network::WpaEnterprise;
+  securityMap["wpa-eap"] = Network::WpaEnterprise;
 
   QMap<QString, Network::Mode> modeMap;
   modeMap["infrastructure"] = Network::Infrastructure;
@@ -535,6 +541,10 @@ Network NetworkManager::networkFromConnection(const Connection &connection) cons
   // Technically, password only applies to WEP connections. We always store both password
   // and psk, however, so it is a somewhat safe assumption to only try the password
   // entry.
+  if (network.security() == Network::WpaEnterprise)
+  {
+    network.setUsername(connection[NM_802_1X_KEY]["id"].toString());
+  }
   network.setPassword(getPassword(network.ssid()));
   return network;
 }
@@ -570,7 +580,11 @@ Network NetworkManager::createAccessPoint(const QDBusObjectPath &accessPoint) co
     //  NM_802_11_AP_SEC_KEY_MGMT_EAP_SUITE_B_192 = 0x00002000 // WPA3 Enterprise Suite-B 192 bit mode is supported. Since: 1.30.
     static QList<uint> WPARSNFlags = QList<uint>() << 0x00000100 << 0x00000400 << 0x00000800 << 0x00001000 << 0x00002000;
 
-    // list of all rsn flags.
+    // list of all RSN flags that mean 802-1x (wpa-eap)
+    //  NM_802_11_AP_SEC_KEY_MGMT_802_1X = 0x00000200,         // 802.1x authentication and key management is supported
+    static QList<uint> WpaEapRSNFlags = QList<uint>() << 0x00000200;
+
+    // list of all RSN flags.
     // these are, respectively, the following:
     //  NM_802_11_AP_SEC_NONE = 0x00000000,                    // the access point has no special security requirements
     //  NM_802_11_AP_SEC_PAIR_WEP40 = 0x00000001,              // 40/64-bit WEP is supported for pairwise/unicast encryption
@@ -598,6 +612,11 @@ Network NetworkManager::createAccessPoint(const QDBusObjectPath &accessPoint) co
         if (WPARSNFlags.contains(*iter))
         {
           newNetwork.setSecurity(Network::Wpa);
+          break;
+        }
+        if (WpaEapRSNFlags.contains(*iter))
+        {
+          newNetwork.setSecurity(Network::WpaEnterprise);
           break;
         }
       }
@@ -669,7 +688,7 @@ QString NetworkManager::getPassword(QString ssid) const
   // get connection and path
   QPair<Connection, QDBusObjectPath> pair = getConnection(ssid);
 
-  // if it was unable to find a matching connection, return an empty password
+  // if it was unable to find a matching connection or it doesn't have a password, return an empty one
   if (pair.first.isEmpty() || pair.first[NM_802_11_WIRELESS_KEY]["security"] != NM_802_11_SECURITY_KEY)
   {
     return "";
@@ -679,16 +698,26 @@ QString NetworkManager::getPassword(QString ssid) const
     // get the secrets
     OrgFreedesktopNetworkManagerSettingsConnectionInterface conn(NM_SERVICE, pair.second.path(), QDBusConnection::systemBus());
 
-    QDBusPendingReply<Connection> reply = conn.GetSecrets(NM_802_11_SECURITY_KEY);
-    Connection conSecrets = getReply(reply, "getting password");
+    //
+    if (pair.first[NM_802_11_SECURITY_KEY]["key-mgmt"].toString() == "wpa-eap")
+    {
+      QDBusPendingReply<Connection> reply = conn.GetSecrets(NM_802_1X_KEY);
+      Connection conSecrets = getReply(reply, "getting password");
+      return conSecrets[NM_802_1X_KEY]["password"].toString();
+    }
+    else
+    {
+      QDBusPendingReply<Connection> reply = conn.GetSecrets(NM_802_11_SECURITY_KEY);
+      Connection conSecrets = getReply(reply, "getting password");
 
-    // WEP family
-    if (pair.first[NM_802_11_SECURITY_KEY]["key-mgmt"].toString() == "none" || pair.first[NM_802_11_SECURITY_KEY]["key-mgmt"].toString() == "ieee8021x")
-      return conSecrets[NM_802_11_SECURITY_KEY]["wep-key0"].toString();
-    // WPA family
-    else if (pair.first[NM_802_11_SECURITY_KEY]["key-mgmt"].toString() == "wpa-psk" || pair.first[NM_802_11_SECURITY_KEY]["key-mgmt"].toString() == "wpa-epa")
-      return conSecrets[NM_802_11_SECURITY_KEY]["psk"].toString();
-    return "";
+      // WEP family
+      if (pair.first[NM_802_11_SECURITY_KEY]["key-mgmt"].toString() == "none" || pair.first[NM_802_11_SECURITY_KEY]["key-mgmt"].toString() == "ieee8021x")
+        return conSecrets[NM_802_11_SECURITY_KEY]["wep-key0"].toString();
+      // WPA
+      else if (pair.first[NM_802_11_SECURITY_KEY]["key-mgmt"].toString() == "wpa-psk")
+        return conSecrets[NM_802_11_SECURITY_KEY]["psk"].toString();
+      return "";
+    }
   }
 }
 

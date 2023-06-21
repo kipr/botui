@@ -84,6 +84,11 @@
        </item>
        <item>
         <property name="text">
+         <string>WPA Enterprise</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
          <string>WEP</string>
         </property>
        </item>
@@ -97,9 +102,34 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_5">
+    <layout class="QHBoxLayout" name="horizontallayout_5">
      <item>
       <widget class="QLabel" name="label_3">
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Username:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="LineEdit" name="username">
+       <property name="font">
+        <font>
+         <pointsize>33</pointsize>
+        </font>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_6">
+     <item>
+      <widget class="QLabel" name="label_4">
        <property name="font">
         <font>
          <pointsize>33</pointsize>

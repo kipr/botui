@@ -40,6 +40,9 @@ public:
 	void setPassword(const QString &password);
 	const QString &password() const;
 
+	void setUsername(const QString &username);
+	const QString &username() const;
+
 	void setMode(const Mode &mode);
 	const Mode &mode() const;
 
@@ -51,6 +54,7 @@ public:
 private:
 	QString m_ssid;
 	Security m_security;
+	QString m_username;
 	QString m_password;
 	Mode m_mode;
 	double m_strength;

@@ -17,21 +17,22 @@ class KeyboardDialog;
 
 class OtherNetworkWidget : public StandardWidget
 {
-Q_OBJECT
+	Q_OBJECT
 public:
 	OtherNetworkWidget(Device *device, QWidget *parent = 0);
 	~OtherNetworkWidget();
-	
+
 	void fillNetworkInfo(const Network &network);
-	
+
 private slots:
 	void join();
 	void securityChanged(int index);
-	
+
 private:
 	Ui::OtherNetworkWidget *ui;
-	
+
 	KeyboardDialog *m_ssid;
+	KeyboardDialog *m_username;
 	KeyboardDialog *m_password;
 };
 

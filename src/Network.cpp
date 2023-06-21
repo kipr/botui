@@ -64,6 +64,16 @@ const QString &Network::password() const
 	return m_password;
 }
 
+void Network::setUsername(const QString &username)
+{
+	m_username = username;
+}
+
+const QString &Network::username() const
+{
+	return m_username;
+}
+
 void Network::setMode(const Network::Mode &mode)
 {
 	m_mode = mode;
@@ -88,7 +98,9 @@ bool Network::isComplete() const
 {
 	if (m_security == Network::None)
 		return true;
-	return !m_password.isEmpty();
+	if (m_security != Network::WpaEnterprise)
+		return !m_password.isEmpty();
+	return !m_username.isEmpty();
 }
 
 bool operator==(const Network &lhs, const Network &rhs)
