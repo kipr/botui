@@ -731,7 +731,7 @@ QString NetworkManager::getUsername(QString ssid) const
 {
   // get connection and path
   QPair<Connection, QDBusObjectPath> pair = getConnection(ssid);
-  return pair.first[NM_802_1X_KEY]["id"];
+  return pair.first[NM_802_1X_KEY]["id"].toString();
 }
 
 void NetworkManager::getReply(QDBusPendingReply<> &reply, const QString where, const bool throwError) const
