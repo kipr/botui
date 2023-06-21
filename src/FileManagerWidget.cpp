@@ -14,7 +14,7 @@
 #include <QFile>
 #include <QDebug>
 
-// #define HOME_PATH "/home/erin/Documents/KISS" //home programs folder for dev machine *CHANGE FOR YOUR SPECIFIC MACHINE*
+//#define HOME_PATH "/home/erin/Documents/KISS" //home programs folder for dev machine *CHANGE FOR YOUR SPECIFIC MACHINE*
 #ifdef WOMBAT
 #define HOME_PATH "/home/kipr/Documents/KISS"
 #endif
@@ -135,13 +135,14 @@ void FileManagerWidget::remove()
 	if (indexes.size() != 1)
 		return;
 	const QString to = m_fs->filePath(indexes[0]);
-	AreYouSureDialog confirm;
-	confirm.setDescription(tr("You are about to permanently delete %1.")
-							   .arg(QFileInfo(to).fileName()));
-	int ret = RootController::ref().presentDialog(&confirm);
-	if (ret == QDialog::Rejected)
+
+	if (QMessageBox::question(this, "Delete Folder?", tr("You are about to permanently delete %1. \n\nContinue?").arg(QFileInfo(to).fileName()), QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
 		return;
-	qDebug() << "Remove success?" << FileUtils::rm(to);
+	else{
+		qDebug() << "Remove success?" << FileUtils::rm(to);
+	}
+
+
 }
 
 void FileManagerWidget::home()
@@ -154,6 +155,7 @@ void FileManagerWidget::home()
 	ui->files->setModel(this->m_fs);
 	qDebug() << "homeDir.path(): " << homeDir.path();
 	m_fs->setRootPath(homeDir.path());
+	m_fs->setFilter(QDir::Dirs | QDir::Drives | QDir::NoDotAndDotDot | QDir::AllDirs);
 	ui->files->setRootIndex(m_fs->index(homeDir.path()));
 }
 

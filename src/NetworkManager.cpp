@@ -51,7 +51,7 @@ Connection DEFAULT_AP;
 #define WIFI_DEVICE "wlo1" // wlo1 for dev machine
 #endif
 
-#define AP_NAME m_dev->serial() + "-wombatAP"
+#define AP_NAME m_dev->serial() + "-wombat"
 #define AP_SSID (AP_NAME).toUtf8()
 #define AP_PASSWORD SystemUtils::sha256(m_dev->id()).left(6) + "00"
 
@@ -293,7 +293,7 @@ Connection NetworkManager::createAPConfig() const // Creates a default AP_SSID c
 
   DEFAULT_AP[NM_802_11_SECURITY_KEY]["key-mgmt"] = "wpa-psk";
 
-  DEFAULT_AP[NM_802_11_SECURITY_KEY]["psk"] = "kipr4609";
+  DEFAULT_AP[NM_802_11_SECURITY_KEY]["psk"] = AP_PASSWORD;
   OrgFreedesktopNetworkManagerSettingsInterface settings(
       NM_SERVICE,
       NM_OBJECT "/Settings",

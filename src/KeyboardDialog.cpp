@@ -9,6 +9,7 @@ KeyboardDialog::KeyboardDialog(const QString& text, Mode mode, QWidget *parent) 
 	shifted(false)
 {
 	ui->setupUi(this);
+	move(0,-30);
 	
 	alphaVerticalLayout = new QVBoxLayout(this);
 	numVerticalLayout = new QVBoxLayout(this);
@@ -32,7 +33,9 @@ KeyboardDialog::KeyboardDialog(const QString& text, Mode mode, QWidget *parent) 
 	setupSpecialButtons();
 	setupAlphaButtons();
 	setupNumButtons();
+	
 	ui->numWidget->hide();
+	setWindowState(Qt::WindowFullScreen);
 }
 
 KeyboardDialog::~KeyboardDialog()
@@ -89,7 +92,7 @@ void KeyboardDialog::numPressed()
 		ui->numGrid->addWidget(spaceButton, 5, 4, 1, 12);
 		ui->numGrid->addWidget(delButton, 4, 15, 1, 5);
 		ui->numGrid->addWidget(numButton, 5, 0, 1, 4);
-	
+		
 		ui->numWidget->show();
 	} else {
 		if(symButton->isSwitched()) symPressed();
