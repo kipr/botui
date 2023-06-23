@@ -223,10 +223,11 @@ bool NetworkManager::enableAP()
 {
 
   QDBusObjectPath apPath = getAPSettingsObjectPath();
-
+ 
   if (apPath.path() != "") // AP Configuration already exists
   {
     qDebug() << "AP Path Connection already exists";
+
     if (NetworkManager::ref().isActiveConnectionOn() == true)
     {
       m_nm->DeactivateConnection(m_device->activeConnection()); // Deactivate current connection
@@ -276,8 +277,6 @@ Connection NetworkManager::createAPConfig() const // Creates a default AP_SSID c
 {
   qDebug() << "Creating AP Config...";
 
-  DEFAULT_AP["ipv4"]["method"] = "shared";
-  DEFAULT_AP["ipv6"]["method"] = "auto";
   DEFAULT_AP["connection"]["type"] = NM_802_11_WIRELESS_KEY;
   DEFAULT_AP["connection"]["uuid"] = QUuid::createUuid().toString().remove('{').remove('}');
   // File name is just the SSID for now
@@ -294,11 +293,24 @@ Connection NetworkManager::createAPConfig() const // Creates a default AP_SSID c
   DEFAULT_AP[NM_802_11_SECURITY_KEY]["key-mgmt"] = "wpa-psk";
 
   DEFAULT_AP[NM_802_11_SECURITY_KEY]["psk"] = AP_PASSWORD;
+
+  
+  DEFAULT_AP["ipv4"]["method"] = "shared";
+  DEFAULT_AP["ipv6"]["method"] = "auto";
+
+
   OrgFreedesktopNetworkManagerSettingsInterface settings(
       NM_SERVICE,
       NM_OBJECT "/Settings",
       QDBusConnection::systemBus());
-  settings.AddConnection(DEFAULT_AP);
+  QDBusObjectPath defaultPath = settings.AddConnection(DEFAULT_AP);
+  qDebug() << "settings.AddConnection(DEFAULT_AP): " << defaultPath.path();
+
+  QString str = tr("nmcli connection modify %1 ipv4.address 192.168.125.1/24").arg(AP_NAME);
+  QByteArray ba = str.toLocal8Bit();
+  const char *csys = ba.data();
+  system(csys);
+
   return DEFAULT_AP;
 }
 
@@ -414,6 +426,9 @@ QString NetworkManager::ip4Address() const
       QDBusConnection::systemBus());
 
   QList<QMap<QString, QVariant>> ip4conf = ip4Object.addressData();
+  qDebug() << "addressData(): " << ip4conf;
+  qDebug() << "addressData().value(0): " << ip4conf.value(0);
+
   ipAddr = ip4conf.value(0).value("address").toString();
   return ipAddr;
 }

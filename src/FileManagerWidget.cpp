@@ -13,8 +13,10 @@
 #include <QFileSystemModel>
 #include <QFile>
 #include <QDebug>
+#include <iostream>
+#include <fstream>
 
-//#define HOME_PATH "/home/erin/Documents/KISS" //home programs folder for dev machine *CHANGE FOR YOUR SPECIFIC MACHINE*
+//#define HOME_PATH "/home/erin/Documents/KISS" // home programs folder for dev machine *CHANGE FOR YOUR SPECIFIC MACHINE*
 #ifdef WOMBAT
 #define HOME_PATH "/home/kipr/Documents/KISS"
 #endif
@@ -131,6 +133,7 @@ void FileManagerWidget::paste()
 
 void FileManagerWidget::remove()
 {
+
 	QModelIndexList indexes = ui->files->selectionModel()->selection().indexes();
 	if (indexes.size() != 1)
 		return;
@@ -138,11 +141,44 @@ void FileManagerWidget::remove()
 
 	if (QMessageBox::question(this, "Delete Folder?", tr("You are about to permanently delete %1. \n\nContinue?").arg(QFileInfo(to).fileName()), QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
 		return;
-	else{
+	else
+	{
 		qDebug() << "Remove success?" << FileUtils::rm(to);
 	}
+	QStringList pathArguments;
+	pathArguments << "/home/kipr/Documents/KISS/users.json";
+
+	QProcess *myProcess = new QProcess(this);
+	myProcess->start("cat", pathArguments);
+	myProcess->waitForFinished();
 
 
+	QByteArray output = myProcess->readAllStandardOutput();
+	QByteArray output2 = output.sliced(1, output.size() - 2); //Just the users without begin/end {}
+	QList<QByteArray> list = output2.split(',');
+	QByteArray ba(QFileInfo(to).fileName().toLatin1());
+	QByteArrayView y(ba);
+	QString filename = "/home/kipr/Documents/KISS/users.json";
+
+	QFile file(filename);
+	file.open(QFile::ReadWrite | QFile::Text);
+	file.resize(0); //empties the file 
+	QTextStream stream(&file);
+	stream << "{";
+	for (int i = 0; i < list.length(); i++)
+	{
+	
+		if ((list[i].indexOf(y) == -1))
+		{
+
+			stream << list[i];
+			if (i < list.length() - 1)
+			{
+				stream << ",";
+			}
+		}
+	}
+	stream << "}";
 }
 
 void FileManagerWidget::home()
