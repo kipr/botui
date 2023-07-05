@@ -245,6 +245,6 @@ void SensorModel::populateButtons()
 	appendRow(QList<QStandardItem *>()
 			  << new SensorNameItem(SensorModel::Button)
 			  //		<< new SensorValueItem<bool>(&(::Button::Right), true));
-			  << new SensorValueItem<bool>(new kipr::button::IdButton(Right, ""), true));
+			  << new SensorValueItem<bool>(new kipr::button::IdButton(kipr::button::Id::Right,""), true));
 }
 
