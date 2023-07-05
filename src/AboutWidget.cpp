@@ -4,6 +4,8 @@
 #include "SystemUtils.h"
 #include "NetworkManager.h"
 #include "NetworkSettingsWidget.h"
+#include "RootController.h"
+#include "DeveloperListWidget.h"
 
 #include <QDebug>
 #include <QRegularExpression>
@@ -29,7 +31,7 @@ AboutWidget::AboutWidget(Device *device, QWidget *parent)
 
     // Check if eth0 is active (/sys/class/net/eth0/carrier will output 1 if eth0 is active and 0 if it is not)
     QStringList arguments;
-    arguments << "/sys/class/net/eth0/carrier";
+    arguments << "/sys/class/net/enp3s0/carrier";
 
     QProcess *myProcess = new QProcess(parent);
     myProcess->start("cat", arguments);
@@ -74,9 +76,17 @@ AboutWidget::AboutWidget(Device *device, QWidget *parent)
     ui->password->setText("");
     ui->LANaddr->setText("0.0.0.0");
   }
+
+  connect(ui->developerList, SIGNAL(clicked()), SLOT(developerList()));
+
 }
 
 AboutWidget::~AboutWidget()
 {
   delete ui;
+}
+
+void AboutWidget::developerList()
+{
+  RootController::ref().presentWidget(new DeveloperListWidget(device()));
 }

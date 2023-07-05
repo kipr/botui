@@ -20,7 +20,7 @@
 
 SettingsWidget::SettingsWidget(Device *device, QWidget *parent)
 	: StandardWidget(device, parent),
-	ui(new Ui::SettingsWidget)
+	  ui(new Ui::SettingsWidget)
 {
 	ui->setupUi(this);
         performStandardSetup(tr("Settings"));

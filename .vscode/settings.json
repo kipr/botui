@@ -11,6 +11,7 @@
         "bitset": "cpp",
         "initializer_list": "cpp",
         "utility": "cpp",
-        "functional": "cpp"
+        "functional": "cpp",
+        "tuple": "cpp"
     }
 }
