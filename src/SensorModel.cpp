@@ -180,6 +180,9 @@ void SensorModel::populate()
 		populateDigital(i);
 
 	populateAccel();
+	populateGyro();
+	populateMagneto();
+	populateButtons();
 }
 
 void SensorModel::populateAnalog(const unsigned char port)
