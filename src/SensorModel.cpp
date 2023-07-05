@@ -214,26 +214,26 @@ void SensorModel::populateGyro()
 {
 	appendRow(QList<QStandardItem *>()
 			  << new SensorNameItem(SensorModel::GyroX)
-			  << new SensorValueItem<short>(new ::GyroX(), true));
+			  << new SensorValueItem<short>(new kipr::gyro::GyroX(), true));
 	appendRow(QList<QStandardItem *>()
 			  << new SensorNameItem(SensorModel::GyroY)
-			  << new SensorValueItem<short>(new ::GyroY(), true));
+			  << new SensorValueItem<short>(new kipr::gyro::GyroY(), true));
 	appendRow(QList<QStandardItem *>()
 			  << new SensorNameItem(SensorModel::GyroZ)
-			  << new SensorValueItem<short>(new ::GyroZ(), true));
+			  << new SensorValueItem<short>(new kipr::gyro::GyroZ(), true));
 }
 
 void SensorModel::populateMagneto()
 {
 	appendRow(QList<QStandardItem *>()
 			  << new SensorNameItem(SensorModel::MagnetoX)
-			  << new SensorValueItem<short>(new ::MagnetoX(), true));
+			  << new SensorValueItem<short>(new kipr::magneto::MagnetoX(), true));
 	appendRow(QList<QStandardItem *>()
 			  << new SensorNameItem(SensorModel::MagnetoY)
-			  << new SensorValueItem<short>(new ::MagnetoY(), true));
+			  << new SensorValueItem<short>(new kipr::magneto::MagnetoY(), true));
 	appendRow(QList<QStandardItem *>()
 			  << new SensorNameItem(SensorModel::MagnetoZ)
-			  << new SensorValueItem<short>(new ::MagnetoZ(), true));
+			  << new SensorValueItem<short>(new kipr::magneto::MagnetoZ(), true));
 }
 
 void SensorModel::populateButtons()
@@ -245,6 +245,6 @@ void SensorModel::populateButtons()
 	appendRow(QList<QStandardItem *>()
 			  << new SensorNameItem(SensorModel::Button)
 			  //		<< new SensorValueItem<bool>(&(::Button::Right), true));
-			  << new SensorValueItem<bool>(new ::IdButton(Button::Type::Right, ""), true));
+			  << new SensorValueItem<bool>(new kipr::button::IdButton(Button::Type::Right, ""), true));
 }
 
