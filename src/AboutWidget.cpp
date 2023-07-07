@@ -4,6 +4,8 @@
 #include "SystemUtils.h"
 #include "NetworkManager.h"
 #include "NetworkSettingsWidget.h"
+#include "RootController.h"
+#include "DeveloperListWidget.h"
 
 #include <QDebug>
 #include <QRegularExpression>
@@ -74,9 +76,17 @@ AboutWidget::AboutWidget(Device *device, QWidget *parent)
     ui->password->setText("");
     ui->LANaddr->setText("0.0.0.0");
   }
+
+  connect(ui->developerList, SIGNAL(clicked()), SLOT(developerList()));
+
 }
 
 AboutWidget::~AboutWidget()
 {
   delete ui;
+}
+
+void AboutWidget::developerList()
+{
+  RootController::ref().presentWidget(new DeveloperListWidget(device()));
 }

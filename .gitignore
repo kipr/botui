@@ -3,3 +3,4 @@ build
 deploy
 lib
 obj-arm-linux-gnueabihf
+.vscode

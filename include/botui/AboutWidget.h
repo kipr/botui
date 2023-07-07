@@ -16,6 +16,8 @@ public:
 	AboutWidget(Device *device, QWidget *parent = 0);
 	~AboutWidget();
 	
+public slots:
+	void developerList();
 private:
 	Ui::AboutWidget *ui;
 	QProcess proc;
