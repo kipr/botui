@@ -54,7 +54,7 @@ void BackupWidget::backupoption()
 void BackupWidget::restore()
 {
     QProcess restore_process;
-    restorprocess->setProcessChannelMode(QProcess::MergedChannels);
+    restore_process->setProcessChannelMode(QProcess::MergedChannels);
     ui->updateConsole->setProcess(restore_process);
     restore_process.startDetached("/bin/sh", QStringList()<< "/home/kipr/wombat-os/Backup/restore.sh");
     restore_process.waitForFinished(); // sets current thread to sleep and waits for Restore end
