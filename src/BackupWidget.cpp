@@ -46,7 +46,7 @@ BackupWidget::~BackupWidget()
 void BackupWidget::backupoption()
 {
         QProcess backup_process;
-        backup_process.startCommand("sh /home/kipr/Backup/backup.sh");
+        backup_process.startCommand("sh /home/kipr/wombat-os/Backup/backup.sh");
         ui->updateConsole->insertPlainText("Backup Complete");
         QMessageBox::warning(this, "Backup complete", "Backup complete");
 }
@@ -54,7 +54,7 @@ void BackupWidget::backupoption()
 void BackupWidget::restore()
 {
     QProcess restore_process;
-    restore_process.startDetached("/bin/sh", QStringList()<< "/home/kipr/Backup/restore.sh");
+    restore_process.startDetached("/bin/sh", QStringList()<< "/home/kipr/wombat-os/Backup/restore.sh");
     restore_process.waitForFinished(); // sets current thread to sleep and waits for Restore end
     ui->updateConsole->insertPlainText("Restore Complete");
     QMessageBox::warning(this, "Restore complete", "Restore Complete");
