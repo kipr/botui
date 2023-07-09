@@ -146,20 +146,21 @@ const QString WombatUpdateWidget::updateFileName = "wombat_update.sh";
 const QDir WombatUpdateWidget::mountDir = QDir("/mnt");
 
 void WombatUpdateWidget::ethernet(){
-        if(QMessageBox::question(this, "Update?", QString("Is the ethernet cable plugged into the controller?"), QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
-      return;
+  if(QMessageBox::question(this, "Update?", QString("Is your controller connected to the internet over ethernet or Wifi?"), QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes) {
+    return;
+  }
 
 	// Change UI to show output
-      ui->updateConsole->setVisible(true);
-      ui->selectionWidget->setVisible(false);
-      ui->statusLabel->setText("Update progress:");
-      
-      // Run update process
-      m_updateProc = new QProcess();
-      m_updateProc->setProcessChannelMode(QProcess::MergedChannels);
-      ui->updateConsole->setProcess(m_updateProc);
-      connect(m_updateProc, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(updateFinished(int, QProcess::ExitStatus)));
-      m_updateProc->start("sudo sh /home/pi/updateMe.sh");
+    ui->updateConsole->setVisible(true);
+    ui->selectionWidget->setVisible(false);
+    ui->statusLabel->setText("Update progress:");
+    
+    // Run update process
+    m_updateProc = new QProcess();
+    m_updateProc->setProcessChannelMode(QProcess::MergedChannels);
+    ui->updateConsole->setProcess(m_updateProc);
+    connect(m_updateProc, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(updateFinished(int, QProcess::ExitStatus)));
+    m_updateProc->start("sudo sh /home/kipr/wombat_update.sh");
 }
 
 
