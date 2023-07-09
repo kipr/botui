@@ -160,7 +160,7 @@ void WombatUpdateWidget::ethernet(){
     m_updateProc->setProcessChannelMode(QProcess::MergedChannels);
     ui->updateConsole->setProcess(m_updateProc);
     connect(m_updateProc, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(updateFinished(int, QProcess::ExitStatus)));
-    m_updateProc->start("sudo sh /home/kipr/wombat-os/updateFiles/files/updateMe.sh");
+    m_updateProc->startCommand("sudo sh /home/kipr/wombat-os/updateFiles/files/updateMe.sh");
 }
 
 
