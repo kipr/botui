@@ -46,8 +46,7 @@ BackupWidget::~BackupWidget()
 void BackupWidget::backupoption()
 {
         QProcess backup_process;
-        backup_process.startDetached("/bin/sh", QStringList()<< "/home/kipr/Backup/backup.sh");
-        backup_process.waitForFinished(); // sets current thread to sleep and waits for Backup end
+        backup_process.startCommand("sh /home/kipr/Backup/backup.sh");
         ui->updateConsole->insertPlainText("Backup Complete");
         QMessageBox::warning(this, "Backup complete", "Backup complete");
 }
