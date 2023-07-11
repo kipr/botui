@@ -18,7 +18,7 @@ AboutWidget::AboutWidget(Device *device, QWidget *parent)
   // Setup the UI
   performStandardSetup(tr("About"));
   // Version Number
-  ui->version->setText("Version 30.0");
+  ui->version->setText("Version 30.1.1");
   const bool on = NetworkManager::ref().isOn();
   // ui->deviceName->setText(device->name() + " v" + device->version());
 
