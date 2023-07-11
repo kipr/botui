@@ -46,6 +46,11 @@
        </item>
        <item>
         <property name="text">
+          <string>Howard Guo</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
          <string>Eliot Hall</string>
         </property>
        </item>
