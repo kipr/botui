@@ -35,7 +35,7 @@ FactoryWidget::FactoryWidget(Device *device, QWidget *parent)
         //Connect the functions to their respective buttons
         connect(ui->confirm, SIGNAL(clicked()), SLOT(confirm()));
         connect(ui->reflash, SIGNAL(clicked()), SLOT(reflash()));
-        connect(ui->experimental, SIGNAL(clicked()), SLOT(experimental()));
+      
 }
 
 FactoryWidget::~FactoryWidget()
@@ -72,7 +72,7 @@ void FactoryWidget::reflash()
 {
     //Disable Buttons
     ui->reflash->setEnabled(false);
-    ui->experimental->setEnabled(false);
+
     ui->confirm->setEnabled(false);
 
     //Make console appear
@@ -87,7 +87,7 @@ void FactoryWidget::reflash()
     //Make buttons and labels disappear
     ui->confirm->setVisible(false);
     ui->reflash->setVisible(false);
-    ui->experimental->setVisible(false);
+
     ui->changeSerialLabel->setText("Flash Progress:");
     ui->subText->setText("The console may not update until the end, wait for 'Reflash Complete'");
 
@@ -124,7 +124,7 @@ void FactoryWidget::experimental()
     //Make buttons and labels disappear
     ui->confirm->setVisible(false);
     ui->reflash->setVisible(false);
-    ui->experimental->setVisible(false);
+
     ui->changeSerialLabel->setText("Experimental Install:");
 
     //Setup QProcess

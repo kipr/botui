@@ -82,6 +82,7 @@
         <file>icons/basket_put.png</file>
         <file>icons/basket_remove.png</file>
         <file>icons/basket.png</file>
+        <file>icons/battery-full.png</file>
         <file>icons/bell_add.png</file>
         <file>icons/bell_delete.png</file>
         <file>icons/bell_error.png</file>
@@ -169,6 +170,7 @@
         <file>icons/calendar_view_month.png</file>
         <file>icons/calendar_view_week.png</file>
         <file>icons/calendar.png</file>
+        <file>icons/calendar-week.png</file>
         <file>icons/camera_add.png</file>
         <file>icons/camera_delete.png</file>
         <file>icons/camera_edit.png</file>
@@ -177,6 +179,7 @@
         <file>icons/camera_link.png</file>
         <file>icons/camera_small.png</file>
         <file>icons/camera.png</file>
+        <file>icons/camera-retro.png</file>
         <file>icons/cancel.png</file>
         <file>icons/car_add.png</file>
         <file>icons/car_delete.png</file>
@@ -224,6 +227,9 @@
         <file>icons/chart_pie_error.png</file>
         <file>icons/chart_pie_link.png</file>
         <file>icons/chart_pie.png</file>
+        <file>icons/chart-bar.png</file>
+        <file>icons/chart-line.png</file>
+        <file>icons/check.png</file>
         <file>icons/clock_add.png</file>
         <file>icons/clock_delete.png</file>
         <file>icons/clock_edit.png</file>
@@ -235,12 +241,14 @@
         <file>icons/clock_red.png</file>
         <file>icons/clock_stop.png</file>
         <file>icons/clock.png</file>
+        <file>icons/cloud-download-alt.png</file>
         <file>icons/cog_add.png</file>
         <file>icons/cog_delete.png</file>
         <file>icons/cog_edit.png</file>
         <file>icons/cog_error.png</file>
         <file>icons/cog_go.png</file>
         <file>icons/cog.png</file>
+        <file>icons/cogs.png</file>
         <file>icons/coins_add.png</file>
         <file>icons/coins_delete.png</file>
         <file>icons/coins.png</file>
@@ -335,6 +343,7 @@
         <file>icons/date_previous.png</file>
         <file>icons/date.png</file>
         <file>icons/delete.png</file>
+        <file>icons/desktop.png</file>
         <file>icons/disconnect.png</file>
         <file>icons/disk_multiple.png</file>
         <file>icons/disk.png</file>
@@ -405,6 +414,8 @@
         <file>icons/feed_magnify.png</file>
         <file>icons/feed.png</file>
         <file>icons/female.png</file>
+        <file>icons/file-alt.png</file>
+        <file>icons/file-archive.png</file>
         <file>icons/film_add.png</file>
         <file>icons/film_delete.png</file>
         <file>icons/film_edit.png</file>
@@ -467,6 +478,7 @@
         <file>icons/heart_delete.png</file>
         <file>icons/heart.png</file>
         <file>icons/help.png</file>
+        <file>icons/history.png</file>
         <file>icons/hourglass_add.png</file>
         <file>icons/hourglass_delete.png</file>
         <file>icons/hourglass_go.png</file>
@@ -486,6 +498,7 @@
         <file>icons/image_link.png</file>
         <file>icons/image.png</file>
         <file>icons/images.png</file>
+        <file>icons/industry.png</file>
         <file>icons/information.png</file>
         <file>icons/ipod_cast_add.png</file>
         <file>icons/ipod_cast_delete.png</file>
@@ -529,6 +542,7 @@
         <file>icons/link_error.png</file>
         <file>icons/link_go.png</file>
         <file>icons/link.png</file>
+        <file>icons/list-alt.png</file>
         <file>icons/lock_add.png</file>
         <file>icons/lock_break.png</file>
         <file>icons/lock_delete.png</file>
@@ -588,6 +602,7 @@
         <file>icons/mouse_error.png</file>
         <file>icons/mouse.png</file>
         <file>icons/music.png</file>
+        <file>icons/network-wired.png</file>
         <file>icons/new.png</file>
         <file>icons/newspaper_add.png</file>
         <file>icons/newspaper_delete.png</file>
@@ -720,6 +735,7 @@
         <file>icons/pill_delete.png</file>
         <file>icons/pill_go.png</file>
         <file>icons/pill.png</file>
+        <file>icons/play-circle.png</file>
         <file>icons/plugin_add.png</file>
         <file>icons/plugin_delete.png</file>
         <file>icons/plugin_disabled.png</file>
@@ -826,6 +842,7 @@
         <file>icons/shield.png</file>
         <file>icons/sitemap_color.png</file>
         <file>icons/sitemap.png</file>
+        <file>icons/sort-amount-down-alt.png</file>
         <file>icons/sound_add.png</file>
         <file>icons/sound_delete.png</file>
         <file>icons/sound_low.png</file>
@@ -847,12 +864,14 @@
         <file>icons/status_offline.png</file>
         <file>icons/status_online.png</file>
         <file>icons/stop.png</file>
+        <file>icons/stop-circle.png</file>
         <file>icons/style_add.png</file>
         <file>icons/style_delete.png</file>
         <file>icons/style_edit.png</file>
         <file>icons/style_go.png</file>
         <file>icons/style.png</file>
         <file>icons/sum.png</file>
+        <file>icons/sync-alt.png</file>
         <file>icons/tab_add.png</file>
         <file>icons/tab_delete.png</file>
         <file>icons/tab_edit.png</file>
@@ -955,6 +974,7 @@
         <file>icons/transmit_go.png</file>
         <file>icons/transmit.png</file>
         <file>icons/tux.png</file>
+        <file>icons/tv.png</file>
         <file>icons/user_add.png</file>
         <file>icons/user_comment.png</file>
         <file>icons/user_delete.png</file>
@@ -986,6 +1006,7 @@
         <file>icons/webcam_error.png</file>
         <file>icons/webcam.png</file>
         <file>icons/wifi.png</file>
+        <file>icons/window-minimize.png</file>
         <file>icons/world_add.png</file>
         <file>icons/world_delete.png</file>
         <file>icons/world_edit.png</file>

@@ -52,7 +52,7 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/table.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/table.svg</iconset>
+           <normaloff>:/icons/table.png</normaloff>:/icons/table.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -75,7 +75,7 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/industry.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/industry.svg</iconset>
+           <normaloff>:/icons/industry.png</normaloff>:/icons/industry.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -127,7 +127,7 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/apple-tiny.svg</normaloff>:/icons/apple-tiny.svg</iconset>
+           <normaloff>:/icons/network-wired.png</normaloff>:/icons/network-wired.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -149,7 +149,7 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/battery-full.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/battery-full.svg</iconset>
+           <normaloff>:/icons/battery-full.png</normaloff>:/icons/battery-full.png</iconset>
          </property>
          <property name="iconSize">
           <size>

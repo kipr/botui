@@ -112,7 +112,7 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/desktop.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/desktop.svg</iconset>
+           <normaloff>:/icons/desktop.png</normaloff>:/icons/desktop.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -140,7 +140,7 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/cogs.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/cogs.svg</iconset>
+           <normaloff>:/icons/cogs.png</normaloff>:/icons/cogs.png</iconset>
          </property>
          <property name="iconSize">
           <size>
