@@ -245,7 +245,7 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/history.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/history.svg</iconset>
+           <normaloff>:/icons/history.png</normaloff>:/icons/history.png</iconset>
          </property>
          <property name="iconSize">
           <size>

@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Factory</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0,0,0,0,0,0">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0,0,0,0,0">
    <property name="leftMargin">
     <number>6</number>
    </property>
@@ -148,7 +148,7 @@
      </property>
      <property name="icon">
       <iconset resource="../rc/icons.qrc">
-       <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/check-circle.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/check-circle.svg</iconset>
+       <normaloff>:/icons/check.png</normaloff>:/icons/check.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -184,30 +184,7 @@
      </property>
      <property name="icon">
       <iconset resource="../rc/icons.qrc">
-       <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/briefcase.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/briefcase.svg</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>35</width>
-       <height>35</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="experimental">
-     <property name="font">
-      <font>
-       <family>Sans</family>
-       <pointsize>33</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Install Experimental Build</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../rc/icons.qrc">
-       <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/vial.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/vial.svg</iconset>
+       <normaloff>:/icons/briefcase.png</normaloff>:/icons/briefcase.png</iconset>
      </property>
      <property name="iconSize">
       <size>

@@ -70,7 +70,7 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/car.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/car.svg</iconset>
+           <normaloff>:/icons/car.png</normaloff>:/icons/car.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -98,7 +98,7 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/chart-bar.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/chart-bar.svg</iconset>
+           <normaloff>:/icons/chart-bar.png</normaloff>:/icons/chart-bar.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -126,7 +126,7 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/cogs.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/cogs.svg</iconset>
+           <normaloff>:/icons/cogs.png</normaloff>:/icons/cogs.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -184,7 +184,7 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/chart-line.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/chart-line.svg</iconset>
+           <normaloff>:/icons/chart-line.png</normaloff>:/icons/chart-line.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -212,7 +212,7 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/list-alt.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/list-alt.svg</iconset>
+           <normaloff>:/icons/list-alt.png</normaloff>:/icons/list-alt.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -240,7 +240,7 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/camera-retro.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/camera-retro.svg</iconset>
+           <normaloff>:/icons/camera-retro.png</normaloff>:/icons/camera-retro.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -268,7 +268,7 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/sort-amount-down-alt.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/sort-amount-down-alt.svg</iconset>
+           <normaloff>:/icons/sort-amount-down-alt.png</normaloff>:/icons/sort-amount-down-alt.png</iconset>
          </property>
          <property name="iconSize">
           <size>

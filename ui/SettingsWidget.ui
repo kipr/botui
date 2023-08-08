@@ -52,7 +52,7 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/camera.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/camera.svg</iconset>
+           <normaloff>:/icons/camera-retro.png</normaloff>:/icons/camera-retro.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -74,7 +74,7 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/tv.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/tv.svg</iconset>
+           <normaloff>:/icons/tv.png</normaloff>:/icons/tv.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -96,7 +96,7 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/compress.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/compress.svg</iconset>
+           <normaloff>:/icons/compress.png</normaloff>:/icons/compress.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -118,7 +118,7 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/window-minimize.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/window-minimize.svg</iconset>
+           <normaloff>:/icons/window-minimize.png</normaloff>:/icons/window-minimize.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -170,7 +170,7 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/book.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/book.svg</iconset>
+           <normaloff>:/icons/book.png</normaloff>:/icons/book.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -192,7 +192,7 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/cloud-download-alt.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/cloud-download-alt.svg</iconset>
+           <normaloff>:/icons/cloud-download-alt.png</normaloff>:/icons/cloud-download-alt.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -220,7 +220,7 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/file-archive.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/file-archive.svg</iconset>
+           <normaloff>:/icons/file-archive.png</normaloff>:/icons/file-archive.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -243,7 +243,7 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/cogs.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/cogs.svg</iconset>
+           <normaloff>:/icons/cogs.png</normaloff>:/icons/cogs.png</iconset>
          </property>
          <property name="iconSize">
           <size>
