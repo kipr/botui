@@ -175,8 +175,9 @@ void Create3Widget::indexChanged(int index)
     }
     break;
     case 2: // 03_Move_Velocity
-    {
+    {process.setWorkingDirectory("/home/erin/Desktop/qt6Upgrade/create3/build/client/examples");
         QString command = "./03_move_velocity";
+        qDebug() << "command: " << command;
         QStringList arguments;
         arguments << "";
 
@@ -210,13 +211,12 @@ void Create3Widget::indexChanged(int index)
             // Failed to start the process
             qDebug() << "Failed to start process.";
         }
-
-        break;
     }
-
+    break;
     case 3: // 04_Rotate
-    {
+    {process.setWorkingDirectory("/home/erin/Desktop/qt6Upgrade/create3/build/client/examples");
         QString command = "./04_rotate";
+        qDebug() << "command: " << command;
         QStringList arguments;
         arguments << "";
 
@@ -250,13 +250,12 @@ void Create3Widget::indexChanged(int index)
             // Failed to start the process
             qDebug() << "Failed to start process.";
         }
-
-        break;
     }
-
+    break;
     case 4: // 05_Arc
-    {
+    {process.setWorkingDirectory("/home/erin/Desktop/qt6Upgrade/create3/build/client/examples");
         QString command = "./05_arc";
+        qDebug() << "command: " << command;
         QStringList arguments;
         arguments << "";
 
@@ -290,12 +289,14 @@ void Create3Widget::indexChanged(int index)
             // Failed to start the process
             qDebug() << "Failed to start process.";
         }
-        break;
     }
-
+    break;
     case 5: // 06_led_test
     {
+         QProcess process;
+        process.setWorkingDirectory("/home/erin/Desktop/qt6Upgrade/create3/build/client/examples");
         QString command = "./06_led_test";
+    qDebug() << "command: " << command;
         QStringList arguments;
         arguments << "";
 
@@ -323,14 +324,36 @@ void Create3Widget::indexChanged(int index)
 
             qDebug() << "Exit code: " << exitCode;
             QList<QString> inputList = output.split('\n');
+            QRegularExpression regex("Output (\\d+)");
+            qDebug() << "Output == " << inputList;
+            for (const QString &input : inputList)
+            {
+                qDebug() << input;
+                QRegularExpressionMatch match = regex.match(input);
+                if (match.hasMatch())
+                {
+                    // Extract the number captured by the regular expression
+                    QString numberStr = match.captured(1);
+                    bool ok;
+                    int number = numberStr.toInt(&ok);
+                    if (ok)
+                    {
+                        // Process the extracted number
+                        qDebug() << "Found number after 'Output': " << number;
+                        break;
+                    }
+                }
+            }
         }
         else
         {
             // Failed to start the process
             qDebug() << "Failed to start process.";
         }
+
         break;
     }
+
     default:
         break;
     }

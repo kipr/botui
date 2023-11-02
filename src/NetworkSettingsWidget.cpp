@@ -67,7 +67,7 @@ void NetworkSettingsWidget::indexChanged(int index)
 	if (index == 0) // AP mode
 	{
 
-		NetworkManager::ref().enableAP();
+		//NetworkManager::ref().enableAP();
 		ui->ConnectButton->setEnabled(false);
 	}
 	else if (index == 1) // Wifi on (client mode)
