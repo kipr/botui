@@ -9,6 +9,8 @@ namespace Ui
 	class Create3Widget;
 }
 
+class SensorModel;
+
 class Create3Widget : public StandardWidget
 {
 Q_OBJECT
@@ -21,6 +23,7 @@ private slots:
 	void motorChanged();
     int createConnect();
 	int isConnected();
+	void sensorList();
 	void indexChanged( int index);
 	void update();
 
@@ -28,7 +31,7 @@ private slots:
 private:
 	Ui::Create3Widget *ui;
 
-
+  SensorModel *_model;
 	double m_setpointVal;
 	double m_feedbackVal;
 	int m_position_1;
