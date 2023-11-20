@@ -1,6 +1,7 @@
 #include "Create3Widget.h"
 #include "ui_Create3Widget.h"
 #include "Create3SensorListWidget.h"
+#include "Create3ExampleWidget.h"
 #include "SensorModel.h"
 #include <kipr/create3/client/client.h>
 #include <unistd.h>
@@ -47,6 +48,7 @@ Create3Widget::Create3Widget(Device *device, QWidget *parent)
     // ui->sensors->setItemDelegate(new SensorItemDelegate(_model, this));
     // connect(ui->testProgramComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
     connect(ui->Create3SensorListButton, SIGNAL(clicked()), SLOT(sensorList()));
+    connect(ui->Create3ExampleProgramButton, SIGNAL(clicked()), SLOT(exampleList()));
 }
 
 Create3Widget::~Create3Widget()
@@ -75,6 +77,12 @@ void Create3Widget::sensorList()
     RootController::ref().presentWidget(new Create3SensorListWidget(device()));
 }
 
+void Create3Widget::exampleList()
+{
+    RootController::ref().presentWidget(new Create3ExampleWidget(device()));
+}
+
+
 int Create3Widget::createConnect()
 {
     // create3_connect();
@@ -91,165 +99,5 @@ int Create3Widget::createConnect()
     }
 }
 
-void Create3Widget::indexChanged(int index)
-{
-    QProcess process;
-    process.setWorkingDirectory("/home/erin/Desktop/qt6Upgrade/create3/build/client/examples");
-    switch (index)
-    {
 
-    case 0:
-    { // 01_Connect
-        printf("Connecting to Create3 robot...\n");
-        create3_connect_manual("192.168.125.1", 50051);
-        printf("Connected!\n");
-        break;
-    }
 
-    case 1: // 02_Dock_Undock
-    {
-
-        printf("Connecting to Create3 robot...\n");
-
-        create3_connect_manual("192.168.125.1", 50051);
-
-        printf("Connected!\n");
-
-        printf("Undocking...\n");
-        // Move forward at 0.5 m/s for 1 second
-        create3_undock();
-
-        create3_wait();
-
-        printf("Docking...\n");
-
-        create3_dock();
-
-        create3_wait();
-
-        printf("Done!\n");
-
-        break;
-    }
-
-    case 2: // 03_Move_Velocity
-    {
-        printf("Connecting to Create3 robot...\n");
-
-        create3_connect_manual("192.168.125.1", 50051);
-
-        printf("Connected!\n");
-
-        printf("Moving forward at 0.5 m/s for 1 second...\n");
-
-        // Move forward at 0.5 m/s for 1 second
-        create3_velocity_set_components(0.5, 0);
-
-        // Wait for 1 second
-        usleep(1000000);
-
-        // Stop
-        create3_velocity_set_components(0.0, 0.0);
-
-        printf("Done!\n");
-        break;
-    }
-
-    case 3: // 04_Rotate
-    {
-        printf("Connecting to Create3 robot...\n");
-
-        create3_connect_manual("192.168.125.1", 50051);
-
-        printf("Connected!\n");
-
-        printf("Rotate at 0.5 m/s for 1 second...\n");
-
-        // Rotate at 90 deg/s (PI/2 rad/s) to 90 degrees (PI/2 radians)
-        create3_rotate_degrees(90, 90);
-        create3_rotate_radians(1.57, 1.57);
-
-        // Wait for 1 second
-        create3_wait();
-
-        printf("Done!\n");
-
-        break;
-    }
-
-    case 4: // 05_Arc
-    {
-        printf("Connecting to Create3 robot...\n");
-
-        create3_connect_manual("192.168.125.1", 50051);
-
-        printf("Connected!\n");
-
-        printf("Rotate at 0.5 m/s for 1 second...\n");
-
-        // Arc of 90 deg (PI/2 rad) with radius of 0.5 m
-        create3_drive_arc_degrees(0.5, 90, 0.306);
-        create3_drive_arc_radians(0.5, -1.57, 0.460);
-
-        // Wait for 1 second
-        create3_wait();
-
-        printf("Done!\n");
-
-        break;
-    }
-
-    case 5: // 06_led_test
-    {
-        printf("Connecting to Create3 robot...\n");
-
-        create3_connect_manual("192.168.125.1", 50051);
-
-        printf("Connected!\n");
-
-        printf("Blinking lights...\n");
-        // Blink the lights green for 5 seconds.
-
-        Create3LedColor green;
-        green.r = 0;
-        green.g = 255;
-        green.b = 0;
-
-        Create3Lightring lightring;
-        lightring.led0 = green;
-        lightring.led1 = green;
-        lightring.led2 = green;
-        lightring.led3 = green;
-        lightring.led4 = green;
-        lightring.led5 = green;
-
-        create3_led_animation(Create3BlinkLights, lightring, 5.0); // Blink the lights green for 5 seconds.
-
-        // Wait for 1 second
-        create3_wait();
-
-        printf("Done!\n");
-
-        break;
-    }
-
-    default:
-        break;
-    }
-}
-
-void Create3Widget::update()
-{
-}
-
-void Create3Widget::coeffChanged()
-{
-}
-
-void Create3Widget::motorChanged()
-{
-}
-
-void Create3Widget::updatePids()
-{
-}

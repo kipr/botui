@@ -19,13 +19,11 @@ public:
 	~Create3Widget();
 
 private slots:
-	void coeffChanged();
-	void motorChanged();
+
     int createConnect();
 	int isConnected();
 	void sensorList();
-	void indexChanged( int index);
-	void update();
+	void exampleList();
 
 
 private:
@@ -37,8 +35,6 @@ private:
 	int m_position_1;
 	double m_vel_1;
 
-
-	void updatePids();
 };
 
 
