@@ -20,7 +20,7 @@ public:
     SensorNameItem(CreateSensorModel::SensorType type, const int port = -1)
         : m_type(type), m_port(port), m_typeName(typeName(type)), m_optionName(optionName(type))
     {
-        setText(m_typeName + (port >= 0 ? QObject::tr("").arg(port) : QString()));
+        setText(m_typeName);
     }
 
     CreateSensorModel::SensorType sensorType() const
