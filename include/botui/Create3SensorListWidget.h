@@ -10,11 +10,11 @@ namespace Ui
 	class Create3SensorListWidget;
 }
 
-class CreateSensorModel;
+class Create3SensorModel;
 
 class Create3SensorListWidget : public StandardWidget
 {
-Q_OBJECT
+	Q_OBJECT
 public:
 	Create3SensorListWidget(Device *device, QWidget *parent = 0);
 	~Create3SensorListWidget();
@@ -22,25 +22,20 @@ public:
 private slots:
 	void coeffChanged();
 	void motorChanged();
-    int createConnect();
+	int create3Connect();
 	int isConnected();
 
-	void indexChanged( int index);
+	void indexChanged(int index);
 	void update();
-
 
 private:
 	Ui::Create3SensorListWidget *ui;
 
-  CreateSensorModel *_model;
+	Create3SensorModel *_model;
 	double m_setpointVal;
 	double m_feedbackVal;
 	int m_position_1;
 	double m_vel_1;
-
-
-
 };
-
 
 #endif

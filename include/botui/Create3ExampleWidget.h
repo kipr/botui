@@ -9,7 +9,7 @@ namespace Ui
 	class Create3ExampleWidget;
 }
 
-class SensorModel;
+class Create3SensorModel;
 
 class Create3ExampleWidget : public StandardWidget
 {
@@ -20,17 +20,15 @@ public:
 
 private slots:
 
-    int createConnect();
+	int create3Connect();
 	int isConnected();
-	void indexChanged( int index);
-    void run();
-
-
+	void indexChanged(int index);
+	void run();
 
 private:
 	Ui::Create3ExampleWidget *ui;
 
-  SensorModel *_model;
+  Create3SensorModel *_model;
 	double m_setpointVal;
 	double m_feedbackVal;
 	int m_position_1;

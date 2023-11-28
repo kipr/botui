@@ -1,9 +1,9 @@
-#ifndef _CREATESENSORMODEL_H_
-#define _CREATESENSORMODEL_H_
+#ifndef _CREATE3SENSORMODEL_H_
+#define _CREATE3SENSORMODEL_H_
 
 #include <QStandardItemModel>
 
-class CreateSensorModel : public QStandardItemModel
+class Create3SensorModel : public QStandardItemModel
 {
 Q_OBJECT
 public:
@@ -33,19 +33,19 @@ public:
         Cliff,
         IR
     };
-	CreateSensorModel(QObject *parent = 0);
-	~CreateSensorModel();
+	Create3SensorModel(QObject *parent = 0);
+	~Create3SensorModel();
 
-	CreateSensorModel::SensorType type(const QModelIndex &index) const;
+	Create3SensorModel::SensorType type(const QModelIndex &index) const;
 
 public slots:
 	void update();
 	
 private:
 	void populate();
-	void populateBump(const unsigned char port);
-	// void populateCliff(const unsigned char port);
-    // void populateIR(const unsigned char port);
+	void populateBump(unsigned int port);
+	void populateCliff(unsigned int port);
+    void populateIR(unsigned int port);
 };
 
 #endif
