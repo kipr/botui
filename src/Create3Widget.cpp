@@ -2,14 +2,14 @@
 #include "ui_Create3Widget.h"
 #include "Create3SensorListWidget.h"
 #include "Create3ExampleWidget.h"
-#include "SensorModel.h"
+#include "Create3SensorModel.h"
 #include <kipr/create3/client/client.h>
 #include <unistd.h>
 #include "NumpadDialog.h"
 #include <QDebug>
 #include <stdio.h>
+#include <iostream>
 #include <QRegularExpression>
-#include <kipr/motor/motor.h>
 #include <QProcess>
 #include <QHeaderView>
 #include <cmath>
@@ -18,26 +18,21 @@
 #include <QItemDelegate>
 #include "RootController.h"
 
-#define MOTOR_SCALING (1500.0)
-#define UPDATE_MS (25.0)
-#define LPF_ALPHA (0.5)
-int connected;
-
-class SensorItemDelegate : public QItemDelegate
+class Create3SensorItemDelegate : public QItemDelegate
 {
 public:
-    SensorItemDelegate(SensorModel *const model, QObject *const parent = 0);
+    Create3SensorItemDelegate(Create3SensorModel *const model, QObject *const parent = 0);
     virtual void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 
 private:
-    const SensorModel *const _model;
+    const Create3SensorModel *const _model;
     const QPixmap _up;
     const QPixmap _down;
 };
 
 Create3Widget::Create3Widget(Device *device, QWidget *parent)
     : StandardWidget(device, parent),
-      ui(new Ui::Create3Widget), _model(new SensorModel(this))
+      ui(new Ui::Create3Widget), _model(new Create3SensorModel(this))
 {
     ui->setupUi(this);
     performStandardSetup(tr("Create 3"), false);
@@ -45,7 +40,7 @@ Create3Widget::Create3Widget(Device *device, QWidget *parent)
     connect(ui->CreateConnectButton, SIGNAL(clicked()), SLOT(isConnected()));
 
     // ui->sensors->setModel(_model);
-    // ui->sensors->setItemDelegate(new SensorItemDelegate(_model, this));
+    // ui->sensors->setItemDelegate(new Create3SensorItemDelegate(_model, this));
     // connect(ui->testProgramComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
     connect(ui->Create3SensorListButton, SIGNAL(clicked()), SLOT(sensorList()));
     connect(ui->Create3ExampleProgramButton, SIGNAL(clicked()), SLOT(exampleList()));
@@ -58,7 +53,14 @@ Create3Widget::~Create3Widget()
 
 int Create3Widget::isConnected()
 {
-    connected = create3_is_connected();
+    int connected;
+    try {
+        connected = create3_is_connected();
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << e.what() << '\n';
+    }
     if (connected == 1)
     {
         qDebug() << "Create connected";
@@ -83,20 +85,18 @@ void Create3Widget::exampleList()
 }
 
 
-int Create3Widget::createConnect()
+int Create3Widget::create3Connect()
 {
-    // create3_connect();
-    int connected = create3_connect_manual("192.168.125.1", 50051);
-    qDebug() << "Create connected? " << connected;
-    if (connected == 1)
-    {
-
-        return true;
+    int connected = 0;
+    try{
+        connected = create3_connect_manual("192.168.125.1", 50051);
+        qDebug() << "Create connected? " << connected;
     }
-    else
+    catch (const std::exception &e)
     {
-        return false;
+        std::cerr << e.what() << '\n';
     }
+    return connected;
 }
 
 
