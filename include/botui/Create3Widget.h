@@ -21,6 +21,7 @@ public:
 private slots:
 
   int create3Connect();
+	void resetServer(QWidget *parent = 0);
 	int isConnected();
 	void sensorList();
 	void exampleList();

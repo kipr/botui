@@ -58,6 +58,13 @@
           </widget>
          </item>
          <item>
+          <widget class="QPushButton" name="ResetServerButton">
+           <property name="text">
+            <string>Restart Create Server</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <layout class="QHBoxLayout" name="CreateConnectHorizontal">
            <item>
             <widget class="QLabel" name="createConnectLabel">
