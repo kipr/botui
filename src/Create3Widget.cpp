@@ -157,11 +157,6 @@ void Create3Widget::resetServer()
         "docker.io/kipradmin/create3_docker"
     };
 
-    connect(podmanStart, &QProcess::readyReadStandardOutput, [=]() {
-        QByteArray data = podmanStart->readAllStandardOutput();
-        qDebug() << "Output:" << data; 
-    });
-
     connect(podmanStart, &QProcess::readyReadStandardError, [=]() {
         QByteArray data = podmanStart->readAllStandardError();
         qDebug() << "Error:" << data;
