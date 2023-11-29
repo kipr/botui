@@ -1,5 +1,6 @@
 #include "Create3SensorModel.h"
 #include <kipr/create3/client/client.h>
+#include <iostream>
 #include <math.h>
 #include <kipr/create3/client/BumpSensor.hpp>
 
@@ -125,17 +126,26 @@ private:
 
     static int typeName(Create3SensorModel::SensorMethod name, int port)
     {
-        switch (name)
+        try
         {
-        case Create3SensorModel::Bump:
-            return create3_sensor_bump(port);
-        case Create3SensorModel::Cliff:
-            return create3_sensor_cliff(port);
-        case Create3SensorModel::IR:
-            return create3_sensor_ir(port);
-        default:
-            break;
+            switch (name)
+            {
+            case Create3SensorModel::Bump:
+                return create3_sensor_bump(port);
+            case Create3SensorModel::Cliff:
+                return create3_sensor_cliff(port);
+            case Create3SensorModel::IR:
+                return create3_sensor_ir(port);
+            default:
+                break;
+            }
         }
+        catch (const std::exception &e)
+        {
+            std::cerr << e.what() << '\n';
+            return 0;
+        }
+        return 0;
     }
 };
 
@@ -181,6 +191,7 @@ void Create3SensorModel::update()
 
 void Create3SensorModel::populate()
 {
+
     for (unsigned int i = 0; i < 6; ++i)
         populateBump(i);
     for (unsigned int i = 0; i < 5; ++i)
@@ -191,129 +202,108 @@ void Create3SensorModel::populate()
 
 void Create3SensorModel::populateBump(unsigned int port)
 {
-    try
+    switch (port)
     {
-        switch (port)
-        {
-        case 0:
-            appendRow(QList<QStandardItem *>()
-                      << new Create3SensorNameItem(Create3SensorModel::Bump0, port)
-                      << new Create3SensorValueItem<unsigned short>(Create3SensorModel::Bump, port, true));
-            break;
-        case 1:
-            appendRow(QList<QStandardItem *>()
-                      << new Create3SensorNameItem(Create3SensorModel::Bump1, port)
-                      << new Create3SensorValueItem<unsigned short>(Create3SensorModel::Bump, port, true));
-            break;
-        case 2:
-            appendRow(QList<QStandardItem *>()
-                      << new Create3SensorNameItem(Create3SensorModel::Bump2, port)
-                      << new Create3SensorValueItem<unsigned short>(Create3SensorModel::Bump, port, true));
-            break;
-        case 3:
-            appendRow(QList<QStandardItem *>()
-                      << new Create3SensorNameItem(Create3SensorModel::Bump3, port)
-                      << new Create3SensorValueItem<unsigned short>(Create3SensorModel::Bump, port, true));
-            break;
-        case 4:
-            appendRow(QList<QStandardItem *>()
-                      << new Create3SensorNameItem(Create3SensorModel::Bump4, port)
-                      << new Create3SensorValueItem<unsigned short>(Create3SensorModel::Bump, port, true));
-            break;
-        default:
-            break;
-        }
-    }
-    catch (const std::exception &e)
-    {
-        std::cerr << 'Could not load bump sensor values\n' << e.what() << '\n';
+    case 0:
+        appendRow(QList<QStandardItem *>()
+                  << new Create3SensorNameItem(Create3SensorModel::Bump0, port)
+                  << new Create3SensorValueItem<unsigned short>(Create3SensorModel::Bump, port, true));
+        break;
+    case 1:
+        appendRow(QList<QStandardItem *>()
+                  << new Create3SensorNameItem(Create3SensorModel::Bump1, port)
+                  << new Create3SensorValueItem<unsigned short>(Create3SensorModel::Bump, port, true));
+        break;
+    case 2:
+        appendRow(QList<QStandardItem *>()
+                  << new Create3SensorNameItem(Create3SensorModel::Bump2, port)
+                  << new Create3SensorValueItem<unsigned short>(Create3SensorModel::Bump, port, true));
+        break;
+    case 3:
+        appendRow(QList<QStandardItem *>()
+                  << new Create3SensorNameItem(Create3SensorModel::Bump3, port)
+                  << new Create3SensorValueItem<unsigned short>(Create3SensorModel::Bump, port, true));
+        break;
+    case 4:
+        appendRow(QList<QStandardItem *>()
+                  << new Create3SensorNameItem(Create3SensorModel::Bump4, port)
+                  << new Create3SensorValueItem<unsigned short>(Create3SensorModel::Bump, port, true));
+        break;
+    default:
+        break;
     }
 }
 
 void Create3SensorModel::populateCliff(unsigned int port)
 {
-    try
+    switch (port)
     {
-        switch (port)
-        {
-        case 0:
-            appendRow(QList<QStandardItem *>()
-                      << new Create3SensorNameItem(Create3SensorModel::Cliff0, port)
-                      << new Create3SensorValueItem<unsigned short>(Create3SensorModel::Cliff, port, true));
-            break;
-        case 1:
-            appendRow(QList<QStandardItem *>()
-                      << new Create3SensorNameItem(Create3SensorModel::Cliff1, port)
-                      << new Create3SensorValueItem<unsigned short>(Create3SensorModel::Cliff, port, true));
-            break;
-        case 2:
-            appendRow(QList<QStandardItem *>()
-                      << new Create3SensorNameItem(Create3SensorModel::Cliff2, port)
-                      << new Create3SensorValueItem<unsigned short>(Create3SensorModel::Cliff, port, true));
-            break;
-        case 3:
-            appendRow(QList<QStandardItem *>()
-                      << new Create3SensorNameItem(Create3SensorModel::Cliff3, port)
-                      << new Create3SensorValueItem<unsigned short>(Create3SensorModel::Cliff, port, true));
-            break;
+    case 0:
+        appendRow(QList<QStandardItem *>()
+                  << new Create3SensorNameItem(Create3SensorModel::Cliff0, port)
+                  << new Create3SensorValueItem<unsigned short>(Create3SensorModel::Cliff, port, true));
+        break;
+    case 1:
+        appendRow(QList<QStandardItem *>()
+                  << new Create3SensorNameItem(Create3SensorModel::Cliff1, port)
+                  << new Create3SensorValueItem<unsigned short>(Create3SensorModel::Cliff, port, true));
+        break;
+    case 2:
+        appendRow(QList<QStandardItem *>()
+                  << new Create3SensorNameItem(Create3SensorModel::Cliff2, port)
+                  << new Create3SensorValueItem<unsigned short>(Create3SensorModel::Cliff, port, true));
+        break;
+    case 3:
+        appendRow(QList<QStandardItem *>()
+                  << new Create3SensorNameItem(Create3SensorModel::Cliff3, port)
+                  << new Create3SensorValueItem<unsigned short>(Create3SensorModel::Cliff, port, true));
+        break;
 
-        default:
-            break;
-        }
-    }
-    catch (const std::exception &e)
-    {
-        std::cerr << 'Could not load cliff sensor values\n' << e.what() << '\n';
+    default:
+        break;
     }
 }
 
 void Create3SensorModel::populateIR(unsigned int port)
 {
-    try
+    switch (port)
     {
-        switch (port)
-        {
-        case 0:
-            appendRow(QList<QStandardItem *>()
-                      << new Create3SensorNameItem(Create3SensorModel::IR0, port)
-                      << new Create3SensorValueItem<unsigned short>(Create3SensorModel::IR, port, true));
-            break;
-        case 1:
-            appendRow(QList<QStandardItem *>()
-                      << new Create3SensorNameItem(Create3SensorModel::IR1, port)
-                      << new Create3SensorValueItem<unsigned short>(Create3SensorModel::IR, port, true));
-            break;
-        case 2:
-            appendRow(QList<QStandardItem *>()
-                      << new Create3SensorNameItem(Create3SensorModel::IR2, port)
-                      << new Create3SensorValueItem<unsigned short>(Create3SensorModel::IR, port, true));
-            break;
-        case 3:
-            appendRow(QList<QStandardItem *>()
-                      << new Create3SensorNameItem(Create3SensorModel::IR3, port)
-                      << new Create3SensorValueItem<unsigned short>(Create3SensorModel::IR, port, true));
-            break;
-        case 4:
-            appendRow(QList<QStandardItem *>()
-                      << new Create3SensorNameItem(Create3SensorModel::IR4, port)
-                      << new Create3SensorValueItem<unsigned short>(Create3SensorModel::IR, port, true));
-            break;
-        case 5:
-            appendRow(QList<QStandardItem *>()
-                      << new Create3SensorNameItem(Create3SensorModel::IR5, port)
-                      << new Create3SensorValueItem<unsigned short>(Create3SensorModel::IR, port, true));
-            break;
-        case 6:
-            appendRow(QList<QStandardItem *>()
-                      << new Create3SensorNameItem(Create3SensorModel::IR6, port)
-                      << new Create3SensorValueItem<unsigned short>(Create3SensorModel::IR, port, true));
-            break;
-        default:
-            break;
-        }
-    }
-    catch (const std::exception &e)
-    {
-        std::cerr << 'Could not load IR sensor values\n' << e.what() << '\n';
+    case 0:
+        appendRow(QList<QStandardItem *>()
+                  << new Create3SensorNameItem(Create3SensorModel::IR0, port)
+                  << new Create3SensorValueItem<unsigned short>(Create3SensorModel::IR, port, true));
+        break;
+    case 1:
+        appendRow(QList<QStandardItem *>()
+                  << new Create3SensorNameItem(Create3SensorModel::IR1, port)
+                  << new Create3SensorValueItem<unsigned short>(Create3SensorModel::IR, port, true));
+        break;
+    case 2:
+        appendRow(QList<QStandardItem *>()
+                  << new Create3SensorNameItem(Create3SensorModel::IR2, port)
+                  << new Create3SensorValueItem<unsigned short>(Create3SensorModel::IR, port, true));
+        break;
+    case 3:
+        appendRow(QList<QStandardItem *>()
+                  << new Create3SensorNameItem(Create3SensorModel::IR3, port)
+                  << new Create3SensorValueItem<unsigned short>(Create3SensorModel::IR, port, true));
+        break;
+    case 4:
+        appendRow(QList<QStandardItem *>()
+                  << new Create3SensorNameItem(Create3SensorModel::IR4, port)
+                  << new Create3SensorValueItem<unsigned short>(Create3SensorModel::IR, port, true));
+        break;
+    case 5:
+        appendRow(QList<QStandardItem *>()
+                  << new Create3SensorNameItem(Create3SensorModel::IR5, port)
+                  << new Create3SensorValueItem<unsigned short>(Create3SensorModel::IR, port, true));
+        break;
+    case 6:
+        appendRow(QList<QStandardItem *>()
+                  << new Create3SensorNameItem(Create3SensorModel::IR6, port)
+                  << new Create3SensorValueItem<unsigned short>(Create3SensorModel::IR, port, true));
+        break;
+    default:
+        break;
     }
 }
