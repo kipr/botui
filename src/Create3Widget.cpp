@@ -119,7 +119,7 @@ void Create3Widget::resetServer()
         qDebug() << "Error:" << data;
     });
 
-    podmanStop->start(podmanStopCommand, podmanStopArgs);
+    podmanStop->startDetached(podmanStopCommand, podmanStopArgs);
 
     if (podmanStop->waitForFinished())
     {
@@ -152,7 +152,7 @@ void Create3Widget::resetServer()
         qDebug() << "Error:" << data;
     });
 
-    podmanStart->start(podmanStartCommand, podmanStartArgs);
+    podmanStart->startDetached(podmanStartCommand, podmanStartArgs);
 
     if (podmanStart->waitForFinished())
     {
