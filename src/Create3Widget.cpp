@@ -45,9 +45,14 @@ Create3Widget::Create3Widget(Device *device, QWidget *parent)
     connect(ui->Create3SensorListButton, SIGNAL(clicked()), SLOT(sensorList()));
     connect(ui->Create3ExampleProgramButton, SIGNAL(clicked()), SLOT(exampleList()));
 
-    ui->create3IP->setText(getIP());
+    QStringList arguments;
+    arguments << "-a" << "| grep 'iRobot' | awk -F '[()]' '{print $2}'";
 
-
+    QProcess *myProcess = new QProcess(parent);
+    myProcess->start("arp", arguments);
+    myProcess->waitForFinished();
+    QByteArray output = myProcess->readAllStandardOutput();
+    ui->create3IP->setText(output);
 }
 
 Create3Widget::~Create3Widget()
@@ -65,7 +70,6 @@ QString Create3Widget::getIP()
     qDebug() << "Create3 IP: " << output;
 
     return output;
-    
 }
 
 int Create3Widget::isConnected()
