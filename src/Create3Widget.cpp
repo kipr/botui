@@ -102,9 +102,12 @@ int Create3Widget::isConnected()
 
 void Create3Widget::resetServer()
 {
-    QString podmanStopCommand = "sudo podman stop";
-    QStringList podmanStopArgs;
-    podmanStopArgs << "-a";
+    QString podmanStopCommand = "sudo";
+    QStringList podmanStopArgs = {
+        "podman",
+        "stop",
+        "-a"
+    };
 
     connect(podmanStop, &QProcess::readyReadStandardOutput, [=]() {
         QByteArray data = podmanStop->readAllStandardOutput();
@@ -127,14 +130,17 @@ void Create3Widget::resetServer()
         qDebug() << "Podman stop failed to start or crashed.";
     }
 
-    QString podmanStartCommand = "sudo podman run";
-    QStringList podmanStartArgs;
-    podmanStartArgs << "-dt"
-                    << "--rm"
-                    << "--net=host"
-                    << "--env"
-                    << "IP=192.168.125.1"
-                    << "docker.io/kipradmin/create3_docker";
+    QString podmanStartCommand = "sudo";
+    QStringList podmanStartArgs = {
+        "podman",
+        "run",
+        "-dt",
+        "--rm",
+        "--net=host",
+        "--env",
+        "IP=192.168.125.1",
+        "docker.io/kipradmin/create3_docker"
+    };
 
     connect(podmanStart, &QProcess::readyReadStandardOutput, [=]() {
         QByteArray data = podmanStart->readAllStandardOutput();
