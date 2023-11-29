@@ -4,6 +4,8 @@
 #include "StandardWidget.h"
 
 #include <QRegularExpression>
+#include <QProcess>
+
 namespace Ui
 {
 	class Create3Widget;
@@ -36,6 +38,9 @@ private:
 	double m_feedbackVal;
 	int m_position_1;
 	double m_vel_1;
+
+	QProcess *podmanStop;
+	QProcess *podmanStart;
 
 };
 
