@@ -144,7 +144,7 @@ void Create3Widget::resetServer()
         qDebug() << "Error:" << data;
     });
 
-    podmanStop->startDetached(podmanStopCommand, podmanStopArgs);
+    podmanStop->start(podmanStopCommand, podmanStopArgs);
 
     if (podmanStop->waitForFinished())
     {
@@ -179,9 +179,9 @@ void Create3Widget::resetServer()
 
     podmanStart->startDetached(podmanStartCommand, podmanStartArgs);
 
-    if (podmanStart->waitForFinished())
+    if (podmanStart->startDetached(podmanStartCommand, podmanStartArgs))
     {
-        qDebug() << "Podman container successfully started with exit code:" << podmanStart->exitCode();
+        qDebug() << "Podman container successfully started and detached";
     }
     else
     {
