@@ -78,14 +78,12 @@ void Create3Widget::resetServer()
 {
     QProcess *myProc = new QProcess();
     QStringList args;
-    args << "stop" << "-a";
-    myProc->start("sudo podman", args);
+    myProc->start("sudo podman stop -a");
     myProc->waitForFinished();
     QByteArray output = myProc->readAllStandardOutput();
     qDebug() << output;
 
-    args << "run" << "-dt" << "--rm" << "--net=host" << "--env" << "IP=192.168.125.1" << "docker.io/kipradmin/create3_docker";
-    myProc->start("sudo podman", args);
+    myProc->start("sudo podman run -dt --rm --net=host --env IP=192.168.125.1 docker.io/kipradmin/create3_docker");
     myProc->waitForFinished();
     output = myProc->readAllStandardOutput();
     qDebug() << output;
