@@ -177,8 +177,6 @@ void Create3Widget::resetServer()
         qDebug() << "Error:" << data;
     });
 
-    podmanStart->startDetached(podmanStartCommand, podmanStartArgs);
-
     if (podmanStart->startDetached(podmanStartCommand, podmanStartArgs))
     {
         qDebug() << "Podman container successfully started and detached";
