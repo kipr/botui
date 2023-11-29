@@ -115,7 +115,7 @@ void Create3Widget::resetServer()
 
     podmanStop.start(podmanStopCommand, podmanStopArgs);
 
-    if (v.waitForFinished())
+    if (podmanStop.waitForFinished())
     {
         qDebug() << "Podman container successfully stopped with exit code:" << podmanStop.exitCode();
     }
