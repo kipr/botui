@@ -63,6 +63,8 @@ QString Create3Widget::getIP()
     myProc->waitForFinished();
     QByteArray output = myProc->readAllStandardOutput();
     qDebug() << "Create3 IP: " << output;
+
+    return output;
     
 }
 
