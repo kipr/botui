@@ -159,7 +159,7 @@ void Create3Widget::resetServer()
     QStringList podmanStartArgs = {
         "podman",
         "run",
-        "-it",
+        "-dt",
         "--rm",
         "--net=host",
         "--env",
