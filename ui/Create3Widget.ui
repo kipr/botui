@@ -13,10 +13,7 @@
   <property name="windowTitle">
    <string>Create 3</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="0">
-   <property name="margin" stdset="0">
-    <number>6</number>
-   </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="PlotWidget" name="plot" native="true">
      <property name="font">
@@ -89,7 +86,7 @@
               <string/>
              </property>
              <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
              </property>
             </widget>
            </item>
@@ -99,6 +96,12 @@
           <layout class="QHBoxLayout" name="IPHorizontal">
            <item>
             <widget class="QLabel" name="create3IPLabel">
+             <property name="maximumSize">
+              <size>
+               <width>200</width>
+               <height>16777215</height>
+              </size>
+             </property>
              <property name="font">
               <font>
                <pointsize>22</pointsize>
@@ -126,7 +129,7 @@
               <string/>
              </property>
              <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
              </property>
             </widget>
            </item>

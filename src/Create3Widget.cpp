@@ -66,12 +66,37 @@ Create3Widget::~Create3Widget()
 
 QString Create3Widget::getIP()
 {
-    QProcess *myProc = new QProcess();
-    QStringList args;
-    myProc->start("arp -a | grep 'iRobot' | awk -F '[()]' '{print $2}'");
-    myProc->waitForFinished();
-    QByteArray output = myProc->readAllStandardOutput();
-    qDebug() << "Create3 IP: " << output;
+
+     // The command to execute
+    const char *command = "arp -a | grep 'iRobot' | awk -F '[()]' '{print $2}'";
+
+    // Open a pipe to the command
+    FILE *pipe = popen(command, "r");
+    if (!pipe)
+    {
+        std::cerr << "Error opening pipe." << std::endl;
+    }
+
+    // Read the output from the command
+    char buffer[128];
+    std::string result = "";
+    while (fgets(buffer, sizeof(buffer), pipe) != nullptr)
+    {
+        result += buffer;
+    }
+
+    // Close the pipe
+    pclose(pipe);
+
+    // Trim the newline character from the end of the result
+    result.erase(result.find_last_not_of("\n") + 1);
+
+    // Print or use the result as needed
+    std::cout << "Output:\n"
+              << result << std::endl;
+
+
+    QString output = QString::fromStdString(result);
 
     return output;
 }
