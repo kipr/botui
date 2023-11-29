@@ -48,15 +48,8 @@ Create3Widget::Create3Widget(Device *device, QWidget *parent)
     podmanStop = new QProcess(this);
     podmanStart = new QProcess(this);
 
-    QStringList arguments;
-    arguments << "-a"
-              << "| grep 'iRobot' | awk -F '[()]' '{print $2}'";
-
-    QProcess *myProcess = new QProcess(parent);
-    myProcess->start("arp", arguments);
-    myProcess->waitForFinished();
-    QByteArray output = myProcess->readAllStandardOutput();
-    ui->create3IP->setText(output);
+   
+    ui->create3IP->setText(getIP());
 }
 
 Create3Widget::~Create3Widget()
