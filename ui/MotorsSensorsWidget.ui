@@ -126,7 +126,7 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/robot.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/robot.svg</iconset>
+           <normaloff>:/icons/robot.png</normaloff>:/icons/robot.png</iconset>
          </property>
          <property name="iconSize">
           <size>
