@@ -74,19 +74,21 @@ int Create3Widget::isConnected()
     return connected;
 }
 
-void Create3Widget::resetServer(QWidget *parent)
+void Create3Widget::resetServer()
 {
-    QProcess *myProc = new QProcess(parent);
+    QProcess *myProc = new QProcess();
     QStringList args;
     args << "stop" << "-a";
     myProc->start("sudo podman", args);
     myProc->waitForFinished();
     QByteArray output = myProc->readAllStandardOutput();
+    qDebug() << output;
 
     args << "run" << "-dt" << "--rm" << "--net=host" << "--env" << "IP=192.168.125.1" << "docker.io/kipradmin/create3_docker";
     myProc->start("sudo podman", args);
     myProc->waitForFinished();
     output = myProc->readAllStandardOutput();
+    qDebug() << output;
 }
 
 void Create3Widget::sensorList()
