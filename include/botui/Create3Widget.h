@@ -25,6 +25,7 @@ private slots:
 	int isConnected();
 	void sensorList();
 	void exampleList();
+	QString getIP();
 
 
 private:

@@ -96,21 +96,21 @@
           </layout>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="BatteryHorizontal">
+          <layout class="QHBoxLayout" name="IPHorizontal">
            <item>
-            <widget class="QLabel" name="batteryPercentLabel">
+            <widget class="QLabel" name="create3IPLabel">
              <property name="font">
               <font>
                <pointsize>22</pointsize>
               </font>
              </property>
              <property name="text">
-              <string>Battery %:</string>
+              <string>Create3 IP:</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="batteryPercent">
+            <widget class="QLabel" name="create3IP">
              <property name="minimumSize">
               <size>
                <width>25</width>

@@ -44,6 +44,10 @@ Create3Widget::Create3Widget(Device *device, QWidget *parent)
     // connect(ui->testProgramComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
     connect(ui->Create3SensorListButton, SIGNAL(clicked()), SLOT(sensorList()));
     connect(ui->Create3ExampleProgramButton, SIGNAL(clicked()), SLOT(exampleList()));
+
+    ui->create3IP->setText(getIP());
+
+
 }
 
 Create3Widget::~Create3Widget()
@@ -51,10 +55,22 @@ Create3Widget::~Create3Widget()
     delete ui;
 }
 
+QString Create3Widget::getIP()
+{
+    QProcess *myProc = new QProcess();
+    QStringList args;
+    myProc->start("arp -a | grep 'iRobot' | awk -F '[()]' '{print $2}'");
+    myProc->waitForFinished();
+    QByteArray output = myProc->readAllStandardOutput();
+    qDebug() << "Create3 IP: " << output;
+    
+}
+
 int Create3Widget::isConnected()
 {
     int connected;
-    try {
+    try
+    {
         connected = create3_is_connected();
     }
     catch (const std::exception &e)
@@ -99,11 +115,11 @@ void Create3Widget::exampleList()
     RootController::ref().presentWidget(new Create3ExampleWidget(device()));
 }
 
-
 int Create3Widget::create3Connect()
 {
     int connected = 0;
-    try{
+    try
+    {
         connected = create3_connect_manual("192.168.125.1", 50051);
         qDebug() << "Create connected? " << connected;
     }
@@ -113,6 +129,3 @@ int Create3Widget::create3Connect()
     }
     return connected;
 }
-
-
-
