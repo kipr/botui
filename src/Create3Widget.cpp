@@ -38,7 +38,7 @@ Create3Widget::Create3Widget(Device *device, QWidget *parent)
     performStandardSetup(tr("Create 3"), false);
     setStyleSheet("QScrollBar:vertical {border: 2px solid grey;background:grey ;width: 100px; margin: 22px 0 22px 0; } QScrollBar::handle:vertical { border: 2px solid grey;background: white; min-height: 20px; } QScrollBar::add-line:vertical { border: 2px solid grey;background: #32CC99; height: 20px; subcontrol-position: bottom; subcontrol-origin: margin; } QScrollBar::sub-line:vertical {border: 2px solid grey; background: #32CC99; height: 20px; subcontrol-position: top; subcontrol-origin: margin; } QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical { border: 2px solid grey;width: 3px; height: 3px; background: white; }QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {border: 2px solid grey; background: none;}");
     connect(ui->CreateConnectButton, SIGNAL(clicked()), SLOT(isConnected()));
-    connect(ui->ResetServerButton, SIGNAL(clicked()), SLOT(resetServer(parent)));
+    connect(ui->ResetServerButton, SIGNAL(clicked()), SLOT(resetServer()));
     // ui->sensors->setModel(_model);
     // ui->sensors->setItemDelegate(new Create3SensorItemDelegate(_model, this));
     // connect(ui->testProgramComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
