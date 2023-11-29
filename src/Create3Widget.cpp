@@ -98,17 +98,62 @@ int Create3Widget::isConnected()
 
 void Create3Widget::resetServer()
 {
-    QProcess *myProc = new QProcess();
-    QStringList args;
-    myProc->start("sudo podman stop -a");
-    myProc->waitForFinished();
-    QByteArray output = myProc->readAllStandardOutput();
-    qDebug() << output;
+    QProcess podmanStop;
+    QString podmanStopCommand = "sudo podman stop";
+    QStringList podmanStopArgs;
+    podmanStopArgs << "-a";
 
-    myProc->start("sudo podman run -dt --rm --net=host --env IP=192.168.125.1 docker.io/kipradmin/create3_docker");
-    myProc->waitForFinished();
-    output = myProc->readAllStandardOutput();
-    qDebug() << output;
+    QObject::connect(&podmanStop, &QProcess::readyReadStandardOutput, [&]()
+                     {
+        QByteArray data = podmanStop.readAllStandardOutput();
+        qDebug() << "Output:" << data; });
+
+    QObject::connect(&podmanStop, &QProcess::readyReadStandardError, [&]()
+                     {
+        QByteArray data = podmanStop.readAllStandardError();
+        qDebug() << "Error:" << data; });
+
+    podmanStop.start(podmanStopCommand, podmanStopArgs);
+
+    if (v.waitForFinished())
+    {
+        qDebug() << "Podman container successfully stopped with exit code:" << podmanStop.exitCode();
+    }
+    else
+    {
+        qDebug() << "Podman stop failed to start or crashed.";
+    }
+
+    QProcess podmanStart;
+    QString podmanStartCommand = "sudo podman run";
+    QStringList podmanStartArgs;
+    podmanStartArgs << "-dt"
+                    << "--rm"
+                    << "--net=host"
+                    << "--env"
+                    << "IP=192.168.125.1"
+                    << "docker.io/kipradmin/create3_docker";
+
+    QObject::connect(&podmanStart, &QProcess::readyReadStandardOutput, [&]()
+                     {
+        QByteArray data = podmanStart.readAllStandardOutput();
+        qDebug() << "Output:" << data; });
+
+    QObject::connect(&podmanStart, &QProcess::readyReadStandardError, [&]()
+                     {
+        QByteArray data = podmanStart.readAllStandardError();
+        qDebug() << "Error:" << data; });
+
+    podmanStart.start(podmanStartCommand, podmanStartArgs);
+
+    if (podmanStart.waitForFinished())
+    {
+        qDebug() << "Podman container successfully started with exit code:" << podmanStart.exitCode();
+    }
+    else
+    {
+        qDebug() << "Podman container failed to start or crashed.";
+    }
 }
 
 void Create3Widget::sensorList()
