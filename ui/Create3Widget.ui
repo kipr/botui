@@ -98,7 +98,7 @@
             <widget class="QLabel" name="create3IPLabel">
              <property name="maximumSize">
               <size>
-               <width>171</width>
+               <width>150</width>
                <height>16777215</height>
               </size>
              </property>
