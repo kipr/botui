@@ -116,9 +116,8 @@ int Create3Widget::isConnected()
 
 void Create3Widget::resetServer()
 {
-    QString stopCommand = "sudo";
+    QString stopCommand = "systemctl";
     QStringList stopArgs = {
-        "systemctl",
         "stop",
         "create3_server.service"
     };
@@ -140,9 +139,8 @@ void Create3Widget::resetServer()
         qDebug() << "Create3 Server failed to stop or crashed.";
     }
 
-    QString startCommand = "sudo";
+    QString startCommand = "systemctl";
     QStringList startArgs = {
-        "systemctl",
         "start",
         "create3_server.service"
     };
