@@ -112,7 +112,10 @@ public:
 
     virtual void update()
     {
-        setText(QString("%1").arg(m_value));
+        for (int i = 0; i < 50; i++)
+        {
+            setText(QString("%1").arg(m_value + 1));
+        }
     }
 
     template <typename L>
@@ -167,8 +170,8 @@ Create3SensorModel::Create3SensorModel(QObject *parent)
 {
     populate();
     QTimer *updateTimer = new QTimer(this);
-	connect(updateTimer, SIGNAL(timeout()), SLOT(populate()));
-	updateTimer->start(10);
+    connect(updateTimer, SIGNAL(timeout()), SLOT(populate()));
+    updateTimer->start(10);
 }
 
 Create3SensorModel::~Create3SensorModel()
