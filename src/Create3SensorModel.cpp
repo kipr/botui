@@ -112,7 +112,7 @@ public:
 
     virtual void update()
     {
-        
+
         setText(QString("%1").arg(m_value));
     }
 
@@ -151,25 +151,13 @@ private:
     }
 };
 
-// class SinSensor : public Sensor<double>
-// {
-// public:
-//     virtual double value() const
-//     {
-//         static double theta = 0;
-//         double ret = sin(theta);
-//         theta += 0.01;
-//         return ret;
-//     }
-// };
-
 Create3SensorModel::Create3SensorModel(QObject *parent)
     : QStandardItemModel(parent)
 {
     populate();
     QTimer *updateTimer = new QTimer(this);
-	connect(updateTimer, SIGNAL(timeout()), SLOT(update()));
-	updateTimer->start(10);
+    connect(updateTimer, SIGNAL(timeout()), SLOT(update()));
+    updateTimer->start(10);
 }
 
 Create3SensorModel::~Create3SensorModel()
@@ -185,12 +173,19 @@ Create3SensorModel::SensorType Create3SensorModel::type(const QModelIndex &index
 
 void Create3SensorModel::update()
 {
-    populate();
+    // populate(); ADDS TONS OF ROWS updating values
     for (int i = 0; i < rowCount(); ++i)
     {
         Updateable *updateable = Updateable::cast(item(i, 1));
         if (!updateable)
+        {
             continue;
+        }
+
+        if(i<6){
+          setItem(i,1,new Create3SensorValueItem<unsigned short>(Create3SensorModel::Bump, i, true));
+        }
+
         updateable->update();
     }
 }
