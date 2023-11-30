@@ -42,9 +42,7 @@ Create3Widget::Create3Widget(Device *device, QWidget *parent)
     connect(ui->Create3SensorListButton, SIGNAL(clicked()), SLOT(sensorList()));
     connect(ui->Create3ExampleProgramButton, SIGNAL(clicked()), SLOT(exampleList()));
 
-    podmanStop = new QProcess(this);
-    podmanStart = new QProcess(this);
-
+    create3ServerService = new QProcess(this);
    
     ui->create3IP->setText(getIP());
 }
@@ -117,58 +115,25 @@ int Create3Widget::isConnected()
 
 void Create3Widget::resetServer()
 {
-    QString podmanStopCommand = "sudo";
-    QStringList podmanStopArgs = {
-        "podman",
-        "stop",
-        "-a"
+    QString restartCommand = "sudo";
+    QStringList restartArgs = {
+        "systemctl",
+        "restart",
+        "create3_server.service"
     };
 
-    connect(podmanStop, &QProcess::readyReadStandardOutput, [=]() {
-        QByteArray data = podmanStop->readAllStandardOutput();
-        qDebug() << "Output:" << data;
-    });
-
-    connect(podmanStop, &QProcess::readyReadStandardError, [=]() {
-        QByteArray data = podmanStop->readAllStandardError();
+    connect(create3ServerService, &QProcess::readyReadStandardError, [=]() {
+        QByteArray data = create3ServerService->readAllStandardError();
         qDebug() << "Error:" << data;
     });
 
-    podmanStop->start(podmanStopCommand, podmanStopArgs);
-
-    if (podmanStop->waitForFinished())
+    if (create3ServerService->startDetached(restartCommand, restartArgs))
     {
-        qDebug() << "Podman container successfully stopped with exit code:" << podmanStop->exitCode();
+        qDebug() << "Create3 Server successfully restarted and detached";
     }
     else
     {
-        qDebug() << "Podman stop failed to start or crashed.";
-    }
-
-    QString podmanStartCommand = "sudo";
-    QStringList podmanStartArgs = {
-        "podman",
-        "run",
-        "-dt",
-        "--rm",
-        "--net=host",
-        "--env",
-        "IP=192.168.125.1",
-        "docker.io/kipradmin/create3_docker"
-    };
-
-    connect(podmanStart, &QProcess::readyReadStandardError, [=]() {
-        QByteArray data = podmanStart->readAllStandardError();
-        qDebug() << "Error:" << data;
-    });
-
-    if (podmanStart->startDetached(podmanStartCommand, podmanStartArgs))
-    {
-        qDebug() << "Podman container successfully started and detached";
-    }
-    else
-    {
-        qDebug() << "Podman container failed to start or crashed.";
+        qDebug() << "Create3 Server failed to restart or crashed.";
     }
 }
 

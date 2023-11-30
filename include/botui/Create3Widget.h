@@ -39,8 +39,7 @@ private:
 	int m_position_1;
 	double m_vel_1;
 
-	QProcess *podmanStop;
-	QProcess *podmanStart;
+	QProcess *create3ServerService;
 
 };
 
