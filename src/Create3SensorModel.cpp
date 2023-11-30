@@ -190,13 +190,13 @@ void Create3SensorModel::update()
         // if(i < 5){
         //   setItem(i,1,new Create3SensorValueItem<unsigned short>(Create3SensorModel::Bump, i, true));
         // }
-        else if(i >=5 && i < 9){
-            setItem(i,1,new Create3SensorValueItem<unsigned short>(Create3SensorModel::Cliff, i, true));
-        }
-        else if (i >= 9)
-        {
-             setItem(i,1,new Create3SensorValueItem<unsigned short>(Create3SensorModel::IR, i, true));
-        }
+        // else if(i >=5 && i < 9){
+        //     setItem(i,1,new Create3SensorValueItem<unsigned short>(Create3SensorModel::Cliff, i, true));
+        // }
+        // else if (i >= 9)
+        // {
+        //      setItem(i,1,new Create3SensorValueItem<unsigned short>(Create3SensorModel::IR, i, true));
+        // }
 
         updateable->update();
     }
