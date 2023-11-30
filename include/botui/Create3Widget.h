@@ -40,7 +40,7 @@ private:
 	double m_vel_1;
 
 	QProcess *startCreate3Service;
-	// QProcess *stopCreate3Service;
+	QProcess *stopCreate3Service;
 
 };
 
