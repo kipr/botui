@@ -42,7 +42,8 @@ Create3Widget::Create3Widget(Device *device, QWidget *parent)
     connect(ui->Create3SensorListButton, SIGNAL(clicked()), SLOT(sensorList()));
     connect(ui->Create3ExampleProgramButton, SIGNAL(clicked()), SLOT(exampleList()));
 
-    create3ServerService = new QProcess(this);
+    startCreate3Service = new QProcess(this);
+    stopCreate3Service = new QProcess(this);
    
     ui->create3IP->setText(getIP());
 }
@@ -115,25 +116,52 @@ int Create3Widget::isConnected()
 
 void Create3Widget::resetServer()
 {
-    QString restartCommand = "sudo";
-    QStringList restartArgs = {
+    QString stopCommand = "sudo";
+    QStringList stopArgs = {
         "systemctl",
-        "restart",
+        "stop",
         "create3_server.service"
     };
 
-    connect(create3ServerService, &QProcess::readyReadStandardError, [=]() {
-        QByteArray data = create3ServerService->readAllStandardError();
+    connect(stopCreate3Service, &QProcess::readyReadStandardError, [=]() {
+        QByteArray data = stopCreate3Service->readAllStandardError();
         qDebug() << "Error:" << data;
     });
 
-    if (create3ServerService->startDetached(restartCommand, restartArgs))
+    // Start process to stop server
+    stopCreate3Service->start(stopCommand, stopArgs);
+
+    if (stopCreate3Service->waitForFinished())
     {
-        qDebug() << "Create3 Server successfully restarted and detached";
+        qDebug() << "Create3 Server successfully stopped";
     }
     else
     {
-        qDebug() << "Create3 Server failed to restart or crashed.";
+        qDebug() << "Create3 Server failed to stop or crashed.";
+    }
+
+    QString startCommand = "sudo";
+    QStringList startArgs = {
+        "systemctl",
+        "start",
+        "create3_server.service"
+    };
+
+    connect(startCreate3Service, &QProcess::readyReadStandardError, [=]() {
+        QByteArray data = startCreate3Service->readAllStandardError();
+        qDebug() << "Error:" << data;
+    });
+
+    // Start process to start server
+    startCreate3Service->start(startCommand, startArgs);
+
+    if (startCreate3Service->waitForFinished())
+    {
+        qDebug() << "Create3 Server successfully started";
+    }
+    else
+    {
+        qDebug() << "Create3 Server failed to start or crashed.";
     }
 }
 
