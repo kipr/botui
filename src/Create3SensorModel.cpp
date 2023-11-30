@@ -174,6 +174,11 @@ Create3SensorModel::SensorType Create3SensorModel::type(const QModelIndex &index
 void Create3SensorModel::update()
 {
     // populate(); ADDS TONS OF ROWS updating values
+    setItem(0,1,new Create3SensorValueItem<unsigned short>(Create3SensorModel::Bump, 0, true));
+    setItem(1,1,new Create3SensorValueItem<unsigned short>(Create3SensorModel::Bump, 1, true));
+    setItem(2,1,new Create3SensorValueItem<unsigned short>(Create3SensorModel::Bump, 2, true));
+    setItem(3,1,new Create3SensorValueItem<unsigned short>(Create3SensorModel::Bump, 3, true));
+    setItem(4,1,new Create3SensorValueItem<unsigned short>(Create3SensorModel::Bump, 4, true));
     for (int i = 0; i < rowCount(); ++i)
     {
         Updateable *updateable = Updateable::cast(item(i, 1));
@@ -182,15 +187,15 @@ void Create3SensorModel::update()
             continue;
         }
 
-        if(i < 5){
-          setItem(i,2,new Create3SensorValueItem<unsigned short>(Create3SensorModel::Bump, i, true));
-        }
+        // if(i < 5){
+        //   setItem(i,1,new Create3SensorValueItem<unsigned short>(Create3SensorModel::Bump, i, true));
+        // }
         else if(i >=5 && i < 9){
-            setItem(i,2,new Create3SensorValueItem<unsigned short>(Create3SensorModel::Cliff, i, true));
+            setItem(i,1,new Create3SensorValueItem<unsigned short>(Create3SensorModel::Cliff, i, true));
         }
         else if (i >= 9)
         {
-             setItem(i,2,new Create3SensorValueItem<unsigned short>(Create3SensorModel::IR, i, true));
+             setItem(i,1,new Create3SensorValueItem<unsigned short>(Create3SensorModel::IR, i, true));
         }
 
         updateable->update();
