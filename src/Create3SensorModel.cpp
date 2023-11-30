@@ -2,6 +2,7 @@
 #include <kipr/create3/client/client.h>
 #include <iostream>
 #include <math.h>
+#include <QTimer>
 #include <kipr/create3/client/BumpSensor.hpp>
 
 class Create3SensorNameItem : public QStandardItem
@@ -165,6 +166,9 @@ Create3SensorModel::Create3SensorModel(QObject *parent)
     : QStandardItemModel(parent)
 {
     populate();
+    QTimer *updateTimer = new QTimer(this);
+	connect(updateTimer, SIGNAL(timeout()), SLOT(update()));
+	updateTimer->start(10);
 }
 
 Create3SensorModel::~Create3SensorModel()
