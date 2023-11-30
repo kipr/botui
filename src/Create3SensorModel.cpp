@@ -211,27 +211,27 @@ void Create3SensorModel::populateBump(unsigned int port)
     case 0:
         appendRow(QList<QStandardItem *>()
                   << new Create3SensorNameItem(Create3SensorModel::Bump0, port)
-                  << new Create3SensorValueItem<unsigned short>(Create3SensorModel::Bump, port, true));
+                  << new Create3SensorValueItem<unsigned short>(new Create3SensorModel::Bump, port, true));
         break;
     case 1:
         appendRow(QList<QStandardItem *>()
                   << new Create3SensorNameItem(Create3SensorModel::Bump1, port)
-                  << new Create3SensorValueItem<unsigned short>(Create3SensorModel::Bump, port, true));
+                  << new Create3SensorValueItem<unsigned short>(new Create3SensorModel::Bump, port, true));
         break;
     case 2:
         appendRow(QList<QStandardItem *>()
                   << new Create3SensorNameItem(Create3SensorModel::Bump2, port)
-                  << new Create3SensorValueItem<unsigned short>(Create3SensorModel::Bump, port, true));
+                  << new Create3SensorValueItem<unsigned short>(new Create3SensorModel::Bump, port, true));
         break;
     case 3:
         appendRow(QList<QStandardItem *>()
                   << new Create3SensorNameItem(Create3SensorModel::Bump3, port)
-                  << new Create3SensorValueItem<unsigned short>(Create3SensorModel::Bump, port, true));
+                  << new Create3SensorValueItem<unsigned short>(new Create3SensorModel::Bump, port, true));
         break;
     case 4:
         appendRow(QList<QStandardItem *>()
                   << new Create3SensorNameItem(Create3SensorModel::Bump4, port)
-                  << new Create3SensorValueItem<unsigned short>(Create3SensorModel::Bump, port, true));
+                  << new Create3SensorValueItem<unsigned short>(new Create3SensorModel::Bump, port, true));
         break;
     default:
         break;
@@ -245,22 +245,22 @@ void Create3SensorModel::populateCliff(unsigned int port)
     case 0:
         appendRow(QList<QStandardItem *>()
                   << new Create3SensorNameItem(Create3SensorModel::Cliff0, port)
-                  << new Create3SensorValueItem<unsigned short>(Create3SensorModel::Cliff, port, true));
+                  << new Create3SensorValueItem<unsigned short>(new Create3SensorModel::Cliff, port, true));
         break;
     case 1:
         appendRow(QList<QStandardItem *>()
                   << new Create3SensorNameItem(Create3SensorModel::Cliff1, port)
-                  << new Create3SensorValueItem<unsigned short>(Create3SensorModel::Cliff, port, true));
+                  << new Create3SensorValueItem<unsigned short>(new Create3SensorModel::Cliff, port, true));
         break;
     case 2:
         appendRow(QList<QStandardItem *>()
                   << new Create3SensorNameItem(Create3SensorModel::Cliff2, port)
-                  << new Create3SensorValueItem<unsigned short>(Create3SensorModel::Cliff, port, true));
+                  << new Create3SensorValueItem<unsigned short>(new Create3SensorModel::Cliff, port, true));
         break;
     case 3:
         appendRow(QList<QStandardItem *>()
                   << new Create3SensorNameItem(Create3SensorModel::Cliff3, port)
-                  << new Create3SensorValueItem<unsigned short>(Create3SensorModel::Cliff, port, true));
+                  << new Create3SensorValueItem<unsigned short>(new Create3SensorModel::Cliff, port, true));
         break;
 
     default:
@@ -275,37 +275,37 @@ void Create3SensorModel::populateIR(unsigned int port)
     case 0:
         appendRow(QList<QStandardItem *>()
                   << new Create3SensorNameItem(Create3SensorModel::IR0, port)
-                  << new Create3SensorValueItem<unsigned short>(Create3SensorModel::IR, port, true));
+                  << new Create3SensorValueItem<unsigned short>(new Create3SensorModel::IR, port, true));
         break;
     case 1:
         appendRow(QList<QStandardItem *>()
                   << new Create3SensorNameItem(Create3SensorModel::IR1, port)
-                  << new Create3SensorValueItem<unsigned short>(Create3SensorModel::IR, port, true));
+                  << new Create3SensorValueItem<unsigned short>(new Create3SensorModel::IR, port, true));
         break;
     case 2:
         appendRow(QList<QStandardItem *>()
                   << new Create3SensorNameItem(Create3SensorModel::IR2, port)
-                  << new Create3SensorValueItem<unsigned short>(Create3SensorModel::IR, port, true));
+                  << new Create3SensorValueItem<unsigned short>(new Create3SensorModel::IR, port, true));
         break;
     case 3:
         appendRow(QList<QStandardItem *>()
                   << new Create3SensorNameItem(Create3SensorModel::IR3, port)
-                  << new Create3SensorValueItem<unsigned short>(Create3SensorModel::IR, port, true));
+                  << new Create3SensorValueItem<unsigned short>(new Create3SensorModel::IR, port, true));
         break;
     case 4:
         appendRow(QList<QStandardItem *>()
                   << new Create3SensorNameItem(Create3SensorModel::IR4, port)
-                  << new Create3SensorValueItem<unsigned short>(Create3SensorModel::IR, port, true));
+                  << new Create3SensorValueItem<unsigned short>(new Create3SensorModel::IR, port, true));
         break;
     case 5:
         appendRow(QList<QStandardItem *>()
                   << new Create3SensorNameItem(Create3SensorModel::IR5, port)
-                  << new Create3SensorValueItem<unsigned short>(Create3SensorModel::IR, port, true));
+                  << new Create3SensorValueItem<unsigned short>(new Create3SensorModel::IR, port, true));
         break;
     case 6:
         appendRow(QList<QStandardItem *>()
                   << new Create3SensorNameItem(Create3SensorModel::IR6, port)
-                  << new Create3SensorValueItem<unsigned short>(Create3SensorModel::IR, port, true));
+                  << new Create3SensorValueItem<unsigned short>(new Create3SensorModel::IR, port, true));
         break;
     default:
         break;
