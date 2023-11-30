@@ -153,9 +153,7 @@ void Create3Widget::resetServer()
     });
 
     // Start process to start server
-    startCreate3Service->start(startCommand, startArgs);
-
-    if (startCreate3Service->waitForFinished())
+    if (startCreate3Service->startDetached(startCommand, startArgs))
     {
         qDebug() << "Create3 Server successfully started";
     }
