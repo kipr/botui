@@ -182,8 +182,15 @@ void Create3SensorModel::update()
             continue;
         }
 
-        if(i<6){
-          setItem(i,1,new Create3SensorValueItem<unsigned short>(Create3SensorModel::Bump, i, true));
+        if(i < 5){
+          setItem(i,2,new Create3SensorValueItem<unsigned short>(Create3SensorModel::Bump, i, true));
+        }
+        else if(i >=5 && i < 9){
+            setItem(i,2,new Create3SensorValueItem<unsigned short>(Create3SensorModel::Cliff, i, true));
+        }
+        else if (i >= 9)
+        {
+             setItem(i,2,new Create3SensorValueItem<unsigned short>(Create3SensorModel::IR, i, true));
         }
 
         updateable->update();
