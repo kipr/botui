@@ -42,8 +42,8 @@ Create3Widget::Create3Widget(Device *device, QWidget *parent)
     connect(ui->Create3SensorListButton, SIGNAL(clicked()), SLOT(sensorList()));
     connect(ui->Create3ExampleProgramButton, SIGNAL(clicked()), SLOT(exampleList()));
 
-    startCreate3Service = new QProcess(this);
-    stopCreate3Service = new QProcess(this);
+    // startCreate3Service = new QProcess(this);
+    // stopCreate3Service = new QProcess(this);
    
     ui->create3IP->setText(getIP());
 }
@@ -116,7 +116,45 @@ int Create3Widget::isConnected()
 
 void Create3Widget::resetServer()
 {
+    QProcess stopCreate3Service;
     QString stopCommand = "systemctl";
+    QStringList stopArgs = {
+        "stop",
+        "create3_server.service"
+    };
+
+    stopCreate3Service.start(stopCommand, stopArgs);
+    if(stopCreate3Service.waitForFinished())
+    {
+        QByteArray data = stopCreate3Service.readAllStandardOutput();
+        qDebug() << "Create3 Server successfully stopped\n" << data;
+    }
+    else
+    {
+        QByteArray data = stopCreate3Service.readAllStandardError();
+        qDebug() << "Create3 Server failed to stop or crashed\n" << data;
+    }
+
+    QProcess startCreate3Service;
+    QString startCommand = "systemctl";
+    QStringList startArgs = {
+        "start",
+        "create3_server.service"
+    };
+
+    startCreate3Service.start(startCommand, startArgs);
+    if(startCreate3Service.waitForFinished())
+    {
+        QByteArray data = startCreate3Service.readAllStandardOutput();
+        qDebug() << "Create3 Server successfully started\n" << data;
+    }
+    else
+    {
+        QByteArray data = startCreate3Service.readAllStandardError();
+        qDebug() << "Create3 Server failed to start or crashed\n" << data;
+    }
+
+    /*QString stopCommand = "systemctl";
     QStringList stopArgs = {
         "stop",
         "create3_server.service"
@@ -158,7 +196,7 @@ void Create3Widget::resetServer()
     else
     {
         qDebug() << "Create3 Server failed to start or crashed.";
-    }
+    }*/
 }
 
 void Create3Widget::sensorList()

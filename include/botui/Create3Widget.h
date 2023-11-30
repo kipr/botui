@@ -39,8 +39,8 @@ private:
 	int m_position_1;
 	double m_vel_1;
 
-	QProcess *startCreate3Service;
-	QProcess *stopCreate3Service;
+	// QProcess *startCreate3Service;
+	// QProcess *stopCreate3Service;
 
 };
 
