@@ -167,7 +167,7 @@ Create3SensorModel::Create3SensorModel(QObject *parent)
 {
     populate();
     QTimer *updateTimer = new QTimer(this);
-	connect(updateTimer, SIGNAL(timeout()), SLOT(update()));
+	connect(updateTimer, SIGNAL(timeout()), SLOT(populate()));
 	updateTimer->start(10);
 }
 
