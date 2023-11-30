@@ -58,26 +58,4 @@ Create3SensorListWidget::~Create3SensorListWidget()
     delete ui;
 }
 
-int Create3SensorListWidget::isConnected()
-{
-}
 
-int Create3SensorListWidget::create3Connect()
-{
-}
-
-void Create3SensorListWidget::indexChanged(int index)
-{
-}
-
-void Create3SensorListWidget::update()
-{
-}
-
-void Create3SensorListWidget::coeffChanged()
-{
-}
-
-void Create3SensorListWidget::motorChanged()
-{
-}

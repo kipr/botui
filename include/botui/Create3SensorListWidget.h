@@ -20,22 +20,12 @@ public:
 	~Create3SensorListWidget();
 
 private slots:
-	void coeffChanged();
-	void motorChanged();
-	int create3Connect();
-	int isConnected();
 
-	void indexChanged(int index);
-	void update();
 
 private:
 	Ui::Create3SensorListWidget *ui;
-
 	Create3SensorModel *_model;
-	double m_setpointVal;
-	double m_feedbackVal;
-	int m_position_1;
-	double m_vel_1;
+	
 };
 
 #endif
