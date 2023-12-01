@@ -132,6 +132,28 @@ void Create3Widget::resetServer()
         qDebug() << "Create3 Server failed to stop or crashed\n" << data;
     }
 
+    // Need a command to run between start and stop for some reason for things to work
+    QProcess statusCreate3Service;
+    QString statusCommand = "systemctl";
+    QStringList statusArgs = {
+        "status",
+        "create3_server.service",
+        "--no-pager"
+    };
+
+    statusCreate3Service.start(statusCommand, statusArgs);
+    if(statusCreate3Service.waitForFinished())
+    {
+        QByteArray data = statusCreate3Service.readAllStandardOutput();
+        qDebug() << "Create3 Server status\n" << data;
+    }
+    else
+    {
+        QByteArray data = statusCreate3Service.readAllStandardError();
+        qDebug() << "Create3 Server failed to get status\n" << data;
+    }
+
+
     QProcess startCreate3Service;
     QString startCommand = "systemctl";
     QStringList startArgs = {
