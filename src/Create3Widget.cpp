@@ -42,9 +42,6 @@ Create3Widget::Create3Widget(Device *device, QWidget *parent)
     connect(ui->Create3SensorListButton, SIGNAL(clicked()), SLOT(sensorList()));
     connect(ui->Create3ExampleProgramButton, SIGNAL(clicked()), SLOT(exampleList()));
 
-    // startCreate3Service = new QProcess(this);
-    // stopCreate3Service = new QProcess(this);
-   
     ui->create3IP->setText(getIP());
 }
 
@@ -154,49 +151,6 @@ void Create3Widget::resetServer()
         qDebug() << "Create3 Server failed to start or crashed\n" << data;
     }
 
-    /*QString stopCommand = "systemctl";
-    QStringList stopArgs = {
-        "stop",
-        "create3_server.service"
-    };
-
-    connect(stopCreate3Service, &QProcess::readyReadStandardError, [=]() {
-        QByteArray data = stopCreate3Service->readAllStandardError();
-        qDebug() << "Error:" << data;
-    });
-
-    // Start process to stop server
-    stopCreate3Service->start(stopCommand, stopArgs);
-
-    if (stopCreate3Service->waitForFinished())
-    {
-        qDebug() << "Create3 Server successfully stopped";
-    }
-    else
-    {
-        qDebug() << "Create3 Server failed to stop or crashed.";
-    }
-
-    QString startCommand = "systemctl";
-    QStringList startArgs = {
-        "start",
-        "create3_server.service"
-    };
-
-    connect(startCreate3Service, &QProcess::readyReadStandardError, [=]() {
-        QByteArray data = startCreate3Service->readAllStandardError();
-        qDebug() << "Error:" << data;
-    });
-
-    // Start process to start server
-    if (startCreate3Service->startDetached(startCommand, startArgs))
-    {
-        qDebug() << "Create3 Server successfully started";
-    }
-    else
-    {
-        qDebug() << "Create3 Server failed to start or crashed.";
-    }*/
 }
 
 void Create3Widget::sensorList()
