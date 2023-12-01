@@ -156,18 +156,15 @@ void Create3Widget::resetServer()
 
 
     QProcess startCreate3Service;
-    QString startCommand = "sleep";
+    QString startCommand = "systemctl";
     QStringList startArgs = {
-        "3",
-        "&&",
-        "systemctl",
         "start",
         "create3_server.service"
     };
 
-    if(startCreate3Service.startDetached(startCommand, startArgs))
+    startCreate3Service.start(startCommand, startArgs);
+    if(startCreate3Service.waitForFinished())
     {   
-        qDebug() << "Waiting 3 seconds to switch to home ...";
         QByteArray data = startCreate3Service.readAllStandardOutput();
         qDebug() << "Create3 Server successfully started\n" << data;
     }
