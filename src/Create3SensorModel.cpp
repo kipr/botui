@@ -200,7 +200,10 @@ void Create3SensorModel::update()
             continue;
         }
 
-        updateable->update();We are working on finishing up the Create 3 update. It's been a much more lengthy process to get it ready but we're finishing up bug testing with it right now and we're hoping to release very soon. As soon as we have it done which will hopefully be next week, we'll let everyone know.
+        updateable->update();
+    }
+}
+
 void Create3SensorModel::populate()
 {
 
