@@ -87,30 +87,6 @@ QString Create3Widget::getIP()
     return output;
 }
 
-int Create3Widget::isConnected()
-{
-    int connected;
-    try
-    {
-        connected = create3_is_connected();
-    }
-    catch (const std::exception &e)
-    {
-        std::cerr << e.what() << '\n';
-    }
-    if (connected == 1)
-    {
-        qDebug() << "Create connected";
-        ui->createConnectState->setText("Connected");
-    }
-    else
-    {
-        qDebug() << "Create not connected";
-        ui->createConnectState->setText("Not Connected");
-    }
-    return connected;
-}
-
 // void Create3Widget::resetServer()
 // {
 //     QProcess stopCreate3Service;
@@ -187,7 +163,7 @@ void Create3Widget::exampleList()
     RootController::ref().presentWidget(new Create3ExampleWidget(device()));
 }
 
-int Create3Widget::create3Connect()
+void Create3Widget::create3Connect()
 {
     int connected = 0;
     try
@@ -199,5 +175,14 @@ int Create3Widget::create3Connect()
     {
         std::cerr << e.what() << '\n';
     }
-    return connected;
+    if (connected == 1)
+    {
+        qDebug() << "Create connected";
+        ui->createConnectState->setText("Connected");
+    }
+    else
+    {
+        qDebug() << "Create not connected";
+        ui->createConnectState->setText("Not Connected");
+    }
 }

@@ -22,9 +22,8 @@ public:
 
 private slots:
 
-  int create3Connect();
+  void create3Connect();
 	// void resetServer();
-	int isConnected();
 	void sensorList();
 	void exampleList();
 	QString getIP();
