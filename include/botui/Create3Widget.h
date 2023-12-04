@@ -23,7 +23,7 @@ public:
 private slots:
 
   int create3Connect();
-	void resetServer();
+	// void resetServer();
 	int isConnected();
 	void sensorList();
 	void exampleList();

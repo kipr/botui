@@ -54,13 +54,13 @@
            </property>
           </widget>
          </item>
-         <item>
+         <!-- <item>
           <widget class="QPushButton" name="ResetServerButton">
            <property name="text">
             <string>Restart Create Server</string>
            </property>
           </widget>
-         </item>
+         </item> -->
          <item>
           <layout class="QHBoxLayout" name="CreateConnectHorizontal">
            <item>

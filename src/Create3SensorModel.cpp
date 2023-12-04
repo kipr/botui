@@ -128,24 +128,26 @@ private:
 
     static int typeName(Create3SensorModel::SensorMethod name, int port)
     {
-        try
-        {
-            switch (name)
+        if(create3_is_connected()) {
+            try
             {
-            case Create3SensorModel::Bump:
-                return create3_sensor_bump(port);
-            case Create3SensorModel::Cliff:
-                return create3_sensor_cliff(port);
-            case Create3SensorModel::IR:
-                return create3_sensor_ir(port);
-            default:
-                break;
+                switch (name)
+                {
+                case Create3SensorModel::Bump:
+                    return create3_sensor_bump(port);
+                case Create3SensorModel::Cliff:
+                    return create3_sensor_cliff(port);
+                case Create3SensorModel::IR:
+                    return create3_sensor_ir(port);
+                default:
+                    break;
+                }
             }
-        }
-        catch (const std::exception &e)
-        {
-            std::cerr << e.what() << '\n';
-            return 0;
+            catch (const std::exception &e)
+            {
+                std::cerr << e.what() << '\n';
+                return 0;
+            }
         }
         return 0;
     }

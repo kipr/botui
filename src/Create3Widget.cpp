@@ -38,7 +38,7 @@ Create3Widget::Create3Widget(Device *device, QWidget *parent)
     performStandardSetup(tr("Create 3"), false);
     setStyleSheet("QScrollBar:vertical {border: 2px solid grey;background:grey ;width: 100px; margin: 22px 0 22px 0; } QScrollBar::handle:vertical { border: 2px solid grey;background: white; min-height: 20px; } QScrollBar::add-line:vertical { border: 2px solid grey;background: #32CC99; height: 20px; subcontrol-position: bottom; subcontrol-origin: margin; } QScrollBar::sub-line:vertical {border: 2px solid grey; background: #32CC99; height: 20px; subcontrol-position: top; subcontrol-origin: margin; } QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical { border: 2px solid grey;width: 3px; height: 3px; background: white; }QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {border: 2px solid grey; background: none;}");
     connect(ui->CreateConnectButton, SIGNAL(clicked()), SLOT(isConnected()));
-    connect(ui->ResetServerButton, SIGNAL(clicked()), SLOT(resetServer()));
+    // connect(ui->ResetServerButton, SIGNAL(clicked()), SLOT(resetServer()));
     connect(ui->Create3SensorListButton, SIGNAL(clicked()), SLOT(sensorList()));
     connect(ui->Create3ExampleProgramButton, SIGNAL(clicked()), SLOT(exampleList()));
 
@@ -111,71 +111,71 @@ int Create3Widget::isConnected()
     return connected;
 }
 
-void Create3Widget::resetServer()
-{
-    QProcess stopCreate3Service;
-    QString stopCommand = "systemctl";
-    QStringList stopArgs = {
-        "stop",
-        "create3_server.service"
-    };
+// void Create3Widget::resetServer()
+// {
+//     QProcess stopCreate3Service;
+//     QString stopCommand = "systemctl";
+//     QStringList stopArgs = {
+//         "stop",
+//         "create3_server.service"
+//     };
 
-    stopCreate3Service.start(stopCommand, stopArgs);
-    if(stopCreate3Service.waitForFinished())
-    {
-        QByteArray data = stopCreate3Service.readAllStandardOutput();
-        qDebug() << "Create3 Server successfully stopped\n" << data;
-    }
-    else
-    {
-        QByteArray data = stopCreate3Service.readAllStandardError();
-        qDebug() << "Create3 Server failed to stop or crashed\n" << data;
-    }
+//     stopCreate3Service.start(stopCommand, stopArgs);
+//     if(stopCreate3Service.waitForFinished())
+//     {
+//         QByteArray data = stopCreate3Service.readAllStandardOutput();
+//         qDebug() << "Create3 Server successfully stopped\n" << data;
+//     }
+//     else
+//     {
+//         QByteArray data = stopCreate3Service.readAllStandardError();
+//         qDebug() << "Create3 Server failed to stop or crashed\n" << data;
+//     }
 
-    // Need a command to run between start and stop for some reason for things to work
-    QProcess statusCreate3Service;
-    QString statusCommand = "systemctl";
-    QStringList statusArgs = {
-        "status",
-        "create3_server.service",
-        "--no-pager"
-    };
+//     // Need a command to run between start and stop for some reason for things to work
+//     QProcess statusCreate3Service;
+//     QString statusCommand = "systemctl";
+//     QStringList statusArgs = {
+//         "status",
+//         "create3_server.service",
+//         "--no-pager"
+//     };
 
-    statusCreate3Service.start(statusCommand, statusArgs);
-    if(statusCreate3Service.waitForFinished())
-    {
-        QByteArray data = statusCreate3Service.readAllStandardOutput();
-        qDebug() << "Create3 Server status\n" << data;
-    }
-    else
-    {
-        QByteArray data = statusCreate3Service.readAllStandardError();
-        qDebug() << "Create3 Server failed to get status\n" << data;
-    }
+//     statusCreate3Service.start(statusCommand, statusArgs);
+//     if(statusCreate3Service.waitForFinished())
+//     {
+//         QByteArray data = statusCreate3Service.readAllStandardOutput();
+//         qDebug() << "Create3 Server status\n" << data;
+//     }
+//     else
+//     {
+//         QByteArray data = statusCreate3Service.readAllStandardError();
+//         qDebug() << "Create3 Server failed to get status\n" << data;
+//     }
 
 
 
-    QProcess startCreate3Service;
-    QString startCommand = "systemctl";
-    QStringList startArgs = {
-        "start",
-        "create3_server.service"
-    };
+//     QProcess startCreate3Service;
+//     QString startCommand = "systemctl";
+//     QStringList startArgs = {
+//         "start",
+//         "create3_server.service"
+//     };
 
-    startCreate3Service.start(startCommand, startArgs);
-    if(startCreate3Service.waitForFinished())
-    {   
-        QByteArray data = startCreate3Service.readAllStandardOutput();
-        qDebug() << "Create3 Server successfully started\n" << data;
-    }
-    else
-    {
-        QByteArray data = startCreate3Service.readAllStandardError();
-        qDebug() << "Create3 Server failed to start or crashed\n" << data;
-    }
+//     startCreate3Service.start(startCommand, startArgs);
+//     if(startCreate3Service.waitForFinished())
+//     {   
+//         QByteArray data = startCreate3Service.readAllStandardOutput();
+//         qDebug() << "Create3 Server successfully started\n" << data;
+//     }
+//     else
+//     {
+//         QByteArray data = startCreate3Service.readAllStandardError();
+//         qDebug() << "Create3 Server failed to start or crashed\n" << data;
+//     }
 
-    RootController::ref().dismissWidget();
-}
+//     RootController::ref().dismissWidget();
+// }
 
 void Create3Widget::sensorList()
 {
