@@ -18,9 +18,9 @@ AboutWidget::AboutWidget(Device *device, QWidget *parent)
   // Setup the UI
   performStandardSetup(tr("About"));
   // Version Number
-  ui->version->setText("Version 30.2.0");
+  // ui->version->setText("Version 30.2.0");
   const bool on = NetworkManager::ref().isOn();
-  // ui->deviceName->setText(device->name() + " v" + device->version());
+  ui->deviceName->setText(device->name() + " v" + device->version());
 
   // Display Serial Number
   const QString serial = device->serial();
