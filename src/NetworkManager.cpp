@@ -220,7 +220,9 @@ bool NetworkManager::enableAP()
  
   if (apPath.path() != "") // AP Configuration already exists
   {
+    qDebug() << "AP Path: " << apPath.path();
     qDebug() << "AP Path Connection already exists";
+    qDebug() << "AP Strength: " << active().strength();
 
     if (NetworkManager::ref().isActiveConnectionOn() == true)
     {
@@ -501,6 +503,7 @@ NetworkManager::NetworkManager()
   turnOn();
 
   requestScan();
+  qDebug() << "Active strength: " << active().strength();
 }
 
 void NetworkManager::nmAccessPointAdded(const QDBusObjectPath &accessPoint)
@@ -564,7 +567,7 @@ Network NetworkManager::createAccessPoint(const QDBusObjectPath &accessPoint) co
   Network newNetwork;
   // SSID
   newNetwork.setSsid(accessPointObject.ssid());
-  newNetwork.setStrength(accessPointObject.strength());
+  newNetwork.setStrength(10);
   newNetwork.setAPPath(accessPoint.path());
 
   // Security
