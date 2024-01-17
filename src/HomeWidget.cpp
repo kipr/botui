@@ -110,6 +110,7 @@ void HomeWidget::reboot()
 	#else
 		QMessageBox::information(this, "Not Available", "Reboot is only available on the kovan.");
 	#endif
+}
 
 void HomeWidget::lock()
 {
