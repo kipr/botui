@@ -43,6 +43,7 @@ HomeWidget::HomeWidget(Device *device, QWidget *parent)
 	menuBar()->adjustSize() ;
 	connect(about, SIGNAL(triggered()), SLOT(about()));
 	connect(shutDown, SIGNAL(triggered()), SLOT(shutDown()));
+	connect(reboot, SIGNAL(triggered()), SLOT(reboot()));
 }
 
 HomeWidget::~HomeWidget()
