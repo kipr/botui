@@ -96,17 +96,20 @@ void HomeWidget::shutDown()
 void HomeWidget::reboot()
 {
 	#ifdef WOMBAT
-	if(QMessageBox::question(this, "Reboot?", "Please wait up to 10 seconds for the system to begin rebooting.\n\nContinue?", QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
-		return;
+		if(QMessageBox::question(this, "Reboot?", "Please wait up to 10 seconds for the system to begin rebooting.\n\nContinue?", QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
+			return;
 
-	QProcess create3ServerStop;
-	create3ServerStop.start("systemctl", QStringList() << "stop" << "create3_server.service");
-	bool create3StopRet = create3ServerStop.waitForFinished();
-	if(create3StopRet == false)
-		QMessageBox::information(this, "Failed", "Create 3 server could not be stopped.");
-	const int rebootRet = QProcess::execute("reboot");
-	if(create3StopRet == false || rebootRet < 0)
-		QMessageBox::information(this, "Failed", "Reboot failed.");
+		QProcess create3ServerStop;
+		create3ServerStop.start("systemctl", QStringList() << "stop" << "create3_server.service");
+		bool create3StopRet = create3ServerStop.waitForFinished();
+		if(create3StopRet == false)
+			QMessageBox::information(this, "Failed", "Create 3 server could not be stopped.");
+		const int rebootRet = QProcess::execute("reboot");
+		if(create3StopRet == false || rebootRet < 0)
+			QMessageBox::information(this, "Failed", "Reboot failed.");
+	#else
+		QMessageBox::information(this, "Not Available", "Reboot is only available on the kovan.");
+	#endif
 
 void HomeWidget::lock()
 {
