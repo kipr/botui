@@ -39,6 +39,7 @@ HomeWidget::HomeWidget(Device *device, QWidget *parent)
 	// connect(lock, SIGNAL(triggered()), SLOT(lock()));
 	QAction *about = menuBar()->addAction(tr("About"));
 	QAction *shutDown = menuBar()->addAction(tr("Shut Down"));
+	QAction *reboot = menuBar()->addAction(tr("Reboot"));
 	menuBar()->adjustSize() ;
 	connect(about, SIGNAL(triggered()), SLOT(about()));
 	connect(shutDown, SIGNAL(triggered()), SLOT(shutDown()));
@@ -90,6 +91,21 @@ void HomeWidget::shutDown()
   QMessageBox::information(this, "Not Available", "Shut down is only available on the kovan.");
 #endif
 }
+
+void HomeWidget::reboot()
+{
+	#ifdef WOMBAT
+	if(QMessageBox::question(this, "Reboot?", "Please wait up to 10 seconds for the system to begin rebooting.\n\nContinue?", QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
+		return;
+
+	QProcess create3ServerStop;
+	create3ServerStop.start("systemctl", QStringList() << "stop" << "create3_server.service");
+	bool create3StopRet = create3ServerStop.waitForFinished();
+	if(create3StopRet == false)
+		QMessageBox::information(this, "Failed", "Create 3 server could not be stopped.");
+	const int rebootRet = QProcess::execute("reboot");
+	if(create3StopRet == false || rebootRet < 0)
+		QMessageBox::information(this, "Failed", "Reboot failed.");
 
 void HomeWidget::lock()
 {
