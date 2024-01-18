@@ -100,7 +100,7 @@ void HomeWidget::reboot()
 			return;
 
 		QProcess create3ServerStop;
-		create3ServerStop.start("systemctl", QStringList() << "stop" << "create3_server.service");
+		create3ServerStop.start("sudo systemctl", QStringList() << "stop" << "create3_server.service");
 		bool create3StopRet = create3ServerStop.waitForFinished();
 		if(create3StopRet == false)
 			QMessageBox::information(this, "Failed", "Create 3 server could not be stopped.");
