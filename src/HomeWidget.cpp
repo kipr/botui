@@ -33,15 +33,17 @@ HomeWidget::HomeWidget(Device *device, QWidget *parent)
 	connect(ui->settings, SIGNAL(clicked()), SLOT(settings()));
 
 	// TODO: fix fileManager and then remove this line
-	ui->fileManager->setVisible(false);
+	ui->fileManager->setVisible(true);
 
 	//QAction *lock = menuBar()->addAction(UiStandards::lockString());
 	// connect(lock, SIGNAL(triggered()), SLOT(lock()));
 	QAction *about = menuBar()->addAction(tr("About"));
 	QAction *shutDown = menuBar()->addAction(tr("Shut Down"));
+	QAction *reboot = menuBar()->addAction(tr("Reboot"));
 	menuBar()->adjustSize() ;
 	connect(about, SIGNAL(triggered()), SLOT(about()));
 	connect(shutDown, SIGNAL(triggered()), SLOT(shutDown()));
+	connect(reboot, SIGNAL(triggered()), SLOT(reboot()));
 }
 
 HomeWidget::~HomeWidget()
@@ -74,11 +76,12 @@ void HomeWidget::settings()
 void HomeWidget::about()
 {
 	RootController::ref().presentWidget(new AboutWidget(device()));
+	
 }
 
 void HomeWidget::shutDown()
 {
-#ifdef WALLABY
+#ifdef WOMBAT
   if(QMessageBox::question(this, "Shut Down?", "After system halted, slide power switch off or disconnect battery.\n\nContinue?", QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
     return;
   
@@ -88,6 +91,25 @@ void HomeWidget::shutDown()
 #else
   QMessageBox::information(this, "Not Available", "Shut down is only available on the kovan.");
 #endif
+}
+
+void HomeWidget::reboot()
+{
+	#ifdef WOMBAT
+		if(QMessageBox::question(this, "Reboot?", "Please wait up to 10 seconds for the system to begin rebooting.\n\nContinue?", QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
+			return;
+
+		QProcess create3ServerStop;
+		create3ServerStop.start("sudo", QStringList() << "systemctl" << "stop" << "create3_server.service");
+		bool create3StopRet = create3ServerStop.waitForFinished();
+		if(create3StopRet == false)
+			QMessageBox::information(this, "Failed", "Create 3 server could not be stopped.");
+		const int rebootRet = QProcess::execute("reboot");
+		if(create3StopRet == false || rebootRet < 0)
+			QMessageBox::information(this, "Failed", "Reboot failed.");
+	#else
+		QMessageBox::information(this, "Not Available", "Reboot is only available on the kovan.");
+	#endif
 }
 
 void HomeWidget::lock()

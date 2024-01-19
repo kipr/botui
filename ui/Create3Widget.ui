@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Create3Widget</class>
+ <widget class="QWidget" name="Create3Widget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>480</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Create 3</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="PlotWidget" name="plot" native="true">
+     <property name="font">
+      <font>
+       <pointsize>22</pointsize>
+      </font>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <widget class="QGroupBox" name="CreateInfo">
+        <property name="font">
+         <font>
+          <pointsize>22</pointsize>
+         </font>
+        </property>
+        <property name="title">
+         <string>Create 3 Info</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="QPushButton" name="CreateConnectButton">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>80</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>33</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Create Connect</string>
+           </property>
+          </widget>
+         </item>
+         <!-- <item>
+          <widget class="QPushButton" name="ResetServerButton">
+           <property name="text">
+            <string>Restart Create Server</string>
+           </property>
+          </widget>
+         </item> -->
+         <item>
+          <layout class="QHBoxLayout" name="CreateConnectHorizontal">
+           <item>
+            <widget class="QLabel" name="createConnectLabel">
+             <property name="font">
+              <font>
+               <pointsize>22</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Create3 Connected State:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="createConnectState">
+             <property name="font">
+              <font>
+               <pointsize>22</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="IPHorizontal">
+           <item>
+            <widget class="QLabel" name="create3IPLabel">
+             <property name="maximumSize">
+              <size>
+               <width>160</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>22</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Create3 IP:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="create3IP">
+             <property name="minimumSize">
+              <size>
+               <width>25</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>22</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="TestProgramHorizontal" stretch="0,0">
+           <item>
+            <widget class="QPushButton" name="Create3SensorListButton">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>80</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>21</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Create 3 Sensor List</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="Create3ExampleProgramButton">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>80</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>21</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Create 3 Example Programs</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PlotWidget</class>
+   <extends>QWidget</extends>
+   <header>PlotWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

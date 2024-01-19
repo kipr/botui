@@ -4,14 +4,7 @@
 #include "NumpadDialog.h"
 #include <QDebug>
 
-
-#ifdef WALLABY
-#include <wallaby/motors.h>
-#include <wallaby/general.h>
-#else
-#include <kovan/motors.h>
-#include <kovan/general.h>
-#endif
+#include <kipr/motor/motor.h>
 
 #include <cmath>
 
@@ -64,17 +57,10 @@ PidTunerWidget::PidTunerWidget(Device *device, QWidget *parent)
 PidTunerWidget::~PidTunerWidget()
 {
 	ao();
-#ifndef NOT_A_KOVAN
-	publish();
-#endif
-
 }
 
 double PidTunerWidget::getFeedbackValue()
 {
-#ifndef NOT_A_KOVAN
-	publish();
-#endif
 	int position = get_motor_position_counter(ui->motor->currentIndex());
 
 	double vel = (1.0-LPF_ALPHA) * m_vel_1
@@ -91,19 +77,11 @@ void PidTunerWidget::mouseEvent(double y)
 	if (fabs(y - m_setpointVal) < 0.20) return;
 
 	mav(ui->motor->currentIndex(), MOTOR_SCALING * y); // TODO: 1200?
-#ifndef NOT_A_KOVAN
-	publish();
-#endif
 	m_setpointVal = y;
 }
 
 void PidTunerWidget::update()
 {
-
-#ifndef NOT_A_KOVAN
-	publish();
-#endif
-
 	ui->plot->push(m_feedback, getFeedbackValue());
 	ui->plot->push(m_setpoint, m_setpointVal);
 	ui->plot->inc();
@@ -119,10 +97,6 @@ void PidTunerWidget::coeffChanged()
 			100,
 			100,
 			100);
-
-#ifndef NOT_A_KOVAN
-	publish();
-#endif
 }
 
 

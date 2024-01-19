@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>WombatUpdateWidget</class>
+ <widget class="QWidget" name="WombatUpdateWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>480</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Update</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>6</number>
+   </property>
+   <property name="topMargin">
+    <number>6</number>
+   </property>
+   <property name="rightMargin">
+    <number>6</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QLabel" name="statusLabel">
+     <property name="font">
+      <font>
+       <pointsize>22</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Select an update:</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="selectionWidget" native="true">
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QListWidget" name="updateList">
+        <property name="font">
+         <font>
+          <pointsize>22</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QPushButton" name="update">
+          <property name="minimumSize">
+           <size>
+            <width>280</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>33</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>USB Update</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/cloud-download-alt.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/cloud-download-alt.svg</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>30</width>
+            <height>30</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="refresh">
+          <property name="font">
+           <font>
+            <pointsize>33</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Refresh</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/sync-alt.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/sync-alt.svg</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>30</width>
+            <height>30</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="ethernet">
+          <property name="font">
+           <font>
+            <pointsize>33</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Online Update</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="ConsoleWidget" name="updateConsole">
+     <property name="font">
+      <font>
+       <family>Courier New</family>
+       <pointsize>22</pointsize>
+       <italic>true</italic>
+      </font>
+     </property>
+     <property name="undoRedoEnabled">
+      <bool>false</bool>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+     <property name="acceptRichText">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ConsoleWidget</class>
+   <extends>QTextEdit</extends>
+   <header>ConsoleWidget.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="../rc/icons.qrc"/>
+ </resources>
+ <connections/>
+</ui>

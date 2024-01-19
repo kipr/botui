@@ -3,11 +3,7 @@
 #include <QDir>
 #include <QFileIconProvider>
 
-#ifdef WALLABY
-#include <wallaby/camera.hpp>
-#else
-#include <kovan/camera.hpp>
-#endif
+#include <kipr/camera/camera.hpp>
 
 class FileIconProvider : public QFileIconProvider
 {
@@ -32,9 +28,9 @@ ChannelConfigurationsModel::ChannelConfigurationsModel(QObject *parent)
 	m_iconProvider(new FileIconProvider)
 {
 	setIconProvider(m_iconProvider);
-	const QString configPath = QString::fromStdString(Camera::ConfigPath::path());
+	const QString configPath = QString::fromStdString(kipr::camera::ConfigPath::path());
 	QDir().mkpath(configPath);
-	setNameFilters(QStringList() << ("*." + QString::fromStdString(Camera::ConfigPath::extension())));
+	setNameFilters(QStringList() << ("*." + QString::fromStdString(kipr::camera::ConfigPath::extension())));
 	setNameFilterDisables(false);
 	setRootPath(configPath);
 }
@@ -46,5 +42,5 @@ ChannelConfigurationsModel::~ChannelConfigurationsModel()
 
 QModelIndex ChannelConfigurationsModel::defaultConfiguration() const
 {
-	return index(QString::fromStdString(Camera::ConfigPath::defaultConfigPath()));
+	return index(QString::fromStdString(kipr::camera::ConfigPath::defaultConfigPath()));
 }

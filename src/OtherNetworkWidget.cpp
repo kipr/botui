@@ -65,11 +65,18 @@ void OtherNetworkWidget::fillNetworkInfo(const Network &network)
 
 void OtherNetworkWidget::join()
 {
-	Network config;
-	config.setSsid(ui->ssid->text());
-	config.setSecurity(securityChoices[ui->security->currentIndex()]);
-	config.setPassword(ui->password->text());
-	NetworkManager::ref().addNetwork(config);
+	Network configs;
+	configs.setSsid(ui->ssid->text());
+	configs.setMode(Network::Infrastructure);
+	configs.setSecurity(securityChoices[ui->security->currentIndex()]);
+	configs.setPassword(ui->password->text());
+	foreach(const Network &nw, NetworkManager::ref().accessPoints())
+	{
+		if(nw.ssid() == ui->ssid->text()){
+			configs.setAPPath(nw.apPath());
+		}
+	}
+	NetworkManager::ref().addNetwork(configs);
 	RootController::ref().dismissWidget();
 }
 

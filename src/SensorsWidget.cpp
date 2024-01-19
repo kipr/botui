@@ -9,11 +9,7 @@
 #include "Device.h"
 #include <QTimer>
 
-#ifdef WALLABY
-#include "wallaby/wallaby.h"
-#else
-#include "kovan/kovan.h"
-#endif
+#include <kipr/kipr.h>
 
 #include <QDebug>
 
@@ -45,8 +41,6 @@ SensorsWidget::~SensorsWidget()
 
 void SensorsWidget::update()
 {
-	publish();
-	
 	ui->val1->setText(QString::number(rawValue(ui->plot1->currentIndex())));
 	ui->val2->setText(QString::number(rawValue(ui->plot2->currentIndex())));
 	

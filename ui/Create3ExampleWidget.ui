@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Create3ExampleWidget</class>
+ <widget class="QWidget" name="Create3ExampleWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>480</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Sensor List</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <widget class="QGroupBox" name="CreateInfo">
+     <property name="font">
+      <font>
+       <pointsize>22</pointsize>
+      </font>
+     </property>
+     <property name="title">
+      <string>Create 3 Examples</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QComboBox" name="exampleComboBox">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <item>
+           <property name="text">
+            <string>01_Connect</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>02_Dock_Undock</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>03_Move_Velocity</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>04_Rotate</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>05_Arc</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>06_LED</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>07_Sensors</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="exampleRunButton">
+          <property name="text">
+           <string>Run</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QListWidget" name="listWidget"/>
+      </item>
+      <item>
+       <widget class="QWidget" name="normal" native="true">
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <property name="margin" stdset="0">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="a_2">
+           <property name="font">
+            <font>
+             <pointsize>33</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>A</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="b_2">
+           <property name="font">
+            <font>
+             <pointsize>33</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>B</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="c_2">
+           <property name="font">
+            <font>
+             <pointsize>33</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>C</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="extra" native="true">
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <property name="margin" stdset="0">
+          <number>0</number>
+         </property>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

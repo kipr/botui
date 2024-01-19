@@ -45,7 +45,7 @@ bool LineEdit::event(QEvent *e)
 void LineEdit::setInputProvider(InputProviderDialog *inputProvider)
 {
 	m_inputProvider = inputProvider;
-	setReadOnly(!m_inputProvider);
+        setReadOnly(!m_inputProvider);
 }
 
 InputProviderDialog *LineEdit::inputProvider() const
@@ -69,6 +69,6 @@ void LineEdit::paintEvent(QPaintEvent *e)
 
 void LineEdit::init()
 {
-	setReadOnly(!m_inputProvider);
+        setReadOnly(!m_inputProvider);
 	setFocusPolicy(Qt::NoFocus);
 }

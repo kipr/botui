@@ -12,7 +12,7 @@
 #include <QDebug>
 
 
-#ifdef WALLABY
+#ifdef WOMBAT
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
@@ -25,7 +25,7 @@
 
 void setWiFiStatusLED(bool on)
 {
-#ifdef WALLABY
+#ifdef WOMBAT
 	std::fstream fs;
 	fs.open("/sys/class/leds/botball:D11:blue/brightness", std::fstream::out);
 
@@ -54,33 +54,33 @@ NetworkStatusWidget::NetworkStatusWidget(QWidget *parent)
 	updateTimer->start(10000);
 }
 
-#ifdef WALLABY
+// #ifdef WOMBAT
 
-bool NetworkStatusWidget::isNetworkUp(const std::string networkName)
-{
-	bool wifi_up = false;
+// // bool NetworkStatusWidget::isNetworkUp(const std::string networkName)
+// // {
+// // 	bool wifi_up = false;
 
-	struct ifreq ifr;
+// // 	struct ifreq ifr;
 
-	memset(&ifr, 0, sizeof(ifr));
-	strcpy(ifr.ifr_name, networkName.c_str());
+// // 	memset(&ifr, 0, sizeof(ifr));
+// // 	strcpy(ifr.ifr_name, networkName.c_str());
 	
-	int dummy_fd = socket(AF_INET, SOCK_DGRAM, 0);
+// // 	int dummy_fd = socket(AF_INET, SOCK_DGRAM, 0);
 	
-	if (ioctl(dummy_fd, SIOCGIFFLAGS, &ifr) != -1)
-	{
-		wifi_up = (ifr.ifr_flags & (IFF_UP | IFF_RUNNING)) == (IFF_UP | IFF_RUNNING);
-	}
-	else
-	{
-		// an error checking network status
-		wifi_up = false;
-	}
+// // 	if (ioctl(dummy_fd, SIOCGIFFLAGS, &ifr) != -1)
+// // 	{
+// // 		wifi_up = (ifr.ifr_flags & (IFF_UP | IFF_RUNNING)) == (IFF_UP | IFF_RUNNING);
+// // 	}
+// // 	else
+// // 	{
+// // 		// an error checking network status
+// // 		wifi_up = false;
+// // 	}
 
-	return wifi_up;
-}
+// // 	return wifi_up;
+// // }
 
-#endif
+// #endif
 
 void NetworkStatusWidget::paintEvent(QPaintEvent *event)
 {
@@ -94,13 +94,10 @@ void NetworkStatusWidget::paintEvent(QPaintEvent *event)
 	
 	static const QColor green = QColor(50, 150, 50);
 	static const QColor red = QColor(250, 100, 100);
-	// static const QColor orange = QColor(250, 127, 0);
+	static const QColor orange = QColor(250, 127, 0);
 
-#ifdef WALLABY
-	const bool off = isNetworkUp("wlan0") == false;
-	QColor color = off ? red : green;
-	setWiFiStatusLED(!off);
-#else	
+#ifdef WOMBAT
+	
 	const bool off = !NetworkManager::ref().isOn();
 	QColor color = off ? red : green;
 	if(!off && NetworkManager::ref().state() < NetworkManager::Activated) {
@@ -121,7 +118,7 @@ void NetworkStatusWidget::paintEvent(QPaintEvent *event)
 		return;
 	}
 
-#ifdef WALLABY
+#ifdef WOMBAT
 	const float percentage = 100.0f;
 #else	
 	const float percentage = NetworkManager::ref().active().strength() / 100.0;

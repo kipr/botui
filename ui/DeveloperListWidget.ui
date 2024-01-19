@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DeveloperListWidget</class>
+ <widget class="QWidget" name="DeveloperListWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>480</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Developer List</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_3">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QListWidget" name="listWidget">
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+         <underline>false</underline>
+        </font>
+       </property>
+       <property name="flow">
+        <enum>QListView::TopToBottom</enum>
+       </property>
+       <property name="spacing">
+        <number>5</number>
+       </property>
+       <property name="uniformItemSizes">
+        <bool>false</bool>
+       </property>
+       <property name="wordWrap">
+        <bool>false</bool>
+       </property>
+       <property name="sortingEnabled">
+        <bool>false</bool>
+       </property>
+       <item>
+        <property name="text">
+         <string>Tim Corbly</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+          <string>Howard Guo</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Eliot Hall</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Erin Harrington</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Prithviraj Kadiyala</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Braden McDorman</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Zachary Sasser</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Joshua Southerland</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Ryan Webb</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Nafis Zaman</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

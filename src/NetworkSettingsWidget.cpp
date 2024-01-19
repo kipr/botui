@@ -1,7 +1,7 @@
 #include "Options.h"
 #include <QCoreApplication>
 #ifdef NETWORK_ENABLED
-
+#include "org_freedesktop_NetworkManager_Connection_Active.h"
 #include "NetworkSettingsWidget.h"
 #include "NetworkStatusWidget.h"
 #include "ui_NetworkSettingsWidget.h"
@@ -20,54 +20,72 @@
 #include <QDebug>
 
 NetworkSettingsWidget::NetworkSettingsWidget(Device *device, QWidget *parent)
-	: StandardWidget(device, parent),
-	ui(new Ui::NetworkSettingsWidget)
+	: StandardWidget(device, parent), ui(new Ui::NetworkSettingsWidget)
 {
 	ui->setupUi(this);
 	performStandardSetup(tr("Network Settings"));
 
 	enableCoolOffTimer = new QTimer(this);
 	enableCoolOffTimer->setSingleShot(true);
-	QObject::connect(enableCoolOffTimer, SIGNAL(timeout()), SLOT(enableAPControls()));
-	
-	ui->turnOn->setVisible(false);
-	ui->turnOff->setVisible(false);
+	ui->connectionModeSelect->setCurrentIndex(0);
+	ui->ConnectButton->setEnabled(false);
+	QObject::connect(ui->ConnectButton, SIGNAL(clicked()), SLOT(connect()));
+	QObject::connect(ui->ManageButton, SIGNAL(clicked()), SLOT(manage()));
 
-	QObject::connect(ui->connect, SIGNAL(clicked()), SLOT(connect()));
-	QObject::connect(ui->manage, SIGNAL(clicked()), SLOT(manage()));
-
-	//QObject::connect(ui->turnOn, SIGNAL(clicked()), SLOT(disableAPControlsTemporarily()));
-	//QObject::connect(ui->turnOff, SIGNAL(clicked()), SLOT(disableAPControlsTemporarily()));
-	//NetworkManager::ref().connect(ui->turnOn, SIGNAL(clicked()), SLOT(enableAP())); //SLOT(turnOn()));
-	//NetworkManager::ref().connect(ui->turnOff, SIGNAL(clicked()), SLOT(disableAP())); //SLOT(turnOff()));
-
-	QObject::connect(ui->turnOn, SIGNAL(clicked()), SLOT(enableAP()));
-	QObject::connect(ui->turnOff, SIGNAL(clicked()), SLOT(disableAP()));
-	QObject::connect(ui->tournamentMode, SIGNAL(clicked()), SLOT(TournamentMode()));
-
+	QObject::connect(ui->TournamentModeButton, SIGNAL(clicked()), SLOT(TournamentMode()));
+	NetworkManager::ref().connect(ui->connectionModeSelect, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
 
 	// TODO: put back after we support client mode WiFi
-	ui->connect->setVisible(false);
-	ui->manage->setVisible(false);
+	ui->ConnectButton->setVisible(true);
+	ui->ManageButton->setVisible(true);
 	ui->security->setVisible(false);
 	ui->securityLabel->setVisible(false);
-	
+
 	QObject::connect(&NetworkManager::ref(),
-		SIGNAL(stateChanged(const NetworkManager::State &, const NetworkManager::State &)),
-		SLOT(stateChanged(const NetworkManager::State &, const NetworkManager::State &)));
-	
+					 SIGNAL(stateChanged(const NetworkManager::State &, const NetworkManager::State &)),
+					 SLOT(stateChanged(const NetworkManager::State &, const NetworkManager::State &)));
+
 	QTimer *updateTimer = new QTimer(this);
 	QObject::connect(updateTimer, SIGNAL(timeout()), SLOT(updateInformation()));
 	updateTimer->start(10000);
 
 	updateInformation();
 }
-//Tournament mode code
-void NetworkSettingsWidget::TournamentMode(){
+
+void NetworkSettingsWidget::TournamentMode()
+{
 	system("sudo iwconfig wlan0 txpower 1");
 	QMessageBox msgBox;
 	msgBox.setText("Tournament Mode activated");
 	msgBox.exec();
+}
+
+void NetworkSettingsWidget::indexChanged(int index)
+{
+	NetworkManager::ref().turnOn();
+
+	if (index == 0) // AP mode
+	{
+
+		NetworkManager::ref().enableAP();
+		ui->ConnectButton->setEnabled(false);
+	}
+	else if (index == 1) // Wifi on (client mode)
+	{
+
+		if (NetworkManager::ref().currentActiveConnectionName() == NetworkManager::ref().getAPName())
+		{
+			NetworkManager::ref().disableAP();
+		}
+
+		ui->ConnectButton->setEnabled(true);
+		ui->state->setText("ON");
+	}
+	else if (index == 2) // Wifi off
+	{
+		NetworkManager::ref().turnOff();
+		ui->ConnectButton->setEnabled(false);
+	}
 }
 
 NetworkSettingsWidget::~NetworkSettingsWidget()
@@ -76,74 +94,56 @@ NetworkSettingsWidget::~NetworkSettingsWidget()
 	delete enableCoolOffTimer;
 }
 
-void NetworkSettingsWidget::connect()
+void NetworkSettingsWidget::connect() // Connects to network
 {
 	RootController::ref().presentWidget(new ConnectWidget(device()));
 }
 
-void NetworkSettingsWidget::manage()
+void NetworkSettingsWidget::manage() // Forget or add network to history
 {
 	RootController::ref().presentWidget(new ManageNetworksWidget(device()));
 }
 
-void NetworkSettingsWidget::enableAP()
-{
-	disableAPControlsTemporarily();
-	NetworkManager::ref().enableAP();
-	ui->turnOn->hide();
-	ui->turnOff->show();
-}
-
-void NetworkSettingsWidget::disableAP()
-{
-	disableAPControlsTemporarily();
-	NetworkManager::ref().disableAP();
-	ui->turnOn->show();
-	ui->turnOff->hide();
-}
-
-void NetworkSettingsWidget::enableAPControls()
-{
-	ui->turnOn->setEnabled(true);
-	ui->turnOff->setEnabled(true);
-}
-
-void NetworkSettingsWidget::disableAPControls()
-{
-	ui->turnOn->setEnabled(false);
-	ui->turnOff->setEnabled(false);
-}
-
-void NetworkSettingsWidget::disableAPControlsTemporarily()
-{
-	ui->turnOn->setEnabled(false);
-	ui->turnOff->setEnabled(false);
-
-	enableCoolOffTimer->start(20000);
-}
-
 void NetworkSettingsWidget::updateInformation()
 {
-	const bool on = NetworkStatusWidget::isNetworkUp(); //NetworkManager::ref().isOn();
-	ui->state->setText(on ? tr("ON") : tr("OFF"));
-	ui->turnOn->setVisible(!on);
-	ui->turnOff->setVisible(on);
-	ui->connect->setEnabled(on);
+	const bool on = NetworkManager::ref().isOn(); //
+	ui->ssid->setText(NetworkManager::ref().currentActiveConnectionName());
+	ui->ip->setText(NetworkManager::ref().ip4Address());
 
 	const QString id = device()->id();
 	const QString serial = device()->serial();
-	if(!id.isEmpty()) {
-		const QString password = SystemUtils::sha256(id).left(6) + "00";
-                const QString ssid = serial + "-wombat";
-		ui->ssid->setText(ssid);
-		ui->password->setText(password);
+
+	if (!on) // wifi is off
+	{
+		ui->connectionModeSelect->setCurrentText("Wifi Off");
+		ui->state->setText("OFF");
+		ui->ssid->setText(" ");
+		ui->ip->setText(" ");
+		ui->password->setText(" ");
+	}
+	else if (NetworkManager::ref().isActiveConnectionOn() == true) // if there's an active connection
+	{
+
+		if (NetworkManager::ref().currentActiveConnectionName() != NetworkManager::ref().getAPName()) // if current mode isn't AP
+		{
+			ui->connectionModeSelect->setCurrentIndex(1);
+			ui->state->setText(on ? tr("ON") : tr("OFF"));
+			ui->ssid->setText(NetworkManager::ref().currentActiveConnectionName());
+			ui->ip->setText(NetworkManager::ref().ip4Address());
+		}
+		else // if current mode is AP
+		{
+			ui->connectionModeSelect->setCurrentIndex(0);
+			ui->state->setText(on ? tr("ON") : tr("OFF"));
+			ui->ssid->setText(NetworkManager::ref().currentActiveConnectionName());
+			ui->ip->setText(NetworkManager::ref().ip4Address());
+		}
+		ui->password->setText(NetworkManager::ref().activeConnectionPassword());
 	}
 
 	Network active = NetworkManager::ref().active();
-	//ui->ssid->setText(active.ssid());
+
 	ui->security->setText(active.securityString());
-	const QString ip = NetworkManager::ref().ipAddress();
-	ui->ip->setText(ip.isEmpty() ? tr("No IP") : ip);
 }
 
 void NetworkSettingsWidget::stateChanged(const NetworkManager::State &newState, const NetworkManager::State &oldState)

@@ -5,11 +5,7 @@
 #include <QTimer>
 #include "Singleton.h"
 
-#ifdef WALLABY
-#include <wallaby/camera.hpp>
-#else
-#include <kovan/camera.hpp>
-#endif
+#include <kipr/camera/camera.hpp>
 
 class CameraInputManager : public QObject, public Singleton<CameraInputManager>
 {
@@ -30,27 +26,24 @@ public:
 	void setFrameRate(int frameRate);
 	int frameRate() const;
 	
-	void setWidth(const unsigned width);
-	void setHeight(const unsigned height);
-	
 	bool retain();
 	bool release();
 	
 	bool isOpen() const;
 	
-	cv::Mat image() const;
+	kipr::camera::Image image() const;
 	
 signals:
-	void frameAvailable(const cv::Mat &image);
+	void frameAvailable(const kipr::camera::Image &image);
 
 public slots:
 	void updateCamera();
 	
 private:	
-  Camera::Device *m_camDevice;
+  kipr::camera::Device *m_camDevice;
 	Source m_source;
 	QTimer *m_timer;
-	cv::Mat m_image;
+	kipr::camera::Image m_image;
 	int m_frameRate;
 	int m_refs;
 	bool m_reentryBarrier;

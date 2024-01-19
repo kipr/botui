@@ -3,7 +3,7 @@
 #include "MechanicalStyle.h"
 #include "HomeWidget.h"
 #include "StatusBar.h"
-#include "WallabyDevice.h"
+#include "WombatDevice.h"
 #include "FirstRunWizard.h"
 #include "FactoryWidget.h"
 #include "NetworkManager.h"
@@ -12,7 +12,7 @@
 #include "KovanSerialBridge.h"
 #include "CursorManager.h"
 #include "SettingsProvider.h"
-
+#include "NetworkSettingsWidget.h"
 #include <QApplication>
 #include <QDir>
 
@@ -46,18 +46,18 @@ int main(int argc, char* argv[])
 	
 	srand(time(NULL));
 	
-	Wallaby::Device device;
+	Wombat::Device device;
 	CursorManager::ref().setDevice(&device);
 #ifdef QT_DBUS_LIB
   KovanSerialBridge::ref().init(&device);
-  NetworkManager::ref();
+  NetworkManager::ref().init(&device);
 #endif
   
   SettingsProvider *const settings = device.settingsProvider();
   const bool fullscreen = settings && settings->value("fullscreen", true).toBool();
   RootController::ref().setFullscreen(fullscreen);
 	//GuiSettingsWidget::updateStyle(&device);
-  
+	
 	RootController::ref().presentWidget(new HomeWidget(&device));
 
 	return app.exec();

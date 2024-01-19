@@ -5,7 +5,7 @@
 #include "CameraLiveWidget.h"
 #include "ServosWidget.h"
 #include "CombinedMotorWidget.h"
-#include "PidTunerWidget.h"
+#include "Create3Widget.h"
 #include "DepthSensorWidget.h"
 #include "SensorsWidget.h"
 #include "SensorListWidget.h"
@@ -23,12 +23,9 @@ MotorsSensorsWidget::MotorsSensorsWidget(Device *device, QWidget *parent)
 	connect(ui->sensorGraph, SIGNAL(clicked()), SLOT(sensorGraph()));
 	connect(ui->sensorList, SIGNAL(clicked()), SLOT(sensorList()));
 	connect(ui->camera, SIGNAL(clicked()), SLOT(camera()));
-	connect(ui->pidTuner, SIGNAL(clicked()), SLOT(pidTuner()));
-	connect(ui->depth, SIGNAL(clicked()), SLOT(depth()));
+	connect(ui->Create3, SIGNAL(clicked()), SLOT(Create3()));
+	
 
-	// TODO: remove these once the widgets work on the Wallaby
-	ui->pidTuner->setVisible(false);
-	ui->depth->setVisible(false);
 }
 
 MotorsSensorsWidget::~MotorsSensorsWidget()
@@ -61,12 +58,9 @@ void MotorsSensorsWidget::camera()
 	RootController::ref().presentWidget(new CameraLiveWidget(device()));
 }
 
-void MotorsSensorsWidget::pidTuner()
+void MotorsSensorsWidget::Create3()
 {
-	RootController::ref().presentWidget(new PidTunerWidget(device()));
+	RootController::ref().presentWidget(new Create3Widget(device()));
 }
 
-void MotorsSensorsWidget::depth()
-{
-  // FIXME: RootController::ref().presentWidget(new DepthSensorWidget(device()));
-}
+

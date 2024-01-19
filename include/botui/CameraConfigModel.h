@@ -4,13 +4,9 @@
 #include <QObject>
 #include <QStandardItemModel>
 
-#ifdef WALLABY
-#include <wallaby/config.hpp>
-#include <wallaby/camera.hpp>
-#else
-#include <kovan/config.hpp>
-#include <kovan/camera.hpp>
-#endif
+#include <kipr/config/config.hpp>
+
+using namespace kipr::config;
 
 class CameraConfigModel : public QStandardItemModel
 {

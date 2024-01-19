@@ -28,6 +28,19 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
+        <spacer name="verticalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
         <widget class="QPushButton" name="cameraView">
          <property name="font">
           <font>
@@ -39,7 +52,7 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/camera.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/camera.svg</iconset>
+           <normaloff>:/icons/camera-retro.png</normaloff>:/icons/camera-retro.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -61,29 +74,7 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/tv.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/tv.svg</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>35</width>
-           <height>35</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="gui">
-         <property name="font">
-          <font>
-           <pointsize>33</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>GUI</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/table.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/table.svg</iconset>
+           <normaloff>:/icons/tv.png</normaloff>:/icons/tv.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -105,7 +96,7 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/compress.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/compress.svg</iconset>
+           <normaloff>:/icons/compress.png</normaloff>:/icons/compress.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -127,7 +118,7 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/window-minimize.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/window-minimize.svg</iconset>
+           <normaloff>:/icons/window-minimize.png</normaloff>:/icons/window-minimize.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -155,48 +146,17 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <widget class="QPushButton" name="comm">
-         <property name="font">
-          <font>
-           <pointsize>33</pointsize>
-          </font>
+        <spacer name="verticalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
          </property>
-         <property name="text">
-          <string>Communic...</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/globe-americas.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/globe-americas.svg</iconset>
-         </property>
-         <property name="iconSize">
+         <property name="sizeHint" stdset="0">
           <size>
-           <width>35</width>
-           <height>35</height>
+           <width>20</width>
+           <height>40</height>
           </size>
          </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="network">
-         <property name="font">
-          <font>
-           <pointsize>33</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Network</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/wifi.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/wifi.svg</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>35</width>
-           <height>35</height>
-          </size>
-         </property>
-        </widget>
+        </spacer>
        </item>
        <item>
         <widget class="QPushButton" name="language">
@@ -210,7 +170,7 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/book.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/book.svg</iconset>
+           <normaloff>:/icons/book.png</normaloff>:/icons/book.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -232,29 +192,7 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/cloud-download-alt.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/cloud-download-alt.svg</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>35</width>
-           <height>35</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="battery">
-         <property name="font">
-          <font>
-           <pointsize>33</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Battery</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/battery-full.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/battery-full.svg</iconset>
+           <normaloff>:/icons/cloud-download-alt.png</normaloff>:/icons/cloud-download-alt.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -282,7 +220,30 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/file-archive.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/file-archive.svg</iconset>
+           <normaloff>:/icons/file-archive.png</normaloff>:/icons/file-archive.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>35</width>
+           <height>35</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="advanced">
+         <property name="font">
+          <font>
+           <family>Noto Sans</family>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Advanced</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../rc/icons.qrc">
+           <normaloff>:/icons/cogs.png</normaloff>:/icons/cogs.png</iconset>
          </property>
          <property name="iconSize">
           <size>

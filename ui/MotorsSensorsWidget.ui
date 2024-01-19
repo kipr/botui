@@ -70,35 +70,7 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/car.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/car.svg</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>30</width>
-           <height>30</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pidTuner">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>80</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>33</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>PID Tuner</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/chart-bar.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/chart-bar.svg</iconset>
+           <normaloff>:/icons/car.png</normaloff>:/icons/car.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -126,7 +98,35 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/cogs.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/cogs.svg</iconset>
+           <normaloff>:/icons/cogs.png</normaloff>:/icons/cogs.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>30</width>
+           <height>30</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="Create3">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>33</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Create 3</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../rc/icons.qrc">
+           <normaloff>:/icons/robot.png</normaloff>:/icons/robot.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -184,7 +184,7 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/chart-line.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/chart-line.svg</iconset>
+           <normaloff>:/icons/chart-line.png</normaloff>:/icons/chart-line.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -212,7 +212,7 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/list-alt.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/list-alt.svg</iconset>
+           <normaloff>:/icons/list-alt.png</normaloff>:/icons/list-alt.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -240,35 +240,7 @@
          </property>
          <property name="icon">
           <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/camera-retro.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/camera-retro.svg</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>30</width>
-           <height>30</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="depth">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>80</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>33</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Depth</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/sort-amount-down-alt.svg</normaloff>:/icons/fontawesome/solid/icons/fontawesome/solid/sort-amount-down-alt.svg</iconset>
+           <normaloff>:/icons/camera-retro.png</normaloff>:/icons/camera-retro.png</iconset>
          </property>
          <property name="iconSize">
           <size>

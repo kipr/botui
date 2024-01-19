@@ -6,11 +6,7 @@
 #include "Device.h"
 #include "NumpadDialog.h"
 
-#ifdef WALLABY
-#include "wallaby/wallaby.h"
-#else
-#include "kovan/kovan.h"
-#endif
+#include <kipr/servo/servo.h>
 
 #include <QDebug>
 #include <math.h>
@@ -44,8 +40,6 @@ ServosWidget::ServosWidget(Device *device, QWidget *parent)
   const bool servoEnabled = get_servo_enabled(0);
 	ui->enable->setVisible(!servoEnabled);
 	ui->disable->setVisible(servoEnabled);
-  
-	publish();
 }
 
 ServosWidget::~ServosWidget()
@@ -60,8 +54,6 @@ void ServosWidget::positionChanged(const double &value)
 	ui->number->setText(QString::number(round(value)));
   
 	set_servo_position(ui->dial->label(), round(value));
-  
-	publish();
 }
 
 void ServosWidget::activeChanged()
@@ -90,8 +82,6 @@ void ServosWidget::activeChanged()
   const bool servoEnabled = get_servo_enabled(newPort);
 	ui->enable->setVisible(!servoEnabled);
 	ui->disable->setVisible(servoEnabled);
-	
-	publish();
 }
 
 void ServosWidget::enable()
@@ -99,7 +89,6 @@ void ServosWidget::enable()
   // Enable current servo
   const int port = ui->dial->label();
 	enable_servo(port);
-	publish();
   
   // Update enable/disable button visibility
 	ui->enable->hide();
@@ -111,7 +100,6 @@ void ServosWidget::disable()
   // Disable current servo
   const int port = ui->dial->label();
 	disable_servo(port);
-	publish();
   
   // Update enable/disable button visibility
 	ui->enable->show();
