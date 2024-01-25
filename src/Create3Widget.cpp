@@ -88,7 +88,7 @@ void Create3Widget::toggleChanged()
     qDebug() << "IP OUTPUT: " << ipOutput; // Get current IP output
 
 
-    if (ipOutput == "192.168.125.1")
+    if (ipOutput.contains("192.168.125.1"))
     {
 
         if (QMessageBox::question(this, "Change Interface?",
@@ -106,7 +106,7 @@ void Create3Widget::toggleChanged()
 
         
     }
-    else if (ipOutput == "192.168.186.3")
+    else if (ipOutput.contains("192.168.186.3"))
     {
         if (QMessageBox::question(this, "Change Interface?",
                                   QString("You are about to change your Create 3 connection from Ethernet to Wifi. \n The Wombat will reboot once you make this change. \nDo you want to continue? \n (Be sure to change the Fast DDS discovery server IP address to 192.168.125.1)"),
