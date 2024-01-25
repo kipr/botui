@@ -99,7 +99,6 @@ void Create3Widget::toggleChanged()
         }
         else
         {
-            ui->toggleSwitch->setChecked(true);
             QProcess process;
             process.startDetached("/bin/sh", QStringList() << "/home/kipr/wombat-os/configFiles/create3_interface_swap.sh"
                                                            << "eth");
@@ -110,14 +109,13 @@ void Create3Widget::toggleChanged()
     else if (ipOutput == "192.168.186.3")
     {
         if (QMessageBox::question(this, "Change Interface?",
-                                  QString("You are about to change your Create 3 connection from Ethernet to Wifi. \n The Wombat will reboot once you make this change. \nDo you want to continue? \n (Be sure to change the Fast DDS discovery server IP address to 192.168.186.3)"),
+                                  QString("You are about to change your Create 3 connection from Ethernet to Wifi. \n The Wombat will reboot once you make this change. \nDo you want to continue? \n (Be sure to change the Fast DDS discovery server IP address to 192.168.125.1)"),
                                   QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
         {
             return;
         }
         else
         {
-            ui->toggleSwitch->setChecked(false);
             QProcess process;
             process.startDetached("/bin/sh", QStringList() << "/home/kipr/wombat-os/configFiles/create3_interface_swap.sh"
                                                            << "wifi");
