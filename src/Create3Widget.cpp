@@ -43,10 +43,11 @@ Create3Widget::Create3Widget(Device *device, QWidget *parent)
     // connect(ui->ResetServerButton, SIGNAL(clicked()), SLOT(resetServer()));
     connect(ui->Create3SensorListButton, SIGNAL(clicked()), SLOT(sensorList()));
     connect(ui->Create3ExampleProgramButton, SIGNAL(clicked()), SLOT(exampleList()));
+    connect(ui->toggleSwitch, SIGNAL(toggled(bool)), SLOT(toggleChanged()));
     ui->create3IP->setText(getIP());
 
     QStringList arguments;
-    arguments << "/home/erin/Desktop/qt6Upgrade/wombat-os/configFiles/create3_server_ip.txt";
+    arguments << "/home/kipr/wombat-os/configFiles/create3_server_ip.txt";
 
     QProcess *myProcess = new QProcess(parent);
     myProcess->start("cat", arguments);
@@ -56,11 +57,13 @@ Create3Widget::Create3Widget(Device *device, QWidget *parent)
     qDebug() << output;
 
     QString ipOutput = QString(output);
-    
-    if(ipOutput == "192.168.125.1"){
+
+    if (ipOutput == "192.168.125.1")
+    {
         ui->toggleSwitch->setChecked(false);
     }
-    else if (ipOutput == "192.168.186.3") {
+    else if (ipOutput == "192.168.186.3")
+    {
         ui->toggleSwitch->setChecked(true);
     }
 }
@@ -70,18 +73,57 @@ Create3Widget::~Create3Widget()
     delete ui;
 }
 
-void Create3Widget::indexChanged()
+void Create3Widget::toggleChanged()
 {
+    QProcess checkCreate3IPState;
+    QString startCommand = "cat";
+    QStringList startArgs = {"/home/kipr/wombat-os/configFiles/create3_server_ip.txt"};
 
-    bool isChecked = ui->toggleSwitch->isChecked();
+    checkCreate3IPState.start(startCommand, startArgs);
+    checkCreate3IPState.waitForFinished();
+    QByteArray output = checkCreate3IPState.readAllStandardOutput();
 
-    if (isChecked)
+    QString ipOutput = QString(output);
+
+    qDebug() << "IP OUTPUT: " << ipOutput; // Get current IP output
+
+
+    if (ipOutput == "192.168.125.1")
     {
-        qDebug() << "toggle: Ethernet";
+
+        if (QMessageBox::question(this, "Change Interface?",
+                                  QString("You are about to change your Create 3 connection from Wifi to Ethernet. \nThe Wombat will reboot once you make this change. \n Do you want to continue? \n (Be sure to change the Fast DDS discovery server IP address to 192.168.186.3)"),
+                                  QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
+        {
+            return;
+        }
+        else
+        {
+            ui->toggleSwitch->setChecked(true);
+            QProcess process;
+            process.startDetached("/bin/sh", QStringList() << "/home/kipr/wombat-os/configFiles/create3_interface_swap.sh"
+                                                           << "eth");
+        }
+
+        
     }
-    else
+    else if (ipOutput == "192.168.186.3")
     {
-        qDebug() << "toggle: WiFi";
+        if (QMessageBox::question(this, "Change Interface?",
+                                  QString("You are about to change your Create 3 connection from Ethernet to Wifi. \n The Wombat will reboot once you make this change. \nDo you want to continue? \n (Be sure to change the Fast DDS discovery server IP address to 192.168.186.3)"),
+                                  QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
+        {
+            return;
+        }
+        else
+        {
+            ui->toggleSwitch->setChecked(false);
+            QProcess process;
+            process.startDetached("/bin/sh", QStringList() << "/home/kipr/wombat-os/configFiles/create3_interface_swap.sh"
+                                                           << "wifi");
+        }
+
+       
     }
 }
 
