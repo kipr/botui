@@ -97,7 +97,7 @@
             <property name="styleSheet">
              <string notr="true">QCheckBox::indicator{
 	margin-left:10%;
-	margin-right:10%
+	margin-right:12%
 }
 
 QCheckBox::indicator:checked{
