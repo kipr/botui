@@ -27,6 +27,7 @@ private slots:
 	void sensorList();
 	void exampleList();
 	QString getIP();
+	void indexChanged();
 
 
 private:

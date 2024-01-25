@@ -129,7 +129,7 @@ QCheckBox::indicator:unchecked{
             </property>
             <property name="maximumSize">
              <size>
-              <width>140</width>
+              <width>134</width>
               <height>16777215</height>
              </size>
             </property>
