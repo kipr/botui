@@ -43,7 +43,7 @@ Create3Widget::Create3Widget(Device *device, QWidget *parent)
     // connect(ui->ResetServerButton, SIGNAL(clicked()), SLOT(resetServer()));
     connect(ui->Create3SensorListButton, SIGNAL(clicked()), SLOT(sensorList()));
     connect(ui->Create3ExampleProgramButton, SIGNAL(clicked()), SLOT(exampleList()));
-    connect(ui->toggleSwitch, SIGNAL(stateChanged(int)), SLOT(toggleChanged()));
+    connect(ui->toggleSwitch, SIGNAL(stateChanged(int)), this, SLOT(toggleChanged()));
     ui->create3IP->setText(getIP());
 
     QStringList arguments;
