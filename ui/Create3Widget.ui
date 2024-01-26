@@ -91,7 +91,7 @@
              <string>Wifi</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
@@ -106,7 +106,7 @@
             <property name="styleSheet">
              <string notr="true">QCheckBox::indicator{
 	margin-left:10%;
-	margin-right:8%
+	margin-right:10%
 }
 
 QCheckBox::indicator:checked{
@@ -148,7 +148,7 @@ QCheckBox::indicator:unchecked{
              <string>Ethernet</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
