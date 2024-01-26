@@ -25,28 +25,31 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <property name="spacing">
-         <number>20</number>
+         <number>0</number>
         </property>
         <property name="leftMargin">
          <number>0</number>
         </property>
-        <item alignment="Qt::AlignHCenter">
+        <item alignment="Qt::AlignLeft">
          <widget class="QPushButton" name="CreateConnectButton">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-            <horstretch>1</horstretch>
+            <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
           <property name="minimumSize">
            <size>
-            <width>0</width>
+            <width>1</width>
             <height>80</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>370</width>
+            <width>16777215</width>
             <height>16777215</height>
            </size>
           </property>
