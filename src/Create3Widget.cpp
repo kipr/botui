@@ -30,6 +30,8 @@ private:
     const QPixmap _down;
 };
 
+QByteArray output;
+
 Create3Widget::Create3Widget(Device *device, QWidget *parent)
     : StandardWidget(device, parent),
       ui(new Ui::Create3Widget), _model(new Create3SensorModel(this))
@@ -41,8 +43,33 @@ Create3Widget::Create3Widget(Device *device, QWidget *parent)
     // connect(ui->ResetServerButton, SIGNAL(clicked()), SLOT(resetServer()));
     connect(ui->Create3SensorListButton, SIGNAL(clicked()), SLOT(sensorList()));
     connect(ui->Create3ExampleProgramButton, SIGNAL(clicked()), SLOT(exampleList()));
-
+   
     ui->create3IP->setText(getIP());
+
+    QStringList arguments;
+    arguments << "/home/kipr/wombat-os/configFiles/create3_server_ip.txt";
+
+    QProcess *myProcess = new QProcess(parent);
+    myProcess->start("cat", arguments);
+    myProcess->waitForFinished();
+    output = myProcess->readAllStandardOutput();
+
+    qDebug() << output;
+
+    QString ipOutput = QString(output);
+
+    if (ipOutput == "192.168.125.1")
+    {
+        ui->toggleSwitch->setChecked(false);
+    }
+    else if (ipOutput == "192.168.186.3")
+    {
+        ui->toggleSwitch->setChecked(true);
+    }
+
+
+
+    connect(ui->toggleSwitch, SIGNAL(stateChanged(int)), this, SLOT(toggleChanged()));
 }
 
 Create3Widget::~Create3Widget()
@@ -50,10 +77,62 @@ Create3Widget::~Create3Widget()
     delete ui;
 }
 
+void Create3Widget::toggleChanged()
+{
+    QProcess checkCreate3IPState;
+    QString startCommand = "cat";
+    QStringList startArgs = {"/home/kipr/wombat-os/configFiles/create3_server_ip.txt"};
+
+    checkCreate3IPState.start(startCommand, startArgs);
+    checkCreate3IPState.waitForFinished();
+    QByteArray output = checkCreate3IPState.readAllStandardOutput();
+
+    QString ipOutput = QString(output);
+
+    qDebug() << "IP OUTPUT: " << ipOutput; // Get current IP output
+
+
+    if (ipOutput.contains("192.168.125.1"))
+    {
+
+        if (QMessageBox::question(this, "Change Interface?",
+                                  QString("You are about to change your Create 3 connection from Wifi to Ethernet. \nThe Wombat will reboot once you make this change. \n Do you want to continue? \n (Be sure to change the Fast DDS discovery server IP address to 192.168.186.3)"),
+                                  QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
+        {
+            return;
+        }
+        else
+        {
+            QProcess process;
+            process.startDetached("/bin/sh", QStringList() << "/home/kipr/wombat-os/configFiles/create3_interface_swap.sh"
+                                                           << "eth");
+        }
+
+        
+    }
+    else if (ipOutput.contains("192.168.186.3"))
+    {
+        if (QMessageBox::question(this, "Change Interface?",
+                                  QString("You are about to change your Create 3 connection from Ethernet to Wifi. \n The Wombat will reboot once you make this change. \nDo you want to continue? \n (Be sure to change the Fast DDS discovery server IP address to 192.168.125.1)"),
+                                  QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
+        {
+            return;
+        }
+        else
+        {
+            QProcess process;
+            process.startDetached("/bin/sh", QStringList() << "/home/kipr/wombat-os/configFiles/create3_interface_swap.sh"
+                                                           << "wifi");
+        }
+
+       
+    }
+}
+
 QString Create3Widget::getIP()
 {
 
-     // The command to execute
+    // The command to execute
     const char *command = "arp -a | grep 'iRobot' | awk -F '[()]' '{print $2}'";
 
     // Open a pipe to the command
@@ -81,77 +160,10 @@ QString Create3Widget::getIP()
     std::cout << "Output:\n"
               << result << std::endl;
 
-
     QString output = QString::fromStdString(result);
 
     return output;
 }
-
-// void Create3Widget::resetServer()
-// {
-//     QProcess stopCreate3Service;
-//     QString stopCommand = "systemctl";
-//     QStringList stopArgs = {
-//         "stop",
-//         "create3_server.service"
-//     };
-
-//     stopCreate3Service.start(stopCommand, stopArgs);
-//     if(stopCreate3Service.waitForFinished())
-//     {
-//         QByteArray data = stopCreate3Service.readAllStandardOutput();
-//         qDebug() << "Create3 Server successfully stopped\n" << data;
-//     }
-//     else
-//     {
-//         QByteArray data = stopCreate3Service.readAllStandardError();
-//         qDebug() << "Create3 Server failed to stop or crashed\n" << data;
-//     }
-
-//     // Need a command to run between start and stop for some reason for things to work
-//     QProcess statusCreate3Service;
-//     QString statusCommand = "systemctl";
-//     QStringList statusArgs = {
-//         "status",
-//         "create3_server.service",
-//         "--no-pager"
-//     };
-
-//     statusCreate3Service.start(statusCommand, statusArgs);
-//     if(statusCreate3Service.waitForFinished())
-//     {
-//         QByteArray data = statusCreate3Service.readAllStandardOutput();
-//         qDebug() << "Create3 Server status\n" << data;
-//     }
-//     else
-//     {
-//         QByteArray data = statusCreate3Service.readAllStandardError();
-//         qDebug() << "Create3 Server failed to get status\n" << data;
-//     }
-
-
-
-//     QProcess startCreate3Service;
-//     QString startCommand = "systemctl";
-//     QStringList startArgs = {
-//         "start",
-//         "create3_server.service"
-//     };
-
-//     startCreate3Service.start(startCommand, startArgs);
-//     if(startCreate3Service.waitForFinished())
-//     {   
-//         QByteArray data = startCreate3Service.readAllStandardOutput();
-//         qDebug() << "Create3 Server successfully started\n" << data;
-//     }
-//     else
-//     {
-//         QByteArray data = startCreate3Service.readAllStandardError();
-//         qDebug() << "Create3 Server failed to start or crashed\n" << data;
-//     }
-
-//     RootController::ref().dismissWidget();
-// }
 
 void Create3Widget::sensorList()
 {
