@@ -60,11 +60,11 @@ Create3Widget::Create3Widget(Device *device, QWidget *parent)
 
     if (ipOutput == "192.168.125.1")
     {
-        ui->toggleSwitch->setChecked(false);
+        ui->toggleSwitch->setChecked(false); //Wifi toggle side
     }
     else if (ipOutput == "192.168.186.3")
     {
-        ui->toggleSwitch->setChecked(true);
+        ui->toggleSwitch->setChecked(true); //Ethernet toggle side
     }
 
     connect(ui->toggleSwitch, SIGNAL(stateChanged(int)), this, SLOT(toggleChanged()));
@@ -105,6 +105,7 @@ void Create3Widget::toggleChanged()
         {
 
             StandardWidget::enableMenuBar();
+            ui->toggleSwitch->setChecked(false); //Wifi toggle side
             ui->CreateConnectButton->setEnabled(true);
             ui->toggleSwitch->setEnabled(true);
             ui->Create3SensorListButton->setEnabled(true);
@@ -126,6 +127,7 @@ void Create3Widget::toggleChanged()
         {
 
             StandardWidget::enableMenuBar();
+            ui->toggleSwitch->setChecked(true); //Ethernet toggle side
             ui->CreateConnectButton->setEnabled(true);
             ui->toggleSwitch->setEnabled(true);
             ui->Create3SensorListButton->setEnabled(true);
