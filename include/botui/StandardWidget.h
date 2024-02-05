@@ -18,7 +18,8 @@ public:
 	
 protected:
 	void performStandardSetup(const QString& title, const bool &statusBar = true);
-	
+	void disableMenuBar();
+	void enableMenuBar();
 	MenuBar *menuBar() const;
 	StatusBar *statusBar() const;
 	

@@ -20,6 +20,16 @@ StandardWidget::~StandardWidget()
 	delete m_statusBar;
 }
 
+void StandardWidget::disableMenuBar()
+{
+	m_menuBar->setEnabled(false);
+}
+
+void StandardWidget::enableMenuBar() 
+{
+	m_menuBar->setEnabled(true);
+}
+
 void StandardWidget::performStandardSetup(const QString& title, const bool &statusBar)
 {
 	m_menuBar->addHomeAndBackButtons();
