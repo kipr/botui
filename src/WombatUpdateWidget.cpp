@@ -107,6 +107,9 @@ void WombatUpdateWidget::refresh()
 
 void WombatUpdateWidget::updateFinished(int, QProcess::ExitStatus exitStatus)
 {
+
+  StandardWidget::enableMenuBar();
+  
     //Check to see if the update failed
     if(m_updateProc->exitStatus() != QProcess::NormalExit){
         ui->updateConsole->insertPlainText("\n Update Failed (Crashed): \n The update script has crashed with an error. \n Contact KIPR tech support for assistance if the problem persists \n");
@@ -155,6 +158,11 @@ void WombatUpdateWidget::ethernet(){
     ui->selectionWidget->setVisible(false);
     ui->statusLabel->setText("Update progress:");
     
+  
+    //Disables menubar (Back and Home buttons) in StandardWidget
+    StandardWidget::disableMenuBar();
+
+
     // Run update process
     m_updateProc = new QProcess();
     m_updateProc->setProcessChannelMode(QProcess::MergedChannels);
