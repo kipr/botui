@@ -43,7 +43,7 @@ Create3Widget::Create3Widget(Device *device, QWidget *parent)
     // connect(ui->ResetServerButton, SIGNAL(clicked()), SLOT(resetServer()));
     connect(ui->Create3SensorListButton, SIGNAL(clicked()), SLOT(sensorList()));
     connect(ui->Create3ExampleProgramButton, SIGNAL(clicked()), SLOT(exampleList()));
-   
+
     ui->create3IP->setText(getIP());
 
     QStringList arguments;
@@ -66,8 +66,6 @@ Create3Widget::Create3Widget(Device *device, QWidget *parent)
     {
         ui->toggleSwitch->setChecked(true);
     }
-
-
 
     connect(ui->toggleSwitch, SIGNAL(stateChanged(int)), this, SLOT(toggleChanged()));
 }
@@ -98,7 +96,6 @@ void Create3Widget::toggleChanged()
 
     qDebug() << "IP OUTPUT: " << ipOutput; // Get current IP output
 
-
     if (ipOutput.contains("192.168.125.1"))
     {
 
@@ -106,6 +103,12 @@ void Create3Widget::toggleChanged()
                                   QString("You are about to change your Create 3 connection from Wifi to Ethernet. \nThe Wombat will reboot once you make this change. \n Do you want to continue? \n (Be sure to change the Fast DDS discovery server IP address to 192.168.186.3)"),
                                   QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
         {
+
+            StandardWidget::enableMenuBar();
+            ui->CreateConnectButton->setEnabled(true);
+            ui->toggleSwitch->setEnabled(true);
+            ui->Create3SensorListButton->setEnabled(true);
+            ui->Create3ExampleProgramButton->setEnabled(true);
             return;
         }
         else
@@ -114,8 +117,6 @@ void Create3Widget::toggleChanged()
             process.startDetached("/bin/sh", QStringList() << "/home/kipr/wombat-os/configFiles/create3_interface_swap.sh"
                                                            << "eth");
         }
-
-        
     }
     else if (ipOutput.contains("192.168.186.3"))
     {
@@ -123,6 +124,12 @@ void Create3Widget::toggleChanged()
                                   QString("You are about to change your Create 3 connection from Ethernet to Wifi. \n The Wombat will reboot once you make this change. \nDo you want to continue? \n (Be sure to change the Fast DDS discovery server IP address to 192.168.125.1)"),
                                   QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
         {
+
+            StandardWidget::enableMenuBar();
+            ui->CreateConnectButton->setEnabled(true);
+            ui->toggleSwitch->setEnabled(true);
+            ui->Create3SensorListButton->setEnabled(true);
+            ui->Create3ExampleProgramButton->setEnabled(true);
             return;
         }
         else
@@ -131,8 +138,6 @@ void Create3Widget::toggleChanged()
             process.startDetached("/bin/sh", QStringList() << "/home/kipr/wombat-os/configFiles/create3_interface_swap.sh"
                                                            << "wifi");
         }
-
-       
     }
 }
 
