@@ -60,11 +60,11 @@ Create3Widget::Create3Widget(Device *device, QWidget *parent)
 
     if (ipOutput == "192.168.125.1")
     {
-        ui->toggleSwitch->setChecked(false); //Wifi toggle side
+        ui->toggleSwitch->setChecked(false); // Wifi toggle side
     }
     else if (ipOutput == "192.168.186.3")
     {
-        ui->toggleSwitch->setChecked(true); //Ethernet toggle side
+        ui->toggleSwitch->setChecked(true); // Ethernet toggle side
     }
 
     connect(ui->toggleSwitch, SIGNAL(stateChanged(int)), this, SLOT(toggleChanged()));
@@ -105,7 +105,7 @@ void Create3Widget::toggleChanged()
         {
 
             StandardWidget::enableMenuBar();
-            ui->toggleSwitch->setChecked(false); //Wifi toggle side
+            ui->toggleSwitch->setChecked(false); // Wifi toggle side
             ui->CreateConnectButton->setEnabled(true);
             ui->toggleSwitch->setEnabled(true);
             ui->Create3SensorListButton->setEnabled(true);
@@ -127,7 +127,7 @@ void Create3Widget::toggleChanged()
         {
 
             StandardWidget::enableMenuBar();
-            ui->toggleSwitch->setChecked(true); //Ethernet toggle side
+            ui->toggleSwitch->setChecked(true); // Ethernet toggle side
             ui->CreateConnectButton->setEnabled(true);
             ui->toggleSwitch->setEnabled(true);
             ui->Create3SensorListButton->setEnabled(true);
@@ -196,19 +196,19 @@ void Create3Widget::create3Connect()
     {
         connected = create3_connect();
         qDebug() << "Create connected? " << connected;
+        if (connected == 1)
+        {
+            qDebug() << "Create connected";
+            ui->createConnectState->setText("Connected");
+        }
+        else
+        {
+            qDebug() << "Create not connected";
+            ui->createConnectState->setText("Not Connected");
+        }
     }
     catch (const std::exception &e)
     {
         std::cerr << e.what() << '\n';
-    }
-    if (connected == 1)
-    {
-        qDebug() << "Create connected";
-        ui->createConnectState->setText("Connected");
-    }
-    else
-    {
-        qDebug() << "Create not connected";
-        ui->createConnectState->setText("Not Connected");
     }
 }
