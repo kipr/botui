@@ -79,6 +79,13 @@ Create3Widget::~Create3Widget()
 
 void Create3Widget::toggleChanged()
 {
+
+    StandardWidget::disableMenuBar();
+    ui->CreateConnectButton->setEnabled(false);
+    ui->toggleSwitch->setEnabled(false);
+    ui->Create3SensorListButton->setEnabled(false);
+    ui->Create3ExampleProgramButton->setEnabled(false);
+
     QProcess checkCreate3IPState;
     QString startCommand = "cat";
     QStringList startArgs = {"/home/kipr/wombat-os/configFiles/create3_server_ip.txt"};
