@@ -68,6 +68,20 @@ Create3Widget::Create3Widget(Device *device, QWidget *parent)
     }
 
     connect(ui->toggleSwitch, SIGNAL(stateChanged(int)), this, SLOT(toggleChanged()));
+
+    if(ui->create3IP->text() == ""){
+        ui->CreateConnectButton->setEnabled(false);
+        ui->Create3SensorListButton->setEnabled(false);
+        ui->Create3ExampleProgramButton->setEnabled(false);
+        ui->toggleSwitch->setEnabled(false);
+    }
+    else{
+        ui->CreateConnectButton->setEnabled(true);
+        ui->Create3SensorListButton->setEnabled(true);
+        ui->Create3ExampleProgramButton->setEnabled(true);
+        ui->toggleSwitch->setEnabled(true);
+    
+    }
 }
 
 Create3Widget::~Create3Widget()
