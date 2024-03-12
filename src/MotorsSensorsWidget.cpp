@@ -1,6 +1,7 @@
 #include "MotorsSensorsWidget.h"
 #include "ui_MotorsSensorsWidget.h"
 #include "RootController.h"
+#include "TelloWidget.h"
 #include <QDebug>
 #include "CameraLiveWidget.h"
 #include "ServosWidget.h"
@@ -24,6 +25,7 @@ MotorsSensorsWidget::MotorsSensorsWidget(Device *device, QWidget *parent)
 	connect(ui->sensorList, SIGNAL(clicked()), SLOT(sensorList()));
 	connect(ui->camera, SIGNAL(clicked()), SLOT(camera()));
 	connect(ui->Create3, SIGNAL(clicked()), SLOT(Create3()));
+	connect(ui->Tello, SIGNAL(clicked()), SLOT(Tello()));
 	
 
 }
@@ -63,4 +65,7 @@ void MotorsSensorsWidget::Create3()
 	RootController::ref().presentWidget(new Create3Widget(device()));
 }
 
+void MotorsSensorsWidget::Tello() {
+	RootController::ref().presentWidget(new TelloWidget(device()));
+}
 
