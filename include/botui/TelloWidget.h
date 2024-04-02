@@ -20,7 +20,7 @@ public:
 	~TelloWidget();
 
 private slots:
-
+    int telloConnect();
 
 private:
 	Ui::TelloWidget *ui;
