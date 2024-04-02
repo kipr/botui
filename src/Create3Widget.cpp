@@ -39,8 +39,7 @@ Create3Widget::Create3Widget(Device *device, QWidget *parent)
     ui->setupUi(this);
     performStandardSetup(tr("Create 3"), false);
     setStyleSheet("QScrollBar:vertical {border: 2px solid grey;background:grey ;width: 100px; margin: 22px 0 22px 0; } QScrollBar::handle:vertical { border: 2px solid grey;background: white; min-height: 20px; } QScrollBar::add-line:vertical { border: 2px solid grey;background: #32CC99; height: 20px; subcontrol-position: bottom; subcontrol-origin: margin; } QScrollBar::sub-line:vertical {border: 2px solid grey; background: #32CC99; height: 20px; subcontrol-position: top; subcontrol-origin: margin; } QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical { border: 2px solid grey;width: 3px; height: 3px; background: white; }QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {border: 2px solid grey; background: none;}");
-    connect(ui->CreateConnectButton, SIGNAL(clicked()), SLOT(create3Connect()));
-    // connect(ui->ResetServerButton, SIGNAL(clicked()), SLOT(resetServer()));
+
     connect(ui->Create3SensorListButton, SIGNAL(clicked()), SLOT(sensorList()));
     connect(ui->Create3ExampleProgramButton, SIGNAL(clicked()), SLOT(exampleList()));
 
@@ -69,19 +68,7 @@ Create3Widget::Create3Widget(Device *device, QWidget *parent)
 
     connect(ui->toggleSwitch, SIGNAL(stateChanged(int)), this, SLOT(toggleChanged()));
 
-    if(ui->create3IP->text() == ""){
-        ui->CreateConnectButton->setEnabled(false);
-        ui->Create3SensorListButton->setEnabled(false);
-        ui->Create3ExampleProgramButton->setEnabled(false);
-        ui->toggleSwitch->setEnabled(false);
-    }
-    else{
-        ui->CreateConnectButton->setEnabled(true);
-        ui->Create3SensorListButton->setEnabled(true);
-        ui->Create3ExampleProgramButton->setEnabled(true);
-        ui->toggleSwitch->setEnabled(true);
     
-    }
 }
 
 Create3Widget::~Create3Widget()
@@ -93,7 +80,7 @@ void Create3Widget::toggleChanged()
 {
 
     StandardWidget::disableMenuBar();
-    ui->CreateConnectButton->setEnabled(false);
+
     ui->toggleSwitch->setEnabled(false);
     ui->Create3SensorListButton->setEnabled(false);
     ui->Create3ExampleProgramButton->setEnabled(false);
@@ -120,7 +107,6 @@ void Create3Widget::toggleChanged()
 
             StandardWidget::enableMenuBar();
             ui->toggleSwitch->setChecked(false); //Wifi toggle side
-            ui->CreateConnectButton->setEnabled(true);
             ui->toggleSwitch->setEnabled(true);
             ui->Create3SensorListButton->setEnabled(true);
             ui->Create3ExampleProgramButton->setEnabled(true);
@@ -142,7 +128,6 @@ void Create3Widget::toggleChanged()
 
             StandardWidget::enableMenuBar();
             ui->toggleSwitch->setChecked(true); //Ethernet toggle side
-            ui->CreateConnectButton->setEnabled(true);
             ui->toggleSwitch->setEnabled(true);
             ui->Create3SensorListButton->setEnabled(true);
             ui->Create3ExampleProgramButton->setEnabled(true);
@@ -218,11 +203,11 @@ void Create3Widget::create3Connect()
     if (connected == 1)
     {
         qDebug() << "Create connected";
-        ui->createConnectState->setText("Connected");
+        
     }
     else
     {
         qDebug() << "Create not connected";
-        ui->createConnectState->setText("Not Connected");
+       
     }
 }
