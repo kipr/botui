@@ -1,7 +1,7 @@
 #include "Create3Widget.h"
 #include "ui_Create3Widget.h"
 #include "Create3SensorListWidget.h"
-
+#include "kj/exception.h"
 #include "Create3SensorModel.h"
 #include <kipr/create3/client/client.h>
 #include <unistd.h>
@@ -17,7 +17,7 @@
 #include <QPainter>
 #include <QItemDelegate>
 #include "RootController.h"
-
+#include "kipr/create3/create3.capnp.h"
 int exampleIndex;
 QStringList programList;
 
@@ -372,6 +372,7 @@ void Create3Widget::indexChanged(int index)
 
 void Create3Widget::run()
 {
+
     exampleIndex = ui->exampleComboBox->currentIndex();
     switch (exampleIndex)
     {
@@ -544,10 +545,13 @@ void Create3Widget::run()
             create3_wait();
 
             printf("Done!\n");
+
+            
         }
-        catch (const std::exception &e)
+        // catch (const std::exception &e)
+        catch (const kj::Exception &e)
         {
-            std::cerr << e.what() << '\n';
+            std::cerr << e << '\n';
         }
 
         break;
