@@ -22,7 +22,7 @@ private slots:
 	void sensorList();
 	void camera();
 	void Create3();
-	void Tello();
+	void TelloWindow();
 	
 private:
 	Ui::MotorsSensorsWidget *ui;
