@@ -94,6 +94,11 @@ NetworkSettingsWidget::~NetworkSettingsWidget()
 	delete enableCoolOffTimer;
 }
 
+QString NetworkSettingsWidget::sendCurrentConnectionMode() 
+{
+	return ui->connectionModeSelect->currentText();
+}
+
 void NetworkSettingsWidget::connect() // Connects to network
 {
 	RootController::ref().presentWidget(new ConnectWidget(device()));
