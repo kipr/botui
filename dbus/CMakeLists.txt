@@ -16,7 +16,7 @@ foreach (interface ${NETWORK_MANAGER_INTERFACES})
   string (REPLACE "." "_" basename ${interface})
   set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/${interface}.xml PROPERTIES NO_NAMESPACE ON)
   qt_add_dbus_interface(INTERFACE_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/${interface}.xml ${basename})
-  message(STATUS "Adding DBus interface ${interface} ${NETWORK_MANAGER_SOURCES}")
+  message(STATUS "Adding DBus interface ${interface} ${NETWORK_MANAGER_SOURCES} /n")
   list(APPEND NETWORK_MANAGER_SOURCES ${INTERFACE_SOURCES})
 endforeach()
 
