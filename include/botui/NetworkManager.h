@@ -62,6 +62,8 @@ public:
 
   NetworkList accessPoints() const;
 
+  NetworkList telloAccessPoints() const;
+
   QString ipAddress() const;
 
   QString ip4Address() const;

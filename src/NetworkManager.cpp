@@ -235,7 +235,9 @@ bool NetworkManager::enableAP()
   { // AP Configuration doesn't exist yet
     createAPConfig();
     sleep(3);
+    
     apPath = getAPSettingsObjectPath();
+    qDebug() << "APPATH (enableAP): " << apPath.path();
     m_nm->ActivateConnection(apPath, devicePath, QDBusObjectPath("/"));
   }
 
@@ -264,6 +266,7 @@ bool NetworkManager::disableAP()
     {
       conn.Delete();
       sleep(1);
+      qDebug() << "AP Connection deleted";
     }
   }
   return true;
@@ -391,6 +394,30 @@ NetworkList NetworkManager::accessPoints() const
     else
     {
       netSSID.append(nw.ssid().toLatin1());
+      networks << nw;
+    }
+  }
+  return networks;
+}
+
+NetworkList NetworkManager::telloAccessPoints() const
+{
+  if (!m_wifi)
+    return NetworkList();
+  QList<QDBusObjectPath> aps = m_wifi->GetAllAccessPoints();
+  NetworkList networks;
+  QList<Network> netList;
+  QList<QByteArray> netSSID;
+  foreach (const QDBusObjectPath &ap, aps)
+  {
+    Network newNet = createAccessPoint(ap);
+    netList << newNet;
+  }
+  foreach (const Network &nw, netList)
+  {
+
+    if(nw.ssid().toLatin1().contains("TELLO"))
+    {
       networks << nw;
     }
   }
