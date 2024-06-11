@@ -93,42 +93,6 @@
          <property name="margin" stdset="0">
           <number>0</number>
          </property>
-         <item>
-          <widget class="QPushButton" name="a_2">
-           <property name="font">
-            <font>
-             <pointsize>33</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>A</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="b_2">
-           <property name="font">
-            <font>
-             <pointsize>33</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>B</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="c_2">
-           <property name="font">
-            <font>
-             <pointsize>33</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>C</string>
-           </property>
-          </widget>
-         </item>
         </layout>
        </widget>
       </item>
