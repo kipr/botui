@@ -549,9 +549,9 @@ void Create3Widget::run()
             
         }
         // catch (const std::exception &e)
-        catch (const kj::Exception &e)
+        catch (const std::exception &e)
         {
-            std::cerr << e << '\n';
+            std::cerr << e.what() << '\n';
         }
 
         break;
