@@ -35,11 +35,20 @@
         </property>
         <item>
          <layout class="QHBoxLayout" name="IPHorizontal">
+          <property name="spacing">
+           <number>10</number>
+          </property>
           <item>
            <widget class="QLabel" name="create3IPLabel">
-            <property name="maximumSize">
+            <property name="minimumSize">
              <size>
               <width>180</width>
+              <height>37</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>225</width>
               <height>16777215</height>
              </size>
             </property>
@@ -49,6 +58,9 @@
               <pointsize>25</pointsize>
               <italic>false</italic>
               <bold>true</bold>
+              <underline>false</underline>
+              <strikeout>false</strikeout>
+              <kerning>true</kerning>
              </font>
             </property>
             <property name="styleSheet">
