@@ -2,7 +2,12 @@
 
 #include <QApplication>
 #include <QMessageBox>
+#include <QLabel>
+#include <QMovie>
+#include <QSize>
 #include <QProcess>
+#include <QVBoxLayout>
+#include <QGridLayout>
 
 #include "ui_HomeWidget.h"
 #include "MenuBar.h"
@@ -21,12 +26,12 @@
 #include "LockScreen.h"
 
 HomeWidget::HomeWidget(Device *device, QWidget *parent)
-	: StandardWidget(device, parent),
-	ui(new Ui::HomeWidget)
+		: StandardWidget(device, parent),
+			ui(new Ui::HomeWidget)
 {
 	ui->setupUi(this);
 	performStandardSetup(UiStandards::homeString());
-	
+
 	connect(ui->programs, SIGNAL(clicked()), SLOT(programs()));
 	connect(ui->fileManager, SIGNAL(clicked()), SLOT(fileManager()));
 	connect(ui->motorsSensors, SIGNAL(clicked()), SLOT(motorsSensors()));
@@ -35,12 +40,12 @@ HomeWidget::HomeWidget(Device *device, QWidget *parent)
 	// TODO: fix fileManager and then remove this line
 	ui->fileManager->setVisible(true);
 
-	//QAction *lock = menuBar()->addAction(UiStandards::lockString());
-	// connect(lock, SIGNAL(triggered()), SLOT(lock()));
+	// QAction *lock = menuBar()->addAction(UiStandards::lockString());
+	//  connect(lock, SIGNAL(triggered()), SLOT(lock()));
 	QAction *about = menuBar()->addAction(tr("About"));
 	QAction *shutDown = menuBar()->addAction(tr("Shut Down"));
 	QAction *reboot = menuBar()->addAction(tr("Reboot"));
-	menuBar()->adjustSize() ;
+	menuBar()->adjustSize();
 	connect(about, SIGNAL(triggered()), SLOT(about()));
 	connect(shutDown, SIGNAL(triggered()), SLOT(shutDown()));
 	connect(reboot, SIGNAL(triggered()), SLOT(reboot()));
@@ -54,8 +59,8 @@ HomeWidget::~HomeWidget()
 void HomeWidget::programs()
 {
 	RootController::ref().presentWidget(Program::instance()->isRunning()
-		? (QWidget *)new ProgramSelectionWidget(device())
-		: (QWidget *)new ProgramsWidget(device()));
+																					? (QWidget *)new ProgramSelectionWidget(device())
+																					: (QWidget *)new ProgramsWidget(device()));
 }
 
 void HomeWidget::fileManager()
@@ -76,40 +81,86 @@ void HomeWidget::settings()
 void HomeWidget::about()
 {
 	RootController::ref().presentWidget(new AboutWidget(device()));
-	
 }
 
 void HomeWidget::shutDown()
 {
 #ifdef WOMBAT
-  if(QMessageBox::question(this, "Shut Down?", "After system halted, slide power switch off or disconnect battery.\n\nContinue?", QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
-    return;
-  
-  const int ret = QProcess::execute("poweroff");
-  if(ret < 0)
-    QMessageBox::information(this, "Failed", "Shut down failed.");
+	if (QMessageBox::question(this, "Shut Down?", "After system halted, slide power switch off or disconnect battery.\n\nContinue?", QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
+		return;
+
+	const int ret = QProcess::execute("poweroff");
+	if (ret < 0)
+		QMessageBox::information(this, "Failed", "Shut down failed.");
 #else
-  QMessageBox::information(this, "Not Available", "Shut down is only available on the kovan.");
+	QMessageBox::information(this, "Not Available", "Shut down is only available on the kovan.");
 #endif
 }
 
 void HomeWidget::reboot()
 {
-	#ifdef WOMBAT
-		if(QMessageBox::question(this, "Reboot?", "Please wait up to 10 seconds for the system to begin rebooting.\n\nContinue?", QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
-			return;
+#ifdef WOMBAT
+	if (QMessageBox::question(this, "Reboot?", "Please wait up to 10 seconds for the system to begin rebooting.\n\nContinue?", QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
+		return;
 
-		QProcess create3ServerStop;
-		create3ServerStop.start("sudo", QStringList() << "systemctl" << "stop" << "create3_server.service");
-		bool create3StopRet = create3ServerStop.waitForFinished();
-		if(create3StopRet == false)
-			QMessageBox::information(this, "Failed", "Create 3 server could not be stopped.");
-		const int rebootRet = QProcess::execute("reboot");
-		if(create3StopRet == false || rebootRet < 0)
-			QMessageBox::information(this, "Failed", "Reboot failed.");
-	#else
-		QMessageBox::information(this, "Not Available", "Reboot is only available on the kovan.");
-	#endif
+	QMessageBox msgBox(this);
+	msgBox.setWindowTitle("Reboot");
+	msgBox.setText("Rebooting now...");
+
+	// msgBox.setText("Rebooting...");
+	msgBox.setMaximumSize(500, 480);
+	// msgBox.setStyleSheet("QLabel{min-width: 450px; min-height: 280px;}");
+	msgBox.setStandardButtons(QMessageBox::NoButton);
+
+	QLabel *gifLabel = new QLabel();
+	QLabel *messageLabel = new QLabel(msgBox.text());
+
+	QGridLayout *msgBoxLayout = qobject_cast<QGridLayout *>(msgBox.layout());
+
+	msgBoxLayout->setVerticalSpacing(0);
+
+	QWidget *container = new QWidget();
+	QVBoxLayout *vLayout = new QVBoxLayout(container);
+
+	vLayout->addWidget(gifLabel);
+
+	vLayout->addWidget(messageLabel);
+	vLayout->setAlignment(Qt::AlignCenter);
+	gifLabel->setAlignment(Qt::AlignCenter);
+	messageLabel->setAlignment(Qt::AlignCenter);
+
+	msgBoxLayout->setSpacing(0);
+	vLayout->setSpacing(10);
+
+	container->setLayout(vLayout);
+
+	if (msgBoxLayout)
+	{
+		msgBoxLayout->addWidget(container, 0, 0, 1, msgBoxLayout->columnCount());
+	}
+
+	gifLabel->move(200, -50);
+	gifLabel->resize(400, 1100);
+
+	QMovie *movie = new QMovie("://qml/botguy_noMargin.gif");
+	movie->setScaledSize(QSize(200, 240));
+	gifLabel->setMovie(movie);
+	movie->start();
+	gifLabel->show();
+
+	msgBox.setText("");
+	msgBox.exec();
+	QProcess create3ServerStop;
+	create3ServerStop.start("sudo", QStringList() << "systemctl" << "stop" << "create3_server.service");
+	bool create3StopRet = create3ServerStop.waitForFinished();
+	if (create3StopRet == false)
+		QMessageBox::information(this, "Failed", "Create 3 server could not be stopped.");
+	const int rebootRet = QProcess::execute("reboot");
+	if (create3StopRet == false || rebootRet < 0)
+		QMessageBox::information(this, "Failed", "Reboot failed.");
+#else
+	QMessageBox::information(this, "Not Available", "Reboot is only available on the kovan.");
+#endif
 }
 
 void HomeWidget::lock()
