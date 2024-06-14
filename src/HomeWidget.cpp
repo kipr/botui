@@ -146,28 +146,33 @@ void HomeWidget::reboot()
 	movie->setScaledSize(QSize(200, 240));
 	gifLabel->setMovie(movie);
 	movie->start();
-	gifLabel->show();
 
 	msgBox.setText("");
-	msgBox.exec();
-	 // Stop create3_server.service
-    QProcess create3ServerStop;
-    create3ServerStop.start("sudo", QStringList() << "systemctl" << "stop" << "create3_server.service");
-    bool create3StopRet = create3ServerStop.waitForFinished();
-    if (!create3StopRet || create3ServerStop.exitCode() != 0)
-    {
-        QMessageBox::information(this, "Failed", "Create 3 server could not be stopped.");
-        return;
-    }
+	msgBox.show();
+	   // Use a QTimer to delay the reboot process
+    QTimer::singleShot(2000, [this, msgBox]() {
+        // Stop create3_server.service
+        QProcess create3ServerStop;
+        create3ServerStop.start("sudo", QStringList() << "systemctl" << "stop" << "create3_server.service");
+        bool create3StopRet = create3ServerStop.waitForFinished();
+        if (!create3StopRet || create3ServerStop.exitCode() != 0)
+        {
+            QMessageBox::information(this, "Failed", "Create 3 server could not be stopped.");
+            msgBox->close();
+            return;
+        }
 
-    // Reboot the system
-    QProcess rebootProcess;
-    rebootProcess.start("sudo", QStringList() << "reboot");
-    bool rebootRet = rebootProcess.waitForFinished();
-    if (!rebootRet || rebootProcess.exitCode() != 0)
-    {
-        QMessageBox::information(this, "Failed", "Reboot failed.");
-    }
+        // Reboot the system
+        QProcess rebootProcess;
+        rebootProcess.start("sudo", QStringList() << "reboot");
+        bool rebootRet = rebootProcess.waitForFinished();
+        if (!rebootRet || rebootProcess.exitCode() != 0)
+        {
+            QMessageBox::information(this, "Failed", "Reboot failed.");
+        }
+
+        msgBox->close();
+    });
 #else
     QMessageBox::information(this, "Not Available", "Reboot is only available on the kovan.");
 #endif
