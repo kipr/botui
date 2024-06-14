@@ -8,6 +8,7 @@
 #include <QProcess>
 #include <QVBoxLayout>
 #include <QGridLayout>
+#include <QTimer>
 
 #include "ui_HomeWidget.h"
 #include "MenuBar.h"
@@ -100,56 +101,56 @@ void HomeWidget::shutDown()
 void HomeWidget::reboot()
 {
 #ifdef WOMBAT
-	if (QMessageBox::question(this, "Reboot?", "Please wait up to 10 seconds for the system to begin rebooting.\n\nContinue?", QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
-		return;
+    if (QMessageBox::question(this, "Reboot?", "Please wait up to 10 seconds for the system to begin rebooting.\n\nContinue?", QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
+        return;
 
-	QMessageBox msgBox(this);
-	msgBox.setWindowTitle("Reboot");
-	msgBox.setText("Rebooting now...");
+    // Create the QMessageBox
+    QMessageBox *msgBox = new QMessageBox(this);
+    msgBox->setWindowTitle("Reboot");
+    msgBox->setMaximumSize(500, 480); // Limit the size of the QMessageBox
+    msgBox->setStandardButtons(QMessageBox::NoButton);
 
-	// msgBox.setText("Rebooting...");
-	msgBox.setMaximumSize(500, 480);
-	// msgBox.setStyleSheet("QLabel{min-width: 450px; min-height: 280px;}");
-	msgBox.setStandardButtons(QMessageBox::NoButton);
+    // Create QLabel for the GIF
+    QLabel *gifLabel = new QLabel();
+    gifLabel->setAlignment(Qt::AlignCenter); // Center the GIF label
 
-	QLabel *gifLabel = new QLabel();
-	QLabel *messageLabel = new QLabel(msgBox.text());
+    // Create QLabel for the message text
+    QLabel *messageLabel = new QLabel("Rebooting now...");
+    messageLabel->setAlignment(Qt::AlignCenter); // Center the message label
 
-	QGridLayout *msgBoxLayout = qobject_cast<QGridLayout *>(msgBox.layout());
+    // Create a container widget and a new vertical layout
+    QWidget *container = new QWidget();
+    QVBoxLayout *vLayout = new QVBoxLayout(container);
 
-	msgBoxLayout->setVerticalSpacing(0);
+    // Add the GIF label and message label to the vertical layout
+    vLayout->addWidget(gifLabel);
+    vLayout->addWidget(messageLabel);
 
-	QWidget *container = new QWidget();
-	QVBoxLayout *vLayout = new QVBoxLayout(container);
+    // Adjust the vertical layout spacing and margins
+    vLayout->setSpacing(10);
+    vLayout->setContentsMargins(10, 10, 10, 10);
 
-	vLayout->addWidget(gifLabel);
+    // Set the layout of the container
+    container->setLayout(vLayout);
 
-	vLayout->addWidget(messageLabel);
-	vLayout->setAlignment(Qt::AlignCenter);
-	gifLabel->setAlignment(Qt::AlignCenter);
-	messageLabel->setAlignment(Qt::AlignCenter);
+    // Access the internal layout of the QMessageBox
+    QGridLayout *msgBoxLayout = qobject_cast<QGridLayout *>(msgBox->layout());
+    if (msgBoxLayout)
+    {
+        msgBoxLayout->addWidget(container, 0, 0, 1, msgBoxLayout->columnCount());
+    }
 
-	msgBoxLayout->setSpacing(0);
-	vLayout->setSpacing(10);
+    // Setup and start the GIF movie
+    QMovie *movie = new QMovie("://qml/botguy_noMargin.gif");
+    movie->setScaledSize(QSize(200, 240));
+    gifLabel->setMovie(movie);
+    movie->start();
 
-	container->setLayout(vLayout);
+    // Show the QMessageBox non-blocking
+    msgBox->setText(""); // Hide the default text to avoid duplication
+    msgBox->show();
 
-	if (msgBoxLayout)
-	{
-		msgBoxLayout->addWidget(container, 0, 0, 1, msgBoxLayout->columnCount());
-	}
-
-	gifLabel->move(200, -50);
-	gifLabel->resize(400, 1100);
-
-	QMovie *movie = new QMovie("://qml/botguy_noMargin.gif");
-	movie->setScaledSize(QSize(200, 240));
-	gifLabel->setMovie(movie);
-	movie->start();
-
-	msgBox.setText("");
-	msgBox.show();
-	   // Use a QTimer to delay the reboot process
+    // Use a QTimer to delay the reboot process
     QTimer::singleShot(2000, [this, msgBox]() {
         // Stop create3_server.service
         QProcess create3ServerStop;
@@ -177,7 +178,6 @@ void HomeWidget::reboot()
     QMessageBox::information(this, "Not Available", "Reboot is only available on the kovan.");
 #endif
 }
-
 void HomeWidget::lock()
 {
 	LockScreen::lock();
