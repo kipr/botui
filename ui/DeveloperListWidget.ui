@@ -46,7 +46,7 @@
        </item>
        <item>
         <property name="text">
-          <string>Howard Guo</string>
+         <string>Howard Guo</string>
         </property>
        </item>
        <item>
@@ -62,6 +62,11 @@
        <item>
         <property name="text">
          <string>Prithviraj Kadiyala</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Tobias Madlberger</string>
         </property>
        </item>
        <item>
