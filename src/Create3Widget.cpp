@@ -26,6 +26,7 @@
 #include <QGridLayout>
 int exampleIndex;
 QStringList programList;
+QMessageBox *msgBox;
 
 class Create3SensorItemDelegate : public QItemDelegate
 {
@@ -116,7 +117,6 @@ void Create3Widget::toggleChanged()
     QString ipOutput = QString(output);
 
     qDebug() << "IP OUTPUT: " << ipOutput; // Get current IP output
-    
 
     if (ipOutput.contains("192.168.125.1"))
     {
@@ -137,9 +137,16 @@ void Create3Widget::toggleChanged()
         else
         {
             rebootBox();
+            // Use a QTimer to delay the reboot process
+            QTimer::singleShot(2000, this, [this, msgBox]()
+                               {
             QProcess process;
             process.startDetached("/bin/sh", QStringList() << "/home/kipr/wombat-os/configFiles/create3_interface_swap.sh"
                                                            << "eth");
+
+            msgBox->close(); });
+
+            
         }
     }
     else if (ipOutput.contains("192.168.186.3"))
@@ -159,10 +166,16 @@ void Create3Widget::toggleChanged()
         }
         else
         {
-            rebootBox();
+             rebootBox();
+            // Use a QTimer to delay the reboot process
+            QTimer::singleShot(2000, this, [this, msgBox]()
+                               {
             QProcess process;
             process.startDetached("/bin/sh", QStringList() << "/home/kipr/wombat-os/configFiles/create3_interface_swap.sh"
                                                            << "wifi");
+
+            msgBox->close(); });
+
         }
     }
 }
@@ -170,53 +183,54 @@ void Create3Widget::toggleChanged()
 void Create3Widget::rebootBox()
 {
 
-    QMessageBox msgBox(this);
-    msgBox.setWindowTitle("Reboot");
-    msgBox.setText("Rebooting now...");
+    // Create the QMessageBox
+    msgBox = new QMessageBox(this);
+    msgBox->setWindowTitle("Reboot");
+    msgBox->setMaximumSize(500, 480); // Limit the size of the QMessageBox
+    msgBox->setStandardButtons(QMessageBox::NoButton);
 
-    // msgBox.setText("Rebooting...");
-    msgBox.setMaximumSize(500, 480);
-    // msgBox.setStyleSheet("QLabel{min-width: 450px; min-height: 280px;}");
-    msgBox.setStandardButtons(QMessageBox::NoButton);
-
+    // Create QLabel for the GIF
     QLabel *gifLabel = new QLabel();
-    QLabel *messageLabel = new QLabel(msgBox.text());
+    gifLabel->setAlignment(Qt::AlignCenter); // Center the GIF label
 
-    QGridLayout *msgBoxLayout = qobject_cast<QGridLayout *>(msgBox.layout());
+    // Create QLabel for the message text
+    QLabel *messageLabel = new QLabel("Rebooting now...");
+    messageLabel->setAlignment(Qt::AlignCenter); // Center the message label
 
-    msgBoxLayout->setVerticalSpacing(0);
-
+    // Create a container widget and a new vertical layout
     QWidget *container = new QWidget();
     QVBoxLayout *vLayout = new QVBoxLayout(container);
 
+    // Add the GIF label and message label to the vertical layout
     vLayout->addWidget(gifLabel);
-
     vLayout->addWidget(messageLabel);
-    vLayout->setAlignment(Qt::AlignCenter);
-    gifLabel->setAlignment(Qt::AlignCenter);
-    messageLabel->setAlignment(Qt::AlignCenter);
 
-    msgBoxLayout->setSpacing(0);
+    // Adjust the vertical layout spacing and margins
     vLayout->setSpacing(10);
+    vLayout->setContentsMargins(10, 10, 10, 10);
 
+    // Set the layout of the container
     container->setLayout(vLayout);
 
+    // Access the internal layout of the QMessageBox
+    QGridLayout *msgBoxLayout = qobject_cast<QGridLayout *>(msgBox->layout());
     if (msgBoxLayout)
     {
         msgBoxLayout->addWidget(container, 0, 0, 1, msgBoxLayout->columnCount());
     }
 
-    gifLabel->move(200, -50);
-    gifLabel->resize(400, 1100);
-
+    // Setup and start the GIF movie
     QMovie *movie = new QMovie("://qml/botguy_noMargin.gif");
     movie->setScaledSize(QSize(200, 240));
     gifLabel->setMovie(movie);
     movie->start();
-    gifLabel->show();
 
-    msgBox.setText("");
-    msgBox.exec();
+    // Show the QMessageBox non-blocking
+    msgBox->setText(""); // Hide the default text to avoid duplication
+    msgBox->show();
+
+    // Debug information
+    qDebug() << "Message box displayed, starting reboot sequence...";
 }
 
 QString Create3Widget::getIP()
