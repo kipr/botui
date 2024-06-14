@@ -27,74 +27,74 @@
 #include "LockScreen.h"
 
 HomeWidget::HomeWidget(Device *device, QWidget *parent)
-		: StandardWidget(device, parent),
-			ui(new Ui::HomeWidget)
+    : StandardWidget(device, parent),
+      ui(new Ui::HomeWidget)
 {
-	ui->setupUi(this);
-	performStandardSetup(UiStandards::homeString());
+    ui->setupUi(this);
+    performStandardSetup(UiStandards::homeString());
 
-	connect(ui->programs, SIGNAL(clicked()), SLOT(programs()));
-	connect(ui->fileManager, SIGNAL(clicked()), SLOT(fileManager()));
-	connect(ui->motorsSensors, SIGNAL(clicked()), SLOT(motorsSensors()));
-	connect(ui->settings, SIGNAL(clicked()), SLOT(settings()));
+    connect(ui->programs, SIGNAL(clicked()), SLOT(programs()));
+    connect(ui->fileManager, SIGNAL(clicked()), SLOT(fileManager()));
+    connect(ui->motorsSensors, SIGNAL(clicked()), SLOT(motorsSensors()));
+    connect(ui->settings, SIGNAL(clicked()), SLOT(settings()));
 
-	// TODO: fix fileManager and then remove this line
-	ui->fileManager->setVisible(true);
+    // TODO: fix fileManager and then remove this line
+    ui->fileManager->setVisible(true);
 
-	// QAction *lock = menuBar()->addAction(UiStandards::lockString());
-	//  connect(lock, SIGNAL(triggered()), SLOT(lock()));
-	QAction *about = menuBar()->addAction(tr("About"));
-	QAction *shutDown = menuBar()->addAction(tr("Shut Down"));
-	QAction *reboot = menuBar()->addAction(tr("Reboot"));
-	menuBar()->adjustSize();
-	connect(about, SIGNAL(triggered()), SLOT(about()));
-	connect(shutDown, SIGNAL(triggered()), SLOT(shutDown()));
-	connect(reboot, SIGNAL(triggered()), SLOT(reboot()));
+    // QAction *lock = menuBar()->addAction(UiStandards::lockString());
+    //  connect(lock, SIGNAL(triggered()), SLOT(lock()));
+    QAction *about = menuBar()->addAction(tr("About"));
+    QAction *shutDown = menuBar()->addAction(tr("Shut Down"));
+    QAction *reboot = menuBar()->addAction(tr("Reboot"));
+    menuBar()->adjustSize();
+    connect(about, SIGNAL(triggered()), SLOT(about()));
+    connect(shutDown, SIGNAL(triggered()), SLOT(shutDown()));
+    connect(reboot, SIGNAL(triggered()), SLOT(reboot()));
 }
 
 HomeWidget::~HomeWidget()
 {
-	delete ui;
+    delete ui;
 }
 
 void HomeWidget::programs()
 {
-	RootController::ref().presentWidget(Program::instance()->isRunning()
-																					? (QWidget *)new ProgramSelectionWidget(device())
-																					: (QWidget *)new ProgramsWidget(device()));
+    RootController::ref().presentWidget(Program::instance()->isRunning()
+                                            ? (QWidget *)new ProgramSelectionWidget(device())
+                                            : (QWidget *)new ProgramsWidget(device()));
 }
 
 void HomeWidget::fileManager()
 {
-	RootController::ref().presentWidget(new FileManagerWidget(device()));
+    RootController::ref().presentWidget(new FileManagerWidget(device()));
 }
 
 void HomeWidget::motorsSensors()
 {
-	RootController::ref().presentWidget(new MotorsSensorsWidget(device()));
+    RootController::ref().presentWidget(new MotorsSensorsWidget(device()));
 }
 
 void HomeWidget::settings()
 {
-	RootController::ref().presentWidget(new SettingsWidget(device()));
+    RootController::ref().presentWidget(new SettingsWidget(device()));
 }
 
 void HomeWidget::about()
 {
-	RootController::ref().presentWidget(new AboutWidget(device()));
+    RootController::ref().presentWidget(new AboutWidget(device()));
 }
 
 void HomeWidget::shutDown()
 {
 #ifdef WOMBAT
-	if (QMessageBox::question(this, "Shut Down?", "After system halted, slide power switch off or disconnect battery.\n\nContinue?", QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
-		return;
+    if (QMessageBox::question(this, "Shut Down?", "After system halted, slide power switch off or disconnect battery.\n\nContinue?", QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
+        return;
 
-	const int ret = QProcess::execute("poweroff");
-	if (ret < 0)
-		QMessageBox::information(this, "Failed", "Shut down failed.");
+    const int ret = QProcess::execute("poweroff");
+    if (ret < 0)
+        QMessageBox::information(this, "Failed", "Shut down failed.");
 #else
-	QMessageBox::information(this, "Not Available", "Shut down is only available on the kovan.");
+    QMessageBox::information(this, "Not Available", "Shut down is only available on the kovan.");
 #endif
 }
 
@@ -154,7 +154,8 @@ void HomeWidget::reboot()
     qDebug() << "Message box displayed, starting reboot sequence...";
 
     // Use a QTimer to delay the reboot process
-    QTimer::singleShot(2000, this, [this, msgBox]() {
+    QTimer::singleShot(2000, this, [this, msgBox]()
+                       {
         qDebug() << "Stopping create3_server.service...";
         // Stop create3_server.service
         QProcess create3ServerStop;
@@ -162,8 +163,12 @@ void HomeWidget::reboot()
         bool create3StopRet = create3ServerStop.waitForFinished();
         qDebug() << "Create 3 server stop return value: " << create3StopRet;
         qDebug() << "Create 3 server exit code: " << create3ServerStop.exitCode();
-       if(create3StopRet == false)
-			QMessageBox::information(this, "Failed", "Create 3 server could not be stopped.");
+       if(create3StopRet == false){
+        qDebug() << "create3StopRet: " << create3StopRet;
+        QMessageBox::information(this, "Failed", "Create 3 server could not be stopped.");
+
+       }
+			
 
         qDebug() << "Rebooting the system...";
         // Reboot the system
@@ -171,8 +176,7 @@ void HomeWidget::reboot()
 		if(create3StopRet == false || rebootRet < 0)
 			QMessageBox::information(this, "Failed", "Reboot failed.");
 
-        msgBox->close();
-    });
+        msgBox->close(); });
 
 #else
     QMessageBox::information(this, "Not Available", "Reboot is only available on the kovan.");
@@ -180,5 +184,5 @@ void HomeWidget::reboot()
 }
 void HomeWidget::lock()
 {
-	LockScreen::lock();
+    LockScreen::lock();
 }
