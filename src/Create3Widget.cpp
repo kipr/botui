@@ -10,7 +10,6 @@
 #include <stdio.h>
 #include <iostream>
 #include <QRegularExpression>
-#include <QProcess>
 #include <QHeaderView>
 #include <cmath>
 #include <QTimer>
@@ -18,6 +17,13 @@
 #include <QItemDelegate>
 #include "RootController.h"
 #include "kipr/create3/create3.capnp.h"
+#include <QMessageBox>
+#include <QLabel>
+#include <QMovie>
+#include <QSize>
+#include <QProcess>
+#include <QVBoxLayout>
+#include <QGridLayout>
 int exampleIndex;
 QStringList programList;
 
@@ -110,6 +116,7 @@ void Create3Widget::toggleChanged()
     QString ipOutput = QString(output);
 
     qDebug() << "IP OUTPUT: " << ipOutput; // Get current IP output
+    
 
     if (ipOutput.contains("192.168.125.1"))
     {
@@ -129,6 +136,7 @@ void Create3Widget::toggleChanged()
         }
         else
         {
+            rebootBox();
             QProcess process;
             process.startDetached("/bin/sh", QStringList() << "/home/kipr/wombat-os/configFiles/create3_interface_swap.sh"
                                                            << "eth");
@@ -151,11 +159,64 @@ void Create3Widget::toggleChanged()
         }
         else
         {
+            rebootBox();
             QProcess process;
             process.startDetached("/bin/sh", QStringList() << "/home/kipr/wombat-os/configFiles/create3_interface_swap.sh"
                                                            << "wifi");
         }
     }
+}
+
+void Create3Widget::rebootBox()
+{
+
+    QMessageBox msgBox(this);
+    msgBox.setWindowTitle("Reboot");
+    msgBox.setText("Rebooting now...");
+
+    // msgBox.setText("Rebooting...");
+    msgBox.setMaximumSize(500, 480);
+    // msgBox.setStyleSheet("QLabel{min-width: 450px; min-height: 280px;}");
+    msgBox.setStandardButtons(QMessageBox::NoButton);
+
+    QLabel *gifLabel = new QLabel();
+    QLabel *messageLabel = new QLabel(msgBox.text());
+
+    QGridLayout *msgBoxLayout = qobject_cast<QGridLayout *>(msgBox.layout());
+
+    msgBoxLayout->setVerticalSpacing(0);
+
+    QWidget *container = new QWidget();
+    QVBoxLayout *vLayout = new QVBoxLayout(container);
+
+    vLayout->addWidget(gifLabel);
+
+    vLayout->addWidget(messageLabel);
+    vLayout->setAlignment(Qt::AlignCenter);
+    gifLabel->setAlignment(Qt::AlignCenter);
+    messageLabel->setAlignment(Qt::AlignCenter);
+
+    msgBoxLayout->setSpacing(0);
+    vLayout->setSpacing(10);
+
+    container->setLayout(vLayout);
+
+    if (msgBoxLayout)
+    {
+        msgBoxLayout->addWidget(container, 0, 0, 1, msgBoxLayout->columnCount());
+    }
+
+    gifLabel->move(200, -50);
+    gifLabel->resize(400, 1100);
+
+    QMovie *movie = new QMovie("://qml/botguy_noMargin.gif");
+    movie->setScaledSize(QSize(200, 240));
+    gifLabel->setMovie(movie);
+    movie->start();
+    gifLabel->show();
+
+    msgBox.setText("");
+    msgBox.exec();
 }
 
 QString Create3Widget::getIP()
@@ -545,8 +606,6 @@ void Create3Widget::run()
             create3_wait();
 
             printf("Done!\n");
-
-            
         }
         // catch (const std::exception &e)
         catch (const std::exception &e)

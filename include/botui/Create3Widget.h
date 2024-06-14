@@ -27,6 +27,7 @@ private slots:
 	void toggleChanged();
 	void indexChanged(int index);
 	void run();
+	void rebootBox();
 
 private:
 	Ui::Create3Widget *ui;
