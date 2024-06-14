@@ -56,7 +56,7 @@
        <family>Courier</family>
        <pointsize>35</pointsize>
        <italic>false</italic>
-       <fontweight></fontweight>
+       <bold>false</bold>
       </font>
      </property>
      <property name="styleSheet">
