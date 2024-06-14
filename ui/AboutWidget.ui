@@ -56,7 +56,7 @@
        <family>Courier</family>
        <pointsize>35</pointsize>
        <italic>false</italic>
-       <bold>false</bold>
+       <fontweight></fontweight>
       </font>
      </property>
      <property name="styleSheet">
@@ -106,7 +106,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Copyright © 2012 - 2023</string>
+      <string>Copyright © 2012 - 2024</string>
      </property>
      <property name="textFormat">
       <enum>Qt::MarkdownText</enum>
