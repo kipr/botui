@@ -150,16 +150,26 @@ void HomeWidget::reboot()
 
 	msgBox.setText("");
 	msgBox.exec();
-	QProcess create3ServerStop;
-	create3ServerStop.start("sudo", QStringList() << "systemctl" << "stop" << "create3_server.service");
-	bool create3StopRet = create3ServerStop.waitForFinished();
-	if (create3StopRet == false)
-		QMessageBox::information(this, "Failed", "Create 3 server could not be stopped.");
-	const int rebootRet = QProcess::execute("reboot");
-	if (create3StopRet == false || rebootRet < 0)
-		QMessageBox::information(this, "Failed", "Reboot failed.");
+	 // Stop create3_server.service
+    QProcess create3ServerStop;
+    create3ServerStop.start("sudo", QStringList() << "systemctl" << "stop" << "create3_server.service");
+    bool create3StopRet = create3ServerStop.waitForFinished();
+    if (!create3StopRet || create3ServerStop.exitCode() != 0)
+    {
+        QMessageBox::information(this, "Failed", "Create 3 server could not be stopped.");
+        return;
+    }
+
+    // Reboot the system
+    QProcess rebootProcess;
+    rebootProcess.start("sudo", QStringList() << "reboot");
+    bool rebootRet = rebootProcess.waitForFinished();
+    if (!rebootRet || rebootProcess.exitCode() != 0)
+    {
+        QMessageBox::information(this, "Failed", "Reboot failed.");
+    }
 #else
-	QMessageBox::information(this, "Not Available", "Reboot is only available on the kovan.");
+    QMessageBox::information(this, "Not Available", "Reboot is only available on the kovan.");
 #endif
 }
 
