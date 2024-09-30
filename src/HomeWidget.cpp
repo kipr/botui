@@ -25,7 +25,7 @@
 #include "Program.h"
 #include "UiStandards.h"
 #include "LockScreen.h"
-
+QLabel *backgroundImageLabel;
 HomeWidget::HomeWidget(Device *device, QWidget *parent)
     : StandardWidget(device, parent),
       ui(new Ui::HomeWidget)
@@ -33,6 +33,21 @@ HomeWidget::HomeWidget(Device *device, QWidget *parent)
     ui->setupUi(this);
     performStandardSetup(UiStandards::homeString());
 
+    backgroundImageLabel = new QLabel(this);
+    backgroundImageLabel->setGeometry(0, 0, 800, 480);
+    backgroundImageLabel->setPixmap(QPixmap(":/qml/Event_Mode_Background.png"));
+    backgroundImageLabel->setScaledContents(true);
+    backgroundImageLabel->lower();
+    backgroundImageLabel->hide();
+
+    bool defaultEventState = getEventModeStateDefault();
+
+    if (defaultEventState)
+    {
+        
+        backgroundImageLabel->show();
+    }
+    qDebug() << "HOME default event state: " << defaultEventState;
     connect(ui->programs, SIGNAL(clicked()), SLOT(programs()));
     connect(ui->fileManager, SIGNAL(clicked()), SLOT(fileManager()));
     connect(ui->motorsSensors, SIGNAL(clicked()), SLOT(motorsSensors()));
@@ -57,6 +72,18 @@ HomeWidget::~HomeWidget()
     delete ui;
 }
 
+void HomeWidget::handleEventMode()
+{
+    qDebug() << "Inside handleEvent Mode HOME";
+    backgroundImageLabel->show();
+
+}
+void HomeWidget::updateEventModeLabel()
+{
+
+    backgroundImageLabel->hide();
+
+}
 void HomeWidget::programs()
 {
     RootController::ref().presentWidget(Program::instance()->isRunning()
@@ -81,7 +108,12 @@ void HomeWidget::settings()
 
 void HomeWidget::about()
 {
-    RootController::ref().presentWidget(new AboutWidget(device()));
+    AboutWidget *aboutWidget = new AboutWidget(device());
+
+    connect(aboutWidget, &AboutWidget::eventModeEnabled, this, &HomeWidget::handleEventMode);
+    connect(aboutWidget, &AboutWidget::eventModeDisabled, this, &HomeWidget::updateEventModeLabel);
+
+    RootController::ref().presentWidget(aboutWidget);
 }
 
 void HomeWidget::shutDown()
