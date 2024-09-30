@@ -17,9 +17,15 @@ AboutWidget::AboutWidget(Device *device, QWidget *parent)
   ui->setupUi(this);
   // Setup the UI
   performStandardSetup(tr("About"));
-  // Version Number
-  // ui->version->setText("Version 30.2.0");
+
+  //Set up emission signals for Event Mode enabled/disabled
+  setupConnections(this);
+
+  //Event Mode persistent state check
+  getEventModeState();
+  
   const bool on = NetworkManager::ref().isOn();
+  // Version Number
   ui->version->setText(device->name() + " v" + device->version());
 
   // Display Serial Number
@@ -37,7 +43,7 @@ AboutWidget::AboutWidget(Device *device, QWidget *parent)
     myProcess->start("cat", arguments);
     myProcess->waitForFinished();
     QByteArray output = myProcess->readAllStandardOutput();
-  
+
     // If eth0 is active
     if (output.at(0) == '1')
     {
@@ -78,12 +84,79 @@ AboutWidget::AboutWidget(Device *device, QWidget *parent)
   }
 
   connect(ui->developerList, SIGNAL(clicked()), SLOT(developerList()));
-
+  connect(ui->toggleSwitch, SIGNAL(stateChanged(int)), this, SLOT(eventModeBackground(int)));
 }
 
 AboutWidget::~AboutWidget()
 {
   delete ui;
+}
+
+void AboutWidget::getEventModeState()
+{
+  QProcess eventModeProcess;
+  QString command = "grep '^EVENT_MODE' /home/kipr/Documents/wifiConnectionMode.txt | awk '{print $2}'";
+
+  eventModeProcess.start("bash", QStringList() << "-c" << command);
+  eventModeProcess.waitForFinished();
+
+  QString output = eventModeProcess.readAllStandardOutput().trimmed();
+
+  if (!output.isEmpty())
+  {
+    qDebug() << "CURRENT EVENT_MODE is set to:" << output;
+    if (output == "true")
+    {
+      ui->toggleSwitch->setChecked(true);
+    }
+    else
+    {
+      ui->toggleSwitch->setChecked(false);
+    }
+  }
+  else
+  {
+    qDebug() << "Failed to read EVENT_MODE.";
+  }
+}
+
+void AboutWidget::setEventModeState(QString newState)
+{
+  QProcess process;
+  QString command = QString("sed -i 's/^EVENT_MODE.*/EVENT_MODE %1/' /home/kipr/Documents/wifiConnectionMode.txt").arg(newState);
+
+  process.start("bash", QStringList() << "-c" << command);
+  process.waitForFinished();
+
+  if (process.exitStatus() == QProcess::NormalExit)
+  {
+    qDebug() << "Successfully set EVENT_MODE to:" << newState;
+  }
+  else
+  {
+    qDebug() << "Failed to set EVENT_MODE.";
+  }
+}
+
+void AboutWidget::eventModeBackground(int checked)
+{
+
+  qDebug() << "Event Mode Background toggled";
+  qDebug() << "Checked: " << checked;
+  if (checked == 2) //Enable Event Mode
+  {
+
+    setEventModeState("true");
+    emit eventModeEnabled();
+    NetworkManager::ref().deactivateAP();
+  }
+  else //Disable Event Mode
+  {
+    setEventModeState("false");
+    emit eventModeDisabled();
+    NetworkManager::ref().enableAP();
+
+  }
 }
 
 void AboutWidget::developerList()
