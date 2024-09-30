@@ -11,39 +11,59 @@
 #include "Device.h"
 #include "ConnectWidget.h"
 #include "ManageNetworksWidget.h"
+
 #include "NetworkManager.h"
 #include "SystemUtils.h"
 #include "Execute.h"
-
+#include <QMessageBox>
 #include <QTimer>
-
+#include <QMovie>
+#include <QLabel>
 #include <QDebug>
+#include <QProcess>
+#include <QVBoxLayout>
+#include <QGridLayout>
+#include <QSize>
+#include <unistd.h>
+
+#define NM_STATE_CONNECTED_GLOBAL 70;
+QString RASPBERRYPI_TYPE_SETTINGS;
+QString WOMBAT_NAME;
+QString INITIAL_CONNECTION_CONFIG;
 
 NetworkSettingsWidget::NetworkSettingsWidget(Device *device, QWidget *parent)
-	: StandardWidget(device, parent), ui(new Ui::NetworkSettingsWidget)
+		: StandardWidget(device, parent), ui(new Ui::NetworkSettingsWidget)
 {
 	ui->setupUi(this);
 	performStandardSetup(tr("Network Settings"));
 
+	bool initializeEventState = getEventModeStateDefault();
+
+	if (initializeEventState) // Event Mode Enabled
+	{
+		eventModeEnabledState();
+	}
+	else // Event Mode Disabled
+	{
+		eventModeDisabledState();
+	}
+
+	qDebug() << "After initializeEventState";
+
 	enableCoolOffTimer = new QTimer(this);
 	enableCoolOffTimer->setSingleShot(true);
-	ui->connectionModeSelect->setCurrentIndex(0);
-	ui->ConnectButton->setEnabled(false);
+
 	QObject::connect(ui->ConnectButton, SIGNAL(clicked()), SLOT(connect()));
 	QObject::connect(ui->ManageButton, SIGNAL(clicked()), SLOT(manage()));
-
-	QObject::connect(ui->TournamentModeButton, SIGNAL(clicked()), SLOT(TournamentMode()));
+	QObject::connect(ui->toggleSwitch, SIGNAL(stateChanged(int)), this, SLOT(toggleChanged()));
+	QObject::connect(&NetworkManager::ref(),
+									 &NetworkManager::stateChangedBandBouncer,
+									 this,
+									 &NetworkSettingsWidget::onStateChanged);
 	NetworkManager::ref().connect(ui->connectionModeSelect, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
 
-	// TODO: put back after we support client mode WiFi
 	ui->ConnectButton->setVisible(true);
 	ui->ManageButton->setVisible(true);
-	ui->security->setVisible(false);
-	ui->securityLabel->setVisible(false);
-
-	QObject::connect(&NetworkManager::ref(),
-					 SIGNAL(stateChanged(const NetworkManager::State &, const NetworkManager::State &)),
-					 SLOT(stateChanged(const NetworkManager::State &, const NetworkManager::State &)));
 
 	QTimer *updateTimer = new QTimer(this);
 	QObject::connect(updateTimer, SIGNAL(timeout()), SLOT(updateInformation()));
@@ -52,17 +72,282 @@ NetworkSettingsWidget::NetworkSettingsWidget(Device *device, QWidget *parent)
 	updateInformation();
 }
 
-void NetworkSettingsWidget::TournamentMode()
+void NetworkSettingsWidget::eventModeEnabledState()
 {
-	system("sudo iwconfig wlan0 txpower 1");
-	QMessageBox msgBox;
-	msgBox.setText("Tournament Mode activated");
-	msgBox.exec();
+	// Basically, turn off all interactive widgets
+	ui->connectionModeSelect->clear();
+	ui->connectionModeSelect->addItems({"Event Mode"});
+	ui->connectionModeSelect->setEnabled(true);
+	ui->connectionModeSelect->setCurrentIndex(0);
+	ui->toggleSwitch->setEnabled(false);
+	
+	ui->ConnectButton->setEnabled(false);
+	ui->ManageButton->setEnabled(false);
+	ui->state->setText("");
+	ui->ssid->setText("");
+	ui->password->setText("");
+	ui->security->setText("");
+}
+
+void NetworkSettingsWidget::eventModeDisabledState()
+{
+	// Initialize as normal
+	getCurrentMode(); // Get current mode
+
+	getWombatName(); // Get Wombat name
+
+	INITIAL_CONNECTION_CONFIG = getConnectionConfig(); // Get initial connection config
+	RASPBERRYPI_TYPE_SETTINGS = "3B+";
+
+	if (RASPBERRYPI_TYPE_SETTINGS == "3B+") // if RaspberryPi is 3B+
+	{
+
+		if (INITIAL_CONNECTION_CONFIG.contains("band=a")) // If currently on 5GHz band
+		{
+			ui->toggleSwitch->setChecked(true); // 5GHz toggle side
+			ui->toggleSwitch->setEnabled(true); // If 3B+, can switch between 2.4GHz and 5GHz
+		}
+		else if (INITIAL_CONNECTION_CONFIG.contains("band=bg"))
+		{
+			ui->toggleSwitch->setChecked(false); // 2.4GHz toggle side
+			ui->toggleSwitch->setEnabled(true);	 // If 3B+, can switch between 2.4GHz and 5GHz
+		}
+	}
+
+	else if (RASPBERRYPI_TYPE_SETTINGS == "3B")
+	{
+		ui->toggleSwitch->setChecked(false); // 2.4GHz toggle side
+		ui->toggleSwitch->setEnabled(false); // If 3B, can only use 2.4GHz
+	}
+
+	ui->connectionModeSelect->clear();
+	ui->connectionModeSelect->addItems({"AP Mode", "Client Mode", "Wifi Off"});
+	ui->connectionModeSelect->setCurrentIndex(0);
+	ui->connectionModeSelect->setEnabled(true);
+	
+}
+
+void NetworkSettingsWidget::getCurrentMode()
+{
+	QProcess modeProcess;
+	QString command = "grep '^MODE' /home/kipr/Documents/wifiConnectionMode.txt | awk '{print $2}'";
+
+	modeProcess.start("bash", QStringList() << "-c" << command);
+	modeProcess.waitForFinished();
+
+	QString output = modeProcess.readAllStandardOutput().trimmed();
+
+	if (!output.isEmpty())
+	{
+		qDebug() << "CURRENT MODE is set to:" << output;
+	}
+	else
+	{
+		qDebug() << "Failed to read MODE.";
+	}
+}
+QString NetworkSettingsWidget::getRaspberryPiType()
+{
+	QStringList arguments;
+	arguments << "-c" << "cat /proc/cpuinfo | grep Revision | awk '{print $3}'";
+
+	QProcess *myProcess = new QProcess(this);
+	myProcess->start("/bin/sh", arguments); // Use /bin/sh or /bin/bash to interpret the command
+	myProcess->waitForFinished();
+	QByteArray output = myProcess->readAllStandardOutput();
+
+	qDebug() << "Revision code output: " << output;
+
+	if (output.contains("a020d3"))
+	{
+		RASPBERRYPI_TYPE_SETTINGS = "3B+";
+	}
+	else if (output.contains("a02082") || output.contains("a22082"))
+	{
+		RASPBERRYPI_TYPE_SETTINGS = "3B";
+	}
+
+	qDebug() << "RASPBERRYPI_TYPE_SETTINGS: " << RASPBERRYPI_TYPE_SETTINGS;
+	return RASPBERRYPI_TYPE_SETTINGS;
+}
+
+void NetworkSettingsWidget::getWombatName()
+{
+	QStringList arguments;
+	arguments << "-c" << "nmcli -t -f NAME connection show --active | grep 'wombat'";
+
+	QProcess *myProcess = new QProcess(this);
+	myProcess->start("/bin/sh", arguments); // Use /bin/sh or /bin/bash to interpret the command
+	myProcess->waitForFinished();
+	QByteArray output = myProcess->readAllStandardOutput();
+
+	qDebug() << "Wombat name output: " << output;
+
+	WOMBAT_NAME = QString(output).trimmed();
+}
+
+QString NetworkSettingsWidget::getConnectionConfig()
+{
+	QString command = QString("cat /etc/NetworkManager/system-connections/%1.nmconnection").arg(WOMBAT_NAME);
+
+	QProcess *myProcess = new QProcess(this);
+	myProcess->start("sudo", QStringList() << "/bin/sh" << "-c" << command);
+	myProcess->waitForFinished();
+	QByteArray output = myProcess->readAllStandardOutput();
+
+	qDebug() << "Connection config output: " << output;
+
+	return QString(output).trimmed();
+}
+
+void NetworkSettingsWidget::toggleChanged()
+{
+
+	// StandardWidget::disableMenuBar();
+	ui->toggleSwitch->setEnabled(false);
+	QString currentConfig = NetworkManager::ref().getAPConnectionConfig();
+	QString newBand;
+	int newChannel;
+	qDebug() << "toggle changed";
+
+	if (currentConfig.contains("band=a")) // Currently set to 5GHz band
+	{
+		if (QMessageBox::question(this, "Change Wifi Band?",
+															QString("You are about to change your Wifi Band from 5GHz to 2.4GHz. \n Do you want to continue?"),
+															QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
+		{
+
+			StandardWidget::enableMenuBar();
+			ui->toggleSwitch->setChecked(true); // Keep on 5GHz toggle side
+			ui->toggleSwitch->setEnabled(true);
+
+			return;
+		}
+
+		newBand = "bg"; // 2.4GHz band
+		newChannel = 1;
+	}
+	else if (currentConfig.contains("band=bg"))
+	{
+		if (QMessageBox::question(this, "Change Wifi Band?",
+															QString("You are about to change your Wifi Band from 2.4GHz to 5GHz. \n Do you want to continue?"),
+															QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
+		{
+
+			StandardWidget::enableMenuBar();
+			ui->toggleSwitch->setChecked(false); // Keep on 2.4GHz toggle side
+			ui->toggleSwitch->setEnabled(true);
+
+			return;
+		}
+		newBand = "a"; // 5GHz band
+		newChannel = 36;
+	}
+
+	NetworkManager::ref().changeWifiBands(newBand, newChannel);
+	rebootBox();
+}
+void NetworkSettingsWidget::onStateChanged(const QString &oldBand, const QString &newBand, int oldChannel, int newChannel)
+{
+
+	// If old Wifi band and channel are not the updated band and channel
+	if ((oldBand != newBand) || (oldChannel != newChannel))
+	{
+
+		if (msgBox)
+		{
+			msgBox->hide();
+			delete msgBox;
+			msgBox = nullptr;
+		}
+
+		ui->toggleSwitch->setEnabled(true); // Re-enable the toggle switch
+		StandardWidget::enableMenuBar();
+
+		qDebug() << "Wifi band change completed.";
+	}
+	else
+	{
+		qDebug() << "Wifi band change failed.";
+	}
+}
+void NetworkSettingsWidget::rebootBox()
+{
+
+	if (!msgBox)
+	{
+		// Create the QMessageBox
+		msgBox = new QMessageBox(this);
+		msgBox->setWindowTitle("Switch Wifi Bands");
+		msgBox->setMaximumSize(500, 480); // Limit the size of the QMessageBox
+		msgBox->setStandardButtons(QMessageBox::NoButton);
+
+		// Create QLabel for the GIF
+		QLabel *gifLabel = new QLabel();
+		gifLabel->setAlignment(Qt::AlignCenter); // Center the GIF label
+
+		// Create QLabel for the message text
+		QLabel *messageLabel = new QLabel("Switching Bands Now...");
+		messageLabel->setAlignment(Qt::AlignCenter); // Center the message label
+
+		// Create a container widget and a new vertical layout
+		QWidget *container = new QWidget();
+		QVBoxLayout *vLayout = new QVBoxLayout(container);
+
+		// Add the GIF label and message label to the vertical layout
+		vLayout->addWidget(gifLabel);
+		vLayout->addWidget(messageLabel);
+
+		// Adjust the vertical layout spacing and margins
+		vLayout->setSpacing(10);
+		vLayout->setContentsMargins(10, 10, 10, 10);
+
+		// Set the layout of the container
+		container->setLayout(vLayout);
+
+		// Access the internal layout of the QMessageBox
+		QGridLayout *msgBoxLayout = qobject_cast<QGridLayout *>(msgBox->layout());
+		if (msgBoxLayout)
+		{
+			msgBoxLayout->addWidget(container, 0, 0, 1, msgBoxLayout->columnCount());
+		}
+
+		// Setup and start the GIF movie
+		QMovie *movie = new QMovie("://qml/botguy_noMargin.gif");
+		movie->setScaledSize(QSize(200, 240));
+		gifLabel->setMovie(movie);
+		movie->start();
+
+		// Show the QMessageBox non-blocking
+		msgBox->setText(""); // Hide the default text to avoid duplication
+	}
+	msgBox->show();
+
+	// Debug information
+	qDebug() << "Message box displayed, starting wifi band change sequence...";
+}
+void NetworkSettingsWidget::editWifiConnectionMode(int newMode)
+{
+	QProcess process;
+	QString command = QString("sed -i 's/^MODE.*/MODE %1/' /home/kipr/Documents/wifiConnectionMode.txt").arg(newMode);
+
+	process.start("bash", QStringList() << "-c" << command);
+	process.waitForFinished();
+
+	if (process.exitStatus() == QProcess::NormalExit)
+	{
+		qDebug() << "Successfully set MODE to:" << newMode;
+	}
+	else
+	{
+		qDebug() << "Failed to set MODE.";
+	}
 }
 
 void NetworkSettingsWidget::indexChanged(int index)
 {
 	NetworkManager::ref().turnOn();
+	editWifiConnectionMode(index);
 
 	if (index == 0) // AP mode
 	{
