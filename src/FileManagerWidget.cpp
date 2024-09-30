@@ -16,7 +16,7 @@
 #include <iostream>
 #include <fstream>
 
-//#define HOME_PATH "/home/erin/Documents/KISS" // home programs folder for dev machine *CHANGE FOR YOUR SPECIFIC MACHINE*
+
 #ifdef WOMBAT
 #define HOME_PATH "/home/kipr/Documents/KISS"
 #endif
