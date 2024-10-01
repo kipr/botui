@@ -129,7 +129,7 @@ bool AboutWidget::getEventModeState()
 void AboutWidget::setEventModeState(QString newState)
 {
   QProcess process;
-  QString command = QString("sed -i 's/^EVENT_MODE.*/EVENT_MODE %1/' /home/kipr/Documents/wifiConnectionMode.txt").arg(newState);
+  QString command = QString("sed -i 's/^EVENT_MODE.*/EVENT_MODE %1/' /home/kipr/wifiConnectionMode.txt").arg(newState);
 
   process.start("bash", QStringList() << "-c" << command);
   process.waitForFinished();
