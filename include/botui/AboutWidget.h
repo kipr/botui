@@ -17,7 +17,7 @@ public:
 	AboutWidget(Device *device, QWidget *parent = nullptr);
 	~AboutWidget();
 
-	void getEventModeState();
+	bool getEventModeState();
 	void setEventModeState(QString newState);
 
 signals:

@@ -22,7 +22,11 @@ AboutWidget::AboutWidget(Device *device, QWidget *parent)
   setupConnections(this);
 
   //Event Mode persistent state check
-  getEventModeState();
+  bool eventModeState = getEventModeState();
+
+  if(eventModeState){
+    eventModeBackground(2);
+  }
   
   const bool on = NetworkManager::ref().isOn();
   // Version Number
@@ -37,7 +41,7 @@ AboutWidget::AboutWidget(Device *device, QWidget *parent)
 
     // Check if eth0 is active (/sys/class/net/eth0/carrier will output 1 if eth0 is active and 0 if it is not)
     QStringList arguments;
-    arguments << "/sys/class/net/eth0/carrier";
+    arguments << "/sys/class/net/eno1/carrier";
 
     QProcess *myProcess = new QProcess(parent);
     myProcess->start("cat", arguments);
@@ -92,10 +96,10 @@ AboutWidget::~AboutWidget()
   delete ui;
 }
 
-void AboutWidget::getEventModeState()
+bool AboutWidget::getEventModeState()
 {
   QProcess eventModeProcess;
-  QString command = "grep '^EVENT_MODE' /home/kipr/wifiConnectionMode.txt | awk '{print $2}'";
+  QString command = "grep '^EVENT_MODE' /home/erin/Documents/wifiConnectionMode.txt | awk '{print $2}'";
 
   eventModeProcess.start("bash", QStringList() << "-c" << command);
   eventModeProcess.waitForFinished();
@@ -108,10 +112,12 @@ void AboutWidget::getEventModeState()
     if (output == "true")
     {
       ui->toggleSwitch->setChecked(true);
+      return true;
     }
     else
     {
       ui->toggleSwitch->setChecked(false);
+      return false;
     }
   }
   else
@@ -123,7 +129,7 @@ void AboutWidget::getEventModeState()
 void AboutWidget::setEventModeState(QString newState)
 {
   QProcess process;
-  QString command = QString("sed -i 's/^EVENT_MODE.*/EVENT_MODE %1/' /home/kipr/wifiConnectionMode.txt").arg(newState);
+  QString command = QString("sed -i 's/^EVENT_MODE.*/EVENT_MODE %1/' /home/erin/Documents/wifiConnectionMode.txt").arg(newState);
 
   process.start("bash", QStringList() << "-c" << command);
   process.waitForFinished();
@@ -143,18 +149,23 @@ void AboutWidget::eventModeBackground(int checked)
 
   qDebug() << "Event Mode Background toggled";
   qDebug() << "Checked: " << checked;
+
+  ui->toggleSwitch->setEnabled(false);
+
   if (checked == 2) //Enable Event Mode
   {
 
     setEventModeState("true");
     emit eventModeEnabled();
     NetworkManager::ref().deactivateAP();
+    ui->toggleSwitch->setEnabled(true);
   }
   else //Disable Event Mode
   {
     setEventModeState("false");
     emit eventModeDisabled();
     NetworkManager::ref().enableAP();
+    ui->toggleSwitch->setEnabled(true);
 
   }
 }
