@@ -10,6 +10,11 @@ StatusBar::StatusBar(QWidget *parent)
 		: QStatusBar(parent)
 {
 	setSizeGripEnabled(false);
+	eventModeLabel = new QLabel("Event Mode Enabled", this);
+	eventModeLabel->setGeometry(300, 0, 800, 25);
+	eventModeLabel->setScaledContents(true);
+	eventModeLabel->lower();
+	eventModeLabel->hide();
 }
 
 void StatusBar::loadDefaultWidgets(Device *device)
@@ -20,26 +25,31 @@ void StatusBar::loadDefaultWidgets(Device *device)
 #ifdef NETWORK_ENABLED
 	addPermanentWidget(new NetworkStatusWidget(this));
 #endif
-
-	
 }
 
 void StatusBar::addPermanentEventModeLabel()
 {
-	qDebug() << "inside addPermanentEventModeLabel";
-	eventModeLabel = new QLabel("Event Mode Enabled", this);
-	eventModeLabel->setGeometry(300, 0, 800, 25);
-	eventModeLabel->setScaledContents(true);
-	eventModeLabel->raise();
-	eventModeLabel->show();
+
+	if (!eventModeLabel)
+	{
+			eventModeLabel = new QLabel("Event Mode Enabled", this);
+		eventModeLabel->setGeometry(340, 0, 800, 25);
+		eventModeLabel->setScaledContents(true);
+		eventModeLabel->lower();
+		eventModeLabel->show();
+	}
+	else
+	{
+	
+		eventModeLabel->show();
+	}
 }
 
 void StatusBar::removePermanentEventModeLabel()
 {
-	qDebug() << "inside removePermanentEventModeLabel";
+
 	if (eventModeLabel)
 	{
-		qDebug() << "delete eventModeLabel";
 		delete eventModeLabel;
 		eventModeLabel = nullptr;
 	}
