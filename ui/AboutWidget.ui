@@ -276,7 +276,7 @@
            </property>
            <layout class="QVBoxLayout" name="verticalLayout">
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="0,0,0">
+             <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="2,0,0">
               <property name="spacing">
                <number>0</number>
               </property>
@@ -302,7 +302,7 @@
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>80</width>
+                  <width>85</width>
                   <height>16777215</height>
                  </size>
                 </property>
@@ -310,7 +310,7 @@
                  <string>Disabled</string>
                 </property>
                 <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 <set>Qt::AlignCenter</set>
                 </property>
                </widget>
               </item>
@@ -324,15 +324,12 @@
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>100</width>
+                  <width>76</width>
                   <height>16777215</height>
                  </size>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QCheckBox::indicator{
-
-	margin-left: 7%;
-}
+                 <string notr="true">
 
 QCheckBox::indicator:checked{
 	image:url(&quot;://qml/right.png&quot;);
@@ -350,6 +347,9 @@ QCheckBox::indicator:unchecked{
                   <width>13</width>
                   <height>16</height>
                  </size>
+                </property>
+                <property name="tristate">
+                 <bool>false</bool>
                 </property>
                </widget>
               </item>
