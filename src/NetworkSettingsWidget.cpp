@@ -174,7 +174,7 @@ QString NetworkSettingsWidget::getRaspberryPiType()
 void NetworkSettingsWidget::getWombatName()
 {
 	QStringList arguments;
-	arguments << "-c" << "nmcli -t -f NAME connection show --active | grep 'wombat'";
+	arguments << "-c" << "nmcli -t -f NAME connection show --active | awk '/-wombat/'";
 
 	QProcess *myProcess = new QProcess(this);
 	myProcess->start("/bin/sh", arguments); // Use /bin/sh or /bin/bash to interpret the command
