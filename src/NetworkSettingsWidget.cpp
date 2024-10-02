@@ -209,6 +209,7 @@ void NetworkSettingsWidget::toggleChanged()
 	QString newBand;
 	int newChannel;
 	qDebug() << "toggle changed";
+	qDebug() << "Current Config after toggle click: " << currentConfig;
 
 	if (currentConfig.contains("band=a")) // Currently set to 5GHz band
 	{
@@ -246,6 +247,8 @@ void NetworkSettingsWidget::toggleChanged()
 
 	NetworkManager::ref().changeWifiBands(newBand, newChannel);
 	rebootBox();
+	currentConfig = NetworkManager::ref().getAPConnectionConfig();
+	qDebug() << "Updated Config after toggling change: " << currentConfig;
 }
 void NetworkSettingsWidget::onStateChanged(const QString &oldBand, const QString &newBand, int oldChannel, int newChannel)
 {
