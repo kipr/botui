@@ -265,14 +265,30 @@ void NetworkManager::changeWifiBands(QString band, int channel)
   foreach (const QDBusObjectPath &activeConnectionPath, activeConnections)
   {
     OrgFreedesktopNetworkManagerConnectionActiveInterface activeConn(NM_SERVICE, activeConnectionPath.path(), QDBusConnection::systemBus());
+    qDebug() << "Active connection UUID:" << activeConn.uuid();
     if (activeConn.uuid() == connectionUUID)
     {
       correctConnectionPath = activeConnectionPath;
       break;
     }
   }
+  qDebug() << "Correct connection ssid " << connectionSettings[NM_802_11_WIRELESS_KEY]["ssid"].toString();
+  QPair<Connection, QDBusObjectPath> correctConnectionPair = getConnection(connectionSettings[NM_802_11_WIRELESS_KEY]["ssid"].toString());
 
-  nm.ActivateConnection(correctConnectionPath, devicePath, QDBusObjectPath("/"));
+  
+
+  QDBusPendingReply<QDBusObjectPath> reply = m_nm->ActivateConnection(correctConnectionPair.second, devicePath, QDBusObjectPath("/"));
+  reply.waitForFinished();
+  getReply(reply);
+
+  if (reply.isError())
+  {
+    qWarning() << "Error in ActivateConnection:" << reply.error().message();
+    return;
+  }
+
+  QDBusObjectPath result = reply.value();
+  qDebug() << "Connection activated successfully:" << result.path();
 
   QTimer::singleShot(1000, this, [this, oldBand, oldChannel, apPath]() mutable
                      {
