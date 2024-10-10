@@ -32,7 +32,7 @@ QString WOMBAT_NAME;
 QString INITIAL_CONNECTION_CONFIG;
 
 NetworkSettingsWidget::NetworkSettingsWidget(Device *device, QWidget *parent)
-		: StandardWidget(device, parent), ui(new Ui::NetworkSettingsWidget)
+		: StandardWidget(device, parent), ui(new Ui::NetworkSettingsWidget), enableCoolOffTimer(new QTimer(this)), msgBox(nullptr)
 {
 	ui->setupUi(this);
 	performStandardSetup(tr("Network Settings"));
@@ -80,7 +80,7 @@ void NetworkSettingsWidget::eventModeEnabledState()
 	ui->connectionModeSelect->setEnabled(true);
 	ui->connectionModeSelect->setCurrentIndex(0);
 	ui->toggleSwitch->setEnabled(false);
-	
+
 	ui->ConnectButton->setEnabled(false);
 	ui->ManageButton->setEnabled(false);
 	ui->state->setText("");
@@ -124,7 +124,6 @@ void NetworkSettingsWidget::eventModeDisabledState()
 	ui->connectionModeSelect->addItems({"AP Mode", "Client Mode", "Wifi Off"});
 	ui->connectionModeSelect->setCurrentIndex(0);
 	ui->connectionModeSelect->setEnabled(true);
-	
 }
 
 void NetworkSettingsWidget::getCurrentMode()
@@ -314,6 +313,10 @@ void NetworkSettingsWidget::rebootBox()
 		{
 			msgBoxLayout->addWidget(container, 0, 0, 1, msgBoxLayout->columnCount());
 		}
+		else
+		{
+			qDebug() << "msgBoxLayout is nullptr!"; // Debugging message if layout is nullptr
+		}
 
 		// Setup and start the GIF movie
 		QMovie *movie = new QMovie("://qml/botguy_noMargin.gif");
@@ -378,6 +381,10 @@ void NetworkSettingsWidget::indexChanged(int index)
 
 NetworkSettingsWidget::~NetworkSettingsWidget()
 {
+	if (msgBox)
+	{
+		msgBox->deleteLater(); // or delete msgBox; if you want to directly delete
+	}
 	delete ui;
 	delete enableCoolOffTimer;
 }

@@ -290,7 +290,7 @@ void NetworkManager::changeWifiBands(QString band, int channel)
   QDBusObjectPath result = reply.value();
   qDebug() << "Connection activated successfully:" << result.path();
 
-  QTimer::singleShot(1000, this, [this, oldBand, oldChannel, apPath]() mutable
+  QTimer::singleShot(3000, this, [this, oldBand, oldChannel, apPath]() mutable
                      {
 
   OrgFreedesktopNetworkManagerSettingsConnectionInterface connection(NM_SERVICE, apPath.path(), QDBusConnection::systemBus());
