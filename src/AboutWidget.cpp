@@ -99,7 +99,7 @@ AboutWidget::~AboutWidget()
 bool AboutWidget::getEventModeState()
 {
   QProcess eventModeProcess;
-  QString command = "grep '^EVENT_MODE' /home/kipr/wifiConnectionMode.txt | awk '{print $2}'";
+  QString command = "grep '^EVENT_MODE' /home/kipr/wombat-os/wifiConnectionMode.txt | awk '{print $2}'";
 
   eventModeProcess.start("bash", QStringList() << "-c" << command);
   eventModeProcess.waitForFinished();
@@ -129,7 +129,7 @@ bool AboutWidget::getEventModeState()
 void AboutWidget::setEventModeState(QString newState)
 {
   QProcess process;
-  QString command = QString("sed -i 's/^EVENT_MODE.*/EVENT_MODE %1/' /home/kipr/wifiConnectionMode.txt").arg(newState);
+  QString command = QString("sed -i 's/^EVENT_MODE.*/EVENT_MODE %1/' /home/kipr/wombat-os/wifiConnectionMode.txt").arg(newState);
 
   process.start("bash", QStringList() << "-c" << command);
   process.waitForFinished();
