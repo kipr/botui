@@ -11,7 +11,7 @@ StatusBar::StatusBar(QWidget *parent)
 {
 	setSizeGripEnabled(false);
 	eventModeLabel = new QLabel("Event Mode Enabled", this);
-	eventModeLabel->setGeometry(340, 0, 800, 25);
+	eventModeLabel->setGeometry(332, 0, 800, 25);
 	eventModeLabel->setScaledContents(true);
 	eventModeLabel->lower();
 	eventModeLabel->hide();
@@ -33,7 +33,7 @@ void StatusBar::addPermanentEventModeLabel()
 	if (!eventModeLabel)
 	{
 			eventModeLabel = new QLabel("Event Mode Enabled", this);
-		eventModeLabel->setGeometry(340, 0, 800, 25);
+		eventModeLabel->setGeometry(332, 0, 800, 25);
 		eventModeLabel->setScaledContents(true);
 		eventModeLabel->lower();
 		eventModeLabel->show();
