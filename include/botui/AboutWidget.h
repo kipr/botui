@@ -19,6 +19,7 @@ public:
 
 	bool getEventModeState();
 	void setEventModeState(QString newState);
+	QString getRaspberryPiType();
 
 signals:
 	void eventModeEnabled();

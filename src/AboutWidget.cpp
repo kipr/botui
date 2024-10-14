@@ -18,16 +18,21 @@ AboutWidget::AboutWidget(Device *device, QWidget *parent)
   // Setup the UI
   performStandardSetup(tr("About"));
 
-  //Set up emission signals for Event Mode enabled/disabled
+  // Set up emission signals for Event Mode enabled/disabled
   setupConnections(this);
 
-  //Event Mode persistent state check
+  // Event Mode persistent state check
   bool eventModeState = getEventModeState();
 
-  if(eventModeState){
+  if (eventModeState)
+  {
     eventModeBackground(2);
   }
-  
+
+  QString piType = getRaspberryPiType();
+
+  ui->piType->setText(piType);
+
   const bool on = NetworkManager::ref().isOn();
   // Version Number
   ui->version->setText(device->name() + " v" + device->version());
@@ -96,6 +101,42 @@ AboutWidget::~AboutWidget()
   delete ui;
 }
 
+QString AboutWidget::getRaspberryPiType()
+{
+  QProcess process;
+  QString command = "awk '/Revision/ {print $3}' /proc/cpuinfo"; // Corrected command syntax
+
+  process.start("bash", QStringList() << "-c" << command);
+  process.waitForFinished();
+  QByteArray output = process.readAllStandardOutput(); // Fixed this line to use process directly
+
+  QString piType;
+  if (process.exitStatus() == QProcess::NormalExit && process.exitCode() == 0) // Check exit code
+  {
+    qDebug() << "Successfully got Raspberry Pi Type:" << output.trimmed(); // Trim output to remove whitespace
+
+  
+    if(output.trimmed() == "a020d3" || output.trimmed() == "a020d4")
+    {
+      piType = "3B+";
+    }
+    else if(output.trimmed() == "a02082" || output.trimmed() == "a22082" || output.trimmed() == "a32082" || output.trimmed() == "a52082" || output.trimmed() == "a22083")
+    {
+      piType = "3B";
+    }
+    else
+    {
+      piType = "Unknown";
+    }
+  }
+  else
+  {
+    qDebug() << "Failed to get Raspberry Pi type. Exit Code:" << process.exitCode();
+  }
+
+  return piType; // Convert QByteArray to QString and trim
+}
+
 bool AboutWidget::getEventModeState()
 {
   QProcess eventModeProcess;
@@ -152,7 +193,7 @@ void AboutWidget::eventModeBackground(int checked)
 
   ui->toggleSwitch->setEnabled(false);
 
-  if (checked == 2) //Enable Event Mode
+  if (checked == 2) // Enable Event Mode
   {
 
     setEventModeState("true");
@@ -160,13 +201,12 @@ void AboutWidget::eventModeBackground(int checked)
     NetworkManager::ref().deactivateAP();
     ui->toggleSwitch->setEnabled(true);
   }
-  else //Disable Event Mode
+  else // Disable Event Mode
   {
     setEventModeState("false");
     emit eventModeDisabled();
     NetworkManager::ref().enableAP();
     ui->toggleSwitch->setEnabled(true);
-
   }
 }
 
