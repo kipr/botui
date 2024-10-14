@@ -618,28 +618,7 @@ NetworkManager::NetworkManager()
           this)),
       m_device(0), m_wifi(0), m_dev(nullptr)
 {
-  QStringList arguments;
-  arguments << "-c" << "cat /proc/cpuinfo | grep Revision | awk '{print $3}'";
 
-  QProcess *myProcess = new QProcess(this);
-  myProcess->start("/bin/sh", arguments); // Use /bin/sh or /bin/bash to interpret the command
-  myProcess->waitForFinished();
-  QByteArray output = myProcess->readAllStandardOutput();
-
-  qDebug() << "Revision code output: " << output;
-
-  // if (output.contains("a020d3"))
-  // {
-  //   RASPBERRYPI_TYPE = "3B+";
-  // }
-  // else if (output.contains("a02082") || output.contains("a22082"))
-  // {
-  //   RASPBERRYPI_TYPE = "3B";
-  // }
-
-  RASPBERRYPI_TYPE = "3B+";
-
-  qDebug() << "RASPBERRYPI_TYPE: " << RASPBERRYPI_TYPE;
 
   // Register our metatype with dbus
   qDBusRegisterMetaType<Connection>();
