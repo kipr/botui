@@ -129,7 +129,7 @@ void NetworkSettingsWidget::eventModeDisabledState()
 void NetworkSettingsWidget::getCurrentMode()
 {
 	QProcess modeProcess;
-	QString command = "grep '^MODE' /home/kipr/wombat-os/wifiConnectionMode.txt | awk '{print $2}'";
+	QString command = "grep '^MODE' /home/kipr/wombat-os/configFiles/wifiConnectionMode.txt | awk '{print $2}'";
 
 	modeProcess.start("bash", QStringList() << "-c" << command);
 	modeProcess.waitForFinished();
@@ -335,7 +335,7 @@ void NetworkSettingsWidget::rebootBox()
 void NetworkSettingsWidget::editWifiConnectionMode(int newMode)
 {
 	QProcess process;
-	QString command = QString("sed -i 's/^MODE.*/MODE %1/' /home/kipr/wombat-os/wifiConnectionMode.txt").arg(newMode);
+	QString command = QString("sed -i 's/^MODE.*/MODE %1/' /home/kipr/wombat-os/configFiles/wifiConnectionMode.txt").arg(newMode);
 
 	process.start("bash", QStringList() << "-c" << command);
 	process.waitForFinished();

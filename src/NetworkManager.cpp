@@ -557,7 +557,7 @@ QString NetworkManager::ipAddress() const
 bool NetworkManager::eventModeState()
 {
   QProcess eventModeProcess;
-  QString command = "grep '^EVENT_MODE' /home/kipr/wombat-os/wifiConnectionMode.txt | awk '{print $2}'";
+  QString command = "grep '^EVENT_MODE' /home/kipr/wombat-os/configFiles/wifiConnectionMode.txt | awk '{print $2}'";
 
   eventModeProcess.start("bash", QStringList() << "-c" << command);
   eventModeProcess.waitForFinished();
