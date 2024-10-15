@@ -44,37 +44,39 @@ public:
   ~NetworkManager();
 
   void init(const Device *device);
-
   void addNetwork(const Network &network);
   void forgetNetwork(const Network &network);
+  void getAPConnection(QString ssid) const;
+  void changeWifiBands(QString band, int channel);
+  void requestScan();
+  void deactivateAP();
+
+
+  bool isOn() const;
+  bool isPersistentOn() const;
+  bool isActiveConnectionOn() const;
+  bool eventModeState();
+  
+  QString ipAddress() const;
+  QString ip4Address() const;
+  QString currentActiveConnectionName() const;
+  QString getAPName();
+  QString activeConnectionPassword() const;
+  QString getAPConnectionConfig();
+
+  NetworkList accessPoints() const;
   NetworkList networks() const;
 
   Network active() const;
 
-  QString activeConnectionPassword() const;
-
-  void requestScan();
-
-  bool isOn() const;
-  bool isPersistentOn() const;
-
   State state() const;
-
-  NetworkList accessPoints() const;
-
-  QString ipAddress() const;
-
-  QString ip4Address() const;
 
   Connection createAPConfig() const;
 
-  QString currentActiveConnectionName() const;
-
   QDBusObjectPath getAPSettingsObjectPath() const;
 
-  bool isActiveConnectionOn() const;
+  OrgFreedesktopNetworkManagerInterface *networkManagerInterface();
 
-  QString getAPName();
 public slots:
   bool turnOn();
   void turnOff();
@@ -90,6 +92,7 @@ signals:
   void accessPointRemoved(const Network &network);
 
   void stateChanged(const NetworkManager::State &newState, const NetworkManager::State &oldState);
+  void stateChangedBandBouncer(const QString &oldBand, const QString &newBand, int oldChannel, int newChannel);
 
 private slots:
   void nmAccessPointAdded(const QDBusObjectPath &path);

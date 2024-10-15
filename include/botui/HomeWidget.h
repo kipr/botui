@@ -24,7 +24,8 @@ public slots:
   void shutDown();
 	void reboot();
 	void lock();
-	
+	void handleEventMode();
+	void updateEventModeLabel();
 private:
 	Ui::HomeWidget *ui;
 };

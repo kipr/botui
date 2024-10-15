@@ -20,30 +20,35 @@ namespace Ui
 
 class NetworkSettingsWidget : public StandardWidget
 {
-Q_OBJECT
+	Q_OBJECT
 public:
 	NetworkSettingsWidget(Device *device, QWidget *parent = 0);
 	~NetworkSettingsWidget();
-	
+	QString getRaspberryPiType();
+	void getWombatName();
+	void editWifiConnectionMode(int newMode);
+	void eventModeEnabledState();
+	void eventModeDisabledState();
+	void getCurrentMode();
+	QString getConnectionConfig();
+
 public slots:
-	void TournamentMode();
 	void connect();
 	void manage();
 	void updateInformation();
-
-
 	
 private slots:
 	void stateChanged(const NetworkManager::State &newState, const NetworkManager::State &oldState);
 	void indexChanged(int index);
+	void toggleChanged();
+	void rebootBox();
+	 void onStateChanged(const QString &oldBand, const QString &newBand, int oldChannel, int newChannel);
 private:
 	Ui::NetworkSettingsWidget *ui;
 	QTimer *enableCoolOffTimer;
 	QProcess proc;
-	QMessageBox msgBox;
-	
+	QMessageBox *msgBox;
 };
-
 
 #endif
 

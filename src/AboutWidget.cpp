@@ -17,9 +17,24 @@ AboutWidget::AboutWidget(Device *device, QWidget *parent)
   ui->setupUi(this);
   // Setup the UI
   performStandardSetup(tr("About"));
-  // Version Number
-  // ui->version->setText("Version 30.2.0");
+
+  // Set up emission signals for Event Mode enabled/disabled
+  setupConnections(this);
+
+  // Event Mode persistent state check
+  bool eventModeState = getEventModeState();
+
+  if (eventModeState)
+  {
+    eventModeBackground(2);
+  }
+
+  QString piType = getRaspberryPiType();
+
+  ui->piType->setText(piType);
+
   const bool on = NetworkManager::ref().isOn();
+  // Version Number
   ui->version->setText(device->name() + " v" + device->version());
 
   // Display Serial Number
@@ -37,7 +52,7 @@ AboutWidget::AboutWidget(Device *device, QWidget *parent)
     myProcess->start("cat", arguments);
     myProcess->waitForFinished();
     QByteArray output = myProcess->readAllStandardOutput();
-  
+
     // If eth0 is active
     if (output.at(0) == '1')
     {
@@ -78,12 +93,121 @@ AboutWidget::AboutWidget(Device *device, QWidget *parent)
   }
 
   connect(ui->developerList, SIGNAL(clicked()), SLOT(developerList()));
-
+  connect(ui->toggleSwitch, SIGNAL(stateChanged(int)), this, SLOT(eventModeBackground(int)));
 }
 
 AboutWidget::~AboutWidget()
 {
   delete ui;
+}
+
+QString AboutWidget::getRaspberryPiType()
+{
+  QProcess process;
+  QString command = "awk '/Revision/ {print $3}' /proc/cpuinfo"; // Corrected command syntax
+
+  process.start("bash", QStringList() << "-c" << command);
+  process.waitForFinished();
+  QByteArray output = process.readAllStandardOutput(); // Fixed this line to use process directly
+
+  QString piType;
+  if (process.exitStatus() == QProcess::NormalExit && process.exitCode() == 0) // Check exit code
+  {
+    qDebug() << "Successfully got Raspberry Pi Type:" << output.trimmed(); // Trim output to remove whitespace
+
+  
+    if(output.trimmed() == "a020d3" || output.trimmed() == "a020d4")
+    {
+      piType = "3B+";
+    }
+    else if(output.trimmed() == "a02082" || output.trimmed() == "a22082" || output.trimmed() == "a32082" || output.trimmed() == "a52082" || output.trimmed() == "a22083")
+    {
+      piType = "3B";
+    }
+    else
+    {
+      piType = "Unknown";
+    }
+  }
+  else
+  {
+    qDebug() << "Failed to get Raspberry Pi type. Exit Code:" << process.exitCode();
+  }
+
+  return piType; // Convert QByteArray to QString and trim
+}
+
+bool AboutWidget::getEventModeState()
+{
+  QProcess eventModeProcess;
+  QString command = "grep '^EVENT_MODE' /home/kipr/wombat-os/configFiles/wifiConnectionMode.txt | awk '{print $2}'";
+
+  eventModeProcess.start("bash", QStringList() << "-c" << command);
+  eventModeProcess.waitForFinished();
+
+  QString output = eventModeProcess.readAllStandardOutput().trimmed();
+
+  if (!output.isEmpty())
+  {
+    qDebug() << "CURRENT EVENT_MODE is set to:" << output;
+    if (output == "true")
+    {
+      ui->toggleSwitch->setChecked(true);
+      return true;
+    }
+    else
+    {
+      ui->toggleSwitch->setChecked(false);
+      return false;
+    }
+  }
+  else
+  {
+    qDebug() << "Failed to read EVENT_MODE.";
+  }
+}
+
+void AboutWidget::setEventModeState(QString newState)
+{
+  QProcess process;
+  QString command = QString("sed -i 's/^EVENT_MODE.*/EVENT_MODE %1/' /home/kipr/wombat-os/configFiles/wifiConnectionMode.txt").arg(newState);
+
+  process.start("bash", QStringList() << "-c" << command);
+  process.waitForFinished();
+
+  if (process.exitStatus() == QProcess::NormalExit)
+  {
+    qDebug() << "Successfully set EVENT_MODE to:" << newState;
+  }
+  else
+  {
+    qDebug() << "Failed to set EVENT_MODE.";
+  }
+}
+
+void AboutWidget::eventModeBackground(int checked)
+{
+
+  qDebug() << "Event Mode Background toggled";
+  qDebug() << "Checked: " << checked;
+
+  ui->toggleSwitch->setEnabled(false);
+
+  if (checked == 2) // Enable Event Mode
+  {
+
+    setEventModeState("true");
+    emit eventModeEnabled();
+    NetworkManager::ref().deactivateAP();
+    ui->toggleSwitch->setEnabled(true);
+  }
+  else // Disable Event Mode
+  {
+    setEventModeState("false");
+    emit eventModeDisabled();
+    NetworkManager::ref().enableAP();
+    ui->toggleSwitch->setEnabled(true);
+  }
 }
 
 void AboutWidget::developerList()

@@ -2,7 +2,7 @@
 
 #include "NetworkManager.h"
 #include "SystemUtils.h"
-
+#include "StandardWidget.h"
 #include "org_freedesktop_NetworkManager.h"
 #include "org_freedesktop_NetworkManager_AccessPoint.h"
 #include "org_freedesktop_NetworkManager_Device.h"
@@ -42,14 +42,15 @@
 #define NM_802_11_MODE_AP 3
 #define NM_SERVICE "org.freedesktop.NetworkManager"
 #define NM_OBJECT "/org/freedesktop/NetworkManager"
+
 QDBusObjectPath AP_PATH;
 Connection DEFAULT_AP;
-
+QString RASPBERRYPI_TYPE;
 #ifdef WOMBAT
-#define WIFI_DEVICE "wlan0" // always wlan0 for raspberry pi
-#else
-#define WIFI_DEVICE "wlo1" // wlo1 for dev machine
-#endif
+ #define WIFI_DEVICE "wlan0" // always wlan0 for raspberry pi
+ #else
+ #define WIFI_DEVICE "wlo1" // wlo1 for dev machine
+ #endif
 
 
 #define AP_NAME m_dev->serial() + "-wombat"
@@ -62,6 +63,16 @@ NetworkManager::~NetworkManager()
 
 #define NM_802_11_WIRELESS_KEY ("802-11-wireless")
 #define NM_802_11_SECURITY_KEY ("802-11-wireless-security")
+
+OrgFreedesktopNetworkManagerInterface *NetworkManager::networkManagerInterface()
+{
+  static OrgFreedesktopNetworkManagerInterface nmInterface(
+      NM_SERVICE,
+      NM_OBJECT,
+      QDBusConnection::systemBus());
+
+  return &nmInterface;
+}
 
 void NetworkManager::addNetwork(const Network &network)
 {
@@ -213,11 +224,102 @@ void NetworkManager::turnOff()
   settings.endGroup();
 }
 
-bool NetworkManager::enableAP()
+QString NetworkManager::getAPConnectionConfig()
+{
+  QString command = QString("cat /etc/NetworkManager/system-connections/%1.nmconnection").arg(AP_NAME);
+
+  QProcess *myProcess = new QProcess(this);
+  myProcess->start("sudo", QStringList() << "/bin/sh" << "-c" << command);
+  myProcess->waitForFinished();
+  QByteArray output = myProcess->readAllStandardOutput();
+
+  return QString(output).trimmed();
+}
+
+void NetworkManager::changeWifiBands(QString band, int channel)
 {
 
   QDBusObjectPath apPath = getAPSettingsObjectPath();
- 
+
+  OrgFreedesktopNetworkManagerSettingsConnectionInterface connection(NM_SERVICE, apPath.path(), QDBusConnection::systemBus());
+
+  Connection connectionSettings = connection.GetSettings().value();
+
+  // Get old AP configuration
+  QString oldBand = connectionSettings[NM_802_11_WIRELESS_KEY]["band"].toString();
+  int oldChannel = connectionSettings[NM_802_11_WIRELESS_KEY]["channel"].toInt();
+
+  // Change band and channel to desired values
+  connectionSettings[NM_802_11_WIRELESS_KEY]["band"] = QVariant(band);
+  connectionSettings[NM_802_11_WIRELESS_KEY]["channel"] = QVariant(channel);
+  connection.Update(connectionSettings);
+
+  QDBusObjectPath devicePath = QDBusObjectPath(m_device->path());
+
+  QString connectionUUID = connectionSettings["connection"]["uuid"].toString();
+
+  OrgFreedesktopNetworkManagerInterface nm(NM_SERVICE, NM_OBJECT, QDBusConnection::systemBus());
+  QList<QDBusObjectPath> activeConnections = nm.activeConnections();
+
+  QDBusObjectPath correctConnectionPath;
+  foreach (const QDBusObjectPath &activeConnectionPath, activeConnections)
+  {
+    OrgFreedesktopNetworkManagerConnectionActiveInterface activeConn(NM_SERVICE, activeConnectionPath.path(), QDBusConnection::systemBus());
+    qDebug() << "Active connection UUID:" << activeConn.uuid();
+    if (activeConn.uuid() == connectionUUID)
+    {
+      correctConnectionPath = activeConnectionPath;
+      break;
+    }
+  }
+  qDebug() << "Correct connection ssid " << connectionSettings[NM_802_11_WIRELESS_KEY]["ssid"].toString();
+  QPair<Connection, QDBusObjectPath> correctConnectionPair = getConnection(connectionSettings[NM_802_11_WIRELESS_KEY]["ssid"].toString());
+
+  
+
+  QDBusPendingReply<QDBusObjectPath> reply = m_nm->ActivateConnection(correctConnectionPair.second, devicePath, QDBusObjectPath("/"));
+  reply.waitForFinished();
+  getReply(reply);
+
+  if (reply.isError())
+  {
+    qWarning() << "Error in ActivateConnection:" << reply.error().message();
+    return;
+  }
+
+  QDBusObjectPath result = reply.value();
+  qDebug() << "Connection activated successfully:" << result.path();
+
+  QTimer::singleShot(3000, this, [this, oldBand, oldChannel, apPath]() mutable
+                     {
+
+  OrgFreedesktopNetworkManagerSettingsConnectionInterface connection(NM_SERVICE, apPath.path(), QDBusConnection::systemBus());
+
+    auto connectionSettings = connection.GetSettings().value();
+    if (connectionSettings.isEmpty()) { // Check if the QMap is empty
+        qDebug() << "Failed to get settings or settings are empty.";
+        return;
+    }
+
+    QString newBand = connectionSettings[NM_802_11_WIRELESS_KEY]["band"].toString();
+    int newChannel = connectionSettings[NM_802_11_WIRELESS_KEY]["channel"].toInt();
+
+      emit stateChangedBandBouncer(oldBand, newBand, oldChannel, newChannel); });
+}
+
+bool NetworkManager::enableAP()
+{
+
+  QDBusPendingReply<bool> nmRunningReply = m_nm->state();
+
+  if (nmRunningReply.isError())
+  {
+    qDebug() << "NetworkManager is not running. Cannot enable AP.";
+    return false; // Ensure NetworkManager is running
+  }
+
+  QDBusObjectPath apPath = getAPSettingsObjectPath();
+
   if (apPath.path() != "") // AP Configuration already exists
   {
     qDebug() << "AP Path: " << apPath.path();
@@ -228,8 +330,25 @@ bool NetworkManager::enableAP()
     {
       m_nm->DeactivateConnection(m_device->activeConnection()); // Deactivate current connection
     }
+    else if (NetworkManager::ref().isActiveConnectionOn() == false)
+    {
+      turnOn();
+      uint stateReply;
+      while (true)
+      {
+        stateReply = m_device->state();
 
+        if (stateReply == 30)
+        {
+          qDebug() << "Reached Disconnected state";
+          break;
+        }
+        sleep(0.5);
+      }
+    }
     m_nm->ActivateConnection(apPath, devicePath, QDBusObjectPath("/"));
+
+    return true;
   }
   else
   { // AP Configuration doesn't exist yet
@@ -247,6 +366,16 @@ QDBusObjectPath NetworkManager::getAPSettingsObjectPath() const
   QDBusObjectPath settingsPath = getConnection(AP_NAME).second;
 
   return settingsPath;
+}
+
+void NetworkManager::deactivateAP()
+{
+  qDebug() << "inside deactivateAP()";
+  QDBusObjectPath apPath = getAPSettingsObjectPath();
+  QDBusObjectPath activePath = m_device->activeConnection();
+  qDebug() << "deactivateAP apPath: " << apPath.path();
+  qDebug() << "deactivateAP current activePath: " << activePath.path();
+  m_nm->DeactivateConnection(activePath);
 }
 
 bool NetworkManager::disableAP()
@@ -290,10 +419,19 @@ Connection NetworkManager::createAPConfig() const // Creates a default AP_SSID c
 
   DEFAULT_AP[NM_802_11_SECURITY_KEY]["psk"] = AP_PASSWORD;
 
-  
   DEFAULT_AP["ipv4"]["method"] = "shared";
   DEFAULT_AP["ipv6"]["method"] = "auto";
 
+  if (RASPBERRYPI_TYPE == "3B+")
+  {
+    DEFAULT_AP[NM_802_11_WIRELESS_KEY]["band"] = "a";
+    DEFAULT_AP[NM_802_11_WIRELESS_KEY]["channel"] = 36;
+  }
+  else if (RASPBERRYPI_TYPE == "3B")
+  {
+    DEFAULT_AP[NM_802_11_WIRELESS_KEY]["band"] = "bg";
+    DEFAULT_AP[NM_802_11_WIRELESS_KEY]["channel"] = 1;
+  }
 
   OrgFreedesktopNetworkManagerSettingsInterface settings(
       NM_SERVICE,
@@ -351,6 +489,10 @@ bool NetworkManager::isActiveConnectionOn() const
   if (m_device->activeConnection().path() != "/") // if there is an Active Connection path (i.e. not "/")
   {
     activeConnOn = true;
+  }
+  else
+  {
+    qDebug() << "activeConnection.path(): " << m_device->activeConnection().path();
   }
   return activeConnOn;
 }
@@ -412,6 +554,34 @@ QString NetworkManager::ipAddress() const
   return ret;
 }
 
+bool NetworkManager::eventModeState()
+{
+  QProcess eventModeProcess;
+  QString command = "grep '^EVENT_MODE' /home/kipr/wombat-os/configFiles/wifiConnectionMode.txt | awk '{print $2}'";
+
+  eventModeProcess.start("bash", QStringList() << "-c" << command);
+  eventModeProcess.waitForFinished();
+
+  QString output = eventModeProcess.readAllStandardOutput().trimmed();
+
+  if (!output.isEmpty())
+  {
+
+    if (output == "true")
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }
+  else
+  {
+    qDebug() << "Failed to read EVENT_MODE.";
+  }
+}
+
 QString NetworkManager::ip4Address() const
 {
   QString ipAddr;
@@ -432,7 +602,12 @@ QString NetworkManager::ip4Address() const
 void NetworkManager::init(const Device *device)
 {
   m_dev = device;
-  enableAP();
+  bool checkEventState = eventModeState();
+
+  if (!checkEventState) // Event Mode enabled
+  {
+    enableAP();
+  }
 }
 
 NetworkManager::NetworkManager()
@@ -443,6 +618,7 @@ NetworkManager::NetworkManager()
           this)),
       m_device(0), m_wifi(0), m_dev(nullptr)
 {
+
 
   // Register our metatype with dbus
   qDBusRegisterMetaType<Connection>();
@@ -667,13 +843,15 @@ NetworkManager::getAllConnections() const
 QPair<Connection, QDBusObjectPath>
 NetworkManager::getConnection(QString ssid) const
 {
-  // loop through all the found dbus path connections
+
   using ConnectionPathPair = QPair<Connection, QDBusObjectPath>;
   foreach (const ConnectionPathPair &pair, getAllConnections())
   {
+
     // if ssid matches, return the connection and the path
     if (pair.first[NM_802_11_WIRELESS_KEY]["ssid"].toString() == ssid)
     {
+
       return pair;
     }
   }

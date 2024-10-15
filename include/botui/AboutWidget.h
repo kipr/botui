@@ -1,7 +1,7 @@
 #ifndef _ABOUTWIDGET_H_
 #define _ABOUTWIDGET_H_
 
-#include "StandardWidget.h"
+#include "StandardWidget.h" // Include here if needed for inheritance
 #include <QProcess>
 
 namespace Ui
@@ -11,17 +11,27 @@ namespace Ui
 
 class AboutWidget : public StandardWidget
 {
-Q_OBJECT
+	Q_OBJECT
+
 public:
-	AboutWidget(Device *device, QWidget *parent = 0);
+	AboutWidget(Device *device, QWidget *parent = nullptr);
 	~AboutWidget();
-	
+
+	bool getEventModeState();
+	void setEventModeState(QString newState);
+	QString getRaspberryPiType();
+
+signals:
+	void eventModeEnabled();
+	void eventModeDisabled();
+
 public slots:
 	void developerList();
+	void eventModeBackground(int checked);
+
 private:
 	Ui::AboutWidget *ui;
 	QProcess proc;
 };
-
 
 #endif
