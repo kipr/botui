@@ -21,7 +21,7 @@ cmake_minimum_required(VERSION 2.8.11)
 set(LIBKAR_ROOT ${CMAKE_SOURCE_DIR}/../libkar)
 set(PCOMPILER_ROOT ${CMAKE_SOURCE_DIR}/../pcompiler)
 set(LIBKIPR_ROOT ${CMAKE_SOURCE_DIR}/../libwallaby)
-set(CREATE3_ROOT ${CMAKE_SOURCE_DIR}/../create3)
+
 
 include_directories(/usr/local/include)
 
@@ -124,7 +124,6 @@ target_link_libraries(botui
 	pcompiler
 	z
 	${OPENSSL_LIBRARIES}
-	create3_client
 )
 
 IF(wombat)
