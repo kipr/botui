@@ -5,7 +5,6 @@
 #include "CameraLiveWidget.h"
 #include "ServosWidget.h"
 #include "CombinedMotorWidget.h"
-#include "Create3Widget.h"
 #include "DepthSensorWidget.h"
 #include "SensorsWidget.h"
 #include "SensorListWidget.h"
@@ -23,8 +22,6 @@ MotorsSensorsWidget::MotorsSensorsWidget(Device *device, QWidget *parent)
 	connect(ui->sensorGraph, SIGNAL(clicked()), SLOT(sensorGraph()));
 	connect(ui->sensorList, SIGNAL(clicked()), SLOT(sensorList()));
 	connect(ui->camera, SIGNAL(clicked()), SLOT(camera()));
-	connect(ui->Create3, SIGNAL(clicked()), SLOT(Create3()));
-	
 
 }
 
@@ -56,11 +53,6 @@ void MotorsSensorsWidget::sensorList()
 void MotorsSensorsWidget::camera()
 {
 	RootController::ref().presentWidget(new CameraLiveWidget(device()));
-}
-
-void MotorsSensorsWidget::Create3()
-{
-	RootController::ref().presentWidget(new Create3Widget(device()));
 }
 
 

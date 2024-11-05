@@ -21,8 +21,7 @@ private slots:
 	void sensorGraph();
 	void sensorList();
 	void camera();
-	void Create3();
-	
+
 private:
 	Ui::MotorsSensorsWidget *ui;
 };
