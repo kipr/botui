@@ -51,8 +51,11 @@ void WombatUpdateWidget::update()
     // Check if update file exists
     QDir subDir = WombatUpdateWidget::mountDir;
     subDir.cd(selectedName);
-    if(!subDir.exists(WombatUpdateWidget::updateFileName))
-      QMessageBox::warning(this, "File not found", "The update file no longer exists");
+    QDir updateDir = subDir;
+    updateDir.cd("updateFiles")
+    
+    if(!updateDir.exists("wombat_update.sh"))
+      QMessageBox::warning(this, "File not found", "The update file wombat_update.sh does not exist");
     else {
       // Change UI to show output
       ui->updateConsole->setVisible(true);
