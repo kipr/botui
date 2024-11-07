@@ -52,7 +52,7 @@ void WombatUpdateWidget::update()
     QDir subDir = WombatUpdateWidget::mountDir;
     subDir.cd(selectedName);
     QDir updateDir = subDir;
-    updateDir.cd("updateFiles")
+    updateDir.cd("updateFiles");
     
     if(!updateDir.exists("wombat_update.sh"))
       QMessageBox::warning(this, "File not found", "The update file wombat_update.sh does not exist");
