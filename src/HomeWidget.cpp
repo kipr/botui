@@ -188,25 +188,10 @@ void HomeWidget::reboot()
     // Use a QTimer to delay the reboot process
     QTimer::singleShot(2000, this, [this, msgBox]()
                        {
-        qDebug() << "Stopping create3_server.service...";
-        // Stop create3_server.service
-        QProcess create3ServerStop;
-        create3ServerStop.start("sudo", QStringList() << "systemctl" << "stop" << "create3_server.service");
-        bool create3StopRet = create3ServerStop.waitForFinished();
-        qDebug() << "Create 3 server stop return value: " << create3StopRet;
-        qDebug() << "Create 3 server exit code: " << create3ServerStop.exitCode();
-       if(create3StopRet == false){
-        qDebug() << "create3StopRet: " << create3StopRet;
-        QMessageBox::information(this, "Failed", "Create 3 server could not be stopped.");
-
-       }
-			
-
         qDebug() << "Rebooting the system...";
         // Reboot the system
        const int rebootRet = QProcess::execute("reboot");
-		if(create3StopRet == false || rebootRet < 0)
-			QMessageBox::information(this, "Failed", "Reboot failed.");
+
 
         msgBox->close(); });
 
