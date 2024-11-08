@@ -91,11 +91,11 @@ void WombatUpdateWidget::refresh()
     // Look at each directory
     foreach (const QString &name, WombatUpdateWidget::mountDir.entryList(QDir::NoDotAndDotDot | QDir::Dirs))
     {
-      // Filter out directories without updates
+      // Filter out directories that aren't zip files
       QDir subDir = WombatUpdateWidget::mountDir;
       subDir.cd(name);
 
-      if (!subDir.exists(WombatUpdateWidget::updateFileName))
+      if (!selectedName.contains(".zip", Qt::CaseInsensitive))
         continue;
 
       // Add directory to the list
