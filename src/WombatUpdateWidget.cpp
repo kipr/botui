@@ -89,17 +89,14 @@ void WombatUpdateWidget::refresh()
   else
   {
     // Look at each directory
-    foreach (const QString &name, WombatUpdateWidget::mountDir.entryList(QDir::NoDotAndDotDot | QDir::Dirs))
+    foreach (const QString &file, WombatUpdateWidget::mountDir.entryList(QDir::Files))
     {
-      // Filter out directories that aren't zip files
-      QDir subDir = WombatUpdateWidget::mountDir;
-      subDir.cd(name);
-
-      if (!selectedName.contains(".zip", Qt::CaseInsensitive))
+      // Filter out files that aren't zip files
+      if (!file.contains(".zip", Qt::CaseInsensitive))
         continue;
 
       // Add directory to the list
-      ui->updateList->addItem(subDir.dirName());
+      ui->updateList->addItem(file);
     }
 
     // Unmount USB drive
