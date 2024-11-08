@@ -68,8 +68,7 @@ void WombatUpdateWidget::update()
       m_updateProc->setWorkingDirectory("/home/kipr");
       ui->updateConsole->setProcess(m_updateProc);
       connect(m_updateProc, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(updateFinished(int, QProcess::ExitStatus)));
-      QString selectedPath = WombatUpdateWidget::mountDir.absoluteFilePath(selectedName);
-      m_updateProc->start("sh", QStringList() << "updateMe.sh" << selectedPath);
+      m_updateProc->start("sh", QStringList() << "-c" << "/home/kipr/updateMe.sh /media/kipr/*/*");
 
       // Update script will reboot the controller
     }
