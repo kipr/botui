@@ -97,7 +97,7 @@ void NetworkSettingsWidget::eventModeDisabledState()
 	getWombatName(); // Get Wombat name
 
 	INITIAL_CONNECTION_CONFIG = getConnectionConfig(); // Get initial connection config
-	RASPBERRYPI_TYPE_SETTINGS = "3B+";
+	RASPBERRYPI_TYPE_SETTINGS = getRaspberryPiType();
 
 	if (RASPBERRYPI_TYPE_SETTINGS == "3B+") // if RaspberryPi is 3B+
 	{
@@ -156,14 +156,17 @@ QString NetworkSettingsWidget::getRaspberryPiType()
 	QByteArray output = myProcess->readAllStandardOutput();
 
 	qDebug() << "Revision code output: " << output;
-
-	if (output.contains("a020d3"))
+	if (output.trimmed() == "a020d3" || output.trimmed() == "a020d4")
 	{
-		RASPBERRYPI_TYPE_SETTINGS = "3B+";
+		piType = "3B+";
 	}
-	else if (output.contains("a02082") || output.contains("a22082"))
+	else if (output.trimmed() == "a02082" || output.trimmed() == "a22082" || output.trimmed() == "a32082" || output.trimmed() == "a52082" || output.trimmed() == "a22083")
 	{
-		RASPBERRYPI_TYPE_SETTINGS = "3B";
+		piType = "3B";
+	}
+	else
+	{
+		piType = "Unknown";
 	}
 
 	qDebug() << "RASPBERRYPI_TYPE_SETTINGS: " << RASPBERRYPI_TYPE_SETTINGS;
