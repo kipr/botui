@@ -158,15 +158,15 @@ QString NetworkSettingsWidget::getRaspberryPiType()
 	qDebug() << "Revision code output: " << output;
 	if (output.trimmed() == "a020d3" || output.trimmed() == "a020d4")
 	{
-		piType = "3B+";
+		RASPBERRYPI_TYPE_SETTINGS = "3B+";
 	}
 	else if (output.trimmed() == "a02082" || output.trimmed() == "a22082" || output.trimmed() == "a32082" || output.trimmed() == "a52082" || output.trimmed() == "a22083")
 	{
-		piType = "3B";
+		RASPBERRYPI_TYPE_SETTINGS = "3B";
 	}
 	else
 	{
-		piType = "Unknown";
+		RASPBERRYPI_TYPE_SETTINGS = "Unknown";
 	}
 
 	qDebug() << "RASPBERRYPI_TYPE_SETTINGS: " << RASPBERRYPI_TYPE_SETTINGS;
