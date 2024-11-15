@@ -68,7 +68,7 @@ void WombatUpdateWidget::update()
       m_updateProc->setWorkingDirectory("/home/kipr");
       ui->updateConsole->setProcess(m_updateProc);
       connect(m_updateProc, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(updateFinished(int, QProcess::ExitStatus)));
-      m_updateProc->start("sh", QStringList() << "-c" << "/home/kipr/updateMe.sh /media/kipr/*/*");
+      m_updateProc->start("sh", QStringList() << "-c" << "/home/kipr/updateMe.sh /media/kipr/*/wombat-os-31Update.zip");
 
       // Update script will reboot the controller
     }
