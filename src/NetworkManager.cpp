@@ -46,13 +46,12 @@
 QDBusObjectPath AP_PATH;
 Connection DEFAULT_AP;
 QString RASPBERRYPI_TYPE;
-// #ifdef WOMBAT
-// #define WIFI_DEVICE "wlan0" // always wlan0 for raspberry pi
-// #else
-// #define WIFI_DEVICE "wlo1" // wlo1 for dev machine
-// #endif
-
+#ifdef WOMBAT
+#define WIFI_DEVICE "wlan0" // always wlan0 for raspberry pi
+#else
 #define WIFI_DEVICE "wlo1" // wlo1 for dev machine
+#endif
+
 
 #define AP_NAME m_dev->serial() + "-wombat"
 #define AP_SSID (AP_NAME).toUtf8()
@@ -336,15 +335,31 @@ bool NetworkManager::enableAP()
     {
       qDebug() << "Missing 'band' or 'channel' in AP settings. Recreating AP configuration.";
 
-      //Delete previous AP Configuration
-      qDebug() << "Deleting the previous AP connection: " << apPath.path();
-      connection.Delete();
-      // Recreate AP configuration
-      createAPConfig();
-      sleep(3);
-      apPath = getAPSettingsObjectPath();
-      qDebug() << "New apPath" << apPath.path();
+      if (RASPBERRYPI_TYPE == "3B+")
+      {
+        settings[NM_802_11_WIRELESS_KEY]["band"] = "a";
+        settings[NM_802_11_WIRELESS_KEY]["channel"] = 36;
+      }
+      else if (RASPBERRYPI_TYPE == "3B")
+      {
+        settings[NM_802_11_WIRELESS_KEY]["band"] = "bg";
+        settings[NM_802_11_WIRELESS_KEY]["channel"] = 1;
+      }
+
+      qDebug() << "Modified AP settings: band and channel added.";
+
+      QDBusPendingReply<void> reply = connection.Update(settings);
+      reply.waitForFinished();
+
+      if (reply.isError())
+      {
+        qWarning() << "Error in Update:" << reply.error().message();
+        return false;
+      }
+   
       m_nm->ActivateConnection(apPath, devicePath, QDBusObjectPath("/"));
+
+      qDebug() << "AP settings updated and connection activated.";
       return true;
     }
 
