@@ -46,12 +46,13 @@
 QDBusObjectPath AP_PATH;
 Connection DEFAULT_AP;
 QString RASPBERRYPI_TYPE;
-#ifdef WOMBAT
- #define WIFI_DEVICE "wlan0" // always wlan0 for raspberry pi
- #else
- #define WIFI_DEVICE "wlo1" // wlo1 for dev machine
- #endif
+// #ifdef WOMBAT
+// #define WIFI_DEVICE "wlan0" // always wlan0 for raspberry pi
+// #else
+// #define WIFI_DEVICE "wlo1" // wlo1 for dev machine
+// #endif
 
+#define WIFI_DEVICE "wlo1" // wlo1 for dev machine
 
 #define AP_NAME m_dev->serial() + "-wombat"
 #define AP_SSID (AP_NAME).toUtf8()
@@ -275,8 +276,6 @@ void NetworkManager::changeWifiBands(QString band, int channel)
   qDebug() << "Correct connection ssid " << connectionSettings[NM_802_11_WIRELESS_KEY]["ssid"].toString();
   QPair<Connection, QDBusObjectPath> correctConnectionPair = getConnection(connectionSettings[NM_802_11_WIRELESS_KEY]["ssid"].toString());
 
-  
-
   QDBusPendingReply<QDBusObjectPath> reply = m_nm->ActivateConnection(correctConnectionPair.second, devicePath, QDBusObjectPath("/"));
   reply.waitForFinished();
   getReply(reply);
@@ -325,6 +324,29 @@ bool NetworkManager::enableAP()
     qDebug() << "AP Path: " << apPath.path();
     qDebug() << "AP Path Connection already exists";
     qDebug() << "AP Strength: " << active().strength();
+    OrgFreedesktopNetworkManagerSettingsConnectionInterface connection(NM_SERVICE, apPath.path(), QDBusConnection::systemBus());
+
+    Connection settings = connection.GetSettings().value();
+
+    bool containsBand = settings.contains("band");
+    bool containsChannel = settings.contains("channel");
+
+    // Check if the settings contain "band" and "channel"
+    if (!containsBand || !containsChannel)
+    {
+      qDebug() << "Missing 'band' or 'channel' in AP settings. Recreating AP configuration.";
+
+      //Delete previous AP Configuration
+      qDebug() << "Deleting the previous AP connection: " << apPath.path();
+      connection.Delete();
+      // Recreate AP configuration
+      createAPConfig();
+      sleep(3);
+      apPath = getAPSettingsObjectPath();
+      qDebug() << "New apPath" << apPath.path();
+      m_nm->ActivateConnection(apPath, devicePath, QDBusObjectPath("/"));
+      return true;
+    }
 
     if (NetworkManager::ref().isActiveConnectionOn() == true)
     {
@@ -684,30 +706,29 @@ NetworkManager::NetworkManager()
 
 void NetworkManager::getRaspberryPiType()
 {
-	QStringList arguments;
-	arguments << "-c" << "cat /proc/cpuinfo | grep Revision | awk '{print $3}'";
+  QStringList arguments;
+  arguments << "-c" << "cat /proc/cpuinfo | grep Revision | awk '{print $3}'";
 
-	QProcess *myProcess = new QProcess(this);
-	myProcess->start("/bin/sh", arguments); // Use /bin/sh or /bin/bash to interpret the command
-	myProcess->waitForFinished();
-	QByteArray output = myProcess->readAllStandardOutput();
+  QProcess *myProcess = new QProcess(this);
+  myProcess->start("/bin/sh", arguments); // Use /bin/sh or /bin/bash to interpret the command
+  myProcess->waitForFinished();
+  QByteArray output = myProcess->readAllStandardOutput();
 
-	qDebug() << "Revision code output: " << output;
-	if (output.trimmed() == "a020d3" || output.trimmed() == "a020d4")
-	{
-		RASPBERRYPI_TYPE = "3B+";
-	}
-	else if (output.trimmed() == "a02082" || output.trimmed() == "a22082" || output.trimmed() == "a32082" || output.trimmed() == "a52082" || output.trimmed() == "a22083")
-	{
-		RASPBERRYPI_TYPE = "3B";
-	}
-	else
-	{
-		RASPBERRYPI_TYPE = "Unknown";
-	}
+  qDebug() << "Revision code output: " << output;
+  if (output.trimmed() == "a020d3" || output.trimmed() == "a020d4")
+  {
+    RASPBERRYPI_TYPE = "3B+";
+  }
+  else if (output.trimmed() == "a02082" || output.trimmed() == "a22082" || output.trimmed() == "a32082" || output.trimmed() == "a52082" || output.trimmed() == "a22083")
+  {
+    RASPBERRYPI_TYPE = "3B";
+  }
+  else
+  {
+    RASPBERRYPI_TYPE = "Unknown";
+  }
 
-	qDebug() << "RASPBERRYPI_TYPE: " << RASPBERRYPI_TYPE;
-
+  qDebug() << "RASPBERRYPI_TYPE: " << RASPBERRYPI_TYPE;
 }
 
 void NetworkManager::nmAccessPointAdded(const QDBusObjectPath &accessPoint)
