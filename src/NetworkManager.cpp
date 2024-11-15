@@ -619,7 +619,7 @@ NetworkManager::NetworkManager()
       m_device(0), m_wifi(0), m_dev(nullptr)
 {
 
-
+  getRaspberryPiType();
   // Register our metatype with dbus
   qDBusRegisterMetaType<Connection>();
   qDBusRegisterMetaType<StringVariantMap>();
@@ -680,6 +680,34 @@ NetworkManager::NetworkManager()
 
   requestScan();
   qDebug() << "Active strength: " << active().strength();
+}
+
+void NetworkManager::getRaspberryPiType()
+{
+	QStringList arguments;
+	arguments << "-c" << "cat /proc/cpuinfo | grep Revision | awk '{print $3}'";
+
+	QProcess *myProcess = new QProcess(this);
+	myProcess->start("/bin/sh", arguments); // Use /bin/sh or /bin/bash to interpret the command
+	myProcess->waitForFinished();
+	QByteArray output = myProcess->readAllStandardOutput();
+
+	qDebug() << "Revision code output: " << output;
+	if (output.trimmed() == "a020d3" || output.trimmed() == "a020d4")
+	{
+		RASPBERRYPI_TYPE = "3B+";
+	}
+	else if (output.trimmed() == "a02082" || output.trimmed() == "a22082" || output.trimmed() == "a32082" || output.trimmed() == "a52082" || output.trimmed() == "a22083")
+	{
+		RASPBERRYPI_TYPE = "3B";
+	}
+	else
+	{
+		RASPBERRYPI_TYPE = "Unknown";
+	}
+
+	qDebug() << "RASPBERRYPI_TYPE: " << RASPBERRYPI_TYPE;
+
 }
 
 void NetworkManager::nmAccessPointAdded(const QDBusObjectPath &accessPoint)

@@ -50,6 +50,7 @@ public:
   void changeWifiBands(QString band, int channel);
   void requestScan();
   void deactivateAP();
+  void getRaspberryPiType();
 
 
   bool isOn() const;
