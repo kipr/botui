@@ -101,7 +101,8 @@ void NetworkSettingsWidget::eventModeDisabledState()
 
 	if (RASPBERRYPI_TYPE_SETTINGS == "3B+") // if RaspberryPi is 3B+
 	{
-
+		ui->TwoFourGHZLabel->setEnabled(true); // Enable 2.4GHz label
+		ui->FiveGHZLabel->setEnabled(true);	 // Enable 5GHz label
 		if (INITIAL_CONNECTION_CONFIG.contains("band=a")) // If currently on 5GHz band
 		{
 			ui->toggleSwitch->setChecked(true); // 5GHz toggle side
@@ -118,6 +119,8 @@ void NetworkSettingsWidget::eventModeDisabledState()
 	{
 		ui->toggleSwitch->setChecked(false); // 2.4GHz toggle side
 		ui->toggleSwitch->setEnabled(false); // If 3B, can only use 2.4GHz
+		ui->TwoFourGHZLabel->setEnabled(false); //Grey out 2.4GHz label
+		ui->FiveGHZLabel->setEnabled(false); //Grey out 5GHz label
 	}
 
 	ui->connectionModeSelect->clear();
