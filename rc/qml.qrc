@@ -3,6 +3,7 @@
         <file>qml/loading.qml</file>
         <file>qml/lock.qml</file>
         <file>qml/50-screenlock.png</file>
+        <file>qml/disabled.png</file>
         <file>qml/left.png</file>
         <file>qml/right.png</file>
         <file>qml/Event_Mode_Background.png</file>
