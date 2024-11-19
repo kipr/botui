@@ -55,6 +55,10 @@ void WombatUpdateWidget::update()
     {
       QMessageBox::warning(this, "File Not Found", "The selected folder is not a .zip folder");
     }
+    else if (!selectedName.contains("wombat-os", Qt::CaseInsensitive))
+    {
+      QMessageBox::warning(this, "File Not Found", "The selected folder is not a valid update file (missing wombat-os)");
+    }
     else
     {
       // Change UI to show output
@@ -68,7 +72,9 @@ void WombatUpdateWidget::update()
       m_updateProc->setWorkingDirectory("/home/kipr");
       ui->updateConsole->setProcess(m_updateProc);
       connect(m_updateProc, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(updateFinished(int, QProcess::ExitStatus)));
-      m_updateProc->start("sh", QStringList() << "-c" << "/home/kipr/updateMe.sh /media/kipr/*/wombat-os-31Update.zip");
+      QString command = QString("/home/kipr/updateMe.sh %1").arg("/media/kipr/*/" + selectedName);
+
+      m_updateProc->start("sh", QStringList() << "-c" << command);
 
       // Update script will reboot the controller
     }
