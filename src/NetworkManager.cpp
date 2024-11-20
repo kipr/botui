@@ -275,8 +275,6 @@ void NetworkManager::changeWifiBands(QString band, int channel)
   qDebug() << "Correct connection ssid " << connectionSettings[NM_802_11_WIRELESS_KEY]["ssid"].toString();
   QPair<Connection, QDBusObjectPath> correctConnectionPair = getConnection(connectionSettings[NM_802_11_WIRELESS_KEY]["ssid"].toString());
 
-  
-
   QDBusPendingReply<QDBusObjectPath> reply = m_nm->ActivateConnection(correctConnectionPair.second, devicePath, QDBusObjectPath("/"));
   reply.waitForFinished();
   getReply(reply);
@@ -325,6 +323,102 @@ bool NetworkManager::enableAP()
     qDebug() << "AP Path: " << apPath.path();
     qDebug() << "AP Path Connection already exists";
     qDebug() << "AP Strength: " << active().strength();
+    qDebug() << "State: " << m_device->state();
+    OrgFreedesktopNetworkManagerSettingsConnectionInterface connection(NM_SERVICE, apPath.path(), QDBusConnection::systemBus());
+
+    Connection settings = connection.GetSettings().value();
+    QMap<QString, QVariant> wirelessSettings = settings.value("802-11-wireless");
+
+    qDebug() << "Settings before anything: " << settings;
+    bool containsBand = wirelessSettings.contains("band");
+    bool containsChannel = wirelessSettings.contains("channel");
+
+    qDebug() << "AP settings: " << settings;
+    qDebug() << "Contains band? : " << containsBand;
+    qDebug() << "Contains channel? : " << containsChannel;
+
+    // Check if the settings contain "band" and "channel"
+    if (!containsBand || !containsChannel)
+    {
+      qDebug() << "Missing 'band' or 'channel' in AP settings. Recreating AP configuration.";
+
+      bool activeConnectionOn = NetworkManager::ref().isActiveConnectionOn();
+
+      if (activeConnectionOn == true)
+      {
+        qDebug() << "Current active connection: " << m_device->activeConnection().path();
+        QDBusPendingReply<void> deactivateReply = m_nm->DeactivateConnection(m_device->activeConnection());
+        deactivateReply.waitForFinished();
+
+        if (deactivateReply.isError())
+        {
+          qWarning() << "Error deactivating connection:" << deactivateReply.error().message();
+          return false; // Handle the error appropriately
+        }
+        else
+        {
+          qDebug() << "Connection deactivated successfully.";
+        }
+      }
+
+      if (RASPBERRYPI_TYPE == "3B+")
+      {
+        settings[NM_802_11_WIRELESS_KEY]["band"] = "a";
+        settings[NM_802_11_WIRELESS_KEY]["channel"] = 36;
+      }
+      else if (RASPBERRYPI_TYPE == "3B")
+      {
+        settings[NM_802_11_WIRELESS_KEY]["band"] = "bg";
+        settings[NM_802_11_WIRELESS_KEY]["channel"] = 1;
+      }
+
+      qDebug() << "Modified AP settings: band and channel added.";
+
+      QDBusPendingReply<void> reply = connection.Update(settings);
+      reply.waitForFinished();
+
+      if (reply.isError())
+      {
+        qWarning() << "Error in Update:" << reply.error().message();
+        return false;
+      }
+
+      if (reply.isValid())
+      {
+        qDebug() << "AP settings updated successfully.";
+        qDebug() << "Connection after update: " << connection.GetSettings().value();
+      }
+
+      QDBusPendingReply<void> activateReply = m_nm->ActivateConnection(apPath, devicePath, QDBusObjectPath("/"));
+      activateReply.waitForFinished();
+
+      if (activateReply.isError())
+      {
+        qWarning() << "Error activating connection:" << activateReply.error().message();
+        return false; // Handle the error appropriately
+      }
+      else
+      {
+        qDebug() << "Connection activated successfully.";
+      }
+    
+      qDebug() << "Device is now active. Proceeding to reapply settings.";
+
+      QDBusPendingReply<void> reapplyReply = m_device->Reapply(settings, 0, 0);
+      reapplyReply.waitForFinished();
+
+      if (reapplyReply.isError())
+      {
+        qWarning() << "Error in Reapply:" << reapplyReply.error().message();
+        return false;
+      }
+      else
+      {
+        qDebug() << "Reapply successful.";
+      }
+
+      return true;
+    }
 
     if (NetworkManager::ref().isActiveConnectionOn() == true)
     {
@@ -332,6 +426,7 @@ bool NetworkManager::enableAP()
     }
     else if (NetworkManager::ref().isActiveConnectionOn() == false)
     {
+     
       turnOn();
       uint stateReply;
       while (true)
@@ -619,7 +714,7 @@ NetworkManager::NetworkManager()
       m_device(0), m_wifi(0), m_dev(nullptr)
 {
 
-
+  getRaspberryPiType();
   // Register our metatype with dbus
   qDBusRegisterMetaType<Connection>();
   qDBusRegisterMetaType<StringVariantMap>();
@@ -680,6 +775,33 @@ NetworkManager::NetworkManager()
 
   requestScan();
   qDebug() << "Active strength: " << active().strength();
+}
+
+void NetworkManager::getRaspberryPiType()
+{
+  QStringList arguments;
+  arguments << "-c" << "cat /proc/cpuinfo | grep Revision | awk '{print $3}'";
+
+  QProcess *myProcess = new QProcess(this);
+  myProcess->start("/bin/sh", arguments); // Use /bin/sh or /bin/bash to interpret the command
+  myProcess->waitForFinished();
+  QByteArray output = myProcess->readAllStandardOutput();
+
+  qDebug() << "Revision code output: " << output;
+  if (output.trimmed() == "a020d3" || output.trimmed() == "a020d4")
+  {
+    RASPBERRYPI_TYPE = "3B+";
+  }
+  else if (output.trimmed() == "a02082" || output.trimmed() == "a22082" || output.trimmed() == "a32082" || output.trimmed() == "a52082" || output.trimmed() == "a22083")
+  {
+    RASPBERRYPI_TYPE = "3B";
+  }
+  else
+  {
+    RASPBERRYPI_TYPE = "Unknown";
+  }
+
+  qDebug() << "RASPBERRYPI_TYPE: " << RASPBERRYPI_TYPE;
 }
 
 void NetworkManager::nmAccessPointAdded(const QDBusObjectPath &accessPoint)

@@ -97,7 +97,16 @@ QCheckBox::indicator:checked{
 
 QCheckBox::indicator:unchecked{
 	image:url(&quot;://qml/left.png&quot;);
-}</string>
+}
+
+QCheckBox::indicator:disabled:checked {
+    image: url(&quot;://qml/disabled.png&quot;);
+}
+
+QCheckBox::indicator:disabled:unchecked {
+    image: url(&quot;://qml/disabled.png&quot;);
+}
+</string>
             </property>
             <property name="text">
              <string/>
