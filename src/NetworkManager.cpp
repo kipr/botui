@@ -47,22 +47,25 @@ QDBusObjectPath AP_PATH;
 Connection DEFAULT_AP;
 QString RASPBERRYPI_TYPE;
 #ifdef WOMBAT
- #define WIFI_DEVICE "wlan0" // always wlan0 for raspberry pi
- #else
- #define WIFI_DEVICE "wlo1" // wlo1 for dev machine
- #endif
+#define WIFI_DEVICE "wlan0" // always wlan0 for raspberry pi
+#else
+#define WIFI_DEVICE "wlo1" // wlo1 for dev machine
+#endif
 
 
 #define AP_NAME m_dev->serial() + "-wombat"
 #define AP_SSID (AP_NAME).toUtf8()
 #define AP_PASSWORD SystemUtils::sha256(m_dev->id()).left(6) + "00"
 
-NetworkManager::~NetworkManager()
-{
-}
+#define NETWORK_MANAGER_GROUP "NetworkManager"
+#define ON_KEY "on"
 
 #define NM_802_11_WIRELESS_KEY ("802-11-wireless")
 #define NM_802_11_SECURITY_KEY ("802-11-wireless-security")
+
+NetworkManager::~NetworkManager()
+{
+}
 
 OrgFreedesktopNetworkManagerInterface *NetworkManager::networkManagerInterface()
 {
@@ -74,6 +77,7 @@ OrgFreedesktopNetworkManagerInterface *NetworkManager::networkManagerInterface()
   return &nmInterface;
 }
 
+// Adds a new connection to the NetworkManager
 void NetworkManager::addNetwork(const Network &network)
 {
   // Yes, yes... this is a hard coded mess.
@@ -149,6 +153,7 @@ void NetworkManager::addNetwork(const Network &network)
   emit networkAdded(network);
 }
 
+// Forgets the given network
 void NetworkManager::forgetNetwork(const Network &network)
 {
   Q_FOREACH (const QDBusObjectPath &connectionPath, getAllConnectionPaths())
@@ -173,11 +178,13 @@ void NetworkManager::forgetNetwork(const Network &network)
   emit networkForgotten(network);
 }
 
+// Get the name of the AP connection
 QString NetworkManager::getAPName()
 {
   return AP_NAME;
 }
 
+// Returns list of all networks
 NetworkList NetworkManager::networks() const
 {
   NetworkList networks;
@@ -190,6 +197,7 @@ NetworkList NetworkManager::networks() const
   return networks;
 }
 
+// Scans for available networks
 void NetworkManager::requestScan()
 {
   if (!m_wifi)
@@ -202,9 +210,8 @@ void NetworkManager::requestScan()
   qWarning() << "NetworkManager::requestScan" << reply.error().message();
 }
 
-#define NETWORK_MANAGER_GROUP "NetworkManager"
-#define ON_KEY "on"
 
+// Turns on the network manager
 bool NetworkManager::turnOn()
 {
   m_nm->Enable(true);
@@ -215,6 +222,7 @@ bool NetworkManager::turnOn()
   return true; // TODO: This is a bad assumption
 }
 
+// Turns off the network manager
 void NetworkManager::turnOff()
 {
   m_nm->Enable(false);
@@ -224,6 +232,7 @@ void NetworkManager::turnOff()
   settings.endGroup();
 }
 
+// Returns the AP connection configuration
 QString NetworkManager::getAPConnectionConfig()
 {
   QString command = QString("cat /etc/NetworkManager/system-connections/%1.nmconnection").arg(AP_NAME);
@@ -236,6 +245,7 @@ QString NetworkManager::getAPConnectionConfig()
   return QString(output).trimmed();
 }
 
+// Changes the WiFi band and channel
 void NetworkManager::changeWifiBands(QString band, int channel)
 {
 
@@ -262,6 +272,8 @@ void NetworkManager::changeWifiBands(QString band, int channel)
   QList<QDBusObjectPath> activeConnections = nm.activeConnections();
 
   QDBusObjectPath correctConnectionPath;
+
+  // Loop through active connection paths to find the correct one
   foreach (const QDBusObjectPath &activeConnectionPath, activeConnections)
   {
     OrgFreedesktopNetworkManagerConnectionActiveInterface activeConn(NM_SERVICE, activeConnectionPath.path(), QDBusConnection::systemBus());
@@ -275,6 +287,7 @@ void NetworkManager::changeWifiBands(QString band, int channel)
   qDebug() << "Correct connection ssid " << connectionSettings[NM_802_11_WIRELESS_KEY]["ssid"].toString();
   QPair<Connection, QDBusObjectPath> correctConnectionPair = getConnection(connectionSettings[NM_802_11_WIRELESS_KEY]["ssid"].toString());
 
+  // Activate found connection 
   QDBusPendingReply<QDBusObjectPath> reply = m_nm->ActivateConnection(correctConnectionPair.second, devicePath, QDBusObjectPath("/"));
   reply.waitForFinished();
   getReply(reply);
@@ -305,6 +318,7 @@ void NetworkManager::changeWifiBands(QString band, int channel)
       emit stateChangedBandBouncer(oldBand, newBand, oldChannel, newChannel); });
 }
 
+// Enables AP connection
 bool NetworkManager::enableAP()
 {
 
@@ -323,27 +337,22 @@ bool NetworkManager::enableAP()
     qDebug() << "AP Path: " << apPath.path();
     qDebug() << "AP Path Connection already exists";
     qDebug() << "AP Strength: " << active().strength();
-    qDebug() << "State: " << m_device->state();
     OrgFreedesktopNetworkManagerSettingsConnectionInterface connection(NM_SERVICE, apPath.path(), QDBusConnection::systemBus());
 
     Connection settings = connection.GetSettings().value();
     QMap<QString, QVariant> wirelessSettings = settings.value("802-11-wireless");
 
-    qDebug() << "Settings before anything: " << settings;
     bool containsBand = wirelessSettings.contains("band");
     bool containsChannel = wirelessSettings.contains("channel");
 
-    qDebug() << "AP settings: " << settings;
-    qDebug() << "Contains band? : " << containsBand;
-    qDebug() << "Contains channel? : " << containsChannel;
-
-    // Check if the settings contain "band" and "channel"
+    // Check if the current settings contain "band" and "channel"
     if (!containsBand || !containsChannel)
     {
       qDebug() << "Missing 'band' or 'channel' in AP settings. Recreating AP configuration.";
 
       bool activeConnectionOn = NetworkManager::ref().isActiveConnectionOn();
 
+      // If there is a current connection active, deactivate it
       if (activeConnectionOn == true)
       {
         qDebug() << "Current active connection: " << m_device->activeConnection().path();
@@ -361,6 +370,7 @@ bool NetworkManager::enableAP()
         }
       }
 
+      // Assign the default band and channel based on the Raspberry Pi type
       if (RASPBERRYPI_TYPE == "3B+")
       {
         settings[NM_802_11_WIRELESS_KEY]["band"] = "a";
@@ -374,6 +384,7 @@ bool NetworkManager::enableAP()
 
       qDebug() << "Modified AP settings: band and channel added.";
 
+      // Update the connection settings
       QDBusPendingReply<void> reply = connection.Update(settings);
       reply.waitForFinished();
 
@@ -389,6 +400,7 @@ bool NetworkManager::enableAP()
         qDebug() << "Connection after update: " << connection.GetSettings().value();
       }
 
+      // Activate updated connection
       QDBusPendingReply<void> activateReply = m_nm->ActivateConnection(apPath, devicePath, QDBusObjectPath("/"));
       activateReply.waitForFinished();
 
@@ -401,7 +413,7 @@ bool NetworkManager::enableAP()
       {
         qDebug() << "Connection activated successfully.";
       }
-    
+
       qDebug() << "Device is now active. Proceeding to reapply settings.";
 
       QDBusPendingReply<void> reapplyReply = m_device->Reapply(settings, 0, 0);
@@ -426,14 +438,16 @@ bool NetworkManager::enableAP()
     }
     else if (NetworkManager::ref().isActiveConnectionOn() == false)
     {
-     
+
       turnOn();
       uint stateReply;
       while (true)
       {
         stateReply = m_device->state();
 
-        if (stateReply == 30)
+        if (stateReply == 30)NetworkManager::~NetworkManager()
+{
+}
         {
           qDebug() << "Reached Disconnected state";
           break;
@@ -456,6 +470,7 @@ bool NetworkManager::enableAP()
   return true;
 }
 
+// Returns AP settings object path
 QDBusObjectPath NetworkManager::getAPSettingsObjectPath() const
 {
   QDBusObjectPath settingsPath = getConnection(AP_NAME).second;
@@ -463,6 +478,7 @@ QDBusObjectPath NetworkManager::getAPSettingsObjectPath() const
   return settingsPath;
 }
 
+// Turns off the AP connection
 void NetworkManager::deactivateAP()
 {
   qDebug() << "inside deactivateAP()";
@@ -473,6 +489,7 @@ void NetworkManager::deactivateAP()
   m_nm->DeactivateConnection(activePath);
 }
 
+// Deletes the AP connection
 bool NetworkManager::disableAP()
 {
   foreach (const QDBusObjectPath &settingPath, getAllConnectionPaths())
@@ -493,7 +510,8 @@ bool NetworkManager::disableAP()
   return true;
 }
 
-Connection NetworkManager::createAPConfig() const // Creates a default AP_SSID configuration for settings
+// Creates a default AP_SSID configuration for settings
+Connection NetworkManager::createAPConfig() const 
 {
   qDebug() << "Creating AP Config...";
 
@@ -517,6 +535,7 @@ Connection NetworkManager::createAPConfig() const // Creates a default AP_SSID c
   DEFAULT_AP["ipv4"]["method"] = "shared";
   DEFAULT_AP["ipv6"]["method"] = "auto";
 
+  // Assign the default band and channel based on the Raspberry Pi type
   if (RASPBERRYPI_TYPE == "3B+")
   {
     DEFAULT_AP[NM_802_11_WIRELESS_KEY]["band"] = "a";
@@ -535,6 +554,7 @@ Connection NetworkManager::createAPConfig() const // Creates a default AP_SSID c
   QDBusObjectPath defaultPath = settings.AddConnection(DEFAULT_AP);
   qDebug() << "settings.AddConnection(DEFAULT_AP): " << defaultPath.path();
 
+  // Hardcode WiFi IP address
   QString str = tr("nmcli connection modify %1 ipv4.address 192.168.125.1/24").arg(AP_NAME);
   QByteArray ba = str.toLocal8Bit();
   const char *csys = ba.data();
@@ -543,11 +563,13 @@ Connection NetworkManager::createAPConfig() const // Creates a default AP_SSID c
   return DEFAULT_AP;
 }
 
+// Returns if the network manager is on
 bool NetworkManager::isOn() const
 {
   return m_nm->networkingEnabled();
 }
 
+// Returns if the network manager is persistent
 bool NetworkManager::isPersistentOn() const
 {
   QSettings settings;
@@ -557,10 +579,12 @@ bool NetworkManager::isPersistentOn() const
   return ret;
 }
 
+// Returns the current state of the network manager
 NetworkManager::State NetworkManager::state() const
 {
   return (NetworkManager::State)m_device->state();
 }
+
 
 Network NetworkManager::active() const
 {
@@ -569,6 +593,7 @@ Network NetworkManager::active() const
   return createAccessPoint(m_wifi->activeAccessPoint());
 }
 
+// Returns active connection password
 QString NetworkManager::activeConnectionPassword() const
 {
   if (!isActiveConnectionOn())
@@ -578,6 +603,7 @@ QString NetworkManager::activeConnectionPassword() const
   return getPassword(active().ssid());
 }
 
+// Returns if the active connection is on
 bool NetworkManager::isActiveConnectionOn() const
 {
   bool activeConnOn;
@@ -592,6 +618,7 @@ bool NetworkManager::isActiveConnectionOn() const
   return activeConnOn;
 }
 
+// Returns the current active connection name
 QString NetworkManager::currentActiveConnectionName() const
 {
   QDBusObjectPath activePath = m_device->activeConnection(); // Device's current active connection
@@ -604,6 +631,7 @@ QString NetworkManager::currentActiveConnectionName() const
   return activeConnObj.id();
 }
 
+// Returns NetworkList of all access points
 NetworkList NetworkManager::accessPoints() const
 {
   if (!m_wifi)
@@ -634,6 +662,7 @@ NetworkList NetworkManager::accessPoints() const
   return networks;
 }
 
+// Returns network IP address
 QString NetworkManager::ipAddress() const
 {
   int fd = socket(AF_INET, SOCK_DGRAM, 0);
@@ -649,6 +678,7 @@ QString NetworkManager::ipAddress() const
   return ret;
 }
 
+// Returns if event mode is on or off
 bool NetworkManager::eventModeState()
 {
   QProcess eventModeProcess;
@@ -677,6 +707,7 @@ bool NetworkManager::eventModeState()
   }
 }
 
+// Returns the network's IPv4 address
 QString NetworkManager::ip4Address() const
 {
   QString ipAddr;
@@ -694,14 +725,30 @@ QString NetworkManager::ip4Address() const
   return ipAddr;
 }
 
+// Initilization function
 void NetworkManager::init(const Device *device)
 {
+  qDebug() << "Init";
   m_dev = device;
   bool checkEventState = eventModeState();
+  int checkNetworkMode = getBootUpNetworkMode();
 
-  if (!checkEventState) // Event Mode enabled
+  if (!checkEventState && (checkNetworkMode != 1 && checkNetworkMode != 2)) // Event Mode enabled
   {
+ 
     enableAP();
+  }
+  else if (checkNetworkMode == 1) // Client Mode
+  {
+
+    if(currentActiveConnectionName() == AP_NAME)
+    {
+      disableAP();
+    }
+  }
+  else if (checkNetworkMode == 2) //Wifi off
+  {
+    turnOff();
   }
 }
 
@@ -774,9 +821,43 @@ NetworkManager::NetworkManager()
   turnOn();
 
   requestScan();
+
   qDebug() << "Active strength: " << active().strength();
+
 }
 
+// Returns the network mode on boot up
+int NetworkManager::getBootUpNetworkMode()
+{
+  QProcess networkModeProcess;
+  QString command = "grep '^MODE' /home/kipr/wombat-os/configFiles/wifiConnectionMode.txt | awk '{print $2}'";
+
+  networkModeProcess.start("bash", QStringList() << "-c" << command);
+  networkModeProcess.waitForFinished();
+
+  QString output = networkModeProcess.readAllStandardOutput().trimmed();
+  qDebug() << "getBootUpNetworkMode: " << output.toInt();
+  if (!output.isEmpty())
+  {
+    switch (output.toInt())
+    {
+    case 0: // AP Mode
+      return 0;
+    case 1: // Client Mode
+      return 1;
+    case 2: // Wifi Off
+      return 2;
+    default:
+      qDebug() << "Unknown MODE.";
+    }
+  }
+  else
+  {
+    qDebug() << "Failed to read MODE.";
+  }
+}
+
+// Returns the Raspberry Pi type inside Wombat
 void NetworkManager::getRaspberryPiType()
 {
   QStringList arguments;
@@ -804,6 +885,7 @@ void NetworkManager::getRaspberryPiType()
   qDebug() << "RASPBERRYPI_TYPE: " << RASPBERRYPI_TYPE;
 }
 
+// NetworkManager AP added signal
 void NetworkManager::nmAccessPointAdded(const QDBusObjectPath &accessPoint)
 {
   Network network = createAccessPoint(accessPoint);
@@ -812,6 +894,7 @@ void NetworkManager::nmAccessPointAdded(const QDBusObjectPath &accessPoint)
   emit accessPointAdded(network);
 }
 
+// NetworkManager AP removed signal
 void NetworkManager::nmAccessPointRemoved(const QDBusObjectPath &accessPoint)
 {
   Network network = createAccessPoint(accessPoint);
@@ -820,6 +903,7 @@ void NetworkManager::nmAccessPointRemoved(const QDBusObjectPath &accessPoint)
   m_accessPoints.removeAll(network);
 }
 
+// Signal for when the network state changes
 void NetworkManager::stateChangedBouncer(uint newState, uint oldState)
 {
   NetworkManager::State networkStateNew = (NetworkManager::State)newState;
@@ -827,6 +911,7 @@ void NetworkManager::stateChangedBouncer(uint newState, uint oldState)
   emit stateChanged(networkStateNew, networkStateOld);
 }
 
+// Returns Network config from connection
 Network NetworkManager::networkFromConnection(const Connection &connection) const
 {
   // TODO: It would be nice to make this static somewhere
@@ -855,6 +940,7 @@ Network NetworkManager::networkFromConnection(const Connection &connection) cons
   return network;
 }
 
+// Creates a network from an access point
 Network NetworkManager::createAccessPoint(const QDBusObjectPath &accessPoint) const
 {
   OrgFreedesktopNetworkManagerAccessPointInterface accessPointObject(
@@ -931,6 +1017,7 @@ Network NetworkManager::createAccessPoint(const QDBusObjectPath &accessPoint) co
   return newNetwork;
 }
 
+// Returns a list of all connections
 QList<QDBusObjectPath> NetworkManager::getAllConnectionPaths() const
 {
   // initialize settings provider to get all dbus path connections
@@ -962,6 +1049,7 @@ NetworkManager::getAllConnections() const
   return ret;
 }
 
+// Returns the connection and path for a given ssid
 QPair<Connection, QDBusObjectPath>
 NetworkManager::getConnection(QString ssid) const
 {
@@ -982,6 +1070,7 @@ NetworkManager::getConnection(QString ssid) const
   return qMakePair(Connection(), QDBusObjectPath());
 }
 
+// Returns the password for a given ssid
 QString NetworkManager::getPassword(QString ssid) const
 {
   // get connection and path
@@ -1010,6 +1099,7 @@ QString NetworkManager::getPassword(QString ssid) const
   }
 }
 
+// Returns the reply from a given query
 void NetworkManager::getReply(QDBusPendingReply<> &reply, const QString where, const bool throwError) const
 {
   reply.waitForFinished();
