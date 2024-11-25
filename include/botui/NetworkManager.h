@@ -51,6 +51,7 @@ public:
   void requestScan();
   void deactivateAP();
   void getRaspberryPiType();
+  int getBootUpNetworkMode();
 
 
   bool isOn() const;
