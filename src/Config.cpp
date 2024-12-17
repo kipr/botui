@@ -10,6 +10,6 @@
 namespace botui
 {
 
-	// const QString pathToKISS = "/home/kipr/Documents/KISS/"; // "/home/kipr/Documents/KISS/"
-	const QString pathToKISS = "/home/erin/Documents/KISS/";
+	 const QString pathToKISS = "/home/kipr/Documents/KISS/"; // "/home/kipr/Documents/KISS/"
+	
 }
