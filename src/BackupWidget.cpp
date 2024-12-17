@@ -86,7 +86,7 @@ bool BackupWidget::isAlreadyMounted(const QString &device, const QString &mountP
         qDebug() << "Failed to open /proc/mounts to check mounted devices.";
         return false;
     }
-       QString normalizedMountPoint = QDir::cleanPath(mountPoint);
+    QString normalizedMountPoint = QDir::cleanPath(mountPoint);
     qDebug() << "Checking if device:" << device << "is mounted at:" << normalizedMountPoint;
 
     QTextStream in(&file);
@@ -204,31 +204,22 @@ void BackupWidget::updateFinished(int, QProcess::ExitStatus exitStatus)
 
 void BackupWidget::restoreFinished(int, QProcess::ExitStatus exitStatus)
 {
+    qDebug() << "Beginning restoreFinished with exitstatus:" << exitStatus;
+    ui->backupConsole->insertPlainText("Restore Complete");
     QMessageBox::warning(this, "Restore complete", "Restore complete");
     StandardWidget::enableMenuBar();
 
     // Check to see if the update failed
-    if (backup_process->exitStatus() != QProcess::NormalExit)
+    if (restore_process->exitStatus() != QProcess::NormalExit)
     {
         ui->backupConsole->insertPlainText("\n Update Failed (Crashed): \n The Restore script has crashed with an error. \n Contact KIPR tech support for assistance if the problem persists \n");
         ui->backupConsole->moveCursor(QTextCursor::End, QTextCursor::KeepAnchor);
     }
 
-    // // Log only the file paths from errorFiles (if any)
-    // if (!errorFiles.isEmpty())
-    // {
-    //     qDebug() << "Restore error files: ";
-    //     foreach (const QString &filePath, errorFiles)
-    //     {
-    //         qDebug() << filePath; // Logs each file path individually
-    //         ui->backupConsole->append(filePath);
-    //         ui->backupConsole->append(""); // Add a new line after each file path
-    //     }
-    // }
-
+    qDebug() << "Before restore cleanup process";
     // Cleanup process
     ui->backupConsole->setProcess(0);
-    delete restore_process;
+
 
     // Re-enable buttons
     ui->backupoption->setEnabled(true);
@@ -257,11 +248,11 @@ void BackupWidget::restore()
         ui->BackupRestoreLabel->setText("Restore in progress...");
         restore_process = new QProcess();
 
-        restore_process->startDetached("/bin/sh", QStringList() << "/home/kipr/wombat-os/Backup/restore.sh");
-        restore_process->waitForFinished(); // sets current thread to sleep and waits for Restore end
-        ui->backupConsole->insertPlainText("Restore Complete");
-        QMessageBox::warning(this, "Restore complete", "Restore Complete");
-        connect(backup_process, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(restoreFinished(int, QProcess::ExitStatus)));
+        QString command = QString("/home/kipr/wombat-os/Backup/restore.sh");
+        restore_process->start("sudo", QStringList() << "sh" << "-c" << command);
+        ui->backupConsole->setProcess(restore_process);
+
+        connect(restore_process, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(restoreFinished(int, QProcess::ExitStatus)));
     }
 }
 
