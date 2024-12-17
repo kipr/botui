@@ -65,6 +65,8 @@ NetworkSettingsWidget::NetworkSettingsWidget(Device *device, QWidget *parent)
 	ui->ConnectButton->setVisible(true);
 	ui->ManageButton->setVisible(true);
 
+	// Get Network Mode
+
 	QTimer *updateTimer = new QTimer(this);
 	QObject::connect(updateTimer, SIGNAL(timeout()), SLOT(updateInformation()));
 	updateTimer->start(10000);
