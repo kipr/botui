@@ -96,6 +96,7 @@ AboutWidget::AboutWidget(Device *device, QWidget *parent)
 
   connect(ui->developerList, SIGNAL(clicked()), SLOT(developerList()));
   connect(ui->toggleSwitch, SIGNAL(stateChanged(int)), this, SLOT(eventModeBackground(int)));
+  connect(ui->toggleSwitch, SIGNAL(stateChanged(int)), this, SLOT(rebootBox()));
 }
 
 AboutWidget::~AboutWidget()
@@ -258,7 +259,7 @@ void AboutWidget::eventModeBackground(int checked)
   qDebug() << "Checked: " << checked;
 
   ui->toggleSwitch->setEnabled(false);
-  rebootBox();
+ // rebootBox();
   if (checked == 2) // Enable Event Mode
   {
 
