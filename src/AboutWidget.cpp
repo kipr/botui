@@ -48,7 +48,7 @@ AboutWidget::AboutWidget(Device *device, QWidget *parent)
 
     // Check if eth0 is active (/sys/class/net/eth0/carrier will output 1 if eth0 is active and 0 if it is not)
     QStringList arguments;
-    arguments << "/sys/class/net/eno1/carrier";
+    arguments << "/sys/class/net/eth0/carrier";
 
     QProcess *myProcess = new QProcess(parent);
     myProcess->start("cat", arguments);
