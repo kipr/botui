@@ -3,7 +3,7 @@
 
 #include "StandardWidget.h" // Include here if needed for inheritance
 #include <QProcess>
-
+#include <QMessageBox>
 namespace Ui
 {
 	class AboutWidget;
@@ -29,9 +29,13 @@ public slots:
 	void developerList();
 	void eventModeBackground(int checked);
 
+private slots:
+	void rebootBox();
+
 private:
 	Ui::AboutWidget *ui;
 	QProcess proc;
+	QMessageBox *msgBox;
 };
 
 #endif

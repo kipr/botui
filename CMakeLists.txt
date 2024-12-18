@@ -5,7 +5,7 @@ option(DEBUG "Enable debug mode" OFF)
 option(RELEASE "Enable release mode" OFF)
 option(docker_cross "Cross compile option for docker container" OFF)
 set(KIPR_VERSION_MAJOR 1)
-set(KIPR_VERSION_MINOR 2)
+set(KIPR_VERSION_MINOR 3)
 set(KIPR_VERSION_PATCH 0)
 cmake_minimum_required(VERSION 2.8.11)
 
