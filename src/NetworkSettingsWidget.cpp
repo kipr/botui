@@ -340,21 +340,29 @@ void NetworkSettingsWidget::rebootBox()
 }
 void NetworkSettingsWidget::editWifiConnectionMode(int newMode)
 {
-	QProcess process;
-	QString command = QString("sed -i 's/^MODE.*/MODE %1/' /home/kipr/wombat-os/configFiles/wifiConnectionMode.txt").arg(newMode);
+    QProcess process;
+    QString command = QString("sudo sed -i 's/^MODE.*/MODE %1/' /home/kipr/wombat-os/configFiles/wifiConnectionMode.txt").arg(newMode);
 
-	process.start("bash", QStringList() << "-c" << command);
-	process.waitForFinished();
+    // Start the process
+    process.start("bash", QStringList() << "-c" << command);
+    process.waitForFinished();
 
-	if (process.exitStatus() == QProcess::NormalExit)
-	{
-		qDebug() << "Successfully set MODE to:" << newMode;
-	}
-	else
-	{
-		qDebug() << "Failed to set MODE.";
-	}
+    // Debug: Capture outputs
+    qDebug() << "Standard Output:" << process.readAllStandardOutput();
+    qDebug() << "Error Output:" << process.readAllStandardError();
+
+    // Check for success
+    if (process.exitCode() == 0 && process.exitStatus() == QProcess::NormalExit)
+    {
+        qDebug() << "Successfully set MODE to:" << newMode;
+    }
+    else
+    {
+        qDebug() << "Failed to set MODE. Exit code:" << process.exitCode()
+                 << "Exit status:" << process.exitStatus();
+    }
 }
+
 
 void NetworkSettingsWidget::indexChanged(int index)
 {
