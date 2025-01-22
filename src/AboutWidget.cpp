@@ -39,6 +39,9 @@ AboutWidget::AboutWidget(Device *device, QWidget *parent)
   // Version Number
   ui->version->setText(device->name() + " v" + device->version());
 
+  //Copyright year
+  ui->CopyrightYearLabel->setText(device->copyrightYear());
+
   // Display Serial Number
   const QString serial = device->serial();
   ui->deviceName->setText("Wombat-" + serial);
@@ -48,7 +51,7 @@ AboutWidget::AboutWidget(Device *device, QWidget *parent)
 
     // Check if eth0 is active (/sys/class/net/eth0/carrier will output 1 if eth0 is active and 0 if it is not)
     QStringList arguments;
-    arguments << "/sys/class/net/eth0/carrier";
+    arguments << "/sys/class/net/eno1/carrier";
 
     QProcess *myProcess = new QProcess(parent);
     myProcess->start("cat", arguments);

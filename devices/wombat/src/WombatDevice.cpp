@@ -38,12 +38,28 @@ QString getVersionNum()
 	return line;
 }
 
+QString getCopyrightYear()
+{
+  QFile file("/usr/share/kipr/board_copyright_year.txt");
+
+  if(!file.open(QIODevice::ReadOnly)) return QString("??");
+
+  QTextStream in(&file);
+
+    QString line = in.readLine();
+
+  file.close();
+
+  return line;
+}
+
 Wombat::Device::Device()
   : m_compileProvider(new KissCompileProvider(this)),
   m_batteryLevelProvider(new Wombat::BatteryLevelProvider()),
   m_settingsProvider(new Wombat::SettingsProvider()),
   m_buttonProvider(new Wombat::ButtonProvider()),
   m_version(getVersionNum()),
+  m_copyrightYear(getCopyrightYear()),
   m_id(getId()),
   m_serial(getSerial())
 {
@@ -73,6 +89,11 @@ QString Wombat::Device::name() const
 QString Wombat::Device::version() const
 {
   return m_version;
+}
+
+QString Wombat::Device::copyrightYear() const
+{
+  return m_copyrightYear;
 }
 
 QString Wombat::Device::id() const

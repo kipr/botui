@@ -14,6 +14,7 @@ namespace Wombat
     
     virtual QString name() const;
     virtual QString version() const;
+    virtual QString copyrightYear() const;
     virtual QString id() const;
     virtual QString serial() const;
     virtual bool isTouchscreen() const;
@@ -38,6 +39,7 @@ namespace Wombat
     SettingsProvider *m_settingsProvider;
     ButtonProvider *m_buttonProvider;
     QString m_version;
+    QString m_copyrightYear;
     QString m_id;
     QString m_serial;
     int m_timerId;
