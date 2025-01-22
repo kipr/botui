@@ -89,7 +89,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Copyright © 2012 - 2024</string>
+        <string>Copyright © 2012 - 2025</string>
        </property>
        <property name="textFormat">
         <enum>Qt::MarkdownText</enum>
