@@ -46,9 +46,7 @@ CameraLiveWidget::CameraLiveWidget(Device *device, QWidget *parent)
 	}  
   }
   
-  ui->channelView->setModel(u_model);
-
-  /*QTimer *timer = new QTimer(this);
+    /*QTimer *timer = new QTimer(this);
   ui->ValueUpdates->connect(timer, SIGNAL(timeout()), SLOT(update()));
   timer->start(200);*/
 }
