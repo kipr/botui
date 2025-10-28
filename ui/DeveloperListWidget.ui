@@ -91,6 +91,11 @@
        </item>
        <item>
         <property name="text">
+         <string>Thomas Wells</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
          <string>Nafis Zaman</string>
         </property>
        </item>
