@@ -1,32 +1,33 @@
 #include "Program.h"
 #include "SystemPrefix.h"
-
-
+#include <unistd.h>
 #include <QDebug>
 #include <QThread>
+#include <signal.h>
 
 Program::~Program()
 {
 	stop();
 }
 
-bool Program::start(const QString& path, const QStringList &arguments)
+bool Program::start(const QString &path, const QStringList &arguments)
 {
-	if(path.isEmpty()) return false;
+	if (path.isEmpty())
+		return false;
 	stop();
 	m_process = new QProcess(this);
-        QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-        const QString libPath = env.value("LD_LIBRARY_PATH");
-        env.insert("LD_LIBRARY_PATH", (libPath.isEmpty() ? "" : libPath + ":") + SystemPrefix::ref().rootManager()->libDirectoryPaths().join(":"));
-        m_process->setProcessEnvironment(env);
+	QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+	const QString libPath = env.value("LD_LIBRARY_PATH");
+	env.insert("LD_LIBRARY_PATH", (libPath.isEmpty() ? "" : libPath + ":") + SystemPrefix::ref().rootManager()->libDirectoryPaths().join(":"));
+	m_process->setProcessEnvironment(env);
 	m_process->setProcessChannelMode(QProcess::MergedChannels);
-	connect(m_process, SIGNAL(finished(int, QProcess::ExitStatus)), SIGNAL(finished(int, 		QProcess::ExitStatus)));
+	connect(m_process, SIGNAL(finished(int, QProcess::ExitStatus)), SIGNAL(finished(int, QProcess::ExitStatus)));
 	connect(m_process, SIGNAL(readyRead()), SIGNAL(readyRead()));
-	
+
 	m_process->start(path, arguments);
-	if(!m_process->waitForStarted()) {
-		delete m_process;
-		m_process = 0;
+	if (!m_process->waitForStarted())
+	{
+		stop();
 		return false;
 	}
 	emit started();
@@ -36,13 +37,19 @@ bool Program::start(const QString& path, const QStringList &arguments)
 
 void Program::stop()
 {
-	if(!m_process) return;
-	m_process->terminate();
-	if(!m_process->waitForFinished(2000)) m_process->kill();
-	//unused: const int msecs = m_time.elapsed();
-	// write(tr("Finished in %1 seconds").arg(msecs / 1000.0).toAscii());
-	delete m_process;
-	m_process = 0;
+    if (!m_process) return;
+
+    QProcess *p = m_process;
+    m_process = nullptr;      // prevent re-entrancy/UAF
+    p->disconnect(this);
+
+    p->terminate();
+    if (!p->waitForFinished(2000)) {
+        p->kill();
+        p->waitForFinished(2000); // IMPORTANT: reap after kill
+    }
+
+    p->deleteLater();
 }
 
 bool Program::isRunning()
@@ -62,9 +69,9 @@ Program *Program::instance()
 }
 
 Program::Program()
-	: m_process(0)
+		: m_process(0)
 {
 	m_time.start();
 }
 
-Program::Program(const Program&) {}
+Program::Program(const Program &) {}
