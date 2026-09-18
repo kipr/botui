@@ -187,8 +187,8 @@ void EditorWidget::saveAndExit()
 
 void EditorWidget::addFile()
 {
-	KeyboardDialog dialog(tr("File Name"));
-	if(RootController::ref().presentDialog(&dialog) != QDialog::Accepted) return;
+	KeyboardDialog dialog(tr("File Name"), KeyboardDialog::Normal, this);
+	if(RootController::ref().presentInput(&dialog) != InputProviderWidget::Accepted) return;
 	const QString filename = dialog.input();
 	m_lookup << filename;
 	ui->files->addItem(filename);

@@ -1,7 +1,7 @@
 #ifndef NumpadDialog_H
 #define NumpadDialog_H
 
-#include "InputProviderDialog.h"
+#include "InputProviderWidget.h"
 #include "KeyButton.h"
 
 #include <QLabel>
@@ -14,7 +14,7 @@ namespace Ui
 	class NumpadDialog;
 }
 
-class NumpadDialog : public InputProviderDialog
+class NumpadDialog : public InputProviderWidget
 {
 Q_OBJECT
 public:
@@ -29,6 +29,7 @@ public:
 					const double& min = -std::numeric_limits<double>::max(),
 					const double& max = std::numeric_limits<double>::max(),
 					QWidget *parent = 0);
+	NumpadDialog(const QString& text, QWidget *parent);
 	~NumpadDialog();
 
 	void setInput(const QString &input);

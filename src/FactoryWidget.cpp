@@ -17,7 +17,7 @@
 FactoryWidget::FactoryWidget(Device *device, QWidget *parent)
         : StandardWidget(device, parent),
         ui(new Ui::FactoryWidget),
-        m_provider(new NumpadDialog(QString()))
+        m_provider(new NumpadDialog(QString(), this))
 {
         //Standard Setup
         ui->setupUi(this);

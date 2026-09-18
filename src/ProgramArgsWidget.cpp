@@ -60,9 +60,9 @@ void ProgramArgsWidget::edit()
 {
 	QListWidgetItem *item = ui->args->currentItem();
 	if(!item) return;
-	KeyboardDialog dialog(tr("Edit Argument"));
+	KeyboardDialog dialog(tr("Edit Argument"), KeyboardDialog::Normal, this);
 	dialog.setInput(item->text());
-	RootController::ref().presentDialog(&dialog);
+	RootController::ref().presentInput(&dialog);
 	const QString input = dialog.input();
 	
 	if(input.isEmpty()) {
@@ -100,8 +100,8 @@ void ProgramArgsWidget::add()
 {
 	QListWidgetItem *item = ui->args->currentItem();
 	
-	KeyboardDialog dialog(tr("Add Argument"));
-	RootController::ref().presentDialog(&dialog);
+	KeyboardDialog dialog(tr("Add Argument"), KeyboardDialog::Normal, this);
+	RootController::ref().presentInput(&dialog);
 	const QString input = dialog.input();
 	if(input.isEmpty()) return;
 	

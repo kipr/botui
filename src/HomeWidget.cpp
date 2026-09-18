@@ -126,7 +126,7 @@ void HomeWidget::shutDown()
     if (ret < 0)
         QMessageBox::information(this, "Failed", "Shut down failed.");
 #else
-    QMessageBox::information(this, "Not Available", "Shut down is only available on the kovan.");
+    QMessageBox::information(this, "Not Available", "Shut down is not available on this controller.");
 #endif
 }
 
@@ -196,7 +196,7 @@ void HomeWidget::reboot()
         msgBox->close(); });
 
 #else
-    QMessageBox::information(this, "Not Available", "Reboot is only available on the kovan.");
+    QMessageBox::information(this, "Not Available", "Reboot is not available on this controller.");
 #endif
 }
 void HomeWidget::lock()

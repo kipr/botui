@@ -13,9 +13,7 @@ Q_OBJECT
 public:
 	enum Source {
 		Nil = 0,
-		UsbCamera,
-		ARDroneFront,
-		ARDroneBottom
+		UsbCamera
 	};
 	
 	CameraInputManager();

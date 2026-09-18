@@ -1,14 +1,16 @@
-#ifndef _ROOTCONTROLLER_H_
-#define _ROOTCONTROLLER_H_
+#ifndef ROOTCONTROLLER_H
+#define ROOTCONTROLLER_H
+
+#include "InputProviderWidget.h"
+#include "Singleton.h"
 
 #include <QObject>
-#include <QWidget>
-#include <QDialog>
 #include <QStack>
 #include <QUrl>
-#include <QMap>
-#include "NetworkSettingsWidget.h"
-#include "Singleton.h"
+
+class QDialog;
+class QWidget;
+class RootWindow;
 
 class RootController : public QObject, public Singleton<RootController>
 {
@@ -18,52 +20,52 @@ class RootController : public QObject, public Singleton<RootController>
 public:
 	RootController();
 
-	const unsigned int depth() const;
+	void initialize(RootWindow *window, QWidget *rootPage);
+	unsigned int depth() const;
+	QWidget *currentWidget() const;
 
 	void setDismissable(bool dismissable);
 	bool isDismissable() const;
 
-	void setFullscreen(const bool fullscreen);
-	bool isFullscreen() const;
-
 	template <typename T>
 	void dismissUntil()
 	{
-		while (depth() > 1 && !dynamic_cast<T *>(m_stack.top()))
-			m_stack.pop();
+		while (depth() > 1 && !dynamic_cast<T *>(m_stack.top())) {
+			const unsigned int previousDepth = depth();
+			dismissWidget();
+			if (depth() == previousDepth)
+				break;
+		}
 	}
 
 	template <typename T>
-	bool containsWidget()
+	bool containsWidget() const
 	{
-		QStack<QWidget *>::ConstIterator it = m_stack.begin();
-		for (; it != m_stack.end(); ++it)
-		{
-			if (dynamic_cast<T *>(*it))
+		for (QWidget *widget : m_stack) {
+			if (dynamic_cast<T *>(widget))
 				return true;
 		}
 		return false;
 	}
 
+	InputProviderWidget::Result presentInput(InputProviderWidget *inputProvider);
+
 public slots:
 	void presentQml(const QUrl &url);
 	int presentDialog(QDialog *dialog);
-	void presentWidget(QWidget *widget, bool owns = true);
+	void presentWidget(QWidget *widget);
+	void replaceWidget(QWidget *widget);
 
 	void dismissWidget();
 	void dismissAllWidgets();
 
-	void minimize();
-
-
 private:
-	void constrain(QWidget *widget);
-	void present(QWidget *widget);
+	bool navigationAllowed(QWidget *newWidget = nullptr) const;
 
-	QMap<QWidget *, bool> m_ownership;
+	RootWindow *m_window;
 	QStack<QWidget *> m_stack;
+	InputProviderWidget *m_activeInput;
 	bool m_dismissable;
-	bool m_fullscreen;
 };
 
-#endif
+#endif // ROOTCONTROLLER_H

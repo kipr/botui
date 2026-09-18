@@ -13,6 +13,8 @@
 #include <QFileSystemModel>
 #include <QFile>
 #include <QDebug>
+#include <QMessageBox>
+#include <QProcess>
 #include <iostream>
 #include <fstream>
 

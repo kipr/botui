@@ -11,8 +11,6 @@
 #include "NumpadDialog.h"
 #include "MenuBar.h"
 
-#define A_KOVAN
-
 CombinedMotorWidget::CombinedMotorWidget(Device *device, QWidget *parent)
 	: StandardWidget(device, parent),
 	ui(new Ui::CombinedMotorWidget)

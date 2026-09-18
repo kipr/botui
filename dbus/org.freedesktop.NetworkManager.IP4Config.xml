@@ -65,7 +65,7 @@
         The nameservers in use. Deprecated: use NameserverData
     -->
     <property name="Nameservers" type="au" access="read">
-<annotation name="org.qtproject.QtDBus.QtTypeName" value="<type>"/>
+<annotation name="org.qtproject.QtDBus.QtTypeName" value="QList&lt;unsigned int &gt;"/>
 </property>
     <!--
         NameserverData:
@@ -114,7 +114,7 @@
         Each address is in network byte order. Deprecated: use WinsServerData
     -->
     <property name="WinsServers" type="au" access="read">
-    <annotation name="org.qtproject.QtDBus.QtTypeName" value="<type>"/>
+    <annotation name="org.qtproject.QtDBus.QtTypeName" value="QList&lt;unsigned int&gt;"/>
     </property>
 
     <!--

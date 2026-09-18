@@ -14,7 +14,7 @@
 ServosWidget::ServosWidget(Device *device, QWidget *parent)
 	: StandardWidget(device, parent),
 	ui(new Ui::ServosWidget),
-	m_provider(new NumpadDialog(QString()))
+	m_provider(new NumpadDialog(QString(), this))
 {
 	ui->setupUi(this);
 	performStandardSetup(tr("Servos"));

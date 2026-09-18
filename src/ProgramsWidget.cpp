@@ -55,14 +55,12 @@ ProgramsWidget::ProgramsWidget(Device *device, QWidget *parent)
 	connect(ui->compile, SIGNAL(clicked()), SLOT(compile()));
 	connect(ui->remove, SIGNAL(clicked()), SLOT(remove()));
 	connect(ui->args, SIGNAL(clicked()), SLOT(args()));
-	connect(ui->transfer, SIGNAL(clicked()), SLOT(transfer()));
 
 	// TODO: remove these once the buttons all work
 	ui->edit->setVisible(true);
 	ui->add->setVisible(false);
 	ui->remove->setVisible(false);
 	ui->args->setVisible(false);
-	ui->transfer->setVisible(false);
 	ui->compile->setVisible(false);
 
 	connect(ui->programs->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
@@ -198,8 +196,8 @@ void ProgramsWidget::edit()
 
 void ProgramsWidget::add()
 {
-	KeyboardDialog keyboard(tr("Program Name"));
-	if (RootController::ref().presentDialog(&keyboard) != QDialog::Accepted)
+	KeyboardDialog keyboard(tr("Program Name"), KeyboardDialog::Normal, this);
+	if (RootController::ref().presentInput(&keyboard) != InputProviderWidget::Accepted)
 		return;
 	const QString name = keyboard.input();
 	if (name.isEmpty())
@@ -273,19 +271,6 @@ void ProgramsWidget::remove()
 	update();
 }
 
-void ProgramsWidget::transfer()
-{
-	QModelIndexList currents = ui->programs->selectionModel()->selectedIndexes();
-	if (currents.size() != 1)
-		return;
-	const QString name = m_model->name(currents[0]);
-	/* FIXME: const kiss::KarPtr archive = kiss::Kar::load(SystemPrefix::ref().rootManager()->archivesPath(name));
-	const QDir flashDrive("/kovan/media/sda1/transfers/" + name);
-	QDir().mkpath(flashDrive.path());
-	archive->extract(flashDrive.path());
-	*/
-}
-
 void ProgramsWidget::compileStarted(const QString &name, ConcurrentCompile *compiler)
 {
 	if (!compiler)
@@ -329,6 +314,4 @@ void ProgramsWidget::update()
 	ui->edit->setEnabled(good);
 	ui->remove->setEnabled(good);
 	ui->args->setEnabled(good);
-	const QDir flashDrive("/kovan/media/sda1");
-	ui->transfer->setEnabled(good && flashDrive.exists());
 }

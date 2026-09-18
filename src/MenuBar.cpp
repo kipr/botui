@@ -53,7 +53,7 @@ void MenuBar::addHomeAndBackButtons()
                  connect(homeAction, SIGNAL(triggered()), RootController::ptr(), SLOT(dismissAllWidgets()));
         }
 
-        if(RootController::ref().depth() > 1) {
+	if(RootController::ref().depth() > 0) {
                 QAction *backAction = addAction(UiStandards::backString());
                 connect(backAction, SIGNAL(triggered()),
                         RootController::ptr(), SLOT(dismissWidget()));

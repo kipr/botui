@@ -8,7 +8,6 @@ CreateChannelDialog::CreateChannelDialog(QWidget *parent)
 	ui(new Ui::CreateChannelDialog)
 {
 	ui->setupUi(this);
-	setWindowState(Qt::WindowFullScreen);
 }
 
 CreateChannelDialog::~CreateChannelDialog()

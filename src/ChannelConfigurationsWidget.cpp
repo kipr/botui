@@ -103,9 +103,9 @@ void ChannelConfigurationsWidget::rename()
 	QModelIndex index = selection.indexes()[0];
 	
 	QFileInfo file = m_model->fileInfo(index);
-	KeyboardDialog keyboard(tr("Rename %1").arg(file.fileName()));
+	KeyboardDialog keyboard(tr("Rename %1").arg(file.fileName()), KeyboardDialog::Normal, this);
 	keyboard.setInput(file.baseName());
-	RootController::ref().presentDialog(&keyboard);
+	RootController::ref().presentInput(&keyboard);
 	if(!QFile::rename(file.filePath(),
 		file.path() + "/" + keyboard.input() + "." + file.completeSuffix())) {
 		qWarning() << "Failed to change name";
@@ -124,14 +124,13 @@ void ChannelConfigurationsWidget::default_()
 	kipr::camera::ConfigPath::setDefaultConfigPath(m_model->fileInfo(index).baseName().toStdString());
 	ui->configs->repaint();
 
-	RootController::ref().dismissWidget();
-	RootController::ref().presentWidget(new ChannelConfigurationsWidget(device()));
+	RootController::ref().replaceWidget(new ChannelConfigurationsWidget(device()));
 }
 
 void ChannelConfigurationsWidget::add()
 {
-	KeyboardDialog keyboard(tr("Create New Configuration"));
-	RootController::ref().presentDialog(&keyboard);
+	KeyboardDialog keyboard(tr("Create New Configuration"), KeyboardDialog::Normal, this);
+	RootController::ref().presentInput(&keyboard);
 	kipr::config::Config blank;
 	std::string savePath = kipr::camera::ConfigPath::path(keyboard.input().toStdString());
 	QString qSavePath = QString::fromStdString(savePath);

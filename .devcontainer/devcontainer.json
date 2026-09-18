@@ -1,0 +1,35 @@
+{
+  "name": "botui Dev",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "target": "dev"
+  },
+  "remoteUser": "code",
+  "mounts": [
+    "source=claude-config,target=/home/code/.claude,type=volume",
+    "source=codex-config,target=/home/code/.codex,type=volume"
+  ],
+  // The Claude Code / Codex sandboxes use bubblewrap. Docker's default seccomp
+  // profile blocks it, and its masked /proc paths stop bwrap mounting /proc.
+  // These turn off the syscall filter and /proc masking for the container.
+  "runArgs": [
+    "--security-opt=seccomp=unconfined",
+    "--security-opt=systempaths=unconfined"
+  ],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools-extension-pack",
+        "github.vscode-pull-request-github",
+        "openai.chatgpt"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "fish",
+        "terminal.integrated.profiles.linux": {
+          "fish": { "path": "/usr/bin/fish" }
+        }
+      }
+    }
+  }
+}

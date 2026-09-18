@@ -4,13 +4,11 @@
 #include <QDebug>
 
 KeyboardDialog::KeyboardDialog(const QString& text, Mode mode, QWidget *parent) :
-	InputProviderDialog(parent),
+	InputProviderWidget(parent),
 	ui(new Ui::KeyboardDialog),
 	shifted(false)
 {
 	ui->setupUi(this);
-	move(0,-30);
-	
 	alphaVerticalLayout = new QVBoxLayout(this);
 	numVerticalLayout = new QVBoxLayout(this);
 	alphaVerticalLayout->setContentsMargins(0, 3, 0, 9);
@@ -35,7 +33,6 @@ KeyboardDialog::KeyboardDialog(const QString& text, Mode mode, QWidget *parent) 
 	setupNumButtons();
 	
 	ui->numWidget->hide();
-	setWindowState(Qt::WindowFullScreen);
 }
 
 KeyboardDialog::~KeyboardDialog()
@@ -89,7 +86,8 @@ void KeyboardDialog::numPressed()
 		numVerticalLayout->addWidget(label);
 		numVerticalLayout->addWidget(display);
 		ui->numGrid->addWidget(enterButton, 5, 16, 1, 4);
-		ui->numGrid->addWidget(spaceButton, 5, 4, 1, 12);
+		ui->numGrid->addWidget(cancelButton, 5, 4, 1, 4);
+		ui->numGrid->addWidget(spaceButton, 5, 8, 1, 8);
 		ui->numGrid->addWidget(delButton, 4, 15, 1, 5);
 		ui->numGrid->addWidget(numButton, 5, 0, 1, 4);
 		
@@ -101,7 +99,8 @@ void KeyboardDialog::numPressed()
 		alphaVerticalLayout->addWidget(label);
 		alphaVerticalLayout->addWidget(display);
 		ui->alphaGrid->addWidget(enterButton, 5, 16, 1, 4);
-		ui->alphaGrid->addWidget(spaceButton, 5, 4, 1, 12);
+		ui->alphaGrid->addWidget(cancelButton, 5, 4, 1, 4);
+		ui->alphaGrid->addWidget(spaceButton, 5, 8, 1, 8);
 		ui->alphaGrid->addWidget(delButton, 4, 17, 1, 3);
 		ui->alphaGrid->addWidget(numButton, 5, 0, 1, 4);
 		
@@ -206,6 +205,7 @@ void KeyboardDialog::setupNumButtons()
 void KeyboardDialog::setupSpecialButtons()
 {
 	enterButton = makeButton(SLOT(accept()), "Ent");
+	cancelButton = makeButton(SLOT(reject()), "Cancel");
 	spaceButton = makeButton(SLOT(spacePressed()), "Space");
 	shiftButton = makeButton(SLOT(shiftPressed()), "Sft");
 	delButton = makeButton(SLOT(delPressed()), "Del");
@@ -213,7 +213,8 @@ void KeyboardDialog::setupSpecialButtons()
 	symButton = makeButton(SLOT(symPressed()), "#+=", "123");
 	
 	ui->alphaGrid->addWidget(enterButton, 5, 16, 1, 4);
-	ui->alphaGrid->addWidget(spaceButton, 5, 4, 1, 12);
+	ui->alphaGrid->addWidget(cancelButton, 5, 4, 1, 4);
+	ui->alphaGrid->addWidget(spaceButton, 5, 8, 1, 8);
 	ui->alphaGrid->addWidget(shiftButton, 4, 0, 1, 3);
 	ui->alphaGrid->addWidget(delButton, 4, 17, 1, 3);
 	ui->alphaGrid->addWidget(numButton, 5, 0, 1, 4);

@@ -1,6 +1,5 @@
 #include "CameraInputManager.h"
 
-#include "ConnectionedARDroneInputProvider.h"
 #include <QDebug>
 
 CameraInputManager::CameraInputManager()

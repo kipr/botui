@@ -1,7 +1,7 @@
 #ifndef KEYBOARDDIALOG_H
 #define KEYBOARDDIALOG_H
 
-#include "InputProviderDialog.h"
+#include "InputProviderWidget.h"
 #include "KeyButton.h"
 
 #include <QGridLayout>
@@ -13,7 +13,7 @@ namespace Ui
 	class KeyboardDialog;
 }
 
-class KeyboardDialog : public InputProviderDialog
+class KeyboardDialog : public InputProviderWidget
 {
 Q_OBJECT
 Q_PROPERTY(QString input READ input)
@@ -49,6 +49,7 @@ private:
 	KeyButton *alphaButtons[26];
 	KeyButton *numButtons[25];
 	KeyButton *enterButton;
+	KeyButton *cancelButton;
 	KeyButton *spaceButton;
 	KeyButton *shiftButton;
 	KeyButton *delButton;

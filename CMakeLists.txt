@@ -1,22 +1,13 @@
+cmake_minimum_required(VERSION 3.10)
 project(botui)
 
 option(wombat "Use the Wombat controller" ON)
 option(DEBUG "Enable debug mode" OFF)
 option(RELEASE "Enable release mode" OFF)
 option(docker_cross "Cross compile option for docker container" OFF)
-set(KIPR_VERSION_MAJOR 1)
-set(KIPR_VERSION_MINOR 2)
-set(KIPR_VERSION_PATCH 5)
-cmake_minimum_required(VERSION 2.8.11)
-
-#if (wallaby)
- # add_definitions(-DWALLABY)
-  #set(DEVICE_DIR ${CMAKE_SOURCE_DIR}/devices/wallaby)
-  #find_package(OpenCV REQUIRED)
-#else()
- # set(DEVICE_DIR ${CMAKE_SOURCE_DIR}/devices/kovan)
-  
-#endif()
+set(KIPR_VERSION_MAJOR 2)
+set(KIPR_VERSION_MINOR 0)
+set(KIPR_VERSION_PATCH 1)
 
 set(LIBKAR_ROOT ${CMAKE_SOURCE_DIR}/../libkar)
 set(PCOMPILER_ROOT ${CMAKE_SOURCE_DIR}/../pcompiler)
@@ -61,9 +52,7 @@ include_directories(
 
 
   
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Network Quick QuickWidgets QuickControls2)
- 
-
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Network Quick QuickWidgets QuickControls2 Xml)
 
 find_package(OpenSSL REQUIRED)
 
@@ -120,6 +109,7 @@ target_link_libraries(botui
 	Qt6::QuickWidgets
 	Qt6::Widgets
 	Qt6::QuickControls2
+	Qt6::Xml
 	network_manager_dbus
 	pcompiler
 	z
@@ -132,9 +122,82 @@ ENDIF()
 
 target_link_libraries(botui ${QT_LIBRARIES})
 
+include(CTest)
+if(BUILD_TESTING)
+	find_package(Qt6 REQUIRED COMPONENTS Test)
+	qt6_add_resources(BOTUI_UI_TEST_RESOURCES ${RC}/target.qrc)
+	qt6_wrap_cpp(BOTUI_UI_TEST_MOCS
+		include/botui/RootController.h
+		include/botui/RootWindow.h
+		include/botui/InputProviderWidget.h
+		include/botui/DeclarativeView.h
+	)
+	add_executable(botui-ui-tests
+		tests/RootWindowTest.cpp
+		src/Calibrate.cpp
+		src/RootController.cpp
+		src/RootWindow.cpp
+		src/InputProviderWidget.cpp
+		src/DeclarativeView.cpp
+		src/TouchCalibration.cpp
+		include/botui/Calibrate.h
+		include/botui/RootController.h
+		include/botui/RootWindow.h
+		include/botui/InputProviderWidget.h
+		include/botui/DeclarativeView.h
+		include/botui/TouchCalibration.h
+		${BOTUI_UI_TEST_RESOURCES}
+		${BOTUI_UI_TEST_MOCS}
+	)
+	target_include_directories(botui-ui-tests PRIVATE ${INCLUDE})
+	target_link_libraries(botui-ui-tests PRIVATE
+		Qt6::Core
+		Qt6::Gui
+		Qt6::Widgets
+		Qt6::Quick
+		Qt6::QuickWidgets
+		Qt6::Xml
+		Qt6::Test
+	)
+	add_test(NAME botui-ui-tests COMMAND botui-ui-tests)
+	set_tests_properties(botui-ui-tests PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen")
+
+	add_executable(botui-calibration-tests
+		tests/TouchCalibrationTest.cpp
+		src/TouchCalibration.cpp
+		include/botui/TouchCalibration.h
+	)
+	target_include_directories(botui-calibration-tests PRIVATE ${INCLUDE})
+	target_link_libraries(botui-calibration-tests PRIVATE
+		Qt6::Core
+		Qt6::Xml
+		Qt6::Test
+	)
+	add_test(NAME botui-calibration-tests COMMAND botui-calibration-tests)
+
+	add_executable(botui-orientation-tests
+		tests/ScreenOrientationTest.cpp
+		src/ScreenOrientation.cpp
+		include/botui/ScreenOrientation.h
+	)
+	target_include_directories(botui-orientation-tests PRIVATE ${INCLUDE})
+	target_link_libraries(botui-orientation-tests PRIVATE Qt6::Core Qt6::Test)
+	add_test(NAME botui-orientation-tests COMMAND botui-orientation-tests)
+
+	add_executable(botui-kanshi-process-tests
+		tests/KanshiProcessTest.cpp
+		src/KanshiProcess.cpp
+		include/botui/KanshiProcess.h
+	)
+	target_include_directories(botui-kanshi-process-tests PRIVATE ${INCLUDE})
+	target_link_libraries(botui-kanshi-process-tests PRIVATE Qt6::Core Qt6::Test)
+	add_test(NAME botui-kanshi-process-tests COMMAND botui-kanshi-process-tests)
+endif()
+
 
 install(TARGETS botui DESTINATION bin)
 install(FILES ${QM_FILES} DESTINATION "/etc/botui/locale")
+install(FILES botui.desktop DESTINATION share/applications)
 
 set(CPACK_PACKAGE_NAME botui)
 set(CPACK_GENERATOR "DEB")
@@ -144,4 +207,22 @@ set(CPACK_PACKAGE_VERSION_PATCH ${KIPR_VERSION_PATCH})
 set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE arm64)
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "KISS Institute for Practical Robotics")
 set(CPACK_PACKAGING_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
+#set (CPACK_DEBIAN_PACKAGE_DEPENDS "libqt6quick6, libqt6core6t64, libqt6dbus6, libqt6network6, libqt6qml6, libqt6gui6, libqt6widgets6, libqt6quickwidgets6, libssl3t64, kipr, pcompiler, libkar, libc6, libgcc-s1, libstdc++6")
+set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
+
+set(CPACK_DEBIAN_PACKAGE_DEPENDS
+    "pcompiler"
+    "kipr"
+	"qt6-wayland"
+	"wlr-randr"
+    # Add QML/plugin packages that are dynamically loaded at runtime.
+)
 include(CPack)
+
+add_custom_target(package-debian
+	COMMAND "${CMAKE_CPACK_COMMAND}"
+	WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
+	DEPENDS botui
+	COMMENT "Building Debian package with CPack"
+	VERBATIM
+)

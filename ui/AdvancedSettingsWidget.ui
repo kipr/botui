@@ -138,28 +138,6 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="battery">
-         <property name="font">
-          <font>
-           <pointsize>33</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Battery</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/battery-full.png</normaloff>:/icons/battery-full.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>35</width>
-           <height>35</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>

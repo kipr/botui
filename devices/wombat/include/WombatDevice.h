@@ -20,29 +20,20 @@ namespace Wombat
     virtual bool isTouchscreen() const;
     
     virtual CompileProvider *compileProvider() const;
-    virtual BatteryLevelProvider *batteryLevelProvider() const;
     virtual SettingsProvider *settingsProvider() const;
     virtual ButtonProvider *buttonProvider() const;
     
-  private slots:
-    void settingsChanged();
-
-  protected:
-    void timerEvent(QTimerEvent *event);
-
   private:
     QString getId() const;
     QString getSerial() const;
     
     CompileProvider *m_compileProvider;
-    BatteryLevelProvider *m_batteryLevelProvider;
     SettingsProvider *m_settingsProvider;
     ButtonProvider *m_buttonProvider;
     QString m_version;
     QString m_copyrightYear;
     QString m_id;
     QString m_serial;
-    int m_timerId;
   };
 }
 

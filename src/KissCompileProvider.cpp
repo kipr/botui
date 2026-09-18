@@ -32,27 +32,6 @@ Compiler::OutputList KissCompileProvider::compile(const QString &name, const kis
 			QByteArray(), "error: KarPtr is null");
 	}
 	
-	/* FIXME:
-	const QString path = tempPath();
-	qDebug() << path;
-	
-	QMap<QString, QString> settings;
-	if(!program->extract(path)) {
-		return OutputList() << Output(name, 1,
-			QByteArray(), "error: Failed to extract KISS Archive.");
-	}
-	
-	QStringList extracted;
-	foreach(const QString& file, program->files()) extracted << path + "/" + file;
-	
-	Input input = Input::fromList(extracted);
-	Options opts = Options::load("/etc/kovan/platform.hints");
-  opts.setVariable("${USER_ROOT}", "/kovan");
-	Engine engine(Compilers::instance()->compilers());
-	OutputList ret = engine.compile(input, opts);
-	
-  ret << SystemPrefix::ref().rootManager()->install(ret, name);
-  */
   OutputList ret;
   return ret;
 }

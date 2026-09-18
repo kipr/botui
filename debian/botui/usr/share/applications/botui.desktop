@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.5
+Type=Application
+Name=Botui
+Comment=Graphical interface for KIPR robotics controllers
+Exec=botui
+TryExec=botui
+Terminal=false
+Categories=Education;Development;

@@ -82,18 +82,9 @@
         <source>iRobot® Create™</source>
         <translation>iRobot® Create™</translation>
     </message>
-    <message utf8="true">
-        <location filename="ui/AccessoriesWidget.ui" line="69"/>
-        <source>Parrot® AR.Drone™</source>
-        <translation>Parrot® AR.Drone™</translation>
-    </message>
     <message>
         <source>iRobotÂ® Createâ¢</source>
         <translation type="obsolete">iRobotÂ® Createâ¢</translation>
-    </message>
-    <message>
-        <source>ParrotÂ® AR.Droneâ¢</source>
-        <translation type="obsolete">ParrotÂ® AR.Droneâ¢</translation>
     </message>
 </context>
 <context>
@@ -118,85 +109,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans&apos;; color:#000000;&quot;&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi quis lorem nunc, a fermentum urna. In facilisis tempus lectus vitae facilisis. Integer volutpat risus et nibh lacinia tincidunt. Quisque et sapien ut sem vulputate posuere semper sit amet nisl. Phasellus sit amet cursus libero. Nullam magna lectus, rutrum at placerat ultricies, egestas vitae lorem. Maecenas porttitor nisi quis nunc laoreet placerat. Proin dui purus, ultrices nec aliquam a, rhoncus at risus.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
-<context>
-    <name>BatterySettingsWidget</name>
-    <message>
-        <location filename="ui/BatterySettingsWidget.ui" line="14"/>
-        <source>Battery Settings</source>
-        <translation>电池设置</translation>
-    </message>
-    <message>
-        <location filename="ui/BatterySettingsWidget.ui" line="34"/>
-        <source>Battery type:</source>
-        <translation>电池类型:</translation>
-    </message>
-    <message>
-        <location filename="ui/BatterySettingsWidget.ui" line="42"/>
-        <source>LiFe</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ui/BatterySettingsWidget.ui" line="47"/>
-        <source>LiPo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ui/BatterySettingsWidget.ui" line="52"/>
-        <source>NiMH</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ui/BatterySettingsWidget.ui" line="64"/>
-        <source>Enable low battery warning:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ui/BatterySettingsWidget.ui" line="78"/>
-        <source>at percent:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/BatterySettingsWidget.cpp" line="20"/>
-        <source>Battery Settings Widget</source>
-        <translation>电池设置对话框</translation>
-    </message>
-</context>
-<context>
-    <name>CameraInputSelectorWidget</name>
-    <message>
-        <location filename="ui/CameraInputSelectorWidget.ui" line="20"/>
-        <source>Camera Input Selector</source>
-        <translation>摄像头输入选择</translation>
-    </message>
-    <message>
-        <location filename="ui/CameraInputSelectorWidget.ui" line="34"/>
-        <source>Source:</source>
-        <translation>源:</translation>
-    </message>
-    <message>
-        <location filename="ui/CameraInputSelectorWidget.ui" line="42"/>
-        <source>USB Camera</source>
-        <translation>USB摄像头</translation>
-    </message>
-    <message utf8="true">
-        <location filename="ui/CameraInputSelectorWidget.ui" line="47"/>
-        <source>Parrot® AR.Drone™ Front Camera</source>
-        <translation>Parrot® AR.Drone™ Front Camera</translation>
-    </message>
-    <message utf8="true">
-        <location filename="ui/CameraInputSelectorWidget.ui" line="52"/>
-        <source>Parrot® AR.Drone™ Bottom Camera</source>
-        <translation>Parrot® AR.Drone™ Bottom Camera</translation>
-    </message>
-    <message>
-        <source>ParrotÂ® AR.Droneâ¢ Front Camera</source>
-        <translation type="obsolete">ParrotÂ® AR.Droneâ¢ Front Camera</translation>
-    </message>
-    <message>
-        <source>ParrotÂ® AR.Droneâ¢ Bottom Camera</source>
-        <translation type="obsolete">ParrotÂ® AR.Droneâ¢ Bottom Camera</translation>
-    </message>
-</context>
+
 <context>
     <name>CameraLiveWidget</name>
     <message>
@@ -515,53 +428,7 @@ p, li { white-space: pre-wrap; }
         <translation>速度</translation>
     </message>
 </context>
-<context>
-    <name>CommunicationSettingsWidget</name>
-    <message>
-        <location filename="ui/CommunicationSettingsWidget.ui" line="14"/>
-        <location filename="src/CommunicationSettingsWidget.cpp" line="27"/>
-        <source>Communication Settings</source>
-        <translation>通信设置</translation>
-    </message>
-    <message>
-        <location filename="ui/CommunicationSettingsWidget.ui" line="34"/>
-        <source>Device Name:</source>
-        <translation>设备名:</translation>
-    </message>
-    <message>
-        <location filename="ui/CommunicationSettingsWidget.ui" line="46"/>
-        <source>Enable Password Protection</source>
-        <translation>启用密码保护</translation>
-    </message>
-    <message>
-        <location filename="ui/CommunicationSettingsWidget.ui" line="70"/>
-        <source>Password:</source>
-        <translation>密码:</translation>
-    </message>
-    <message>
-        <location filename="ui/CommunicationSettingsWidget.ui" line="161"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Lucida Grande&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Passwords must be between 3 and 10 characters in length. &lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Passwords are stored as plain text on the system, but are never transmitted over a connection. &lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Enabling password protection will encrypt all communication with KISS IDE.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Lucida Grande&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Passwords must be between 3 and 10 characters in length. &lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Passwords are stored as plain text on the system, but are never transmitted over a connection. &lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Enabling password protection will encrypt all communication with KISS IDE.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="src/CommunicationSettingsWidget.cpp" line="28"/>
-        <source>Device Name</source>
-        <translation>设备名</translation>
-    </message>
-    <message>
-        <location filename="src/CommunicationSettingsWidget.cpp" line="29"/>
-        <source>Password</source>
-        <translation>密码</translation>
-    </message>
-</context>
+
 <context>
     <name>CompilingWidget</name>
     <message>
@@ -669,25 +536,7 @@ p, li { white-space: pre-wrap; }
         <translation>无可用图像,请检查摄像头连接</translation>
     </message>
 </context>
-<context>
-    <name>DepthImageView</name>
-    <message>
-        <source>Just a second...</source>
-        <translation type="obsolete">请等待...</translation>
-    </message>
-    <message>
-        <source>No depth sensor detected</source>
-        <translation type="obsolete">没有检测到深度传感器</translation>
-    </message>
-</context>
-<context>
-    <name>DepthSensorWidget</name>
-    <message>
-        <location filename="ui/DepthSensorWidget.ui" line="14"/>
-        <source>Depth Sensor</source>
-        <translation>深度传感器</translation>
-    </message>
-</context>
+
 <context>
     <name>EditorWidget</name>
     <message>
@@ -1122,14 +971,7 @@ p, li { white-space: pre-wrap; }
         <translation>KISS IDE 设置</translation>
     </message>
 </context>
-<context>
-    <name>Kovan::Device</name>
-    <message>
-        <location filename="devices/kovan/src/KovanDevice.cpp" line="147"/>
-        <source>Link</source>
-        <translation>Link</translation>
-    </message>
-</context>
+
 <context>
     <name>LanguageWidget</name>
     <message>
@@ -1351,11 +1193,6 @@ p, li { white-space: pre-wrap; }
         <location filename="ui/NetworkSettingsWidget.ui" line="136"/>
         <source>SSID:</source>
         <translation>SSID名:</translation>
-    </message>
-    <message>
-        <location filename="ui/NetworkSettingsWidget.ui" line="143"/>
-        <source>kovanet</source>
-        <translation>kovanet</translation>
     </message>
     <message>
         <location filename="ui/NetworkSettingsWidget.ui" line="160"/>
@@ -2298,11 +2135,6 @@ p, li { white-space: pre-wrap; }
         <location filename="ui/SettingsWidget.ui" line="138"/>
         <source>Update</source>
         <translation>更新</translation>
-    </message>
-    <message>
-        <location filename="ui/SettingsWidget.ui" line="149"/>
-        <source>Battery</source>
-        <translation>电池</translation>
     </message>
 </context>
 <context>

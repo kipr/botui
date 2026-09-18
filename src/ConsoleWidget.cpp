@@ -1,16 +1,10 @@
 #include "ConsoleWidget.h"
 
-#include <QApplication>
-#include <QKeyEvent>
-#include <QTimer>
-#include <QDebug>
-
 #include <fstream>
 
 ConsoleWidget::ConsoleWidget(QWidget *parent)
 	: QTextEdit(parent),
-	m_process(0),
-	m_savedPalette(palette())
+	m_process(0)
 {
   setProcess(0);
 }
@@ -53,6 +47,7 @@ void ConsoleWidget::readStandardOut()
 		setPlainText("");
 		array = array.mid(i + 1);
 	}
+	array.replace("\a", "");
 
         //Output to a debug file
         std::ofstream myfile;
@@ -66,29 +61,10 @@ void ConsoleWidget::readStandardOut()
         }
 
 
-	i = array.lastIndexOf('\a');
-	if(i >= 0) startBeep();
-
-
-	array.remove(i, 1);
-	
         insertPlainText(array);
 
 
 
 	moveCursor(QTextCursor::End, QTextCursor::KeepAnchor);
 	update();
-}
-
-void ConsoleWidget::startBeep()
-{
-	QPalette p = palette();
-	p.setColor(QPalette::Base, QColor(255, 200, 200));
-	setPalette(p);
-	QTimer::singleShot(155, this, SLOT(endBeep()));
-}
-
-void ConsoleWidget::endBeep()
-{
-	setPalette(m_savedPalette);
 }

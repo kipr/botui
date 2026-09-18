@@ -3,7 +3,7 @@
 #include <QEvent>
 #include <QPainter>
 
-#include "InputProviderDialog.h"
+#include "InputProviderWidget.h"
 #include "RootController.h"
 
 #include <QDebug>
@@ -15,7 +15,7 @@ LineEdit::LineEdit(QWidget *parent)
 	init();
 }
 
-LineEdit::LineEdit(InputProviderDialog *inputProvider, QWidget *parent)
+LineEdit::LineEdit(InputProviderWidget *inputProvider, QWidget *parent)
 	: QLineEdit(parent),
 	m_inputProvider(inputProvider)
 {
@@ -30,8 +30,8 @@ bool LineEdit::event(QEvent *e)
 	}
 	if(isEnabled() && e->type() == QEvent::MouseButtonPress) {
 		m_inputProvider->setInput(text());
-		int ret = RootController::ref().presentDialog(m_inputProvider);
-		if(ret == QDialog::Accepted) {
+		const InputProviderWidget::Result result = RootController::ref().presentInput(m_inputProvider);
+		if(result == InputProviderWidget::Accepted) {
 			setText(m_inputProvider->input());
 			emit textEdited(text());
 		}
@@ -42,13 +42,13 @@ bool LineEdit::event(QEvent *e)
 	return QLineEdit::event(e);
 }
 
-void LineEdit::setInputProvider(InputProviderDialog *inputProvider)
+void LineEdit::setInputProvider(InputProviderWidget *inputProvider)
 {
 	m_inputProvider = inputProvider;
         setReadOnly(!m_inputProvider);
 }
 
-InputProviderDialog *LineEdit::inputProvider() const
+InputProviderWidget *LineEdit::inputProvider() const
 {
 	return m_inputProvider;
 }
