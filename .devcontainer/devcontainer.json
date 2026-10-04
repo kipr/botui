@@ -1,0 +1,22 @@
+{
+  "name": "botui Dev",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "../",
+    "target": "devcontainer"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools-extension-pack",
+        "github.vscode-pull-request-github",
+        "openai.chatgpt"
+      ]
+    }
+  },
+  "initializeCommand": "mkdir -p \"$HOME/.config/codex\"",
+  "mounts": [
+    "source=${localEnv:HOME}/.config/codex,target=/home/ubuntu/.codex,type=bind,consistency=cached"
+  ],
+  "remoteUser": "1000"
+}

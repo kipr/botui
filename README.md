@@ -1,17 +1,27 @@
 botui
 =====
-[![Bob the Builder](https://github.com/kipr/botui/actions/workflows/bob.yml/badge.svg)](https://github.com/kipr/botui/actions/workflows/bob.yml)
+[![Build](https://github.com/kipr/botui/actions/workflows/build.yml/badge.svg)](https://github.com/kipr/botui/actions/workflows/build.yml)
 
 
-Botui is a device-independent graphical interface designed initially for the Kovan controller.
+Botui is the touchscreen interface of the KIPR Wombat robot controller. It was designed initially for the Kovan controller.
 
 The icons used throughout botui are from the [Font Awesome](https://fontawesome.com/icons?d=gallery) by © Fonticons, Inc.
 
 Requirements
 ============
-* [pcompiler ](https://github.com/kipr/pcompiler)
-* CMake 2.6.0 or later
-* [Qt >= 4.7.4](https://www.qt.io/download-qt-installer)
+* [libkar](https://github.com/kipr/libkar), [pcompiler](https://github.com/kipr/pcompiler), and [libwallaby](https://github.com/kipr/libwallaby)
+* CMake 3.x (CMake 4 rejects this project's `cmake_minimum_required`)
+* Qt 6, OpenSSL, and zlib development files
+
+
+Build with Docker
+=======
+```
+docker compose build
+docker compose run --rm build-botui
+```
+
+This builds libkar, pcompiler, and libwallaby into the image, then builds botui to `deploy/botui`. Use `run` rather than `up`: `up` reports success even when the build fails. The result runs inside the container (see [AGENTS.md](AGENTS.md#verifying-a-change)) but not on a Wombat.
 
 
 Installation
@@ -33,3 +43,5 @@ Botui is released under the terms of the GPLv3. For more information, see the LI
 
 Want to Contribute? Start Here!: 
 https://github.com/kipr/KIPR-Development-Toolkit
+
+Then read [CONTRIBUTING.md](CONTRIBUTING.md) for how we work, including with AI coding agents.
