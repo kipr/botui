@@ -79,10 +79,14 @@ listed in the `Dockerfile`, and the three KIPR libraries installed to
 `cmake_minimum_required(VERSION 2.8.11)`, which is one reason the image is
 pinned.
 
-There's no clean target; delete `build/` and `deploy/` instead. Also delete
+There's no clean target; delete `build/` and `deploy/` instead. On Linux the
+container creates them as root, so delete them from inside it:
+`docker compose run --rm build-botui rm -rf build deploy`. Also delete
 `build/` when switching between Docker and native builds, because the CMake
-cache records absolute paths. Sources are collected with `file(GLOB)`, so a new
-file is only picked up when CMake re-runs; `build.sh` re-runs it every time.
+cache records absolute paths. The devcontainer mounts the repository at the
+same path as `docker compose`, so the two share `build/`. Sources are
+collected with `file(GLOB)`, so a new file is only picked up when CMake
+re-runs; `build.sh` re-runs it every time.
 
 The build has 13 compiler warnings. Don't add new ones in files you touch.
 
@@ -252,12 +256,13 @@ before changing it to fix a bug.
   and the Factory screen spins on `processEvents()` while flashing. The
   touchscreen freezes for as long as the command runs.
 - **Paths are the Wombat's.** `/home/kipr`, wombat-os, and the system paths
-  above are hard-coded. Off the Wombat, most of them don't exist, which is why
-  the screenshot script creates the Wi-Fi mode file.
+  above are hard-coded. Off the Wombat, most of them don't exist; the image
+  provides a stub Wi-Fi mode file and an empty KISS directory.
 - **Some functions fall off the end.** The `-Wreturn-type` warnings mark
   functions such as `NetworkManager::eventModeState()` that return nothing
-  when their file read fails. The Docker build crashes with `SIGTRAP` at
-  startup if `wifiConnectionMode.txt` is missing.
+  when their file read fails. If `wifiConnectionMode.txt` is missing, the
+  Docker build crashes at startup on a trap instruction (`SIGTRAP` on arm64,
+  `SIGILL` on x86_64).
 - **Fixed 800×480 layout.** `RootController::constrain()` fixes every screen at
   that size. Design `.ui` files for it, with touch-sized controls.
 

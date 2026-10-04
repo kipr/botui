@@ -5,6 +5,8 @@
     "context": "../",
     "target": "devcontainer"
   },
+  "workspaceMount": "source=${localWorkspaceFolder},target=/home/dev/botui,type=bind",
+  "workspaceFolder": "/home/dev/botui",
   "customizations": {
     "vscode": {
       "extensions": [
