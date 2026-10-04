@@ -1,0 +1,5 @@
+services:
+  build-botui:
+    build: .
+    volumes:
+      - .:/home/dev/botui:rw
