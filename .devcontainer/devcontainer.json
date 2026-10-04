@@ -18,6 +18,8 @@
     "--security-opt=systempaths=unconfined"
   ],
 
+  "workspaceMount": "source=${localWorkspaceFolder},target=/home/dev/botui,type=bind",
+  "workspaceFolder": "/home/dev/botui",
   "customizations": {
     "vscode": {
       "extensions": [
