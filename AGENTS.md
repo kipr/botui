@@ -79,14 +79,23 @@ listed in the `Dockerfile`, and the three KIPR libraries installed to
 `cmake_minimum_required(VERSION 2.8.11)`, which is one reason the image is
 pinned.
 
-There's no clean target; delete `build/` and `deploy/` instead. On Linux the
-container creates them as root, so delete them from inside it:
-`docker compose run --rm build-botui rm -rf build deploy`. Also delete
+There's no clean target; delete `build/` and `deploy/` instead. Also delete
 `build/` when switching between Docker and native builds, because the CMake
 cache records absolute paths. The devcontainer mounts the repository at the
-same path as `docker compose`, so the two share `build/`. Sources are
-collected with `file(GLOB)`, so a new file is only picked up when CMake
-re-runs; `build.sh` re-runs it every time.
+same path as `docker compose`, so they can share `build/` when permissions
+allow. The devcontainer uses the named `ubuntu` account so Dev Containers
+automatically matches its uid/gid to the Linux host's. After changing this
+setting, use **Dev Containers: Rebuild Container** to apply the uid/gid
+update; reopening an existing container isn't enough.
+
+Compose still runs as uid/gid 1000. On a Linux host where your uid isn't
+1000, prepare its output directories with `mkdir -p build deploy` and
+`chmod a+rwx build deploy`, as CI does. When switching between Compose and
+a devcontainer with a different uid, existing output files may also need
+permission adjustments. Alternatively, delete `build/` and `deploy/` from
+the environment that owns them, then prepare fresh output directories.
+Sources are collected with `file(GLOB)`, so a new file is only picked up
+when CMake re-runs; `build.sh` re-runs it every time.
 
 The build has 13 compiler warnings. Don't add new ones in files you touch.
 
@@ -105,9 +114,11 @@ There are no automated tests. Before calling a change done:
    Each `X,Y` argument taps the 800×480 screen, and a screenshot is saved
    before the first tap and after each one, to `build/screenshots/0.png`,
    `1.png`, and so on, with botui's output in `botui.log`. The script fails if
-   botui exits early. On the home screen, Programs is at `400,126`, File
-   Manager `400,211`, Motors and Sensors `400,297`, Settings `400,383`, and
-   About `137,30`. Screens one level down have Home at `400,30`.
+   botui exits early, never shows a window, or a screenshot capture fails.
+   Screenshot paths are printed only after a successful capture. On the home
+   screen, Programs is at `400,126`, File Manager `400,211`, Motors and Sensors
+   `400,297`, Settings `400,383`, and About `137,30`. Screens one level down
+   have Home at `400,30`.
 
    Programs lists executables at
    `/home/kipr/Documents/KISS/<user>/<project>/bin/botball_user_program`

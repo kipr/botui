@@ -29,7 +29,8 @@ maintainer you're working with. A wrong approach is much cheaper to catch in a
 plan than in code review.
 
 If you're working with an agent, have it present its plan and review the plan
-yourself before it edits anything.
+yourself before it edits anything. The exception for small fixes is for code
+you write yourself; an agent plans every change.
 
 ## Keep changes focused
 
@@ -38,8 +39,7 @@ yourself before it edits anything.
   AGENTS.md. If you think the architecture itself should change, propose that
   separately.
 - Don't reformat, rename, or reorganize code you aren't otherwise changing; it
-  buries the real change in review. Preserve each file's existing formatting
-  and line endings.
+  buries the real change in review. Preserve each file's existing formatting.
 
 ## Build for what's needed now
 
@@ -49,15 +49,15 @@ issue for it instead.
 
 ## Comments
 
-Comment what a reader can't see from the code: hardware quirks, timing
-constraints, datasheet references, and the reason behind a non-obvious choice.
+Comment what a reader can't see from the code: why a system command or path is
+needed, Qt or NetworkManager quirks, and the reason behind a non-obvious choice.
 Don't describe what the code plainly does, and don't commit commented-out code;
 version control keeps the history.
 
 ## Documentation
 
 Update documentation in the same pull request as the change that affects it:
-README.md, AGENTS.md, CONTRIBUTING.md, and anything under `docs/`.
+README.md, AGENTS.md, and CONTRIBUTING.md.
 
 ## Pull requests
 
