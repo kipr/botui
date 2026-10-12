@@ -20,5 +20,5 @@
   "mounts": [
     "source=${localEnv:HOME}/.config/codex,target=/home/ubuntu/.codex,type=bind,consistency=cached"
   ],
-  "remoteUser": "1000"
+  "remoteUser": "ubuntu"
 }

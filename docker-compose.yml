@@ -1,5 +1,8 @@
 services:
   build-botui:
     build: .
+    # The image's ubuntu account uses uid/gid 1000. Dev Containers can remap
+    # it on Linux, so shared build outputs may need permission adjustments.
+    user: "1000:1000"
     volumes:
       - .:/home/dev/botui:rw
