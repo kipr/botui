@@ -15,7 +15,6 @@ public:
 	StandardWidget(Device *device, QWidget *parent = 0);
 	~StandardWidget();
 	void setupConnections(AboutWidget *aboutWidget);
-	bool getEventModeStateDefault();
 	void reloadStatusBar();
 	void deleteStatusBar();
 	Device *device() const;

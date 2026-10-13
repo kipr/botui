@@ -56,7 +56,6 @@ private:
 	bool isDragRange(const QPoint &mouse, const QPoint &p) const;
 	void drawDragHint(QPainter &painter, const QPoint &p, const QColor &c, const bool &active) const;
 	
-	Q_PROPERTY(int centerHue WRITE setCenterHue)
 	void setCenterHue(const int &centerHue);
 	void scheduleSlide();
 	

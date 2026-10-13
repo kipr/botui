@@ -46,9 +46,11 @@ bool FileUtils::rm(const QString &path)
 	if (dir.removeRecursively())
 	{
 		qDebug() << "Directory removed successfully.";
+		return true;
 	}
 	else
 	{
 		qDebug() << "Failed to remove directory.";
+		return false;
 	}
 }

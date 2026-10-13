@@ -14,7 +14,6 @@
 
 #include "NetworkManager.h"
 #include "SystemUtils.h"
-#include "Execute.h"
 #include <QMessageBox>
 #include <QTimer>
 #include <QMovie>
@@ -37,7 +36,7 @@ NetworkSettingsWidget::NetworkSettingsWidget(Device *device, QWidget *parent)
 	ui->setupUi(this);
 	performStandardSetup(tr("Network Settings"));
 
-	bool initializeEventState = getEventModeStateDefault();
+	bool initializeEventState = NetworkManager::ref().eventModeState();
 
 	if (initializeEventState) // Event Mode Enabled
 	{
@@ -94,8 +93,6 @@ void NetworkSettingsWidget::eventModeEnabledState()
 void NetworkSettingsWidget::eventModeDisabledState()
 {
 	// Initialize as normal
-	getCurrentMode(); // Get current mode
-
 	getWombatName(); // Get Wombat name
 
 	INITIAL_CONNECTION_CONFIG = getConnectionConfig(); // Get initial connection config
@@ -131,25 +128,6 @@ void NetworkSettingsWidget::eventModeDisabledState()
 	ui->connectionModeSelect->setEnabled(true);
 }
 
-void NetworkSettingsWidget::getCurrentMode()
-{
-	QProcess modeProcess;
-	QString command = "grep '^MODE' /home/kipr/wombat-os/configFiles/wifiConnectionMode.txt | awk '{print $2}'";
-
-	modeProcess.start("bash", QStringList() << "-c" << command);
-	modeProcess.waitForFinished();
-
-	QString output = modeProcess.readAllStandardOutput().trimmed();
-
-	if (!output.isEmpty())
-	{
-		qDebug() << "CURRENT MODE is set to:" << output;
-	}
-	else
-	{
-		qDebug() << "Failed to read MODE.";
-	}
-}
 QString NetworkSettingsWidget::getRaspberryPiType()
 {
 	QStringList arguments;

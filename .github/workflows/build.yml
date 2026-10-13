@@ -28,13 +28,23 @@ jobs:
           mkdir -p build deploy
           chmod a+rwx build deploy
           docker compose build
-          docker compose run --rm build-botui
+          set -o pipefail
+          docker compose run --rm build-botui 2>&1 | tee build/build.log
 
       # Fails if botui crashes at startup or never shows a window on the
       # virtual display.
       - name: Launch and screenshot the home screen
         timeout-minutes: 5
         run: docker compose run --rm build-botui scripts/screenshot.sh
+
+      # The checkout is fresh, so every file was compiled and every warning is
+      # in the log.
+      - name: Check for compiler warnings
+        run: |
+          if grep -F ': warning: ' build/build.log; then
+            echo "::error::botui's build printed the warnings above. Fix them before merging."
+            exit 1
+          fi
 
       - name: Upload screenshot and log
         if: always()
