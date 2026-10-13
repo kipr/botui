@@ -3,7 +3,6 @@
 #include <QPainter>
 #include <QMouseEvent>
 #include <QTimer>
-#include <QPropertyAnimation>
 #include <QDebug>
 
 QHsvPicker::QHsvPicker(QWidget *parent)
@@ -194,12 +193,6 @@ void QHsvPicker::slide()
 	}
 	
 	// qDebug() << "new center:" << newCenterH;
-	/* QPropertyAnimation *anim = new QPropertyAnimation(this, "centerHue", this);
-	anim->setDuration(500);
-	anim->setStartValue(360 + m_centerHue);
-	anim->setEndValue(360 + newCenterH);
-	anim->setEasingCurve(QEasingCurve::InOutCubic);
-	anim->start(); */
 	setCenterHue(newCenterH);
 }
 

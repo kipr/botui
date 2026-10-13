@@ -22,6 +22,7 @@ jobs:
 
       # The same commands contributors run locally, so CI and local builds match.
       - name: Build in Docker
+        id: build
         run: |
           # The container runs as uid 1000 and the runner's checkout belongs
           # to another uid, so the output directories have to be writable.
@@ -38,10 +39,16 @@ jobs:
         run: docker compose run --rm build-botui scripts/screenshot.sh
 
       # The checkout is fresh, so every file was compiled and every warning is
-      # in the log.
+      # in the log. Runs even if the screenshot step failed. Case-insensitive
+      # because uic prints "Warning:".
       - name: Check for compiler warnings
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
         run: |
-          if grep -F ': warning: ' build/build.log; then
+          if [ ! -s build/build.log ]; then
+            echo "::error::build/build.log is missing or empty."
+            exit 1
+          fi
+          if grep -iF ': warning: ' build/build.log; then
             echo "::error::botui's build printed the warnings above. Fix them before merging."
             exit 1
           fi

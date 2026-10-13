@@ -829,9 +829,10 @@ NetworkManager::NetworkManager()
 // read, so a Wombat with a missing or damaged file still offers its AP
 int NetworkManager::getBootUpNetworkMode()
 {
+  const QString value = wifiConnectionModeValue("MODE");
+  qDebug() << "getBootUpNetworkMode: " << value;
   bool ok = false;
-  const int mode = wifiConnectionModeValue("MODE").toInt(&ok);
-  qDebug() << "getBootUpNetworkMode: " << mode;
+  const int mode = value.toInt(&ok);
   if (ok && mode >= 0 && mode <= 2)
     return mode;
 
