@@ -160,9 +160,11 @@ void ProgramsWidget::run()
 	const QString cmd = QString("'%1'").arg(escaped);
 
 	ProgramWidget *programWidget = new ProgramWidget(Program::instance(), device());
+	// script gives the program a pseudo-terminal so its output isn't held in a
+	// buffer. Without -e, script exits 0 whatever the program returns.
 	const bool success = Program::instance()->start(
 			"/usr/bin/script",
-			QStringList({"-q", "-c", cmd, "/dev/null"}));
+			QStringList({"-q", "-e", "-c", cmd, "/dev/null"}));
 	if (success)
 		RootController::ref().presentWidget(programWidget);
 	else
