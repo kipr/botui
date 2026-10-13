@@ -21,6 +21,7 @@
 #include "ProgramsWidget.h"
 #include "FileManagerWidget.h"
 #include "Device.h"
+#include "NetworkManager.h"
 #include "ProgramSelectionWidget.h"
 #include "Program.h"
 #include "UiStandards.h"
@@ -40,7 +41,7 @@ HomeWidget::HomeWidget(Device *device, QWidget *parent)
     backgroundImageLabel->lower();
     backgroundImageLabel->hide();
 
-    bool defaultEventState = getEventModeStateDefault();
+    bool defaultEventState = NetworkManager::ref().eventModeState();
 
     if (defaultEventState)
     {
@@ -190,7 +191,7 @@ void HomeWidget::reboot()
                        {
         qDebug() << "Rebooting the system...";
         // Reboot the system
-       const int rebootRet = QProcess::execute("reboot");
+       QProcess::execute("reboot");
 
 
         msgBox->close(); });

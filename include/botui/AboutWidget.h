@@ -17,7 +17,6 @@ public:
 	AboutWidget(Device *device, QWidget *parent = nullptr);
 	~AboutWidget();
 
-	bool getEventModeState();
 	void setEventModeState(QString newState);
 	QString getRaspberryPiType();
 

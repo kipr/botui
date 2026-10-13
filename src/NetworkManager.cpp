@@ -25,6 +25,7 @@
 #include <unistd.h>
 
 #include <QDBusConnection>
+#include <QFile>
 #include <QUuid>
 
 // Applicable defines from the NetworkManager DBus spec
@@ -59,6 +60,10 @@ QString RASPBERRYPI_TYPE;
 
 #define NETWORK_MANAGER_GROUP "NetworkManager"
 #define ON_KEY "on"
+
+// Provided by wombat-os, with lines "MODE <0 AP, 1 client, 2 off>" and
+// "EVENT_MODE <true|false>"
+#define WIFI_CONNECTION_MODE_FILE "/home/kipr/wombat-os/configFiles/wifiConnectionMode.txt"
 
 #define NM_802_11_WIRELESS_KEY ("802-11-wireless")
 #define NM_802_11_SECURITY_KEY ("802-11-wireless-security")
@@ -676,33 +681,29 @@ QString NetworkManager::ipAddress() const
   return ret;
 }
 
-// Returns if event mode is on or off
+// Returns the value after key in the Wi-Fi mode file, or an empty string
+static QString wifiConnectionModeValue(const QString &key)
+{
+  QFile file(WIFI_CONNECTION_MODE_FILE);
+  if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    return QString();
+
+  while (!file.atEnd())
+  {
+    const QStringList fields = QString::fromUtf8(file.readLine()).simplified().split(' ');
+    if (fields.size() >= 2 && fields[0] == key)
+      return fields[1];
+  }
+  return QString();
+}
+
+// Returns if event mode is on, or off if the mode file can't be read
 bool NetworkManager::eventModeState()
 {
-  QProcess eventModeProcess;
-  QString command = "grep '^EVENT_MODE' /home/kipr/wombat-os/configFiles/wifiConnectionMode.txt | awk '{print $2}'";
-
-  eventModeProcess.start("bash", QStringList() << "-c" << command);
-  eventModeProcess.waitForFinished();
-
-  QString output = eventModeProcess.readAllStandardOutput().trimmed();
-
-  if (!output.isEmpty())
-  {
-
-    if (output == "true")
-    {
-      return true;
-    }
-    else
-    {
-      return false;
-    }
-  }
-  else
-  {
+  const QString value = wifiConnectionModeValue("EVENT_MODE");
+  if (value.isEmpty())
     qDebug() << "Failed to read EVENT_MODE.";
-  }
+  return value == "true";
 }
 
 // Returns the network's IPv4 address
@@ -824,35 +825,18 @@ NetworkManager::NetworkManager()
 
 }
 
-// Returns the network mode on boot up
+// Returns the network mode on boot up, or AP mode if the mode file can't be
+// read, so a Wombat with a missing or damaged file still offers its AP
 int NetworkManager::getBootUpNetworkMode()
 {
-  QProcess networkModeProcess;
-  QString command = "grep '^MODE' /home/kipr/wombat-os/configFiles/wifiConnectionMode.txt | awk '{print $2}'";
+  bool ok = false;
+  const int mode = wifiConnectionModeValue("MODE").toInt(&ok);
+  qDebug() << "getBootUpNetworkMode: " << mode;
+  if (ok && mode >= 0 && mode <= 2)
+    return mode;
 
-  networkModeProcess.start("bash", QStringList() << "-c" << command);
-  networkModeProcess.waitForFinished();
-
-  QString output = networkModeProcess.readAllStandardOutput().trimmed();
-  qDebug() << "getBootUpNetworkMode: " << output.toInt();
-  if (!output.isEmpty())
-  {
-    switch (output.toInt())
-    {
-    case 0: // AP Mode
-      return 0;
-    case 1: // Client Mode
-      return 1;
-    case 2: // Wifi Off
-      return 2;
-    default:
-      qDebug() << "Unknown MODE.";
-    }
-  }
-  else
-  {
-    qDebug() << "Failed to read MODE.";
-  }
+  qDebug() << "Failed to read MODE; using AP mode.";
+  return 0;
 }
 
 // Returns the Raspberry Pi type inside Wombat

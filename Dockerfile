@@ -59,8 +59,9 @@ RUN git clone --depth 1 --branch $LIBWALLABY_REF https://github.com/kipr/libwall
     ldconfig && \
     rm -rf /tmp/libwallaby
 
-# Off the Wombat, botui crashes at startup without wombat-os's network mode
-# file. Writable by any user because the build runs as uid 1000 and Dev
+# A stub of wombat-os's network mode file. MODE 2 (Wi-Fi off) stops botui
+# from trying to start the access point, which it does when the file is
+# missing. Writable by any user because the build runs as uid 1000 and Dev
 # Containers can remap the ubuntu account to the Linux host's uid/gid.
 RUN mkdir -p /home/kipr/wombat-os/configFiles /home/kipr/Documents/KISS && \
     printf 'MODE 2\nEVENT_MODE false\n' > /home/kipr/wombat-os/configFiles/wifiConnectionMode.txt && \

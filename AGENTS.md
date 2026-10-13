@@ -97,13 +97,14 @@ the environment that owns them, then prepare fresh output directories.
 Sources are collected with `file(GLOB)`, so a new file is only picked up
 when CMake re-runs; `build.sh` re-runs it every time.
 
-The build has 13 compiler warnings. Don't add new ones in files you touch.
+The build has no compiler warnings, and CI fails if it prints any. An
+incremental build only shows warnings for the files it recompiles.
 
 ## Verifying a change
 
 There are no automated tests. Before calling a change done:
 
-1. The Docker build succeeds without new warnings.
+1. The Docker build succeeds without warnings.
 2. botui launches and the screens you touched look right. Run it on a virtual
    display inside the image and look at the screenshots:
 
@@ -126,10 +127,12 @@ There are no automated tests. Before calling a change done:
    `docker compose run` with `bash -c` before calling the script.
 
    There's no hardware, NetworkManager, or wombat-os in the container. libkipr
-   logs `SPI_IOC_MESSAGE` errors continuously, the battery reads empty, network
-   actions do nothing, and About shows `??` for the version. A screen that
-   depends on those may misbehave before your change too; compare with
-   `master` before blaming it.
+   logs `SPI_IOC_MESSAGE` errors continuously, the battery reads empty, and
+   About shows `??` for the version. Network actions do nothing, except that
+   botui segfaults where `NetworkManager` uses the Wi-Fi device it never found:
+   on the Network settings screen, on About with Event Mode on, and at startup
+   with `MODE 1`. A screen that depends on those may misbehave before your
+   change too; compare with `master` before blaming it.
 3. Changes to behavior on the Wombat need testing on a Wombat: hardware,
    networking, updates, backups, and anything that runs a system command.
    Agents don't deploy to hardware. Tell the person you're working with what
@@ -180,9 +183,11 @@ botui doesn't compile programs; the KIPR IDE on the Wombat does.
 `ArchivesModel` lists projects under `/home/kipr/Documents/KISS/` (`pathToKISS`
 in `Config.cpp`) that have a `bin/botball_user_program`. `ProgramsWidget::run()`
 starts it through `/usr/bin/script` so the program gets a pseudo-terminal and
-its output isn't held in a buffer. `Program` (a singleton) owns the `QProcess`;
-`ProgramWidget` shows its output in a `ConsoleWidget`, which treats `\f` as
-clear and `\a` as a flash, and shows the program's A/B/C/X/Y/Z buttons.
+its output isn't held in a buffer; `-e` passes the program's exit code
+through, which is 128 plus the signal number for a crash. `Program` (a
+singleton) owns the `QProcess`; `ProgramWidget` shows its output in a
+`ConsoleWidget`, which treats `\f` as clear and `\a` as a flash, and shows the
+program's A/B/C/X/Y/Z buttons.
 `KovanSerialBridge` also listens on the local socket `org.kipr.botui.Run` and
 runs any executable path a client writes to it.
 
@@ -206,11 +211,13 @@ first six hex digits of SHA-256 of the device ID followed by `00`
 password on every Wombat that updates, and wombat-os relies on the name.
 
 The Wi-Fi mode (`MODE 0` access point, `1` client, `2` off) and Event Mode are
-stored in `/home/kipr/wombat-os/configFiles/wifiConnectionMode.txt`, which
-botui reads with `grep` and `awk` and writes with `sed`. Event Mode, toggled on
-the About screen, turns the access point off for competitions; its UI state
-lives in globals (`eventModeEnabled` in `StandardWidget.cpp`, `eventModeLabel`
-in `StatusBar.cpp`, `backgroundImageLabel` in `HomeWidget.cpp`).
+stored in `/home/kipr/wombat-os/configFiles/wifiConnectionMode.txt`.
+`NetworkManager` reads it, defaulting to access point mode with Event Mode
+off if the file is missing or damaged, and botui writes it with `sed`. Event
+Mode, toggled on the About screen, turns the access point off for
+competitions; its UI state lives in globals (`eventModeEnabled` in
+`StandardWidget.cpp`, `eventModeLabel` in `StatusBar.cpp`,
+`backgroundImageLabel` in `HomeWidget.cpp`).
 
 ### Files and scripts shared with other repositories
 
@@ -269,11 +276,6 @@ before changing it to fix a bug.
 - **Paths are the Wombat's.** `/home/kipr`, wombat-os, and the system paths
   above are hard-coded. Off the Wombat, most of them don't exist; the image
   provides a stub Wi-Fi mode file and an empty KISS directory.
-- **Some functions fall off the end.** The `-Wreturn-type` warnings mark
-  functions such as `NetworkManager::eventModeState()` that return nothing
-  when their file read fails. If `wifiConnectionMode.txt` is missing, the
-  Docker build crashes at startup on a trap instruction (`SIGTRAP` on arm64,
-  `SIGILL` on x86_64).
 - **Fixed 800×480 layout.** `RootController::constrain()` fixes every screen at
   that size. Design `.ui` files for it, with touch-sized controls.
 

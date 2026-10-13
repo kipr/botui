@@ -69,7 +69,8 @@ State plainly what wasn't tested rather than implying it was.
 
 - CI builds every pull request with the same Docker image you run locally (see
   [AGENTS.md](AGENTS.md#build)). That build checks that botui compiles against
-  Ubuntu's Qt 6; it doesn't produce a binary that runs on a Wombat.
+  Ubuntu's Qt 6 without warnings; it doesn't produce a binary that runs on a
+  Wombat.
 - Changes to what botui does on a Wombat need testing on a Wombat: screens,
   networking, and anything that runs a system command or script. Describe what
   you tested in the pull request, or say that it's untested.

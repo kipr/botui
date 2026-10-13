@@ -31,7 +31,7 @@ void CameraWidget::setConfig(Config *config)
 
 void CameraWidget::setChannelConfig(const Config &config, int channelNum)
 {
-  if(m_camDevice->channels().size() <= channelNum)
+  if(m_camDevice->channels().size() <= static_cast<size_t>(channelNum))
     return;
   
   m_camDevice->channels()[channelNum]->setConfig(config);
@@ -107,7 +107,7 @@ void CameraWidget::postProcessImage(QImage &image)
 
     // Iterate over all objects for this channel
     const kipr::camera::ObjectVector *objs = (*it)->objects();
-    for(int objNum = 0; objNum < objs->size(); ++objNum) {
+    for(int objNum = 0; objNum < static_cast<int>(objs->size()); ++objNum) {
       const kipr::camera::Object &obj = objs->at(objNum);
       
       // If needed, draw bbox

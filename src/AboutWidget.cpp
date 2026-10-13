@@ -24,7 +24,8 @@ AboutWidget::AboutWidget(Device *device, QWidget *parent)
   setupConnections(this);
 
   // Event Mode persistent state check
-  bool eventModeState = getEventModeState();
+  bool eventModeState = NetworkManager::ref().eventModeState();
+  ui->toggleSwitch->setChecked(eventModeState);
 
   if (eventModeState)
   {
@@ -205,36 +206,6 @@ QString AboutWidget::getRaspberryPiType()
   }
 
   return piType; // Convert QByteArray to QString and trim
-}
-
-bool AboutWidget::getEventModeState()
-{
-  QProcess eventModeProcess;
-  QString command = "grep '^EVENT_MODE' /home/kipr/wombat-os/configFiles/wifiConnectionMode.txt | awk '{print $2}'";
-
-  eventModeProcess.start("bash", QStringList() << "-c" << command);
-  eventModeProcess.waitForFinished();
-
-  QString output = eventModeProcess.readAllStandardOutput().trimmed();
-
-  if (!output.isEmpty())
-  {
-    qDebug() << "CURRENT EVENT_MODE is set to:" << output;
-    if (output == "true")
-    {
-      ui->toggleSwitch->setChecked(true);
-      return true;
-    }
-    else
-    {
-      ui->toggleSwitch->setChecked(false);
-      return false;
-    }
-  }
-  else
-  {
-    qDebug() << "Failed to read EVENT_MODE.";
-  }
 }
 
 void AboutWidget::setEventModeState(QString newState)
