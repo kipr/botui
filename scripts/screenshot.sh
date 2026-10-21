@@ -32,12 +32,6 @@ if [ ! -x "$BOTUI" ]; then
   exit 2
 fi
 
-# botui crashes at startup without this file; the image provides a stub.
-if [ ! -f /home/kipr/wombat-os/configFiles/wifiConnectionMode.txt ]; then
-  echo "wifiConnectionMode.txt is missing; rebuild the image." >&2
-  exit 2
-fi
-
 rm -rf "$OUT"
 mkdir -p "$OUT"
 

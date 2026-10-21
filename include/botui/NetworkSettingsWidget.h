@@ -29,7 +29,6 @@ public:
 	void editWifiConnectionMode(int newMode);
 	void eventModeEnabledState();
 	void eventModeDisabledState();
-	void getCurrentMode();
 	QString getConnectionConfig();
 
 public slots:

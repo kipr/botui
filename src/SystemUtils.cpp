@@ -2,6 +2,7 @@
 
 #include <QProcess>
 #include <QDebug>
+#include <openssl/evp.h>
 #include <openssl/sha.h>
 #include <iomanip>
 #include <sstream>
@@ -73,10 +74,7 @@ QString SystemUtils::sha256(const QString &str)
 {
   const std::string stdstr = str.toStdString();
   unsigned char hash[SHA256_DIGEST_LENGTH];
-  SHA256_CTX sha256;
-  SHA256_Init(&sha256);
-  SHA256_Update(&sha256, stdstr.c_str(), stdstr.size());
-  SHA256_Final(hash, &sha256);
+  EVP_Digest(stdstr.c_str(), stdstr.size(), hash, nullptr, EVP_sha256(), nullptr);
   
   std::stringstream ss;
   for(int i = 0; i < SHA256_DIGEST_LENGTH; ++i)

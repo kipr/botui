@@ -14,7 +14,6 @@
 
 #include "NetworkManager.h"
 #include "SystemUtils.h"
-#include "Execute.h"
 #include <QMessageBox>
 #include <QTimer>
 #include <QMovie>
@@ -37,7 +36,7 @@ NetworkSettingsWidget::NetworkSettingsWidget(Device *device, QWidget *parent)
 	ui->setupUi(this);
 	performStandardSetup(tr("Network Settings"));
 
-	bool initializeEventState = getEventModeStateDefault();
+	bool initializeEventState = NetworkManager::ref().eventModeState();
 
 	if (initializeEventState) // Event Mode Enabled
 	{
@@ -94,8 +93,6 @@ void NetworkSettingsWidget::eventModeEnabledState()
 void NetworkSettingsWidget::eventModeDisabledState()
 {
 	// Initialize as normal
-	getCurrentMode(); // Get current mode
-
 	getWombatName(); // Get Wombat name
 
 	INITIAL_CONNECTION_CONFIG = getConnectionConfig(); // Get initial connection config
@@ -131,25 +128,6 @@ void NetworkSettingsWidget::eventModeDisabledState()
 	ui->connectionModeSelect->setEnabled(true);
 }
 
-void NetworkSettingsWidget::getCurrentMode()
-{
-	QProcess modeProcess;
-	QString command = "grep '^MODE' /home/kipr/wombat-os/configFiles/wifiConnectionMode.txt | awk '{print $2}'";
-
-	modeProcess.start("bash", QStringList() << "-c" << command);
-	modeProcess.waitForFinished();
-
-	QString output = modeProcess.readAllStandardOutput().trimmed();
-
-	if (!output.isEmpty())
-	{
-		qDebug() << "CURRENT MODE is set to:" << output;
-	}
-	else
-	{
-		qDebug() << "Failed to read MODE.";
-	}
-}
 QString NetworkSettingsWidget::getRaspberryPiType()
 {
 	QStringList arguments;
@@ -218,6 +196,15 @@ void NetworkSettingsWidget::toggleChanged()
 	qDebug() << "toggle changed";
 	qDebug() << "Current Config after toggle click: " << currentConfig;
 
+	// Puts the toggle back, blocked so it doesn't call toggleChanged() again.
+	// setChecked() during the click wouldn't update the state QCheckBox last
+	// reported, so the next tap wouldn't emit stateChanged().
+	const auto setToggle = [this](Qt::CheckState state)
+	{
+		const QSignalBlocker blocker(ui->toggleSwitch);
+		ui->toggleSwitch->setCheckState(state);
+	};
+
 	if (currentConfig.contains("band=a")) // Currently set to 5GHz band
 	{
 		if (QMessageBox::question(this, "Change Wifi Band?",
@@ -226,7 +213,7 @@ void NetworkSettingsWidget::toggleChanged()
 		{
 
 			StandardWidget::enableMenuBar();
-			ui->toggleSwitch->setChecked(true); // Keep on 5GHz toggle side
+			setToggle(Qt::Checked); // Keep on 5GHz toggle side
 			ui->toggleSwitch->setEnabled(true);
 
 			return;
@@ -243,13 +230,20 @@ void NetworkSettingsWidget::toggleChanged()
 		{
 
 			StandardWidget::enableMenuBar();
-			ui->toggleSwitch->setChecked(false); // Keep on 2.4GHz toggle side
+			setToggle(Qt::Unchecked); // Keep on 2.4GHz toggle side
 			ui->toggleSwitch->setEnabled(true);
 
 			return;
 		}
 		newBand = "a"; // 5GHz band
 		newChannel = 36;
+	}
+	else // No AP connection to change, e.g. one was never created
+	{
+		qWarning() << "No Wifi band in the AP config; not changing it.";
+		setToggle(ui->toggleSwitch->isChecked() ? Qt::Unchecked : Qt::Checked);
+		ui->toggleSwitch->setEnabled(true);
+		return;
 	}
 
 	NetworkManager::ref().changeWifiBands(newBand, newChannel);

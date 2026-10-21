@@ -27,33 +27,6 @@ void StandardWidget::disableMenuBar()
 	m_menuBar->setEnabled(false);
 }
 
-bool StandardWidget::getEventModeStateDefault()
-{
-	QProcess eventModeProcess;
-	QString command = "grep '^EVENT_MODE' /home/kipr/wombat-os/configFiles/wifiConnectionMode.txt | awk '{print $2}'";
-
-	eventModeProcess.start("bash", QStringList() << "-c" << command);
-	eventModeProcess.waitForFinished();
-
-	QString output = eventModeProcess.readAllStandardOutput().trimmed();
-
-	if (!output.isEmpty())
-	{
-
-		if (output == "true")
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-	else
-	{
-		qDebug() << "Failed to read EVENT_MODE.";
-	}
-}
 void StandardWidget::enableMenuBar()
 {
 	m_menuBar->setEnabled(true);
