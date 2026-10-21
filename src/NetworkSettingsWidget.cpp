@@ -196,6 +196,15 @@ void NetworkSettingsWidget::toggleChanged()
 	qDebug() << "toggle changed";
 	qDebug() << "Current Config after toggle click: " << currentConfig;
 
+	// Puts the toggle back, blocked so it doesn't call toggleChanged() again.
+	// setChecked() during the click wouldn't update the state QCheckBox last
+	// reported, so the next tap wouldn't emit stateChanged().
+	const auto setToggle = [this](Qt::CheckState state)
+	{
+		const QSignalBlocker blocker(ui->toggleSwitch);
+		ui->toggleSwitch->setCheckState(state);
+	};
+
 	if (currentConfig.contains("band=a")) // Currently set to 5GHz band
 	{
 		if (QMessageBox::question(this, "Change Wifi Band?",
@@ -204,7 +213,7 @@ void NetworkSettingsWidget::toggleChanged()
 		{
 
 			StandardWidget::enableMenuBar();
-			ui->toggleSwitch->setChecked(true); // Keep on 5GHz toggle side
+			setToggle(Qt::Checked); // Keep on 5GHz toggle side
 			ui->toggleSwitch->setEnabled(true);
 
 			return;
@@ -221,13 +230,20 @@ void NetworkSettingsWidget::toggleChanged()
 		{
 
 			StandardWidget::enableMenuBar();
-			ui->toggleSwitch->setChecked(false); // Keep on 2.4GHz toggle side
+			setToggle(Qt::Unchecked); // Keep on 2.4GHz toggle side
 			ui->toggleSwitch->setEnabled(true);
 
 			return;
 		}
 		newBand = "a"; // 5GHz band
 		newChannel = 36;
+	}
+	else // No AP connection to change, e.g. one was never created
+	{
+		qWarning() << "No Wifi band in the AP config; not changing it.";
+		setToggle(ui->toggleSwitch->isChecked() ? Qt::Unchecked : Qt::Checked);
+		ui->toggleSwitch->setEnabled(true);
+		return;
 	}
 
 	NetworkManager::ref().changeWifiBands(newBand, newChannel);
