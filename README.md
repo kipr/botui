@@ -12,6 +12,12 @@ Requirements
 * [libkar](https://github.com/kipr/libkar), [pcompiler](https://github.com/kipr/pcompiler), and [libwallaby](https://github.com/kipr/libwallaby)
 * CMake 3.x (CMake 4 rejects this project's `cmake_minimum_required`)
 * Qt 6, OpenSSL, and zlib development files
+```
+docker compose build
+docker compose run --rm build-botui
+```
+
+This builds libkar, pcompiler, and libwallaby into the image, then builds botui to `deploy/botui`. Use `run` rather than `up`: `up` reports success even when the build fails. The result runs inside the container (see [AGENTS.md](AGENTS.md#verifying-a-change)) but not on a Wombat.
 
 
 Build with Docker
