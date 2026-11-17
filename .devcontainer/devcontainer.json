@@ -5,6 +5,19 @@
     "context": "../",
     "target": "devcontainer"
   },
+  "remoteUser": "1000",
+  "mounts": [
+    "source=claude-config,target=/home/code/.claude,type=volume",
+    "source=codex-config,target=/home/code/.codex,type=volume"
+  ],
+  // The Claude Code / Codex sandboxes use bubblewrap. Docker's default seccomp
+  // profile blocks it, and its masked /proc paths stop bwrap mounting /proc.
+  // These turn off the syscall filter and /proc masking for the container.
+  "runArgs": [
+    "--security-opt=seccomp=unconfined",
+    "--security-opt=systempaths=unconfined"
+  ],
+
   "workspaceMount": "source=${localWorkspaceFolder},target=/home/dev/botui,type=bind",
   "workspaceFolder": "/home/dev/botui",
   "customizations": {
@@ -12,13 +25,13 @@
       "extensions": [
         "ms-vscode.cpptools-extension-pack",
         "github.vscode-pull-request-github",
-        "openai.chatgpt"
-      ]
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "fish",
+        "terminal.integrated.profiles.linux": {
+          "fish": { "path": "/usr/bin/fish" }
+        }
+      }
     }
-  },
-  "initializeCommand": "mkdir -p \"$HOME/.config/codex\"",
-  "mounts": [
-    "source=${localEnv:HOME}/.config/codex,target=/home/ubuntu/.codex,type=bind,consistency=cached"
-  ],
-  "remoteUser": "ubuntu"
+  }
 }

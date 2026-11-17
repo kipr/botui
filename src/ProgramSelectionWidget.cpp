@@ -20,7 +20,7 @@ ProgramSelectionWidget::ProgramSelectionWidget(Device *device, QWidget *parent)
 	m_menuBar->addHomeAndBackButtons();
 	m_menuBar->setTitle("Program Selection");
 	layout()->setMenuBar(m_menuBar);
-	m_statusBar->loadDefaultWidgets(m_device);
+	m_statusBar->loadDefaultWidgets();
 	layout()->addWidget(m_statusBar);
 	
 	connect(ui->runningProgram, SIGNAL(clicked()), SLOT(runningProgram()));
@@ -36,12 +36,10 @@ ProgramSelectionWidget::~ProgramSelectionWidget()
 
 void ProgramSelectionWidget::runningProgram()
 {
-	RootController::ref().dismissWidget(); // Dismiss ourself
-	RootController::ref().presentWidget(new ProgramWidget(Program::instance(), m_device));
+	RootController::ref().replaceWidget(new ProgramWidget(Program::instance(), m_device));
 }
 
 void ProgramSelectionWidget::otherPrograms()
 {
-	RootController::ref().dismissWidget(); // Dismiss ourself
-	RootController::ref().presentWidget(new ProgramsWidget(m_device));
+	RootController::ref().replaceWidget(new ProgramsWidget(m_device));
 }

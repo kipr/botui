@@ -12,7 +12,6 @@
 #include "NetworkSettingsWidget.h"
 #include "FactoryWidget.h"
 #include "GuiSettingsWidget.h"
-#include "BatterySettingsWidget.h"
 
 #include <QDebug>
 
@@ -33,7 +32,6 @@ AdvancedSettingsWidget::AdvancedSettingsWidget(Device *device, QWidget *parent)
 	connect(ui->network, SIGNAL(clicked()), SLOT(network()));
         connect(ui->factory, SIGNAL(clicked()), SLOT(factory()));
 	connect(ui->gui, SIGNAL(clicked()), SLOT(gui()));
-        connect(ui->battery, SIGNAL(clicked()), SLOT(battery()));
 	
 }
 
@@ -53,11 +51,6 @@ RootController::ref().presentWidget(new NetworkSettingsWidget(device()));
 void AdvancedSettingsWidget::gui()
 {
 	RootController::ref().presentWidget(new GuiSettingsWidget(device()));
-}
-
-void AdvancedSettingsWidget::battery()
-{
-  RootController::ref().presentWidget(new BatterySettingsWidget(device()));
 }
 
 void AdvancedSettingsWidget::factory()

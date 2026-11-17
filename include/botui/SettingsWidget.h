@@ -20,7 +20,6 @@ public slots:
 	void calibrate();
 	void language();
   	void update();
-  	void hideUi();
   	void cameraView();
 	void backup();
         void advanced();

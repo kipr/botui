@@ -5,7 +5,6 @@
 #include "CameraLiveWidget.h"
 #include "ServosWidget.h"
 #include "CombinedMotorWidget.h"
-#include "DepthSensorWidget.h"
 #include "SensorsWidget.h"
 #include "SensorListWidget.h"
 #include "NotYetImplementedDialog.h"
@@ -54,5 +53,4 @@ void MotorsSensorsWidget::camera()
 {
 	RootController::ref().presentWidget(new CameraLiveWidget(device()));
 }
-
 

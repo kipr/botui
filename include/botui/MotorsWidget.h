@@ -8,7 +8,7 @@ namespace Ui
 	class MotorsWidget;
 }
 
-class InputProviderDialog;
+class InputProviderWidget;
 
 class MotorsWidget : public StandardWidget
 {
@@ -26,7 +26,7 @@ private slots:
 	void update();
 private:
 	Ui::MotorsWidget *ui;
-	InputProviderDialog *m_provider;
+	InputProviderWidget *m_provider;
 };
 
 

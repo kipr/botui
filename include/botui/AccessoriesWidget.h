@@ -17,7 +17,6 @@ public:
 	
 private slots:
 	void create();
-	void ardrone();
 	
 private:
 	Ui::AccessoriesWidget *ui;

@@ -4,7 +4,6 @@
 #include <QObject>
 #include <QString>
 
-class BatteryLevelProvider;
 class NetworkingProvider;
 class CommunicationProvider;
 class ArchivesManager;
@@ -28,7 +27,6 @@ public:
 	virtual bool isTouchscreen() const = 0;
 	
 	virtual CompileProvider *compileProvider() const = 0;
-	virtual BatteryLevelProvider *batteryLevelProvider() const = 0;
 	virtual SettingsProvider *settingsProvider() const = 0;
 	virtual ButtonProvider *buttonProvider() const = 0;
 };

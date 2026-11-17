@@ -1,9 +1,8 @@
 #include "StatusBar.h"
 
-#include "Device.h"
 #include "NetworkStatusWidget.h"
-#include "TimeWidget.h"
-#include "BatteryWidget.h"
+#include <QLabel>
+
 QLabel *eventModeLabel;
 
 StatusBar::StatusBar(QWidget *parent)
@@ -17,11 +16,8 @@ StatusBar::StatusBar(QWidget *parent)
 	eventModeLabel->hide();
 }
 
-void StatusBar::loadDefaultWidgets(Device *device)
+void StatusBar::loadDefaultWidgets()
 {
-	if (device->batteryLevelProvider())
-		addPermanentWidget(new BatteryWidget(device->batteryLevelProvider(), this));
-
 #ifdef NETWORK_ENABLED
 	addPermanentWidget(new NetworkStatusWidget(this));
 #endif

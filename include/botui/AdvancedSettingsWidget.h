@@ -18,7 +18,6 @@ public:
 public slots:
 	void network();
 	void gui();
-  	void battery();
         void factory();
 	
 private:

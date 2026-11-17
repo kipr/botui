@@ -3,7 +3,7 @@
 #include "LineEdit.h"
 
 NumpadDialog::NumpadDialog(const QString& text, InputType type, const double& min, const double& max, QWidget *parent)
-	: InputProviderDialog(parent),
+	: InputProviderWidget(parent),
 	ui(new Ui::NumpadDialog),
 	m_decimalExists(false),
 	m_isEmpty(true),
@@ -64,6 +64,13 @@ NumpadDialog::NumpadDialog(const QString& text, InputType type, const double& mi
 	if(m_min >= 0.0) signButton->hide();
 
 	connect(display, SIGNAL(textChanged(QString)), this, SLOT(displayChanged(QString)));
+}
+
+NumpadDialog::NumpadDialog(const QString& text, QWidget *parent)
+	: NumpadDialog(text, Integer,
+		-std::numeric_limits<double>::max(),
+		std::numeric_limits<double>::max(), parent)
+{
 }
 
 NumpadDialog::~NumpadDialog()

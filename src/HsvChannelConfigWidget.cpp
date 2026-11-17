@@ -12,7 +12,7 @@
 HsvChannelConfigWidget::HsvChannelConfigWidget(const QModelIndex &index, QWidget *parent)
 	: ChannelConfigWidget(index, parent),
 	ui(new Ui::HsvChannelConfigWidget),
-	m_numpad(new NumpadDialog("Enter Value"))
+	m_numpad(new NumpadDialog("Enter Value", this))
 {
 	ui->setupUi(this);
 	

@@ -1,5 +1,6 @@
 #include "BusyIndicator.h"
 #include "RootController.h"
+#include "RootWindow.h"
 #include "MechanicalStyle.h"
 #include "HomeWidget.h"
 #include "StatusBar.h"
@@ -8,17 +9,19 @@
 #include "FactoryWidget.h"
 #include "NetworkManager.h"
 #include "GuiSettingsWidget.h"
+#include "ScreenInversion.h"
 #include "TestWizard.h"
-#include "KovanSerialBridge.h"
 #include "CursorManager.h"
-#include "SettingsProvider.h"
 #include "NetworkSettingsWidget.h"
 #include <QApplication>
 #include <QDir>
 
+#include <QFont>
 #include <QFontDatabase>
 #include <QSettings>
+#include <QStringList>
 #include <QTranslator>
+#include <QTimer>
 
 int main(int argc, char* argv[])
 { 
@@ -27,6 +30,30 @@ int main(int argc, char* argv[])
   QApplication::setApplicationName("botui");
   
 	QApplication app(argc, argv);
+	QString screenRecoveryError;
+	const bool screenRecovered = ScreenInversion::recoverPending(&screenRecoveryError);
+	if (!screenRecovered)
+		qWarning() << "Unable to recover pending screen inversion:" << screenRecoveryError;
+	QTimer screenSyncTimer;
+	screenSyncTimer.setInterval(2000);
+	QObject::connect(&screenSyncTimer, &QTimer::timeout, &app, [&screenSyncTimer]() {
+		QString error;
+		if (ScreenInversion::synchronizeConfiguredOutput(&error))
+			screenSyncTimer.stop();
+	});
+	QTimer screenRecoveryTimer;
+	screenRecoveryTimer.setInterval(2000);
+	QObject::connect(&screenRecoveryTimer, &QTimer::timeout, &app, [&screenRecoveryTimer, &screenSyncTimer]() {
+		QString error;
+		if (ScreenInversion::recoverPending(&error)) {
+			screenRecoveryTimer.stop();
+			screenSyncTimer.start();
+		}
+	});
+	if (!screenRecovered)
+		screenRecoveryTimer.start();
+	else
+		screenSyncTimer.start();
   
   QTranslator translator;
   const QString trFile = "botui_" + QSettings().value("locale", "en").toString().left(2);
@@ -40,25 +67,34 @@ int main(int argc, char* argv[])
 	QDir::setCurrent(QApplication::applicationDirPath());
 	qmlRegisterType<BusyIndicator>("ZapBsComponents", 1, 0, "BusyIndicator");
 	
-	QFontDatabase::addApplicationFont(":/fonts/DejaVuSans-ExtraLight.ttf");
-	QFontDatabase::addApplicationFont(":/fonts/DejaVuSans.ttf");
+	// const int sansFontId = QFontDatabase::addApplicationFont(":/fonts/DejaVuSans-ExtraLight.ttf");
+	// const QString sansStyle = "ExtraLight";
+	// To test regular DejaVu Sans, comment out the two lines above and uncomment these:
+	const int sansFontId = QFontDatabase::addApplicationFont(":/fonts/DejaVuSans.ttf");
+	const QString sansStyle = "Book";
 	QFontDatabase::addApplicationFont(":/fonts/DejaVuSansMono.ttf");
+
+	const QStringList sansFamilies = QFontDatabase::applicationFontFamilies(sansFontId);
+	if (!sansFamilies.isEmpty()) {
+		QFont appFont = QApplication::font();
+		appFont.setFamily(sansFamilies.constFirst());
+		appFont.setStyleName(sansStyle);
+		QApplication::setFont(appFont);
+	} else {
+		qWarning() << "Unable to load bundled DejaVu Sans font";
+	}
 	
 	srand(time(NULL));
 	
 	Wombat::Device device;
 	CursorManager::ref().setDevice(&device);
+	RootWindow rootWindow;
+	RootController::ref().initialize(&rootWindow, new HomeWidget(&device));
 #ifdef QT_DBUS_LIB
-  KovanSerialBridge::ref().init(&device);
   NetworkManager::ref().init(&device);
 #endif
-  
-  SettingsProvider *const settings = device.settingsProvider();
-  const bool fullscreen = settings && settings->value("fullscreen", true).toBool();
-  RootController::ref().setFullscreen(fullscreen);
-	//GuiSettingsWidget::updateStyle(&device);
-	
-	RootController::ref().presentWidget(new HomeWidget(&device));
+
+	rootWindow.showFullScreen();
 
 	return app.exec();
 }

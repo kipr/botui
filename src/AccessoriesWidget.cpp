@@ -21,8 +21,3 @@ void AccessoriesWidget::create()
 {
 	RootController::ref().presentWidget(new CreateWidget(device()));
 }
-
-void AccessoriesWidget::ardrone()
-{
-	
-}

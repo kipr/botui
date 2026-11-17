@@ -16,14 +16,9 @@ public:
 
 private slots:
 	void readStandardOut();
-
-	void startBeep();
-	void endBeep();
 private:
 	
 	QIODevice *m_process;
-	
-	QPalette m_savedPalette;
 };
 
 #endif

@@ -44,7 +44,7 @@ void StandardWidget::reloadStatusBar()
 	if (!m_statusBar)
 	{
 		m_statusBar = new StatusBar(this);
-		m_statusBar->loadDefaultWidgets(m_device);
+		m_statusBar->loadDefaultWidgets();
 		if (layout())
 			layout()->addWidget(m_statusBar);
 
@@ -68,7 +68,7 @@ void StandardWidget::performStandardSetup(const QString &title, const bool &stat
 	if (!statusBar)
 		return;
 	m_statusBar = new StatusBar(this);
-	m_statusBar->loadDefaultWidgets(m_device);
+	m_statusBar->loadDefaultWidgets();
 	if (layout())
 		layout()->addWidget(m_statusBar);
 

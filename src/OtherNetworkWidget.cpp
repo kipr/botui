@@ -22,8 +22,8 @@ const static Network::Security securityChoices[] = {
 OtherNetworkWidget::OtherNetworkWidget(Device *device, QWidget *parent)
 	: StandardWidget(device, parent),
 	ui(new Ui::OtherNetworkWidget),
-	m_ssid(new KeyboardDialog("Network Name")),
-	m_password(new KeyboardDialog("Password"))
+	m_ssid(new KeyboardDialog("Network Name", KeyboardDialog::Normal, this)),
+	m_password(new KeyboardDialog("Password", KeyboardDialog::Normal, this))
 {
 	ui->setupUi(this);
 	performStandardSetup(tr("Other Network"));

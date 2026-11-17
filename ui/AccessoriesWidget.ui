@@ -69,18 +69,6 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton">
-         <property name="font">
-          <font>
-           <pointsize>33</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Parrot® AR.Drone™</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>

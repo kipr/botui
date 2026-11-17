@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="/">
     <file>target.c</file>
+    <file alias="raccoon.png">../images/raccoon.png</file>
   </qresource>
 </RCC>

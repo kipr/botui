@@ -10,7 +10,7 @@ ChannelSettingsWidget::ChannelSettingsWidget(Device *device, QWidget *parent)
 	ui->setupUi(this);
 	performStandardSetup(tr("Channel Settings"));
 	
-	ui->minBlobSizeEdit->setInputProvider(new NumpadDialog(tr("Min Blob Size"), NumpadDialog::Integer, 0, 500));
+	ui->minBlobSizeEdit->setInputProvider(new NumpadDialog(tr("Min Blob Size"), NumpadDialog::Integer, 0, 500, this));
 }
 
 ChannelSettingsWidget::~ChannelSettingsWidget()

@@ -8,7 +8,7 @@ namespace Ui
 	class ServosWidget;
 }
 
-class InputProviderDialog;
+class InputProviderWidget;
 
 class ServosWidget : public StandardWidget
 {
@@ -27,7 +27,7 @@ private slots:
 	void manualEntry(const QString &text);
 private:
 	Ui::ServosWidget *ui;
-	InputProviderDialog *m_provider;
+	InputProviderWidget *m_provider;
 };
 
 

@@ -27,7 +27,6 @@ public slots:
 	void args();
 	void compile();
 	void remove();
-	void transfer();
 	
 private slots:
 	void compileStarted(const QString &name, ConcurrentCompile *compiler);

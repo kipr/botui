@@ -124,28 +124,6 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="transfer">
-         <property name="font">
-          <font>
-           <pointsize>33</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Recover</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../rc/icons.qrc">
-           <normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/hdd.svg</normaloff>:/icons/fontawesome/regular/icons/fontawesome/regular/hdd.svg</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>30</width>
-           <height>30</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>

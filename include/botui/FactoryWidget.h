@@ -12,7 +12,7 @@ namespace Ui
         class FactoryWidget;
 }
 
-class InputProviderDialog;
+class InputProviderWidget;
 
 class FactoryWidget : public StandardWidget
 {
@@ -28,7 +28,7 @@ public slots:
 
 private:
         Ui::FactoryWidget *ui;
-        InputProviderDialog *m_provider;
+        InputProviderWidget *m_provider;
         QProcess *m_consoleProc;
 };
 

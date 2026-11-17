@@ -1,6 +1,5 @@
 #include "SettingsWidget.h"
 #include "ui_SettingsWidget.h"
-#include "SettingsProvider.h"
 #include "MenuBar.h"
 #include "RootController.h"
 #include "StatusBar.h"
@@ -25,17 +24,10 @@ SettingsWidget::SettingsWidget(Device *device, QWidget *parent)
 	ui->setupUi(this);
         performStandardSetup(tr("Settings"));
 
-	const SettingsProvider *const settingsProvider = device->settingsProvider();
-	  if(settingsProvider) {
-	    const bool hideUI = settingsProvider->value("hideUI").toBool();   
-	    ui->hideUi->setVisible(hideUI);
-	  }
-
 	connect(ui->channels, SIGNAL(clicked()), SLOT(channels()));
 	connect(ui->calibrate, SIGNAL(clicked()), SLOT(calibrate()));
 	connect(ui->language, SIGNAL(clicked()), SLOT(language()));
         connect(ui->update, SIGNAL(clicked()), SLOT(update()));
-        connect(ui->hideUi, SIGNAL(clicked()), SLOT(hideUi()));
         connect(ui->cameraView, SIGNAL(clicked()), SLOT(cameraView()));
         connect(ui->backup, SIGNAL(clicked()), SLOT(backup()));
         connect(ui->advanced, SIGNAL(clicked()), SLOT(advanced()));
@@ -72,11 +64,6 @@ void SettingsWidget::update()
   WombatUpdateWidget *const updateWidget = new WombatUpdateWidget(device());
   RootController::ref().presentWidget(updateWidget);
   updateWidget->refresh();
-}
-
-void SettingsWidget::hideUi()
-{
-  RootController::ref().minimize();
 }
 
 void SettingsWidget::cameraView()
