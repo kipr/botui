@@ -1,65 +1,82 @@
-# Stages:
-#   toolchain  aarch64 cross toolchain, Qt 6 (arm64) and the KIPR libraries
-#   dev        toolchain + dev tools and agent CLIs (used by .devcontainer/)
-#   builder    the default target, used by the README's Docker build
-FROM debian:13.6 AS toolchain
+# Pinned so the toolchain doesn't change underneath the build. Newer images ship
+# CMake 4, which rejects the cmake_minimum_required(VERSION 2.8.x) in botui,
+# libkar, and pcompiler. Ubuntu 24.04 provides CMake 3.28 and Qt 6.4.
+FROM ubuntu:24.04 AS botui-base
 
-RUN dpkg --add-architecture arm64 \
-    && apt update \
-    && apt install -y \
-        cmake \
-        dpkg-dev \
-        file \
-        g++-aarch64-linux-gnu \
-        gcc-aarch64-linux-gnu \
-        make \
-        qt6-base-dev:arm64 \
-        qt6-declarative-dev:arm64 \
-        libssl-dev:arm64 \
-        wget \
-        zlib1g-dev:arm64 \
-    && rm -rf /var/lib/apt/lists/*
+ENV TZ=America/Chicago
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-# TODO Don't hardcode
-RUN wget 'https://github.com/twells46/libkar/releases/download/v1.0.1/libkar-1.0.1-Linux.deb' 'https://github.com/twells46/pcompiler/releases/download/v1.0.1/pcompiler-1.0.1-Linux.deb' 'https://github.com/twells46/libwallaby/releases/download/v1.2.4/kipr-1.2.4-Linux.deb' \
-    && printf 'b925d91433a08cd38d90bb4dfc9cb765e143f45ec7b6c87f177d1b82b16a1ebd libkar-1.0.1-Linux.deb\naee3d1385138a4a2eea339283a226db02c1efb08949e52bb919d92b32db37308 pcompiler-1.0.1-Linux.deb\n29dbfe1425fd84f8d974930f25fcccd64cd858a5ae5f12ecc65974c03bbcc27b kipr-1.2.4-Linux.deb' > pkgs.CHECKSUM \
-    && sha256sum -c pkgs.CHECKSUM \
-    && apt install ./libkar-1.0.1-Linux.deb ./pcompiler-1.0.1-Linux.deb ./kipr-1.2.4-Linux.deb \
-    && rm libkar-1.0.1-Linux.deb pcompiler-1.0.1-Linux.deb kipr-1.2.4-Linux.deb pkgs.CHECKSUM
+RUN apt-get update && \
+    apt-get install -y \
+    build-essential \
+    ca-certificates \
+    cmake \
+    git \
+    imagemagick \
+    libssl-dev \
+    libx11-dev \
+    qt6-base-dev \
+    qt6-base-dev-tools \
+    qt6-declarative-dev \
+    xdotool \
+    xvfb \
+    zlib1g-dev && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
+# The KIPR libraries botui links against, at the versions wombat-os ships.
+# libwallaby's camera module downloads and builds OpenCV and libav, so this
+# layer takes a while the first time.
+ARG LIBKAR_REF=v1.0.0
+ARG PCOMPILER_REF=v1.0.0
+ARG LIBWALLABY_REF=v1.2.1
 
-FROM toolchain AS dev
+RUN git clone --depth 1 --branch $LIBKAR_REF https://github.com/kipr/libkar.git /tmp/libkar && \
+    cmake -S /tmp/libkar -B /tmp/libkar/build && \
+    cmake --build /tmp/libkar/build -j "$(nproc)" && \
+    cmake --install /tmp/libkar/build && \
+    rm -rf /tmp/libkar
 
-# gnupg: signing commits/tags inside the container
+RUN git clone --depth 1 --branch $PCOMPILER_REF https://github.com/kipr/pcompiler.git /tmp/pcompiler && \
+    cmake -S /tmp/pcompiler -B /tmp/pcompiler/build && \
+    cmake --build /tmp/pcompiler/build -j "$(nproc)" && \
+    cmake --install /tmp/pcompiler/build && \
+    rm -rf /tmp/pcompiler
+
+# libwallaby's tests stay on: with_tests=OFF fails to configure at v1.2.1.
+# Its bundled libav has x86 inline assembly that current binutils rejects, so
+# libav is built without assembly; nothing here depends on its speed.
+RUN git clone --depth 1 --branch $LIBWALLABY_REF https://github.com/kipr/libwallaby.git /tmp/libwallaby && \
+    sed -i 's/--disable-filters/--disable-filters --disable-asm/' \
+        /tmp/libwallaby/module/camera/dependencies/libav/CMakeLists.txt && \
+    grep -q -- --disable-asm /tmp/libwallaby/module/camera/dependencies/libav/CMakeLists.txt && \
+    cmake -S /tmp/libwallaby -B /tmp/libwallaby/build \
+        -Dwith_python_binding=OFF \
+        -Dwith_xml_binding=OFF \
+        -Dwith_documentation=OFF && \
+    cmake --build /tmp/libwallaby/build -j "$(nproc)" && \
+    cmake --install /tmp/libwallaby/build && \
+    ldconfig && \
+    rm -rf /tmp/libwallaby
+
+WORKDIR /home/dev/botui
+
+CMD ["bash", "build.sh"]
+
+FROM botui-base AS devcontainer
+
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-        bubblewrap ca-certificates curl fd-find fish fzf git gnupg jq openssh-client ripgrep wget \
-    && ln -s "$(command -v fdfind)" /usr/local/bin/fd \
+    && apt-get install -y \
+        curl \
+        fd-find \
+        file \
+        fish \
+        fzf \
+        gdb \
+        gnupg \
+        ripgrep \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN groupadd --gid 1000 code \
-    && useradd --uid 1000 --gid 1000 --create-home --shell /usr/bin/fish code
-
-USER code
-# Agent state lives in named volumes; a new volume inherits this ownership.
-# CLAUDE_CONFIG_DIR also moves ~/.claude.json inside the volume.
-ENV CLAUDE_CONFIG_DIR=/home/code/.claude \
-    CODEX_HOME=/home/code/.codex \
-    PATH=/home/code/.local/bin:$PATH
-RUN mkdir -p "$CLAUDE_CONFIG_DIR" "$CODEX_HOME" \
-    && curl -fsSL https://claude.ai/install.sh | bash \
-    && claude --version \
-    # The Codex installer puts its package under CODEX_HOME; point it outside
-    # the volume so the binary stays in the image.
-    && curl -fsSL https://chatgpt.com/codex/install.sh \
-        | CODEX_HOME=/home/code/.local/share/codex CODEX_NON_INTERACTIVE=1 sh \
-    && codex --version
-
-
-# Keep this stage last: it is the default target for `docker build .`
-FROM toolchain AS builder
-
-RUN groupadd --gid 1000 kipr \
-    && useradd --uid 1000 --gid 1000 kipr
-
-USER kipr:kipr
+# Final stage is default, so compose-based build is unaffected
+FROM botui-base AS botui

@@ -2,10 +2,10 @@
   "name": "botui Dev",
   "build": {
     "dockerfile": "../Dockerfile",
-    "context": "..",
-    "target": "dev"
+    "context": "../",
+    "target": "devcontainer"
   },
-  "remoteUser": "code",
+  "remoteUser": "1000",
   "mounts": [
     "source=claude-config,target=/home/code/.claude,type=volume",
     "source=codex-config,target=/home/code/.codex,type=volume"
@@ -17,12 +17,12 @@
     "--security-opt=seccomp=unconfined",
     "--security-opt=systempaths=unconfined"
   ],
+
   "customizations": {
     "vscode": {
       "extensions": [
         "ms-vscode.cpptools-extension-pack",
         "github.vscode-pull-request-github",
-        "openai.chatgpt"
       ],
       "settings": {
         "terminal.integrated.defaultProfile.linux": "fish",

@@ -1,0 +1,35 @@
+name: Build
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  botui:
+    name: Build and launch botui
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+
+      # The same commands contributors run locally, so CI and local builds match.
+      - name: Build in Docker
+        run: |
+          docker compose build
+          docker compose run --rm build-botui
+
+      # Fails if botui crashes at startup on the virtual display.
+      - name: Launch and screenshot the home screen
+        run: docker compose run --rm build-botui scripts/screenshot.sh
+
+      - name: Upload screenshot and log
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: botui-screenshots
+          path: build/screenshots/
+          if-no-files-found: ignore
